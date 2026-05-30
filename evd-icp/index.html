@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVD & Elevated ICP Guide: Interactive Infographic & Decision Tool</title>
+  <meta name="description" content="An educational infographic and clinical decision support tool for External Ventricular Drains (EVDs) and stepwise ICP escalation management.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Neurocritical Care & Stroke Service</span>
+        <h1>EVD &amp; Elevated ICP Guide</h1>
+        <p class="subtitle">Interactive Decision Support & Evidence-Based Reference</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Interactive Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- VIEW 1: INTERACTIVE DASHBOARD -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid">
+        
+        <!-- LEFT PANEL: EVD SIMULATOR & WAVEFORM -->
+        <div class="panel-left">
+          
+          <!-- CARD A: WAVEFORM CANVAS & REAL-TIME DISPLAY -->
+          <div class="glass-card card-monitor">
+            <div class="card-header">
+              <div class="header-left">
+                <h2>Real-Time ICP Monitor</h2>
+                <span class="pulse-dot"></span>
+              </div>
+              <div class="card-actions">
+                <span id="compliance-badge" class="badge-status safe">NORMAL COMPLIANCE</span>
+              </div>
+            </div>
+            
+            <div class="monitor-display">
+              <div class="lcd-screen">
+                <div class="numeric-stats">
+                  <div class="stat-box">
+                    <span class="stat-label">ICP (mean)</span>
+                    <span class="stat-val" id="val-mean-icp">12</span>
+                    <span class="stat-unit">mmHg</span>
+                  </div>
+                  <div class="stat-box sub-stats">
+                    <div class="sub-stat">
+                      <span class="stat-label">CPP</span>
+                      <strong id="val-cpp">78</strong> <span class="stat-unit">mmHg</span>
+                    </div>
+                    <div class="sub-stat">
+                      <span class="stat-label">MAP</span>
+                      <strong id="val-map">90</strong> <span class="stat-unit">mmHg</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="canvas-container">
+                  <canvas id="waveform-canvas"></canvas>
+                  <div class="waveform-labels">
+                    <span class="p-label p1" id="p1-marker">P1</span>
+                    <span class="p-label p2" id="p2-marker">P2</span>
+                    <span class="p-label p3" id="p3-marker">P3</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="monitor-controls">
+              <div class="control-row">
+                <div class="control-item">
+                  <label for="slider-brain-compliance">Brain Compliance</label>
+                  <input type="range" id="slider-brain-compliance" min="0" max="2" value="2" step="1" oninput="changeCompliance(this.value)">
+                  <div class="scale-labels">
+                    <span>Low (Stiff)</span>
+                    <span>Mod</span>
+                    <span>High (Normal)</span>
+                  </div>
+                </div>
+                <div class="control-item">
+                  <label for="slider-map">MAP Dosing (mmHg)</label>
+                  <input type="range" id="slider-map" min="50" max="130" value="90" step="5" oninput="changeMAP(this.value)">
+                  <div class="scale-labels">
+                    <span>50</span>
+                    <span>90</span>
+                    <span>130</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CARD B: EVD SETUP GRAPHIC & CONTROLS -->
+          <div class="glass-card card-evd-simulator">
+            <div class="card-header">
+              <h2>EVD System Setup &amp; Leveling</h2>
+              <span class="badge-tag">Simulation</span>
+            </div>
+            
+            <div class="evd-simulator-content">
+              <div class="evd-graphics-container">
+                <!-- SVG diagram of EVD system -->
+                <svg id="evd-svg" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Patient Silhouette -->
+                  <path d="M 60 160 C 60 110, 100 70, 140 70 C 180 70, 200 100, 200 130 C 200 140, 205 145, 210 145 C 215 145, 220 150, 215 160 C 208 175, 200 180, 200 190 C 200 230, 160 250, 120 250 C 90 250, 60 230, 60 190 Z" fill="#2d3748" stroke="#4a5568" stroke-width="2"/>
+                  <!-- External Auditory Meatus (EAM) / Tragus -->
+                  <circle cx="150" cy="155" r="5" fill="#f56565" id="eam-point"/>
+                  <text x="145" y="145" fill="#f56565" font-size="9" font-family="Outfit" font-weight="bold">Tragus (Foramen of Monro)</text>
+                  
+                  <!-- Reference Leveling Line -->
+                  <line x1="150" y1="155" x2="350" y2="155" stroke="#f56565" stroke-dasharray="4 4" stroke-width="1" id="leveling-laser"/>
+                  
+                  <!-- EVD Ventricular Catheter -->
+                  <path d="M 125 110 Q 135 125, 150 155" fill="none" stroke="#a0aec0" stroke-width="3" stroke-dasharray="2 1"/>
+                  <circle cx="125" cy="110" r="3" fill="#a0aec0"/>
+                  
+                  <!-- Drainage Tubing -->
+                  <path d="M 150 155 Q 165 185, 200 195" fill="none" stroke="#90cdf4" stroke-width="3" id="patient-line"/>
+                  
+                  <!-- Transducer Setup (Mounted on Manifold) -->
+                  <rect x="195" y="190" width="12" height="12" fill="#4a5568" rx="2" id="evd-transducer"/>
+                  <circle cx="201" cy="196" r="3" fill="#3182ce"/>
+                  <text x="212" y="199" fill="#a0aec0" font-size="8" font-family="Inter">Transducer</text>
+                  
+                  <!-- Stopcock Dial -->
+                  <g id="stopcock-group" transform="translate(201,196)" cursor="pointer" onclick="rotateStopcock()">
+                    <circle cx="0" cy="0" r="10" fill="#2d3748" stroke="#4a5568" stroke-width="1"/>
+                    <line x1="0" y1="0" x2="0" y2="-9" stroke="#38a169" stroke-width="3" id="stopcock-pointer-1"/>
+                    <line x1="0" y1="0" x2="9" y2="0" stroke="#38a169" stroke-width="3" id="stopcock-pointer-2"/>
+                    <line x1="0" y1="0" x2="-9" y2="0" stroke="#38a169" stroke-width="3" id="stopcock-pointer-3"/>
+                  </g>
+                  
+                  <!-- Drip Chamber Scale and Board -->
+                  <rect x="290" y="30" width="30" height="240" fill="#1a202c" rx="4" stroke="#4a5568" stroke-width="1.5"/>
+                  <!-- Zero Point Line -->
+                  <line x1="285" y1="155" x2="335" y2="155" stroke="#e2e8f0" stroke-width="1"/>
+                  
+                  <!-- Dripping Chamber Cylinder -->
+                  <rect x="295" y="60" width="20" height="150" fill="rgba(255,255,255,0.08)" rx="10" stroke="rgba(255,255,255,0.2)" stroke-width="1" id="drip-chamber"/>
+                  
+                  <!-- Height Adjustment Bracket -->
+                  <g id="evd-bracket" transform="translate(0, 0)">
+                    <rect x="282" y="115" width="46" height="10" fill="#edd682" rx="2" opacity="0.6"/>
+                    <line x1="285" y1="120" x2="325" y2="120" stroke="#d69e2e" stroke-width="2"/>
+                    <!-- Arrows -->
+                    <polygon points="305,112 301,116 309,116" fill="#d69e2e"/>
+                    <polygon points="305,128 301,124 309,124" fill="#d69e2e"/>
+                  </g>
+                  
+                  <!-- Drops of CSF -->
+                  <circle cx="305" cy="80" r="2.5" fill="#ebf8ff" opacity="0" id="csf-drop"/>
+                  <!-- Fluid Level in Chamber -->
+                  <path d="M 296 200 Q 305 198, 314 200 L 314 210 L 296 210 Z" fill="rgba(144,205,244,0.4)" id="chamber-fluid"/>
+                  
+                  <!-- Connection to Bag -->
+                  <path d="M 305 210 L 305 280" fill="none" stroke="#90cdf4" stroke-width="2"/>
+                  <!-- Drainage Bag -->
+                  <path d="M 290 280 L 320 280 L 315 315 L 295 315 Z" fill="rgba(144,205,244,0.2)" stroke="#4a5568" stroke-width="1.5"/>
+                  <text x="296" y="300" fill="#a0aec0" font-size="7" font-family="Inter">CSF Bag</text>
+                  
+                  <!-- Height Tick Marks -->
+                  <text x="325" y="45" fill="#a0aec0" font-size="7" font-family="Inter">+20</text>
+                  <text x="325" y="98" fill="#a0aec0" font-size="7" font-family="Inter">+10</text>
+                  <text x="325" y="158" fill="#e2e8f0" font-size="7" font-family="Inter">0</text>
+                  <text x="325" y="210" fill="#a0aec0" font-size="7" font-family="Inter">-10</text>
+                </svg>
+              </div>
+              
+              <div class="evd-controls-pane">
+                <div class="card-subheader">Stopcock Alignment</div>
+                <div class="stopcock-indicator">
+                  <span>Current State:</span>
+                  <strong id="stopcock-status-text">OPEN (Drain &amp; Monitor)</strong>
+                </div>
+                <button class="btn-secondary btn-full" onclick="rotateStopcock()">Toggle Stopcock Position</button>
+                
+                <div class="card-subheader">EVD Height / Threshold Setting</div>
+                <div class="height-slider-box">
+                  <label for="slider-evd-height">Height: <strong id="val-evd-height">10</strong> cmH<sub>2</sub>O</label>
+                  <input type="range" id="slider-evd-height" min="-5" max="25" value="10" step="1" oninput="changeEVDHeight(this.value)">
+                </div>
+                
+                <div class="card-subheader">Transducer Alignment (Leveling)</div>
+                <div class="leveling-status">
+                  <span class="status-indicator-dot aligned" id="leveling-dot"></span>
+                  <span id="leveling-text">Aligned to tragus (0.0 cm offset)</span>
+                </div>
+                <div class="btn-group-row">
+                  <button class="btn-action" onclick="adjustTransducerLevel(5)">Raise Bed (Misalign)</button>
+                  <button class="btn-action" onclick="adjustTransducerLevel(-5)">Lower Bed (Misalign)</button>
+                  <button class="btn-primary" onclick="relevelTransducer()">Re-Level EVD</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- RIGHT PANEL: TROUBLESHOOTING & EDUCATION -->
+        <div class="panel-right">
+          
+          <!-- CARD C: CLINICAL INTERPRETER & TROUBLESHOOTING -->
+          <div class="glass-card card-troubleshooting">
+            <div class="card-header">
+              <h2>Troubleshooting &amp; Scenarios</h2>
+              <span class="badge-tag">Simulation Cases</span>
+            </div>
+            
+            <div class="scenarios-grid">
+              <button class="btn-scenario active" id="case-normal" onclick="loadCase('normal')">Normal Baseline</button>
+              <button class="btn-scenario" id="case-kinked" onclick="loadCase('kinked')">Kinked Line</button>
+              <button class="btn-scenario" id="case-air" onclick="loadCase('air')">Air Bubble</button>
+              <button class="btn-scenario" id="case-overdrain" onclick="loadCase('overdrain')">Overdrainage / Low Height</button>
+              <button class="btn-scenario" id="case-stiff" onclick="loadCase('stiff')">Refractory ICP Crisis</button>
+            </div>
+            
+            <div class="troubleshooter-panel">
+              <div class="status-summary-box warning" id="trouble-status-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
+                <div class="status-desc">
+                  <h4 id="trouble-title">Normal Baseline</h4>
+                  <p id="trouble-text">All parameters normal. EVD is leveled, stopcock is open, and CSF is fluctuating and draining normally.</p>
+                </div>
+              </div>
+              
+              <div class="clinical-checkpoints">
+                <h3>Action Required Checklist</h3>
+                <ul class="checkpoint-list" id="trouble-actions">
+                  <li class="checked">Confirm EVD leveled to tragus.</li>
+                  <li class="checked">Check stopcock alignment.</li>
+                  <li>Perform hourly checks on drainage color and quantity.</li>
+                </ul>
+              </div>
+              
+              <div class="action-buttons-container" id="scenario-resolves">
+                <!-- Dynamic resolve buttons appear here -->
+              </div>
+            </div>
+          </div>
+          
+          <!-- CARD D: EVD INTERPRETATION & TEACHING GUIDE -->
+          <div class="glass-card card-teaching-guide">
+            <div class="card-header">
+              <h2>EVD System &amp; Waveform Interpretation Guide</h2>
+              <span class="badge-tag">Educational Reference</span>
+            </div>
+            
+            <div class="teaching-content">
+              <div class="teaching-grid">
+                <div class="teaching-card">
+                  <h3>🧠 What is an EVD?</h3>
+                  <p>A ventricular catheter placed in the lateral ventricles of the brain. It acts as a fluid column to measure Intracranial Pressure (ICP) and drains Cerebrospinal Fluid (CSF) to treat pressure elevation.</p>
+                </div>
+                
+                <div class="teaching-card">
+                  <h3>📈 Waveform Peaks &amp; Compliance</h3>
+                  <p>ICP waveforms display three pulses synced to the heart beat:</p>
+                  <ul>
+                    <li><strong>P1 (Percussion Wave)</strong>: Arterial pulsation. Normally the tallest.</li>
+                    <li><strong>P2 (Tidal Wave)</strong>: Reflects **brain compliance** (tissue stiffness). If the brain is swelling and has no room ($P2 \ge P1$), this is an urgent compliance alarm.</li>
+                    <li><strong>P3 (Dicrotic Wave)</strong>: Venous closure.</li>
+                  </ul>
+                </div>
+                
+                <div class="teaching-card">
+                  <h3>📏 Leveling &amp; Zeroing</h3>
+                  <p>The transducer and scale 0-point must align with the **tragus (foramen of Monro)**.</p>
+                  <ul>
+                    <li>If EVD is **too low**: Measured ICP is falsely high, driving risk of **over-drainage** (ventricle collapse, subdural hemorrhage).</li>
+                    <li>If EVD is **too high**: Measured ICP is falsely low, leading to **under-drainage** and worsening intracranial hypertension.</li>
+                  </ul>
+                </div>
+                
+                <div class="teaching-card">
+                  <h3>💧 How CSF Drainage Works</h3>
+                  <p>CSF drains only when **ICP > Drip Chamber height** (in cmH2O). 1 cmH2O = 0.74 mmHg.</p>
+                  <p class="formula-box">CSF Flow occurs if:<br><code>ICP (mmHg) > EVD Height (cmH2O) × 0.74</code></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CARD E: STEPWISE ICP ESCALATION PATHWAY -->
+          <div class="glass-card card-escalation">
+            <div class="card-header">
+              <h2>Stepwise ICP Escalation Pathway</h2>
+              <span class="badge-tag">Clinical Protocol</span>
+            </div>
+            
+            <div class="escalation-flow">
+              <!-- Tier 0 -->
+              <div class="tier-node" id="tier-0-node">
+                <div class="tier-header tier-0">
+                  <span class="tier-num">TIER 0</span>
+                  <span class="tier-title">Baseline Neuroprotection (Prophylaxis)</span>
+                </div>
+                <div class="tier-body">
+                  <strong>Interventions:</strong> HOB elevated 30–45° • Midline neck alignment • Isotonic Saline (0.9% NS) • Maintain normothermia (T &lt; 37.8°C) • Light sedation (Propofol/Fentanyl) • Avoid corticosteroids.
+                </div>
+              </div>
+              
+              <!-- Tier 1 -->
+              <div class="tier-node" id="tier-1-node">
+                <div class="tier-header tier-1">
+                  <span class="tier-num">TIER 1</span>
+                  <span class="tier-title">Basic Osmotherapy &amp; EVD Drainage</span>
+                </div>
+                <div class="tier-body">
+                  <strong>Interventions:</strong> Open EVD to drain 5–10 mL CSF or continuous drainage (threshold 10-15 cmH2O) • <strong>3% HTS</strong> bolus (250–500 mL IV; target Na 145–155) OR <strong>20% Mannitol</strong> bolus (0.5–1.0 g/kg; hold if osm &gt;320 / gap &gt;55).
+                </div>
+              </div>
+              
+              <!-- Tier 2 -->
+              <div class="tier-node" id="tier-2-node">
+                <div class="tier-header tier-2">
+                  <span class="tier-num">TIER 2</span>
+                  <span class="tier-title">Invasive Rescue &amp; Refractory Bridging</span>
+                </div>
+                <div class="tier-body">
+                  <strong>Interventions:</strong> <strong>23.4% HTS</strong> bolus 30 mL over 10 min (<strong>CENTRAL LINE ONLY</strong>) • Short-term Hyperventilation (target PaCO<sub>2</sub> 30–35) • Escalate sedation/analgesia • Continuous EEG.
+                </div>
+              </div>
+              
+              <!-- Tier 3 -->
+              <div class="tier-node" id="tier-3-node">
+                <div class="tier-header tier-3">
+                  <span class="tier-num">TIER 3</span>
+                  <span class="tier-title">Surgical &amp; Metabolic Salvage</span>
+                </div>
+                <div class="tier-body">
+                  <strong>Interventions:</strong> STAT Neurosurgery consult for <strong>decompressive hemicraniectomy</strong> or suboccipital craniectomy • <strong>Barbiturate Coma</strong> (Pentobarbital with EEG suppression target) • Mild hypothermia (32–34°C).
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: PRINT-OPTIMIZED REFERENCE SHEET -->
+    <section id="print-view" class="view-section">
+      <div class="print-container">
+        
+        <div class="print-sheet-header">
+          <h1>EVD &amp; Elevated ICP Management Reference Sheet</h1>
+          <p class="print-sub">A Quick-Reference Guide for Residents, Fellows, and Inpatient Teams</p>
+        </div>
+        
+        <div class="print-section">
+          <h2>1. Stepwise ICP Escalation Pathway (Tiers 0–3)</h2>
+          <table class="print-table">
+            <thead>
+              <tr>
+                <th style="width: 15%">Tier</th>
+                <th style="width: 25%">Clinical Status</th>
+                <th style="width: 40%">Key Interventions</th>
+                <th style="width: 20%">Safety/Targets</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tier 0</strong><br>Baseline</td>
+                <td>ICP &lt; 20 mmHg<br>Prophylaxis for all severe brain injury</td>
+                <td>HOB 30-45°, midline neck alignment • Isotonic crystalloids (0.9% NS) • Sedation (propofol/fentanyl) • Temperature management (T &lt; 37.8°C).</td>
+                <td>Avoid hypotonic fluids • Avoid corticosteroids • Maintain euvolemia.</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 1</strong><br>First Line</td>
+                <td>ICP &ge; 20–22 mmHg<br>sustained &gt; 5 min</td>
+                <td><strong>EVD drainage</strong>: Intermittent CSF release (5-10 mL) or continuous draining at threshold 10-15 cmH2O • <strong>3% Hypertonic Saline (HTS)</strong> 250-500 mL IV bolus OR <strong>20% Mannitol</strong> 0.5-1.0 g/kg IV.</td>
+                <td>Hold Mannitol if Osm &gt;320 or Gap &gt;55 • Target Na 145-155 for HTS • Use inline filter for Mannitol.</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 2</strong><br>Refractory</td>
+                <td>Continued ICP &ge; 20 mmHg<br>despite Tier 1</td>
+                <td><strong>23.4% HTS</strong> 30 mL bolus IV • Short-term hyperventilation (target PaCO2 30-35 mmHg) • Deepen sedation (propofol/midazolam) + neuromuscular blockade.</td>
+                <td><strong>23.4% HTS central line only</strong> • Hyperventilation only as short-term bridge • Continuous EEG required.</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 3</strong><br>Salvage</td>
+                <td>ICP refractory to medical management</td>
+                <td>STAT Neurosurgery consult for <strong>decompressive hemicraniectomy</strong> or suboccipital craniectomy • <strong>Barbiturate Coma</strong> (Pentobarbital infusion) • Moderate therapeutic hypothermia (32-34°C).</td>
+                <td>Continuous EEG target: burst suppression • Watch for hypotension/infection.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="print-grid-two-cols">
+          <div class="print-column">
+            <h2>2. EVD Troubleshooting Guide</h2>
+            <table class="print-table compact">
+              <thead>
+                <tr>
+                  <th>Observation</th>
+                  <th>Potential Cause</th>
+                  <th>Immediate Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Dampened Waveform</strong><br>(No fluctuation in patient line)</td>
+                  <td>- Kinked tubing<br>- Air bubbles in transducer<br>- Blood clot or occlusion<br>- Tip against ventricular wall</td>
+                  <td>1. Check for tubing kinks.<br>2. Align stopcocks correctly.<br>3. Inspect for bubbles; flush <strong>distally</strong> (away from patient) under aseptic technique.<br>4. <strong>NEVER flush proximally</strong> (towards brain).</td>
+                </tr>
+                <tr>
+                  <td><strong>Under-drainage</strong><br>(Zero drainage, high ICP)</td>
+                  <td>- Drip chamber set too high<br>- Line clamped or stopcock closed<br>- Disconnected line</td>
+                  <td>1. Verify EVD height matches current orders.<br>2. Trace line to ensure all clamp valves are open.<br>3. Confirm EVD manifold leveling to tragus/EAM.</td>
+                </tr>
+                <tr>
+                  <td><strong>Over-drainage</strong><br>(High output, brain collapse)</td>
+                  <td>- Drip chamber set too low<br>- Patient moved without clamping EVD<br>- Tubing siphon effect</td>
+                  <td>1. Clamp EVD during patient movements/coughing.<br>2. Level manifold immediately to tragus/EAM.<br>3. Check for severe postural headache or nausea.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-column">
+            <h2>3. EVD Waveform &amp; Setup Interpretation</h2>
+            <div class="print-panel-box">
+              <h3>🔑 Waveform Compliance Peaks</h3>
+              <ul>
+                <li><strong>P1 (Percussion Wave)</strong>: Reflects arterial pulsations. Under normal brain compliance, P1 is the tallest peak.</li>
+                <li><strong>P2 (Tidal Wave)</strong>: Reflects intracranial compliance (brain stiffness). If compliance is compromised (brain swelling, no space), the amplitude of P2 increases, leading to **P2 &ge; P1**. This configuration signals low compliance and risk of pressure crisis.</li>
+                <li><strong>P3 (Dicrotic Wave)</strong>: Reflects aortic valve closure/venous pulse.</li>
+              </ul>
+              
+              <h3>📏 Manifold Leveling Physics</h3>
+              <ul>
+                <li><strong>Tragus Alignment</strong>: The transducer and scale zero line must level to the external auditory meatus (EAM).</li>
+                <li><strong>Too Low</strong>: Lowering the manifold creates a larger pressure gradient, accelerating drainage and causing falsely high ICP readings. This risks ventricles collapsing and tearing bridging veins (subdural hematoma).</li>
+                <li><strong>Too High</strong>: Elevating the manifold reduces the gradient, resulting in under-drainage and falsely low ICP readings.</li>
+              </ul>
+            </div>
+            
+            <div class="print-panel-box alert-box">
+              <h3>⚠️ Critical Safety Warning</h3>
+              <p><strong>Irrigation / Flushing</strong>: Flushing a ventricular catheter towards the patient (proximal flush) can cause catastrophic mechanical brain injury and introduces infection. Clinical teams are <strong>prohibited</strong> from flushing proximally. This must be done exclusively by Neurosurgery using sterile technique.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="print-footer">
+          <p>References: Bulsara et al. Neurocrit Care 2016 | Ichai et al. Intensive Care Med 2009 | BTF Guidelines 2020</p>
+        </div>
+        
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

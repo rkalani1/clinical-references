@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pupillometry in Severe Stroke: Infographic & Guide</title>
+  <meta name="description" content="An infographic and clinical decision support tool for quantitative pupillometry in severe ischemic stroke and intracerebral hemorrhage.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Neurocritical Care & Stroke Service</span>
+        <h1 id="app-title">Pupillometry in Severe Stroke</h1>
+        <p class="subtitle">Quantitative Decision Support & Evidence-Based Reference Guide</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="grid-container">
+        
+        <!-- LEFT COLUMN: SIMULATOR & INTERPRETER -->
+        <div class="left-col">
+          <!-- CARD 1: PUPIL SIMULATOR -->
+          <div class="glass-card card-interactive-simulator">
+            <div class="card-header">
+              <h2>Pupil Light Reflex Simulator</h2>
+              <span class="card-label">Interactive Simulator</span>
+            </div>
+            
+            <div class="simulator-display">
+              <div class="eye-box" id="eye-left-box">
+                <span class="eye-label">LEFT EYE (Ipsilateral/Lesion)</span>
+                <div class="eye-graphic">
+                  <div class="iris">
+                    <div id="pupil-left" class="pupil"></div>
+                  </div>
+                </div>
+                <div class="eye-metrics">
+                  <span id="left-display-size">4.0 mm</span>
+                </div>
+              </div>
+              
+              <div class="eye-box" id="eye-right-box">
+                <span class="eye-label">RIGHT EYE (Contralateral)</span>
+                <div class="eye-graphic">
+                  <div class="iris">
+                    <div id="pupil-right" class="pupil"></div>
+                  </div>
+                </div>
+                <div class="eye-metrics">
+                  <span id="right-display-size">4.0 mm</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="simulator-controls">
+              <button id="btn-stimulate" class="btn-primary" onclick="simulateReflex()">
+                <span class="pulse-ring"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                Simulate Light Reflex
+              </button>
+              
+              <div class="control-groups">
+                <div class="control-card">
+                  <label for="slider-npi" class="slider-label">
+                    <span>Neurological Pupil Index (NPi)</span>
+                    <strong id="val-npi">4.5</strong>
+                  </label>
+                  <input type="range" id="slider-npi" min="0.0" max="5.0" step="0.1" value="4.5" oninput="updateSliders()">
+                  <div class="slider-scale">
+                    <span>0 (Dead)</span>
+                    <span>3.0 (Abnormal Threshold)</span>
+                    <span>5.0 (Normal)</span>
+                  </div>
+                </div>
+
+                <div class="control-card">
+                  <label for="slider-cv" class="slider-label">
+                    <span>Constriction Velocity (CV)</span>
+                    <strong id="val-cv">1.5 mm/s</strong>
+                  </label>
+                  <input type="range" id="slider-cv" min="0.0" max="2.5" step="0.1" value="1.5" oninput="updateSliders()">
+                  <div class="slider-scale">
+                    <span>0.0</span>
+                    <span>0.8 (ICP Elev. Threshold)</span>
+                    <span>2.5</span>
+                  </div>
+                </div>
+
+                <div class="control-card">
+                  <label for="slider-size" class="slider-label">
+                    <span>Pupil Size (Initial)</span>
+                    <strong id="val-size">4.0 mm</strong>
+                  </label>
+                  <input type="range" id="slider-size" min="1.0" max="8.0" step="0.5" value="4.0" oninput="updateSliders()">
+                </div>
+
+                <div class="control-card">
+                  <label for="slider-change" class="slider-label">
+                    <span>Percentage Constriction</span>
+                    <strong id="val-change">20%</strong>
+                  </label>
+                  <input type="range" id="slider-change" min="0" max="50" step="5" value="20" oninput="updateSliders()">
+                  <div class="slider-scale">
+                    <span>0%</span>
+                    <span>10% (ICP Elev. Threshold)</span>
+                    <span>50%</span>
+                  </div>
+                </div>
+
+                <div class="control-card">
+                  <label for="slider-diff" class="slider-label">
+                    <span>Inter-Eye Asymmetry (NPi Diff)</span>
+                    <strong id="val-diff">0.0</strong>
+                  </label>
+                  <input type="range" id="slider-diff" min="0.0" max="2.0" step="0.1" value="0.0" oninput="updateSliders()">
+                  <div class="slider-scale">
+                    <span>0.0</span>
+                    <span>0.7 (Mass Effect Threshold)</span>
+                    <span>2.0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 1B: WHAT IS NPi? -->
+          <div class="glass-card card-npi-explanation">
+            <div class="card-header">
+              <h2>What does the Neurological Pupil Index (NPi) actually mean?</h2>
+              <span class="card-label">Physiological & Mathematical Mechanism</span>
+            </div>
+            <div class="npi-explanation-content">
+              <p>The <strong>Neurological Pupil Index (NPi)</strong> is a standardized, algorithm-derived score ranging from <strong>0.0 to 5.0</strong>. Rather than relying on simple visual inspection of pupil size or reactivity, the NPi compiles <strong>7 kinetic parameters</strong> measured by infrared pupillometry:</p>
+              
+              <div class="npi-params-grid">
+                <div class="npi-param-pill"><strong>Baseline Size:</strong> Pupil diameter prior to light stimulus (mm)</div>
+                <div class="npi-param-pill"><strong>Latency:</strong> Time delay from light onset to constriction start (seconds)</div>
+                <div class="npi-param-pill"><strong>Constriction Velocity (CV):</strong> Mean speed of constriction (mm/s)</div>
+                <div class="npi-param-pill"><strong>Peak Constriction Velocity (MCV):</strong> Maximum speed during constriction (mm/s)</div>
+                <div class="npi-param-pill"><strong>Constriction Amplitude:</strong> Percentage decrease in pupil diameter (%)</div>
+                <div class="npi-param-pill"><strong>Dilation Velocity (DV):</strong> Mean speed of dilation back to baseline (mm/s)</div>
+                <div class="npi-param-pill"><strong>Recovery Time:</strong> Time taken to begin redilation (seconds)</div>
+              </div>
+
+              <h3 class="npi-sub-title">1. The Mathematical Calculation</h3>
+              <p class="npi-alg-desc">
+                The pupillometer compares the patient's individual pupil response curve against a <strong>normative dataset of over 24,000 healthy pupils</strong>. It calculates a standardized score representing how many standard deviations the patient's kinetics deviate from healthy controls:
+              </p>
+              <ul class="npi-scale-list">
+                <li><strong class="color-text-green">3.0 – 5.0 (Normal):</strong> Within normal statistical limits (less than 3 standard deviations from the healthy population mean).</li>
+                <li><strong class="color-text-yellow">2.8 – 2.9 (Borderline):</strong> Sluggish kinetics showing early statistical deviation.</li>
+                <li><strong class="color-text-red">&lt; 2.8 (Abnormal):</strong> Significant deviation (>3 standard deviations from the mean), indicating pathological pupillary light reflex slowing.</li>
+                <li><strong class="color-text-dark-red">0.0 (Non-Reactive):</strong> Complete loss of PLR reflex kinetics.</li>
+              </ul>
+
+              <h3 class="npi-sub-title">2. What NPi Anatomically Refers To</h3>
+              <p class="npi-anatomy-desc">
+                The NPi serves as a direct clinical surrogate for the functional integrity of the <strong>oculomotor nerve (CN III)</strong> and the <strong>midbrain pupillary reflex pathway</strong> (pretectal area and Edinger-Westphal nucleus):
+              </p>
+              <ul class="npi-anatomy-list">
+                <li><strong>Superficial Parasympathetic Fibers:</strong> The pupilloconstrictor fibers run superficially along the outer diameter of CN III. Because of this peripheral location, they are highly vulnerable to even minor mechanical compression (e.g., from uncal displacement or midline shift).</li>
+                <li><strong>Subclinical Warning:</strong> Mechanical compression impairs these fibers' conduction velocities and latency <em>before</em> it completely blocks conduction. This causes pupillary kinetics (NPi) to drop up to 24 hours before the pupil visually dilates (anisocoria) or becomes fixed.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: INTERPRETATION & DECISION SUPPORT -->
+        <div class="right-col">
+          <!-- CARD 2: REAL-TIME INTERPRETER -->
+          <div class="glass-card card-interpreter" id="interpreter-card">
+            <div class="card-header">
+              <h2>Clinical Interpretation</h2>
+              <span id="clinical-status-badge" class="status-badge status-normal">NORMAL PROFILE</span>
+            </div>
+            
+            <div class="interpretation-content">
+              <div class="risk-meter-container">
+                <div class="risk-bar-bg">
+                  <div id="risk-bar" class="risk-bar-fill" style="width: 10%;"></div>
+                </div>
+                <div class="risk-labels">
+                  <span>Normal</span>
+                  <span>Early Alarm</span>
+                  <span>Severe Shift</span>
+                  <span>Herniation</span>
+                </div>
+              </div>
+
+              <div class="interpreter-details">
+                <div class="detail-section">
+                  <h3>Clinical Interpretation</h3>
+                  <p id="interpreter-text">Pupillary parameters are within normal limits. Normal NPi (>3.0) and constriction velocity (>0.8 mm/s) exclude active brainstem compression and severe intracranial hypertension with a high negative predictive value (>97%).</p>
+                </div>
+
+                <div class="detail-section">
+                  <h3>Actionable Next Steps</h3>
+                  <ul id="action-steps" class="step-list">
+                    <li>Continue baseline serial assessments every 4 hours.</li>
+                    <li>Ensure nursing staff are calibrated on device use.</li>
+                    <li>Document values in flowsheets and track NPi trends over time.</li>
+                  </ul>
+                </div>
+                
+                <div class="detail-section" id="anatomic-shift-panel">
+                  <h3>Radiographical Predictions</h3>
+                  <div class="anatomic-grid">
+                    <div class="anatomic-item">
+                      <span class="label">ICH Midline Shift</span>
+                      <strong id="prediction-ich">Low probability (&lt;2mm)</strong>
+                    </div>
+                    <div class="anatomic-item">
+                      <span class="label">Ischemic Pineal Shift</span>
+                      <strong id="prediction-stroke">Low probability (&lt;2mm)</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CARD 3: REFERENCE & THRESHOLDS -->
+          <div class="glass-card card-guidelines">
+            <div class="card-header">
+              <h2>Escalation Checklist</h2>
+              <span class="card-label">Quick Reference</span>
+            </div>
+            <div class="guidelines-content">
+              <div class="protocol-timeline">
+                <div class="timeline-item border-danger">
+                  <div class="timeline-badge bg-danger">0.0</div>
+                  <div class="timeline-desc">
+                    <h4>NPi = 0.0 (Herniation Crisis)</h4>
+                    <p>Immediate hyperosmolar bolus (mannitol or 23.4% saline), elevate head of bed, transient hyperventilation, urgent neurosurgery/EVD placement.</p>
+                  </div>
+                </div>
+                <div class="timeline-item border-warning-orange">
+                  <div class="timeline-badge bg-warning-orange">&lt;2.8</div>
+                  <div class="timeline-desc">
+                    <h4>NPi &lt; 2.8 (Malignant Stroke Alarm)</h4>
+                    <p>Highly specific indicator of deterioration in large MCA stroke. Triage immediately for surgical decompression (hemicraniectomy).</p>
+                  </div>
+                </div>
+                <div class="timeline-item border-warning-yellow">
+                  <div class="timeline-badge bg-warning-yellow">&lt;3.0</div>
+                  <div class="timeline-desc">
+                    <h4>NPi &lt; 3.0 (Abnormal Threshold)</h4>
+                    <p>Triggers urgent neurological examination, assessment for clinical expansion, and stat non-contrast head CT scan.</p>
+                  </div>
+                </div>
+                <div class="timeline-item border-cyan">
+                  <div class="timeline-badge bg-cyan">&ge;0.7</div>
+                  <div class="timeline-desc">
+                    <h4>NPi Diff &ge; 0.7 (Unilateral Mass Effect)</h4>
+                    <p>Indicates early third nerve compression. High correlation with horizontal midline shift (septum pellucidum in ICH, pineal gland in ischemic stroke).</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SECTION 2: PATHOPHYSIOLOGY COMPARISON & PROTOCOLS -->
+      <div class="bottom-row-grid">
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>Hemorrhagic vs. Ischemic Stroke Pathophysiology</h2>
+            <span class="card-label">Anatomical Distinctions</span>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-card ich-theme">
+              <h3>Intracerebral Hemorrhage (ICH)</h3>
+              <ul>
+                <li><strong>Compression Dynamics:</strong> Hyperacute, localized focal compression driven by rapid hematoma expansion.</li>
+                <li><strong>Anatomical Correlate:</strong> Midline shift at the <strong>septum pellucidum</strong> is highly predictive of NPi asymmetry (&beta; = 0.11, p=0.01).</li>
+                <li><strong>Localization Signs:</strong> Basal ganglia ICH (contralateral hemiplegia/gaze deviation), thalamic ICH (miotic pupils, downward gaze), pontine ICH (pinpoint reactive pupils).</li>
+              </ul>
+            </div>
+            <div class="comparison-card stroke-theme">
+              <h3>Severe Ischemic Stroke</h3>
+              <ul>
+                <li><strong>Compression Dynamics:</strong> Slow, progressive, diffuse cytotoxic edema peaking between 24–72 hours.</li>
+                <li><strong>Anatomical Correlate:</strong> Midline shift at the <strong>pineal gland</strong> drives pupillary asymmetry (&beta; = 0.16, p=0.07).</li>
+                <li><strong>Localization Signs:</strong> Malignant MCA territory infarctions leading to uncal herniation with compression of CN III parasympathetic fibers.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>Serial Monitoring Protocol</h2>
+            <span class="card-label">Evidence-Based Flowchart</span>
+          </div>
+          <div class="protocol-grid">
+            <div class="protocol-step">
+              <div class="step-num">1</div>
+              <h4>Admission Assessment</h4>
+              <p>Perform initial pupillometry within 1 hour of admission for severe stroke/ICH. Set baseline.</p>
+            </div>
+            <div class="protocol-step">
+              <div class="step-num">2</div>
+              <h4>Frequency Schedule</h4>
+              <p>Standard: <strong>Every 4 hours</strong> for the first 7 days.<br>High Risk (MCA or Large ICH): <strong>Every 2–4 hours</strong>.</p>
+            </div>
+            <div class="protocol-step">
+              <div class="step-num">3</div>
+              <h4>Confounder Check</h4>
+              <p>Examine sedation (opioids/propofol blunt CV but preserve NPi), ocular trauma, or prior surgery.</p>
+            </div>
+            <div class="protocol-step">
+              <div class="step-num">4</div>
+              <h4>Trend Analysis</h4>
+              <p>Persistent or worsening NPi values are clinical alarms; improvements after osmolar therapy indicate reversibility.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINT-OPTIMIZED REFERENCE SHEET -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Pupillometry in Severe Stroke</h1>
+        </div>
+
+        <div class="print-grid">
+          
+          <div class="print-box full-width">
+            <h3>⚡ High-Leverage Action Protocol</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th>Clinical Alert</th>
+                  <th>Quantitative Criteria</th>
+                  <th>Pathophysiological Threat</th>
+                  <th>Immediate Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="alert-row-danger">
+                  <td><strong>Herniation Crisis</strong></td>
+                  <td>NPi = 0.0</td>
+                  <td>Severe brainstem displacement / midbrain compression</td>
+                  <td>Hyperosmolar therapy bolus (mannitol/23.4% saline), hyperventilate, emergency neurosurgical decompression.</td>
+                </tr>
+                <tr class="alert-row-orange">
+                  <td><strong>Malignant MCA Edema</strong></td>
+                  <td>NPi &lt; 2.8</td>
+                  <td>Impending uncal herniation (100% specificity for clinical worsening)</td>
+                  <td>Activate neurosurgery team immediately, prepare for hemicraniectomy, head CT scan.</td>
+                </tr>
+                <tr class="alert-row-yellow">
+                  <td><strong>Abnormal Pupil Profile</strong></td>
+                  <td>NPi &lt; 3.0</td>
+                  <td>Incipient uncal displacement or CN III compression</td>
+                  <td>Thorough clinical neuro exam, notify fellow/faculty, check sedation depth, obtain stat non-contrast head CT.</td>
+                </tr>
+                <tr class="alert-row-cyan">
+                  <td><strong>Unilateral Mass Effect</strong></td>
+                  <td>NPi Diff &ge; 0.7</td>
+                  <td>Asymmetric compression of ipsilateral oculomotor nerve</td>
+                  <td>Assess for radiographic midline shift (septum pellucidum in ICH; pineal gland in ischemic stroke).</td>
+                </tr>
+                <tr class="alert-row-teal">
+                  <td><strong>Elevated ICP Concern</strong></td>
+                  <td>CV &lt; 0.8 mm/s or % Change &lt; 10%</td>
+                  <td>Intracranial pressure &ge; 20 mmHg (NPV &gt; 97% if normal)</td>
+                  <td>Exclusion tool: Normal values rule out ICP crisis. Abnormal values raise concern; review ICP and clinical stability.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>📊 What the Neurological Pupil Index (NPi) Represents</h3>
+            <p>NPi is a standardized composite index (0.0 to 5.0) that measures pupillary light reflex (PLR) kinetics. It compares <strong>7 kinetic parameters</strong> against a normative database of over 24,000 healthy pupils:</p>
+            <ul class="print-list" style="margin-top: 0.25rem;">
+              <li><strong>Mathematical Scoring:</strong> The pupillometer measures baseline size, latency, constriction velocity (average & peak), percentage constriction amplitude, dilation velocity, and recovery time. The algorithm calculates how many standard deviations the patient's kinetics deviate from the healthy mean.</li>
+              <li><strong>Statistical Thresholds:</strong>
+                <ul class="print-list" style="margin-top: 0.15rem; padding-left: 1rem;">
+                  <li><strong>&ge;3.0 (Normal):</strong> Kinetics are within 3 standard deviations of healthy population norms.</li>
+                  <li><strong>2.8 – 2.9 (Borderline / Sluggish):</strong> Early kinetic deceleration.</li>
+                  <li><strong>&lt; 2.8 (Abnormal):</strong> Severe kinetic compromise (>3 standard deviations from the mean).</li>
+                  <li><strong>0.0 (Non-Reactive):</strong> Complete loss of pupillary light reflex.</li>
+                </ul>
+              </li>
+              <li><strong>Anatomical Surrogate:</strong> Directly reflects the integrity of the pupilloconstrictor fibers on the outer sheath of the <strong>oculomotor nerve (CN III)</strong>. Compression of these superficial fibers (e.g., from uncal herniation) causes kinetic slowing (decreased NPi) long before gross pupil dilation occurs.</li>
+            </ul>
+          </div>
+
+          <div class="print-box">
+            <h3>🧠 Hemorrhagic vs. Ischemic Anatomic Shift</h3>
+            <p>The anatomical markers of intracranial mass effect and their correlation with quantitative NPi measurements differ by stroke subtype:</p>
+            <ul class="print-list">
+              <li><strong>Intracerebral Hemorrhage (ICH)</strong>: 
+                <ul>
+                  <li>Driven by rapid hematoma expansion causing acute focal shifts.</li>
+                  <li>Midline shift of the **septum pellucidum** is the strongest predictor of NPi asymmetry (&beta; = 0.11, p=0.01).</li>
+                  <li>Basal ganglia hemorrhages produce contralateral hemiplegia and gaze preference; thalamic hemorrhages lead to miotic pupils and down-gaze.</li>
+                </ul>
+              </li>
+              <li><strong>Severe Ischemic Stroke</strong>:
+                <ul>
+                  <li>Driven by slower, progressive cytotoxic edema peaking at 24–72 hours.</li>
+                  <li>Midline shift of the **pineal gland** drives pupillary asymmetry (&beta; = 0.16, p=0.07), reflecting progressive transtentorial tissue displacement.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <div class="print-box">
+            <h3>⚠️ Key Confounders & Limitations</h3>
+            <ul class="print-list">
+              <li><strong>Sedative Medications</strong>: Opioids, benzodiazepines, and propofol reduce pupil size and constriction velocity. However, **NPi remains highly robust** compared to raw parameters (CV, latency) under typical clinical sedation levels.</li>
+              <li><strong>Local Eye Pathology</strong>: Prior ophthalmic surgery, severe glaucoma, cataracts, or direct ocular trauma can result in fixed/sluggish pupils. Review medical history thoroughly.</li>
+            </ul>
+          </div>
+
+          <div class="print-box full-width">
+            <h3>📈 Key Evidence Base Overview</h3>
+            <table class="print-table compact">
+              <thead>
+                <tr>
+                  <th>Study Name / Author</th>
+                  <th>Study Cohort & Size</th>
+                  <th>Key Finding & Outcome Correlation</th>
+                  <th>Clinical Takeaway</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ORANGE Study (Lancet Neurol, 2023)</strong></td>
+                  <td>514 ABI patients (151 with ICH) across 8 countries</td>
+                  <td>Abnormal NPi independently associated with poor 6-month neurological outcomes (GOSE &le; 4) and in-hospital mortality (HR 5.58, 95% CI 3.92-7.95).</td>
+                  <td>First large-scale validation establishing NPi &lt; 3.0 as a robust prognostic marker. Worsening NPi trend predicts death.</td>
+                </tr>
+                <tr>
+                  <td><strong>Giede-Jeppe et al. (Neurocrit Care, 2021)</strong></td>
+                  <td>23 ICH patients with simultaneous EVD ICP monitoring</td>
+                  <td>Constriction velocity &lt; 0.8 mm/s and % change &lt; 10% identify ICP &ge; 20 mmHg. Negative Predictive Value (NPV) &gt; 97% for all parameters.</td>
+                  <td>Normal pupillometry can reliably exclude intracranial hypertension crises, reducing unnecessary repeat imaging/invasive monitoring.</td>
+                </tr>
+                <tr>
+                  <td><strong>Park et al. (PLoS One, 2025)</strong></td>
+                  <td>59 malignant anterior circulation stroke patients</td>
+                  <td>Ipsilateral NPi dropped from 4.26 (at 24h) to 1.80 (at 0-3h) before transtentorial herniation. Constricted pupil size increased.</td>
+                  <td>Provides up to a 24-hour warning window preceding clinical herniation.</td>
+                </tr>
+                <tr>
+                  <td><strong>Kim et al. (Neurocrit Care, 2020)</strong></td>
+                  <td>30 large hemispheric stroke patients</td>
+                  <td>Deteriorating patients had significantly lower mean NPi (3.88 vs 4.45, p&lt;0.001) and sudden drops. All patients with NPi &lt; 2.8 deteriorated.</td>
+                  <td>NPi &lt; 2.8 is a highly specific trigger for malignant cerebral edema intervention.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box full-width print-footer-references">
+            <p><strong>References:</strong> [1] Oddo et al. Lancet Neurol 2023. [2] Petrosino et al. JAMA Neurol 2025. [3] Giede-Jeppe et al. Neurocrit Care 2021. [4] Park et al. PLoS One 2025. [5] Kim et al. Neurocrit Care 2020. [6] Kim et al. Front Neurol 2022.</p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

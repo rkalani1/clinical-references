@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal for clinical decision support tools and pocket references for acute neurology, vascular stroke, and neurocritical care.">
+  <title>Clinical References & Bedside Guides</title>
+  
+  <!-- Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Color Palette: Sleek Medical Dark Slate */
+      --bg: #070d19;
+      --surface: #0e1726;
+      --surface-hover: #131f33;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(0, 242, 254, 0.3);
+      
+      /* Accent colors */
+      --accent-cyan: #00f2fe;
+      --accent-blue: #4facfe;
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --accent-glow: rgba(0, 242, 254, 0.15);
+      
+      /* Category Colors */
+      --color-icu: #a855f7;
+      --bg-icu: rgba(168, 85, 247, 0.15);
+      --color-stroke: #f43f5e;
+      --bg-stroke: rgba(244, 63, 94, 0.15);
+      
+      /* Typography Colors */
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --radius-card: 16px;
+      --radius-tag: 6px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.05) 0%, transparent 40%);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1rem;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Header Styling */
+    header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent-cyan);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-badge svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+    }
+
+    h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* Card Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Card Design */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.3);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-hover);
+      background: var(--surface-hover);
+      box-shadow: 0 20px 40px -20px rgba(0, 242, 254, 0.15), 0 1px 0 var(--border-hover);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* Card Contents */
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .category-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-tag);
+    }
+
+    .category-tag.icu {
+      color: var(--color-icu);
+      background: var(--bg-icu);
+    }
+
+    .category-tag.stroke {
+      color: var(--color-stroke);
+      background: var(--bg-stroke);
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-cyan);
+      transition: var(--transition);
+    }
+
+    .card:hover .card-icon {
+      background: var(--accent-gradient);
+      color: var(--bg);
+      border-color: transparent;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .card-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .card h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .features-list li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .features-list li::before {
+      content: "•";
+      color: var(--accent-cyan);
+      font-weight: bold;
+    }
+
+    .card-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: #ffffff;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .card:hover .card-action {
+      background: var(--accent-gradient);
+      color: var(--bg);
+      border-color: transparent;
+      box-shadow: 0 10px 20px -10px var(--accent-glow);
+    }
+
+    .card-action svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      transition: transform 0.2s ease;
+    }
+
+    .card-action:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+      header {
+        margin-bottom: 2.5rem;
+      }
+      .grid {
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .card {
+        padding: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo-badge">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        Clinical Decision Support
+      </div>
+      <h1>Clinical References</h1>
+      <p class="subtitle">Bedside decision support guides and interactive tools for acute stroke services, vascular neurology, and neurocritical care.</p>
+    </header>
+
+    <main class="grid">
+      
+      <!-- Card 1: Bedside Pupillometry -->
+      <div class="card" onclick="window.location.href='./pupillometry/index.html'">
+        <div class="card-meta">
+          <span class="category-tag icu">Neuro ICU</span>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+        </div>
+        <h2>Bedside Pupillometry Guide</h2>
+        <p>Interactive pupillometry calculator, pupillary size estimation helper, Neurological Pupil Index (NPi) evaluator, and clinical response protocols.</p>
+        <ul class="features-list">
+          <li>Dynamic pupil sizes visualizer</li>
+          <li>NPi interpretation matrix</li>
+          <li>Automated action guidelines</li>
+        </ul>
+        <a href="./pupillometry/index.html" class="card-action">
+          Open Guide
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Card 2: EVD & ICP Management -->
+      <div class="card" onclick="window.location.href='./evd-icp/index.html'">
+        <div class="card-meta">
+          <span class="category-tag icu">Neuro ICU</span>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+            </svg>
+          </div>
+        </div>
+        <h2>EVD & ICP Bedside Guide</h2>
+        <p>External Ventricular Drain (EVD) leveling protocols, intracranial pressure (ICP) stepwise management algorithms, and clinical waveforms checklist.</p>
+        <ul class="features-list">
+          <li>Stepwise ICP control guide</li>
+          <li>Interactive waveform helper</li>
+          <li>Troubleshooting guidelines</li>
+        </ul>
+        <a href="./evd-icp/index.html" class="card-action">
+          Open Guide
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Card 3: Stroke Pocket Cards -->
+      <div class="card" onclick="window.location.href='./stroke-pocket-cards/index.html'">
+        <div class="card-meta">
+          <span class="category-tag stroke">Stroke Services</span>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+        </div>
+        <h2>UW Stroke Pocket Cards</h2>
+        <p>Combined clinical reference set. Includes NIHSS examiner scoring tools, ASPECTS scoring templates, IVT/EVT eligibility flowcharts, and DOAC reversal instructions.</p>
+        <ul class="features-list">
+          <li>NIHSS & ASPECTS references</li>
+          <li>IVT & EVT treatment protocols</li>
+          <li>DOAC reversal charts</li>
+        </ul>
+        <a href="./stroke-pocket-cards/index.html" class="card-action">
+          Open Cards
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+
+    </main>
+
+    <footer>
+      <p>Created by <a href="https://github.com/rkalani1" target="_blank" rel="noopener noreferrer">rkalani1</a></p>
+      <p>For educational & clinical decision support. Verify local institutional protocols prior to clinical application.</p>
+    </footer>
+  </div>
+
+</body>
+</html>
