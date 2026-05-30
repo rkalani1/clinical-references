@@ -416,6 +416,7 @@
     </a>
     <div class="portal-nav-links">
       <a href="#card-figure_15_ct_perfusion">Perfusion Chart</a>
+      <a href="#card-ctp_interpretation">CTP Interpretation</a>
       <a href="#card-figure_15b_evt_eligibility">EVT Flowchart</a>
       <a href="#card-figure_14_lvo_contrast_allergy">Contrast Allergy</a>
       <a href="#card-figure_19_bp_ischemic">BP Guidelines</a>
@@ -423,11 +424,117 @@
   </nav>
 
   <div class="cards-wrapper-outer">
+    
+    <!-- Perfusion Image Card -->
     <div id="card-figure_15_ct_perfusion" class="card-wrapper card-figure_15_ct_perfusion">
-<div class="card-container">
-<img alt="CT Perfusion Reference Chart" class="ct-perf-image" src="../assets/ct_perfusion_chart.png"/>
-</div>
-</div>
+      <div class="card-container">
+        <img alt="CT Perfusion Reference Chart" class="ct-perf-image" src="../assets/ct_perfusion_chart.png"/>
+      </div>
+    </div>
+
+    <!-- [NEW] CTP & Collaterals Interpretation Guide Card -->
+    <div id="card-ctp_interpretation" class="card-wrapper" style="background: white;">
+      <div class="card-container" style="padding: 25px 30px !important;">
+        <div class="card-header">
+          <span class="title-logo">Clinical References</span>
+          <span class="doc-id">CTP-EVAL-v1.0</span>
+        </div>
+
+        <div class="card-content">
+          <h1>CT Perfusion &amp; Collaterals Guide</h1>
+          <p style="font-size: 9.8pt; color: var(--ink-soft); margin-bottom: 10px; text-align: center;">
+            Interpretation rules for automated perfusion maps (RAPID) and collateral flow assessments.
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px;">
+            <div class="prognosis-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px;">
+              
+              <!-- Perfusion Maps -->
+              <div class="contact-section" style="padding: 10px 12px;">
+                <h3 style="color: var(--teal-deep); border-bottom-color: var(--teal-soft); margin-bottom: 6px; font-size: 11.5pt;">Perfusion Maps Definition</h3>
+                <ul style="padding-left: 14px; font-size: 8.8pt; line-height: 1.4; color: var(--ink-soft); margin: 0;">
+                  <li>• <strong>Tmax &gt;6.0 seconds:</strong> Defines critically hypoperfused tissue (penumbra + core). The primary metric for mismatch volume.</li>
+                  <li>• <strong>rCBF &lt;30% (Relative Cerebral Blood Flow):</strong> Used in RAPID to define the irreversibly damaged <strong>ischemic core</strong>.</li>
+                  <li>• <strong>CBV (Cerebral Blood Volume):</strong> Reflects blood volume. Very low CBV indicates severe infarct core; maintained CBV suggests collateral compensation.</li>
+                  <li>• <strong>MTT (Mean Transit Time):</strong> CBV/CBF ratio. High sensitivity for delays, but low specificity for infarct core.</li>
+                </ul>
+              </div>
+
+              <!-- Trial Criteria -->
+              <div class="contact-section" style="padding: 10px 12px;">
+                <h3 style="color: var(--purple-deep); border-bottom-color: var(--purple-soft); margin-bottom: 6px; font-size: 11.5pt;">Extended Window Selection (6-24h)</h3>
+                <div style="display: flex; gap: 10px; font-size: 8.5pt;">
+                  <div style="flex: 1; background: var(--purple-soft); padding: 6px; border-radius: 6px; border: 1px solid rgba(91,59,156,0.15);">
+                    <strong style="color: var(--purple-deep); display: block; margin-bottom: 2px;">DEFUSE 3 (6-16h)</strong>
+                    • Core volume: &lt;70 mL<br>
+                    • Mismatch volume: ≥15 mL<br>
+                    • Mismatch ratio: ≥1.8<br>
+                    • Tmax &gt;6s: 15-180 mL
+                  </div>
+                  <div style="flex: 1; background: var(--teal-soft); padding: 6px; border-radius: 6px; border: 1px solid rgba(24,132,158,0.15);">
+                    <strong style="color: var(--teal-deep); display: block; margin-bottom: 2px;">DAWN (6-24h)</strong>
+                    • Age ≥80: core &lt;21 mL + NIHSS ≥10<br>
+                    • Age &lt;80: core &lt;31 mL + NIHSS ≥10<br>
+                    • Age &lt;80: core 31-51 mL + NIHSS ≥20
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- CTP Pitfalls and Artifacts -->
+          <div class="contact-section" style="margin-bottom: 12px; padding: 10px 12px; border-top: 3px solid var(--amber);">
+            <h3 style="color: var(--amber-deep); margin-top: 0; font-size: 11.5pt; border-bottom: 1px solid rgba(217,134,11,0.15); padding-bottom: 4px; margin-bottom: 6px;">
+              Clinical CTP Pitfalls &amp; Artifacts
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 8px; font-size: 8.8pt; line-height: 1.35; color: var(--ink-soft);">
+              <div>• <strong>Crossed Cerebellar Diaschisis:</strong> Hypoperfusion of contralateral cerebellum from a large cerebral infarct mimic. Not an acute cerebellar core.</div>
+              <div>• <strong>Chronic Severe Carotid Stenosis:</strong> Baseline delay in Tmax &gt;6s without acute stroke. Correlate with clinical timing and MRI DWI.</div>
+              <div>• <strong>Low Cardiac Output / Severe Stenosis:</strong> Bilateral global Tmax delays. All values elevated without matching a single vessel territory.</div>
+              <div>• <strong>Hyperacute Core Overestimation:</strong> In the first 60-90 minutes, RAPID can overestimate core size due to transient severe hypoperfusion. If high clinical mismatch is present, proceed with EVT.</div>
+            </div>
+          </div>
+
+          <!-- Collaterals -->
+          <div class="contact-section" style="padding: 10px 12px; border-top: 3px solid var(--teal);">
+            <h3 style="color: var(--teal-deep); margin-top: 0; font-size: 11.5pt; border-bottom: 1px solid rgba(24,132,158,0.15); padding-bottom: 4px; margin-bottom: 6px;">
+              Collateral Assessment Flow Grading
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 8.8pt; line-height: 1.4; color: var(--ink-soft);">
+              <div>
+                <strong>ASITN/SIR Grading System (0-4):</strong>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px;">
+                  <span class="pill" style="font-size: 7.8pt;">Grade 0: None</span>
+                  <span class="pill" style="font-size: 7.8pt;">Grade 1: Slow to &lt;50%</span>
+                  <span class="pill" style="font-size: 7.8pt;">Grade 2: Slow to 100%</span>
+                  <span class="pill teal" style="font-size: 7.8pt;">Grade 3: Rapid to &lt;100%</span>
+                  <span class="pill teal" style="font-size: 7.8pt;">Grade 4: Complete &amp; Rapid</span>
+                </div>
+                <span style="font-size: 8.2pt; color: var(--ink-mute); display: block; margin-top: 4px;">Grade 3-4 = Favorable collaterals; predicts slower core growth and better EVT outcomes.</span>
+              </div>
+              <div style="border-t: 1px solid var(--rule-soft); padding-top: 6px;">
+                <strong>Tan Score (Multiphase CTA, 0-3):</strong>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px;">
+                  <span class="pill" style="font-size: 7.8pt;">Score 0: No filling</span>
+                  <span class="pill" style="font-size: 7.8pt;">Score 1: Some filling</span>
+                  <span class="pill teal" style="font-size: 7.8pt;">Score 2: Delayed late filling</span>
+                  <span class="pill teal" style="font-size: 7.8pt;">Score 3: Normal pial filling</span>
+                </div>
+                <span style="font-size: 8.2pt; color: var(--ink-mute); display: block; margin-top: 4px;">Used in ESCAPE trial. Score 2-3 indicates robust pial arterial collaterals.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card-footer">
+          <span class="disclaimer-text">DEFUSE 3 &amp; DAWN criteria summaries. For clinical decision support only.</span>
+          <span class="page-num">Page 2 of 5</span>
+        </div>
+      </div>
+    </div>
+
 
 <div id="card-figure_15b_evt_eligibility" class="card-wrapper card-figure_15b_evt_eligibility landscape-card">
 <div class="card-container">

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imaging & CVT Monitoring Protocols</title>
+  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  
+  <!-- Navigation Header Styles -->
+  <style>
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .portal-nav a:hover {
+      color: #14b8a6;
+    }
+    .portal-nav-links {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .portal-nav-links a {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .portal-nav-links a:hover {
+      background: rgba(20, 184, 166, 0.08);
+      border-color: rgba(20, 184, 166, 0.3);
+    }
+    .cards-wrapper-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+      background: #f3f1f6;
+      min-height: calc(100vh - 50px);
+    }
+
+    /* Diagnostics Grid */
+    .diagnostics-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    @media (min-width: 768px) {
+      .diagnostics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .diagnostic-section {
+      background: var(--paper);
+      border: 1px solid var(--rule-soft);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .diagnostic-section h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12.5pt;
+      margin-top: 0;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--rule-soft);
+      margin-bottom: 10px;
+    }
+
+    .diag-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .diag-timeline-item {
+      font-size: 9.2pt;
+      line-height: 1.35;
+      padding-left: 10px;
+      border-left: 3px solid var(--teal);
+    }
+    .diag-timeline-item.accent-red {
+      border-left-color: var(--red);
+    }
+    .diag-timeline-item.accent-purple {
+      border-left-color: var(--purple);
+    }
+    .diag-timeline-item.accent-amber {
+      border-left-color: var(--amber);
+    }
+
+    .diag-timeline-item strong {
+      display: block;
+      color: var(--ink);
+      font-size: 9.5pt;
+      margin-bottom: 2px;
+    }
+
+    @media (max-width: 850px) {
+      .cards-wrapper-outer {
+        padding: 0;
+        gap: 0;
+        background: #ffffff;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation header linked back to the index portal -->
+  <div class="portal-nav">
+    <a href="../index.html">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
+      Back to Dashboard
+    </a>
+    <div class="portal-nav-links">
+      <a href="#imaging">Imaging Protocols</a>
+      <a href="#cvt-monitoring">CVT Monitoring</a>
+    </div>
+  </div>
+
+  <div class="cards-wrapper-outer">
+    
+    <!-- Page 1: Imaging Follow-Up Protocols -->
+    <div class="card-container" id="imaging">
+      <div class="card-header">
+        <span class="title-logo">Clinical References</span>
+        <span class="doc-id">DIAG-IMAGING-v1.0</span>
+      </div>
+      
+      <div class="card-content">
+        <h1>Imaging Follow-Up Protocols</h1>
+        <p style="font-size: 10pt; color: var(--ink-soft); margin-bottom: 10px; text-align: center;">Standardized follow-up imaging schedule to prevent missed scans and diagnostics.</p>
+
+        <div class="diagnostics-grid">
+          
+          <!-- AIS Post-TNK -->
+          <div class="diagnostic-section" style="border-top: 4px solid var(--purple);">
+            <h3 style="color: var(--purple-deep);">Acute Ischemic Stroke (Post-TNK)</h3>
+            <div class="diag-timeline">
+              <div class="diag-timeline-item accent-purple">
+                <strong>24 Hours Post-TNK:</strong>
+                Non-contrast Head CT (NCHCT) is required to screen for asymptomatic hemorrhagic transformation prior to initiating antiplatelets/anticoagulants.
+              </div>
+              <div class="diag-timeline-item accent-purple">
+                <strong>24-48 Hours:</strong>
+                Brain MRI DWI/FLAIR (if not obtained on admission) to confirm infarct territory, count/size, and rule out silent ischemic lesions.
+              </div>
+              <div class="diag-timeline-item accent-purple">
+                <strong>Discharge Planning:</strong>
+                Ensure vascular imaging (CTA head/neck or MRA head/neck) is complete. If not, schedule outpatient vascular imaging within 1 week.
+              </div>
+              <div class="diag-timeline-item accent-purple">
+                <strong>Outpatient (3-6 Months):</strong>
+                If significant carotid/vertebral stenosis is managed medically, repeat MRA or CTA to evaluate for plaque progression/restenosis.
+              </div>
+            </div>
+          </div>
+
+          <!-- AIS Post-EVT -->
+          <div class="diagnostic-section" style="border-top: 4px solid var(--teal);">
+            <h3 style="color: var(--teal-deep);">Acute Ischemic Stroke (Post-EVT)</h3>
+            <div class="diag-timeline">
+              <div class="diag-timeline-item">
+                <strong>Immediate Post-Procedure:</strong>
+                Flat-panel CT in angiography suite to assess for immediate contrast extravasation vs. hyperacute intracranial bleeding.
+              </div>
+              <div class="diag-timeline-item">
+                <strong>24 Hours Post-Procedure:</strong>
+                NCHCT +/- CTA head to confirm successful vessel recanalization, check device/stent patency, and rule out delayed hemorrhage.
+              </div>
+              <div class="diag-timeline-item">
+                <strong>48-72 Hours:</strong>
+                Brain MRI DWI to evaluate final infarct volume and core necrosis size for long-term prognosis.
+              </div>
+              <div class="diag-timeline-item">
+                <strong>Outpatient (3-6 Months):</strong>
+                If an intracranial stent was placed (e.g. carotid or MCA stenting), schedule CTA or MRA to monitor for in-stent stenosis.
+              </div>
+            </div>
+          </div>
+
+          <!-- Spontaneous ICH -->
+          <div class="diagnostic-section" style="border-top: 4px solid var(--red);">
+            <h3 style="color: var(--red-deep);">Intracerebral Hemorrhage (ICH)</h3>
+            <div class="diag-timeline">
+              <div class="diag-timeline-item accent-red">
+                <strong>6 Hours Post-Onset:</strong>
+                NCHCT head to monitor for hematoma expansion. Expansion of ≥33% or ≥6 mL is clinically significant and predicts poor outcome.
+              </div>
+              <div class="diag-timeline-item accent-red">
+                <strong>24 Hours Post-Onset:</strong>
+                Repeat NCHCT if clinically stable. Order CTA if spot sign or secondary vascular etiology (AVM, aneurysm) is suspected.
+              </div>
+              <div class="diag-timeline-item accent-red">
+                <strong>Subacute (Hospitalization):</strong>
+                For lobar, young, or non-hypertensive patients, obtain Brain MRI (GRE/SWI) + contrast to screen for cerebral amyloid angiopathy (CAA), cavernoma, or tumor.
+              </div>
+              <div class="diag-timeline-item accent-red">
+                <strong>Outpatient (3 Months):</strong>
+                Repeat Brain MRI or NCHCT to confirm complete hematoma resorption and check for new microbleeds (GRE/SWI).
+              </div>
+            </div>
+          </div>
+
+          <!-- Aneurysmal SAH -->
+          <div class="diagnostic-section" style="border-top: 4px solid var(--amber);">
+            <h3 style="color: var(--amber-deep);">Subarachnoid Hemorrhage (SAH)</h3>
+            <div class="diag-timeline">
+              <div class="diag-timeline-item accent-amber">
+                <strong>Day 0 (Admission):</strong>
+                CTA head/neck to identify ruptured aneurysm. If negative, perform conventional Digital Subtraction Angiography (DSA).
+              </div>
+              <div class="diag-timeline-item accent-amber">
+                <strong>Days 3-14 (Daily):</strong>
+                Transcranial Doppler (TCD) measurements daily to screen for vasospasm (peak vasospasm risk occurs on Days 7-10).
+              </div>
+              <div class="diag-timeline-item accent-amber">
+                <strong>Days 7-10:</strong>
+                Repeat DSA or CTA head to rule out delayed vasospasm or check coiling/clipping occlusion integrity.
+              </div>
+              <div class="diag-timeline-item accent-amber">
+                <strong>Outpatient (3-6 Months):</strong>
+                Repeat MRA head or CTA head to screen for aneurysm recurrence, neck remnant, or de novo aneurysms.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card-callout red" style="margin-top: 5px; margin-bottom: 0;">
+          <div class="tag" style="color: var(--red-deep);">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" style="margin-right: 2px;"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            Neurological Decline Rule
+          </div>
+          <strong>Any acute change in neurologic examination requires a STAT non-contrast head CT (NCHCT).</strong>
+          <div style="font-size: 8.8pt; margin-top: 2px; color: var(--ink-soft);">
+            If post-TNK, immediately suspend all antithrombotics and prepare lytic reversal protocols. If post-EVT, evaluate for re-occlusion (STAT CTA/MRA) in addition to hemorrhage screening.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <span class="disclaimer-text">Standard imaging timelines. Individualize scan schedules based on clinical status.</span>
+        <span class="page-num">Page 1 of 2</span>
+      </div>
+    </div>
+
+    <!-- Page 2: CVT Monitoring Parameters -->
+    <div class="card-container" id="cvt-monitoring">
+      <div class="card-header">
+        <span class="title-logo">Clinical References</span>
+        <span class="doc-id">CVT-MONITOR-v1.0</span>
+      </div>
+
+      <div class="card-content">
+        <h1>Cerebral Venous Thrombosis</h1>
+        <p style="font-size: 10pt; color: var(--ink-soft); margin-bottom: 10px; text-align: center;">
+          Inpatient monitoring and long-term outpatient follow-up checklists for CVT.
+        </p>
+
+        <div class="diagnostics-grid">
+          
+          <!-- Imaging Follow-Up -->
+          <div class="contact-section">
+            <h3 style="color: var(--teal-deep); border-bottom-color: var(--teal-soft); font-size: 11.5pt;">1. Imaging Follow-Up</h3>
+            <ul style="padding-left: 14px; font-size: 9pt; line-height: 1.4; color: var(--ink-soft); margin: 5px 0;">
+              <li>• <strong>Schedule:</strong> Repeat MRI/MRV or CTV at 3 to 6 months post-diagnosis to assess for venous recanalization.</li>
+              <li>• <strong>Acute Worsening:</strong> Repeat venous imaging immediately if there is new severe headache, seizures, or focal deficits.</li>
+              <li>• <strong>Contraindications:</strong> If MRI is contraindicated (e.g. pacemakers), CTV is an acceptable alternative for recanalization follow-up.</li>
+              <li>• <strong>D-dimer:</strong> Serial D-dimer is not recommended for guiding treatment duration, but can support baseline diagnostics.</li>
+            </ul>
+          </div>
+
+          <!-- ICP Monitoring -->
+          <div class="contact-section">
+            <h3 style="color: var(--purple-deep); border-bottom-color: var(--purple-soft); font-size: 11.5pt;">2. ICP Monitoring</h3>
+            <ul style="padding-left: 14px; font-size: 9pt; line-height: 1.4; color: var(--ink-soft); margin: 5px 0;">
+              <li>• <strong>Visual Screens:</strong> Fundoscopy must be performed at baseline and follow-up to monitor for papilledema.</li>
+              <li>• <strong>Acuity Testing:</strong> Formally assess visual acuity and visual fields at baseline to detect impending optic nerve compromise.</li>
+              <li>• <strong>Lumbar Puncture:</strong> LP opening pressure check is indicated if pseudotumor-like presentation is suspected (OP &gt;25 cmH₂O).</li>
+              <li>• <strong>Acetazolamide:</strong> Start 250-500 mg PO BID to lower CSF production if papilledema or progressive visual loss is documented.</li>
+            </ul>
+          </div>
+
+          <!-- Thrombophilia Workup -->
+          <div class="contact-section">
+            <h3 style="color: var(--amber-deep); border-bottom-color: var(--amber-soft); font-size: 11.5pt;">3. Thrombophilia Workup</h3>
+            <ul style="padding-left: 14px; font-size: 9pt; line-height: 1.4; color: var(--ink-soft); margin: 5px 0;">
+              <li>• <strong>Inherited Panel:</strong> Factor V Leiden, Prothrombin G20210A mutation, Protein C, Protein S, and Antithrombin III activities.</li>
+              <li>• <strong>Acquired Panel:</strong> Antiphospholipid antibodies (Lupus anticoagulant, anticardiolipin IgG/IgM, anti-β2-glycoprotein 1 IgG/IgM).</li>
+              <li>• <strong>Myeloproliferative:</strong> Check JAK2 V617F mutation if polycythemia or thrombocytosis is present without clear cause.</li>
+              <li>• <strong>Critical Timing Warning:</strong> Defer Protein C, Protein S, and Antithrombin testing during acute heparin/warfarin therapy. Re-test 2-4 weeks after stopping anticoagulants to avoid false positives.</li>
+            </ul>
+          </div>
+
+          <!-- Seizure Management -->
+          <div class="contact-section">
+            <h3 style="color: var(--red-deep); border-bottom-color: var(--red-soft); font-size: 11.5pt;">4. Seizure Management</h3>
+            <ul style="padding-left: 14px; font-size: 9pt; line-height: 1.4; color: var(--ink-soft); margin: 5px 0;">
+              <li>• <strong>No Prophylaxis:</strong> Routine prophylactic anti-seizure medications are not recommended by AHA/ASA.</li>
+              <li>• <strong>Acute Treatment:</strong> Treat acute symptomatic seizures immediately (e.g. Levetiracetam 500-1000 mg IV).</li>
+              <li>• <strong>Therapy Duration:</strong> Continue anti-seizure medication for 3 to 6 months in patients with a single acute symptomatic seizure.</li>
+              <li>• <strong>EEG Monitoring:</strong> Obtain continuous or routine EEG if the patient has persistent altered mental status to rule out subclinical status.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="card-callout teal" style="margin-top: 5px; margin-bottom: 0;">
+          <div class="tag" style="color: var(--teal-deep);">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" style="margin-right: 2px;"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            Anticoagulation Rule in Hemorrhagic CVT
+          </div>
+          <strong>Anticoagulation is indicated for acute CVT even in the presence of pre-existing hemorrhagic venous infarction.</strong>
+          <div style="font-size: 8.8pt; margin-top: 2px; color: var(--ink-soft);">
+            The hemorrhage is driven by venous hypertension from outflow obstruction. Halting heparin allows thrombus progression and worsens bleeding. Maintain standard therapeutic Heparin infusion or LMWH.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <span class="disclaimer-text">AHA/ASA CVT Guidelines. Stroke. 2024. individualize clinical workup parameters.</span>
+        <span class="page-num">Page 2 of 2</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
