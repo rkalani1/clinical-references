@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lipids &amp; Diabetes Control in Stroke</title>
+  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <style>
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .portal-nav a:hover {
+      color: #38bdf8;
+    }
+    .cards-wrapper-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+      background: #f3f1f6;
+      min-height: calc(100vh - 50px);
+    }
+    @media (max-width: 850px) {
+      .portal-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cards-wrapper-outer {
+        padding: 0;
+        gap: 0;
+        background: #ffffff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="portal-nav">
+    <a href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Portal Dashboard
+    </a>
+  </nav>
+
+  <div class="cards-wrapper-outer">
+    <div class="card-wrapper landscape-card">
+      <div class="card-container" style="box-sizing: border-box; width: 825px; min-height: 1050px; padding: 25px 40px;">
+        <div class="card-content" style="justify-content: flex-start; gap: 10px;">
+          
+          <div class="card-header" style="display: flex;">
+            <div class="title-logo">UW Medicine</div>
+            <div class="doc-id">DOC.REF.LIPID.DIABETES</div>
+          </div>
+
+          <h1 style="font-size: 16.5pt; margin-bottom: 4px; padding-bottom: 2px; text-align: center;">Lipids &amp; Diabetes Control in Stroke</h1>
+          <p style="font-size: 9.2pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
+            Atherosclerotic risk factor targets, metabolic biomarkers, and acute glycemic control evidence.
+          </p>
+
+          <!-- Lipid-Stroke Duality -->
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Lipid Management &amp; Statin Targets</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="border: 1px solid var(--purple-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
+              <strong style="color: var(--purple-deep); font-size: 9.2pt; display: block; margin-bottom: 6px;">Lipid-Stroke Duality &amp; Targets</strong>
+              • **Ischemic Stroke**: Strong positive association between elevated total cholesterol / LDL-C and large artery atherosclerosis and small vessel disease.
+              <br>• **Hemorrhagic Stroke**: **Inverse association**. Extremely low total cholesterol &amp; LDL-C values are associated with an increased risk of intracerebral hemorrhage (ICH) and lobar hemorrhage.
+              <br>• **Treatment Target**: LDL-C &lt;70 mg/dL using high-intensity statins (Atorvastatin 80mg) &plusmn; Ezetimibe &plusmn; PCSK9i.
+              <br>• **SPARCL Trial (2006)**: Secondary prevention stroke patients. Atorvastatin 80mg reduced recurrent stroke rate by 16% (HR 0.84, p=0.03).
+            </div>
+            <div style="border: 1px solid var(--teal-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
+              <strong style="color: var(--teal-deep); font-size: 9.2pt; display: block; margin-bottom: 6px;">Emerging Lipid Biomarkers</strong>
+              • **Apolipoprotein B (ApoB)**: Measures total number of atherogenic particles (LDL, VLDL, IDL). Better predictor of cardiovascular events than LDL-C in statin-treated cohorts.
+              <br>• **Apolipoprotein A1 (ApoA1)**: Primary structural protein of HDL. Reflects reverse cholesterol transport.
+              <br>• **Lipoprotein (a) [Lp(a)]**: Genetically determined particle. Highly atherogenic and prothrombotic.
+              <br>• **Lp-PLA2**: Biomarker of vascular inflammation within the atherosclerotic plaque itself.
+            </div>
+          </div>
+
+          <!-- Diabetes and Hyperglycemia -->
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Diabetes Mellitus &amp; Acute Hyperglycemia</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="border: 1px solid var(--amber-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
+              <strong style="color: var(--amber-deep); font-size: 9.2pt; display: block; margin-bottom: 4px;">Metabolic Targets &amp; Screening</strong>
+              • **Stroke Risk**: Diabetes increases ischemic stroke risk 2-fold (higher in women, longer duration). 
+              <br>• **Prediabetes**: Impaired fasting glucose or HbA1c 5.7–6.4% increases risk.
+              <br>• **Insulin Resistance**: Insulin resistance (HOMA-IR &gt;3) increases risk even in non-diabetic patients.
+              <br>• **Long-term Target**: HbA1c &lt;7.0% for secondary stroke prevention (Class I, LOE A). Screen post-stroke patients with fasting plasma glucose or HbA1c.
+            </div>
+            <div style="border: 1px solid var(--red-soft); background: #fff5f5; padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
+              <strong style="color: var(--red-deep); font-size: 9.2pt; display: block; margin-bottom: 4px;">SHINE Trial (Acute Hyperglycemia)</strong>
+              • **Design**: RCT in acute stroke hyperglycemic patients. Intensive IV Insulin (target 80–130 mg/dL) vs. Standard subq sliding scale insulin (target 80–179 mg/dL) for 72 hours.
+              <br>• **Efficacy**: **No difference** in 90-day functional outcomes (mRS 0-2 shift).
+              <br>• **Harm**: Intensive group had **highly significantly higher severe hypoglycemia** (glucose &lt;40 mg/dL: 11.2% vs. 0%).
+              <br>• **Clinical Takeaway**: Use standard subq sliding scale (target &lt;180 mg/dL) in acute phase. Avoid intensive IV infusion.
+            </div>
+          </div>
+
+          <!-- Document References -->
+          <div style="font-size: 8.5pt; color: #64748b; margin-top: 15px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 8px; display: flex; justify-content: center; gap: 30px;">
+            <span>PDF: <a href="../documents/epidemiology/Diabetes and stroke.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">Diabetes and Stroke.pdf</a></span>
+            <span>PDF: <a href="../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">Lipids and Stroke.pdf</a></span>
+          </div>
+
+          <div class="card-footer" style="display: flex;">
+            <div class="disclaimer-text">For educational &amp; clinical decision support. Verify local institutional protocols prior to application.</div>
+            <div class="page-num">Page 1</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
