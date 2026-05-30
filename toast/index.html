@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOAST Stroke Classification</title>
+  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <style>
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .portal-nav a:hover {
+      color: #38bdf8;
+    }
+    .cards-wrapper-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+      background: #f3f1f6;
+      min-height: calc(100vh - 50px);
+    }
+    @media (max-width: 850px) {
+      .portal-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cards-wrapper-outer {
+        padding: 0;
+        gap: 0;
+        background: #ffffff;
+      }
+    }
+    @media print {
+      .portal-nav {
+        display: none !important;
+      }
+      .cards-wrapper-outer {
+        padding: 0 !important;
+        background: #ffffff !important;
+        gap: 0 !important;
+      }
+    }
+  </style>
+  <style>
+    /* Scoped TOAST Figure Styles */
+    .card-add_figure_01_toast .toast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .card-add_figure_01_toast .toast-card {
+      border: 1px solid var(--rule-soft);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: var(--fill-soft);
+    }
+    .card-add_figure_01_toast .toast-card.primary {
+      border-left: 4px solid var(--purple);
+      background: linear-gradient(135deg, var(--purple-soft) 0%, #ffffff 100%);
+    }
+    .card-add_figure_01_toast .toast-card.secondary {
+      border-left: 4px solid var(--teal);
+      background: linear-gradient(135deg, var(--teal-soft) 0%, #ffffff 100%);
+    }
+    .card-add_figure_01_toast .toast-card.alert-orange {
+      border-left: 4px solid var(--amber);
+      background: linear-gradient(135deg, var(--amber-soft) 0%, #ffffff 100%);
+    }
+    .card-add_figure_01_toast .toast-card.alert-red {
+      border-left: 4px solid var(--red);
+      background: linear-gradient(135deg, var(--red-soft) 0%, #ffffff 100%);
+    }
+    .card-add_figure_01_toast .toast-card.neutral {
+      border-left: 4px solid var(--slate);
+      background: linear-gradient(135deg, var(--slate-soft) 0%, #ffffff 100%);
+    }
+    .card-add_figure_01_toast .toast-card h3 {
+      margin: 0 0 6px 0;
+      font-family: "Outfit", sans-serif;
+      font-size: 11.5pt;
+      font-weight: 700;
+    }
+    .card-add_figure_01_toast .toast-card.primary h3 { color: var(--purple-deep); }
+    .card-add_figure_01_toast .toast-card.secondary h3 { color: var(--teal-deep); }
+    .card-add_figure_01_toast .toast-card.alert-orange h3 { color: var(--amber-deep); }
+    .card-add_figure_01_toast .toast-card.alert-red h3 { color: var(--red-deep); }
+    .card-add_figure_01_toast .toast-card.neutral h3 { color: var(--slate); }
+
+    .card-add_figure_01_toast .toast-card-list {
+      margin: 4px 0 0 0;
+      padding-left: 14px;
+      font-size: 9.2pt;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      list-style-type: disc;
+    }
+    .card-add_figure_01_toast .toast-card-list li {
+      margin-bottom: 4px;
+    }
+    .card-add_figure_01_toast .checklist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 12px;
+      margin-top: 4px;
+      color: var(--ink-soft);
+      line-height: 1.45;
+      font-size: 7.8pt;
+    }
+    .card-add_figure_01_toast .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-add_figure_01_toast .checklist-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 1.5px solid var(--purple);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--purple);
+      font-size: 9px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    @media (max-width: 850px) {
+      .card-add_figure_01_toast .toast-grid {
+        grid-template-columns: 1fr;
+      }
+      .card-add_figure_01_toast .checklist-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="portal-nav">
+    <a href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Portal Dashboard
+    </a>
+  </nav>
+
+  <div class="cards-wrapper-outer">
+    <div class="card-wrapper card-add_figure_01_toast">
+      <div class="card-container" style="box-sizing: border-box;">
+        <div class="card-content">
+          <h1 style="text-align: center; margin-bottom: 4px;">TOAST Stroke Classification</h1>
+          <p style="font-size: 8.8pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
+            Trial of Org 10172 in Acute Stroke Treatment (TOAST) diagnostic criteria for ischemic stroke etiology.
+          </p>
+          
+          <!-- Visual Etiology Tree SVG -->
+          <svg viewBox="0 0 735 120" style="width: 100%; height: 120px; margin-bottom: 8px;">
+            <rect x="0" y="0" width="735" height="120" rx="8" fill="var(--fill-soft)" stroke="var(--rule-soft)" stroke-width="1"/>
+            <rect x="267" y="10" width="200" height="30" rx="15" fill="var(--purple-deep)" />
+            <text x="367" y="25" fill="white" font-size="8.5pt" font-family="Outfit" font-weight="700" text-anchor="middle" dominant-baseline="central">ACUTE ISCHEMIC STROKE</text>
+            <path d="M 367 40 L 367 55 M 92 55 L 642 55 M 92 55 L 92 80 M 230 55 L 230 80 M 367 55 L 367 80 M 505 55 L 505 80 M 642 55 L 642 80" stroke="var(--purple)" stroke-width="2" fill="none" />
+            <polygon points="92,85 88,77 96,77" fill="var(--purple)" />
+            <polygon points="230,85 226,77 234,77" fill="var(--purple)" />
+            <polygon points="367,85 363,77 371,77" fill="var(--purple)" />
+            <polygon points="505,85 501,77 509,77" fill="var(--purple)" />
+            <polygon points="642,85 638,77 646,77" fill="var(--purple)" />
+            <rect x="32" y="85" width="120" height="25" rx="5" fill="var(--purple-soft)" stroke="var(--purple)" stroke-width="1"/>
+            <text x="92" y="101" fill="var(--purple-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Large Artery (LAA)</text>
+            <rect x="170" y="85" width="120" height="25" rx="5" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1"/>
+            <text x="230" y="101" fill="var(--teal-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Small Vessel (SVO)</text>
+            <rect x="307" y="85" width="120" height="25" rx="5" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1"/>
+            <text x="367" y="101" fill="var(--red-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Cardioembolic (CE)</text>
+            <rect x="445" y="85" width="120" height="25" rx="5" fill="var(--slate-soft)" stroke="var(--slate)" stroke-width="1"/>
+            <text x="505" y="101" fill="var(--slate)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Other Det. (ODE)</text>
+            <rect x="582" y="85" width="120" height="25" rx="5" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1"/>
+            <text x="642" y="101" fill="var(--amber-deep)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Undetermined Etiology</text>
+          </svg>
+
+          <div class="toast-grid">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="toast-card primary">
+                <h3>1. Large-Artery Atherosclerosis (LAA)</h3>
+                <ul class="toast-card-list">
+                  <li><strong>Clinical:</strong> Cortical signs (aphasia, neglect, gaze deviation) or brainstem/cerebellar syndrome.</li>
+                  <li><strong>Imaging:</strong> Cortical/subcortical infarct <strong>&gt; 1.5 cm</strong> on MRI or CT.</li>
+                  <li><strong>Vascular:</strong> <strong>&gt; 50% stenosis</strong> or occlusion of the relevant major extracranial (carotid, vertebral) or intracranial artery.</li>
+                  <li><strong>Exclusion:</strong> Must exclude a high-risk cardioembolic source.</li>
+                </ul>
+              </div>
+              
+              <div class="toast-card secondary">
+                <h3>2. Small-Vessel Occlusion (SVO / Lacune)</h3>
+                <ul class="toast-card-list">
+                  <li><strong>Clinical:</strong> Classic lacunar syndrome (pure motor, pure sensory, sensorimotor, ataxic hemiparesis, clumsy hand) <strong>WITHOUT</strong> cortical signs.</li>
+                  <li><strong>Imaging:</strong> Normal scan or deep subcortical lesion <strong>&le; 1.5 cm</strong>.</li>
+                  <li><strong>Vascular/Cardiac:</strong> Relevant artery must lack &gt;50% stenosis, and patient must lack high-risk cardioembolic sources.</li>
+                </ul>
+              </div>
+              
+              <div class="toast-card neutral">
+                <h3>4. Other Determined Etiology (ODE)</h3>
+                <ul class="toast-card-list">
+                  <li><strong>Clinical/Imaging:</strong> Infarction of any size with diagnostic proof of a rare/specific underlying mechanism:</li>
+                  <li>• Arterial dissection (e.g. carotid or vertebral dissection)</li>
+                  <li>• CNS vasculitis or systemic vasculopathy</li>
+                  <li>• RCVS (Reversible Cerebral Vasoconstriction Syndrome)</li>
+                  <li>• Moya-Moya disease, CADASIL, or Fibromuscular Dysplasia</li>
+                  <li>• Prothrombotic/hypercoagulable state (APLS, cancer, DIC)</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="toast-card alert-red" style="padding-bottom: 6px;">
+                <h3>3. Cardioembolism (CE)</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 8.2pt; line-height: 1.3; color: var(--ink-soft); margin-top: 2px;">
+                  <div>
+                    <strong style="color: var(--red-deep); font-size: 8.2pt; text-transform: uppercase; display: block; margin-bottom: 4px;">High-Risk Sources (AC)</strong>
+                    • Atrial Fibrillation / Flutter<br/>
+                    • Mechanical prosthetic valve<br/>
+                    • Left atrial / LAA thrombus<br/>
+                    • Recent anterior MI (&lt;3 mo)<br/>
+                    • Dilated cardiomyopathy (EF&lt;30%)<br/>
+                    • Infective endocarditis<br/>
+                    • Sick sinus syndrome / LA myxoma
+                  </div>
+                  <div>
+                    <strong style="color: var(--amber-deep); font-size: 8.2pt; text-transform: uppercase; display: block; margin-bottom: 4px;">Medium-Risk Sources</strong>
+                    • PFO + Atrial Septal Aneurysm<br/>
+                    • Mitral valve prolapse<br/>
+                    • Mitral annulus calcification<br/>
+                    • Bioprosthetic heart valve<br/>
+                    • Calcific aortic stenosis<br/>
+                    • LV dysfunction (EF 30–40%)<br/>
+                    • LA spontaneous echo contrast
+                  </div>
+                </div>
+              </div>
+              
+              <div class="toast-card alert-orange">
+                <h3>5. Undetermined Etiology</h3>
+                <ul class="toast-card-list">
+                  <li>• <strong>Due to competing risks:</strong> &ge; 2 potential etiologies found (e.g., active AFib AND &ge;50% ipsilateral carotid stenosis).</li>
+                  <li>• <strong>Negative evaluation:</strong> Complete diagnostic workup identifies no clear source (Cryptogenic stroke).</li>
+                  <li>• <strong>Incomplete evaluation:</strong> Workup is unfinished (e.g., patient discharged/AMA before Echo or vascular imaging).</li>
+                </ul>
+                <div style="margin-top: 4px; border-top: 1px dashed rgba(217,134,11,0.3); padding-top: 3px; font-size: 8.8pt; line-height: 1.45; color: var(--ink-soft);">
+                  <strong style="color: var(--amber-deep);">ESUS Criteria (Negative evaluation subset):</strong> non-lacunar stroke, no relevant &gt;50% stenosis, no high-risk cardioembolic source, negative ECG/telemetry &ge;24 hours.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Diagnostic Workup Checklist Box -->
+          <div style="border-left: 4px solid var(--purple); background: var(--purple-soft); padding: 12px 15px; border-radius: 6px; font-size: 9.5pt; margin-bottom: 20px;">
+            <strong style="color: var(--purple-deep); text-transform: uppercase; font-size: 9.2pt; letter-spacing: 0.05em; display: block; margin-bottom: 3px;">Required Diagnostic Workup to Complete TOAST Classification</strong>
+            <div class="checklist-grid">
+              <div class="checklist-item">
+                <div class="checklist-dot">✓</div>
+                <div><strong>Parenchymal:</strong> MRI Brain (DWI/ADC) preferred, or CT Head.</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-dot">✓</div>
+                <div><strong>Vascular:</strong> CTA or MRA Head & Neck (or Carotid Duplex + TCD).</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-dot">✓</div>
+                <div><strong>Rhythm:</strong> EKG + Continuous Telemetry &ge; 24h (or loop recorder).</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-dot">✓</div>
+                <div><strong>Cardiac:</strong> TTE required; consider TEE if cryptogenic / ESUS suspected.</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Footnote / citations -->
+          <div class="ref-citation" style="margin-top: 15px; padding: 10px 12px; font-size: 8.8pt;">
+            <strong>Original Study:</strong> Adams HP Jr, et al. TOAST. <em>Stroke</em>. 1993;24:35-41. <a href="https://pubmed.ncbi.nlm.nih.gov/7678184/" target="_blank">PMID: 7678184</a>.<br/>
+            <strong>AHA/ASA Guideline:</strong> Kleindorfer DO, et al. 2021 Stroke Prevention. <em>Stroke</em>. 2021;52:e364-e467. <a href="https://pubmed.ncbi.nlm.nih.gov/34024117/" target="_blank">PMID: 34024117</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

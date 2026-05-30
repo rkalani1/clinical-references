@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAPT for Non-Cardioembolic Ischemic Stroke</title>
+  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <style>
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .portal-nav a:hover {
+      color: #38bdf8;
+    }
+    .cards-wrapper-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+      background: #f3f1f6;
+      min-height: calc(100vh - 50px);
+    }
+    @media (max-width: 850px) {
+      .portal-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cards-wrapper-outer {
+        padding: 0;
+        gap: 0;
+        background: #ffffff;
+      }
+    }
+    @media print {
+      .portal-nav {
+        display: none !important;
+      }
+      .cards-wrapper-outer {
+        padding: 0 !important;
+        background: #ffffff !important;
+        gap: 0 !important;
+      }
+    }
+  </style>
+  <style>
+    /* Scoped DAPT Figure Styles */
+    .card-add_figure_03_dapt_regimens .dapt-pearls-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .card-add_figure_03_dapt_regimens .dapt-pearl-card {
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .card-add_figure_03_dapt_regimens .dapt-pearl-card.purple {
+      border: 1px solid var(--purple-soft);
+      border-left: 4px solid var(--purple);
+      background: linear-gradient(135deg, var(--purple-soft) 0%, #ffffff 100%);
+    }
+    .card-add_figure_03_dapt_regimens .dapt-pearl-card.red {
+      border: 1px solid var(--red-soft);
+      border-left: 4px solid var(--red);
+      background: linear-gradient(135deg, var(--red-soft) 0%, #ffffff 100%);
+    }
+    .card-add_figure_03_dapt_regimens table.card-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.8pt;
+      margin-bottom: 15px;
+    }
+    .card-add_figure_03_dapt_regimens table.card-table th, 
+    .card-add_figure_03_dapt_regimens table.card-table td {
+      border: 1px solid var(--rule-soft);
+      padding: 6px 8px;
+      vertical-align: top;
+    }
+    .card-add_figure_03_dapt_regimens table.card-table th {
+      background: #4B2E83;
+      color: white;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 8pt;
+      letter-spacing: 0.02em;
+    }
+    .card-add_figure_03_dapt_regimens table.card-table tr:nth-child(even) {
+      background: rgba(0,0,0,0.01);
+    }
+    
+    @media (max-width: 850px) {
+      .card-add_figure_03_dapt_regimens .dapt-pearls-grid {
+        grid-template-columns: 1fr;
+      }
+      .card-add_figure_03_dapt_regimens table.card-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="portal-nav">
+    <a href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Portal Dashboard
+    </a>
+  </nav>
+
+  <div class="cards-wrapper-outer">
+    <div class="card-wrapper card-add_figure_03_dapt_regimens landscape-card">
+      <div class="card-container" style="box-sizing: border-box;">
+        <div class="card-content">
+          <h1 style="text-align: center; margin-bottom: 4px;">DAPT for Non-Cardioembolic Ischemic Stroke</h1>
+          <p style="font-size: 8.8pt; color: var(--ink-soft); margin-bottom: 6px; text-align: center; font-weight: 500;">
+            Guideline-directed Dual Antiplatelet Therapy (DAPT) for secondary non-cardioembolic stroke prevention.
+          </p>
+
+          <!-- Bedside Decision Tree SVG -->
+          <svg viewBox="0 0 735 240" style="width: 100%; height: 210px; margin-bottom: 6px;">
+            <rect x="0" y="0" width="735" height="240" rx="8" fill="var(--fill-soft)" stroke="var(--rule-soft)" stroke-width="1"/>
+            <rect x="292" y="10" width="150" height="35" rx="6" fill="var(--purple-deep)" />
+            <text x="367" y="23" fill="white" font-size="8.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">ACUTE STROKE / TIA</text>
+            <text x="367" y="36" fill="rgba(255,255,255,0.8)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">Non-Cardioembolic Onset</text>
+            <path d="M 367 45 L 367 60 M 120 60 L 615 60 M 120 60 L 120 75 M 367 60 L 367 75 M 615 60 L 615 75" stroke="var(--purple)" stroke-width="1.5" fill="none"/>
+            <rect x="35" y="75" width="170" height="40" rx="6" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.5"/>
+            <text x="120" y="90" fill="var(--teal-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Symptomatic IC Stenosis</text>
+            <text x="120" y="102" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">70-99% Stenosis (SAMMPRIS)</text>
+            <path d="M 120 115 L 120 140" stroke="var(--teal)" stroke-width="1.5" fill="none"/>
+            <polygon points="120,145 117,137 123,137" fill="var(--teal)" />
+            <rect x="35" y="145" width="170" height="40" rx="6" fill="white" stroke="var(--teal)" stroke-width="2" style="filter: drop-shadow(0 2px 4px var(--teal-glow));"/>
+            <text x="120" y="159" fill="var(--teal-deep)" font-size="9pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + CLOPIDOGREL</text>
+            <text x="120" y="172" fill="var(--red-deep)" font-size="8pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Duration: 90 Days</text>
+            <rect x="252" y="75" width="230" height="42" rx="6" fill="var(--purple-soft)" stroke="var(--purple)" stroke-width="1.5"/>
+            <text x="367" y="88" fill="var(--purple-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Minor Stroke (NIHSS&le;3) / TIA</text>
+            <text x="367" y="99" fill="var(--purple-deep)" font-size="7pt" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle">Start Clopidogrel + ASA (Day 1)</text>
+            <text x="367" y="110" fill="var(--purple-deep)" font-size="6.5pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Send CYP2C19 Genotype on Admission</text>
+            <path d="M 367 117 L 367 127 M 290 127 L 444 127 M 290 127 L 290 145 M 444 127 L 444 145" stroke="var(--purple)" stroke-width="1.5" fill="none"/>
+            <rect x="215" y="145" width="140" height="42" rx="6" fill="white" stroke="var(--red)" stroke-width="1.5"/>
+            <text x="285" y="157" fill="var(--red-deep)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">LOF Carrier (*2, *3)</text>
+            <text x="285" y="169" fill="var(--ink-soft)" font-size="6.5pt" font-family="IBM Plex Sans" text-anchor="middle">Results Return (Days 1–3)</text>
+            <text x="285" y="180" fill="var(--red-deep)" font-size="6.5pt" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle">Switch to Ticagrelor</text>
+            <path d="M 285 187 L 285 203" stroke="var(--red)" stroke-width="1.5" fill="none"/>
+            <polygon points="285,203 282,195 288,195" fill="var(--red)" />
+            <rect x="215" y="203" width="140" height="32" rx="4" fill="var(--red-soft)" stroke="var(--red)" stroke-width="2"/>
+            <text x="285" y="213" fill="var(--red-deep)" font-size="7.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + TICAGRELOR</text>
+            <text x="285" y="222" fill="var(--red-deep)" font-size="6pt" font-family="IBM Plex Sans" text-anchor="middle">Load 180mg STAT, then BID</text>
+            <text x="285" y="231" fill="var(--red-deep)" font-size="6pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Complete 21d DAPT</text>
+            <rect x="375" y="145" width="140" height="42" rx="6" fill="white" stroke="var(--purple)" stroke-width="1.5"/>
+            <text x="445" y="157" fill="var(--purple-deep)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Normal Metabolizer</text>
+            <text x="445" y="169" fill="var(--ink-soft)" font-size="6.5pt" font-family="IBM Plex Sans" text-anchor="middle">Results Return (Days 1–3)</text>
+            <text x="445" y="180" fill="var(--purple-deep)" font-size="6.5pt" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle">Continue Clopidogrel</text>
+            <path d="M 445 187 L 445 203" stroke="var(--purple)" stroke-width="1.5" fill="none"/>
+            <polygon points="445,203 442,195 448,195" fill="var(--purple)" />
+            <rect x="375" y="203" width="140" height="32" rx="4" fill="var(--purple-soft)" stroke="var(--purple)" stroke-width="2"/>
+            <text x="445" y="213" fill="var(--purple-deep)" font-size="7.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + CLOPIDOGREL</text>
+            <text x="445" y="222" fill="var(--purple-deep)" font-size="6pt" font-family="IBM Plex Sans" text-anchor="middle">Continue Clopidogrel 75mg qD</text>
+            <text x="445" y="231" fill="var(--purple-deep)" font-size="6pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Complete 21d DAPT</text>
+            <rect x="530" y="75" width="170" height="40" rx="6" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5"/>
+            <text x="615" y="90" fill="var(--amber-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Mild-Mod Stroke (NIHSS&le;5)</text>
+            <text x="615" y="102" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">Or High-Risk TIA (THALES)</text>
+            <path d="M 615 115 L 615 140" stroke="var(--amber)" stroke-width="1.5" fill="none"/>
+            <polygon points="615,145 612,137 618,137" fill="var(--amber)" />
+            <rect x="530" y="145" width="170" height="40" rx="6" fill="white" stroke="var(--amber)" stroke-width="2" style="filter: drop-shadow(0 2px 4px var(--amber-glow));"/>
+            <text x="615" y="159" fill="var(--amber-deep)" font-size="9pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + TICAGRELOR</text>
+            <text x="615" y="172" fill="var(--red-deep)" font-size="8pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Duration: 30 Days</text>
+          </svg>
+
+          <!-- Comparative Table of Trials -->
+          <table class="card-table">
+            <thead>
+              <tr style="background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 100%); color: white;">
+                <th style="width: 22%;">Scenario / Trial</th>
+                <th style="width: 22%;">Target Population</th>
+                <th style="width: 22%;">Loading Dose (Day 1)</th>
+                <th style="width: 20%;">DAPT Duration</th>
+                <th style="width: 14%;">Post-DAPT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 700;">POINT Trial</td>
+                <td>NIHSS &le;3 or ABCD² &ge;4. **Within 12 hours** of onset.</td>
+                <td><strong>Clopidogrel 600 mg</strong> +<br/>Aspirin 162–325 mg</td>
+                <td><strong>Clopidogrel 75mg qD</strong> +<br/>Aspirin 81mg qD for <strong>21 days</strong></td>
+                <td>Aspirin 81mg</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">CHANCE / INSPIRES</td>
+                <td><strong>CHANCE:</strong> NIHSS&le;3, ABCD²&ge;4 within 24h.<br/><strong>INSPIRES:</strong> NIHSS&le;5, ABCD²&ge;4, &ge;50% stenosis within 72h.</td>
+                <td><strong>Clopidogrel 300 mg</strong> +<br/>Aspirin 75–300 mg</td>
+                <td><strong>Clopidogrel 75mg qD</strong> +<br/>Aspirin 75-100mg for <strong>21 days</strong></td>
+                <td>Clopidogrel 75mg (to Day 90)</td>
+              </tr>
+              <tr style="background: var(--purple-soft);">
+                <td style="font-weight: 700; color: var(--purple-deep);">CHANCE-2 Trial</td>
+                <td>CYP2C19 LOF carrier (*2/*3) + Minor stroke/TIA. **Within 24h**.</td>
+                <td><strong>Ticagrelor 180 mg</strong> +<br/>Aspirin 75–300 mg</td>
+                <td><strong>Ticagrelor 90mg BID</strong> +<br/>Aspirin 75-100mg for <strong>21 days</strong></td>
+                <td>Ticagrelor 90mg BID (to Day 90)</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700;">THALES Trial</td>
+                <td>NIHSS &le;5 or high-risk TIA (ABCD² &ge;6 or symptomatic stenosis) within 24h.</td>
+                <td><strong>Ticagrelor 180 mg</strong> +<br/>Aspirin 300–325 mg</td>
+                <td><strong>Ticagrelor 90mg BID</strong> +<br/>Aspirin 75-100mg for <strong>30 days</strong></td>
+                <td>Aspirin 81mg</td>
+              </tr>
+              <tr style="background: var(--teal-soft);">
+                <td style="font-weight: 700; color: var(--teal-deep);">SAMMPRIS Trial</td>
+                <td>Severe symptomatic stenosis (70-99%) of major intracranial artery.</td>
+                <td><strong>Aspirin 325 mg</strong> +<br/><strong>Clopidogrel 75 mg</strong> (no load)</td>
+                <td><strong>Clopidogrel 75mg qD</strong> +<br/>Aspirin for <strong>90 days</strong></td>
+                <td>Aspirin</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="dapt-pearls-grid">
+            <!-- CYP2C19 Genotyping box -->
+            <div class="dapt-pearl-card purple">
+              <strong style="color: var(--purple-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">CYP2C19 Genotyping &amp; Clopidogrel Resistance</strong>
+              <p style="font-size: 7.8pt; color: var(--ink-soft); margin: 0; line-height: 1.45;">
+                • <strong>~30% of US stroke patients</strong> carry a loss-of-function (LOF) allele (<strong>*2, *3</strong>), resulting in poor active metabolite generation and a 2x stroke recurrence rate.
+              </p>
+            </div>
+
+            <!-- Safety Pearls box -->
+            <div class="dapt-pearl-card red">
+              <strong style="color: var(--red-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">Safety Pearls</strong>
+              <p style="font-size: 7.6pt; color: var(--ink-soft); margin: 0; line-height: 1.45;">
+                • <strong>Bleeding vs. Benefit:</strong> DAPT beyond 21 days for minor stroke/TIA increases bleeding (including ICH) without reducing recurrence (POINT/CHANCE).
+                <br/>• <strong>Post-Lytic Policy:</strong> Avoid DAPT in patients who received TNK or EVT (unless specifically requested by neurointerventions for stent).
+              </p>
+            </div>
+          </div>
+
+          <!-- Citations -->
+          <div class="ref-citation" style="margin-top: 0; padding: 6px 10px; font-size: 7.5pt; line-height: 1.25;">
+            <strong>POINT:</strong> Johnston SC et al. <em>N Engl J Med</em>. 2018;379:215-225. <a href="https://pubmed.ncbi.nlm.nih.gov/29766750/" target="_blank">PMID: 29766750</a> | <strong>CHANCE:</strong> Wang Y et al. <em>N Engl J Med</em>. 2013;369:11-19. <a href="https://pubmed.ncbi.nlm.nih.gov/23803136/" target="_blank">PMID: 23803136</a><br/>
+            <strong>CHANCE-2:</strong> Wang Y et al. <em>N Engl J Med</em>. 2021;385:2520-2530. <a href="https://pubmed.ncbi.nlm.nih.gov/34708996/" target="_blank">PMID: 34708996</a> | <strong>INSPIRES:</strong> Gao Y et al. <em>N Engl J Med</em>. 2023;389:2413-2424. <a href="https://pubmed.ncbi.nlm.nih.gov/38157499/" target="_blank">PMID: 38157499</a><br/>
+            <strong>THALES:</strong> Johnston SC et al. <em>N Engl J Med</em>. 2020;383:207-217. <a href="https://pubmed.ncbi.nlm.nih.gov/32668111/" target="_blank">PMID: 32668111</a> | <strong>SAMMPRIS:</strong> Chimowitz MI et al. <em>N Engl J Med</em>. 2011;365:993-1003. <a href="https://pubmed.ncbi.nlm.nih.gov/21899409/" target="_blank">PMID: 21899409</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
