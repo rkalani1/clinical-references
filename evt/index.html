@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LVO Stroke & Endovascular Treatment (EVT)</title>
+  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  
+  <!-- Navigation Header Styles -->
+  <style>
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .portal-nav a:hover {
+      color: #38bdf8;
+    }
+    .portal-nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .portal-nav-links a {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .portal-nav-links a:hover {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .cards-wrapper-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+      background: #f3f1f6;
+      min-height: calc(100vh - 50px);
+    }
+    @media (max-width: 850px) {
+      .portal-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .portal-nav-links {
+        justify-content: flex-start;
+        gap: 0.4rem;
+      }
+      .portal-nav-links a {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.4rem 0.2rem;
+        font-size: 0.75rem;
+      }
+      .cards-wrapper-outer {
+        padding: 0;
+        gap: 0;
+        background: #ffffff;
+      }
+    }
+    @media print {
+      .portal-nav {
+        display: none !important;
+      }
+      .cards-wrapper-outer {
+        padding: 0 !important;
+        background: #ffffff !important;
+        gap: 0 !important;
+      }
+      .card-wrapper {
+        page-break-after: always;
+        break-after: page;
+        margin-bottom: 0 !important;
+      }
+    }
+  </style>
+  
+  <!-- Scoped Figure Styles -->
+  
+<style>
+
+.card-figure_15_ct_perfusion {
+
+      margin: 0;
+      padding: 0;
+      background: white;
+    
+}
+.card-figure_15_ct_perfusion .card-container {
+
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 40px;
+    
+}
+.card-figure_15_ct_perfusion .ct-perf-image {
+
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 4px;
+    
+}
+
+.card-figure_15b_evt_eligibility {
+      margin: 0;
+      padding: 0;
+      background: white;
+}
+.card-figure_15b_evt_eligibility .card-container {
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 40px;
+}
+.card-figure_15b_evt_eligibility .evt-elig-image {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 4px;
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_14_lvo_contrast_allergy .flowchart-container {
+
+      width: 745px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-box {
+
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      padding: 12px 20px;
+      box-sizing: border-box;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-box-who {
+
+      border: 1.5px solid var(--purple);
+      background: var(--purple-soft);
+      border-left: 6px solid var(--purple);
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-box-who .label {
+
+      font-size: 11.5pt;
+      font-weight: 700;
+      color: var(--purple-deep);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-box-who .content {
+
+      font-size: 11.0pt;
+      line-height: 1.5;
+      font-weight: 600;
+      color: var(--ink);
+    
+}
+.card-figure_14_lvo_contrast_allergy .nested-excludes-box {
+
+      border: 1.5px solid rgba(166,40,40,0.2);
+      background: var(--red-soft);
+      border-left: 5px solid var(--red);
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-top: 6px;
+      font-size: 10.2pt;
+      color: var(--red-deep);
+      line-height: 1.45;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-box-consent {
+
+      border: 1.5px solid var(--teal);
+      background: var(--teal-soft);
+      border-left: 6px solid var(--teal);
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-box-consent .label {
+
+      font-size: 11.5pt;
+      font-weight: 700;
+      color: var(--teal-deep);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-list {
+
+      margin: 0;
+      padding-left: 15px;
+      font-size: 10.6pt;
+      line-height: 1.55;
+      color: var(--ink);
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-list li {
+
+      margin-bottom: 5px;
+      font-weight: 500;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-list li:last-child {
+
+      margin-bottom: 0;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-cols {
+
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 25px;
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-col {
+
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      overflow: hidden;
+      background: white;
+      border: 1.5px solid var(--rule);
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-col.col-left {
+
+      border-color: var(--red);
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-col.col-right {
+
+      border-color: var(--slate);
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-col-header {
+
+      color: white;
+      font-weight: 700;
+      font-size: 11.2pt;
+      text-align: center;
+      padding: 8px 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    
+}
+.card-figure_14_lvo_contrast_allergy .col-left .flow-col-header {
+
+      background: var(--red);
+    
+}
+.card-figure_14_lvo_contrast_allergy .col-right .flow-col-header {
+
+      background: var(--slate);
+    
+}
+.card-figure_14_lvo_contrast_allergy .flow-col-content {
+
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      font-size: 10.0pt;
+      line-height: 1.5;
+    
+}
+.card-figure_14_lvo_contrast_allergy .col-left .flow-col-content {
+
+      background: var(--red-soft);
+      justify-content: space-between;
+    
+}
+.card-figure_14_lvo_contrast_allergy .col-right .flow-col-content {
+
+      background: var(--fill-soft);
+    
+}
+.card-figure_14_lvo_contrast_allergy .med-card {
+
+      background: white;
+      border: 1.5px solid rgba(166,40,40,0.15);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+    
+}
+.card-figure_14_lvo_contrast_allergy .med-card:last-child {
+
+      margin-bottom: 0;
+    
+}
+.card-figure_14_lvo_contrast_allergy .med-card .title {
+
+      font-weight: 700;
+      font-size: 11.0pt;
+      color: var(--red-deep);
+      text-align: center;
+    
+}
+.card-figure_14_lvo_contrast_allergy .med-card .sub {
+
+      font-size: 8.5pt;
+      color: var(--ink-soft);
+      margin-top: 2px;
+      text-align: center;
+    
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_19_bp_ischemic {
+
+      margin: 0;
+      padding: 0;
+      background: white;
+    
+}
+.card-figure_19_bp_ischemic .card-container {
+
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: white;
+      padding: 40px 20px;
+    
+}
+.card-figure_19_bp_ischemic .card-image {
+
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+    
+}
+
+  
+
+</style>
+
+</head>
+<body>
+
+  <nav class="portal-nav">
+    <a href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Portal Dashboard
+    </a>
+    <div class="portal-nav-links">
+      <a href="#card-figure_15_ct_perfusion">Perfusion Chart</a>
+      <a href="#card-figure_15b_evt_eligibility">EVT Flowchart</a>
+      <a href="#card-figure_14_lvo_contrast_allergy">Contrast Allergy</a>
+      <a href="#card-figure_19_bp_ischemic">BP Guidelines</a>
+    </div>
+  </nav>
+
+  <div class="cards-wrapper-outer">
+    <div id="card-figure_15_ct_perfusion" class="card-wrapper card-figure_15_ct_perfusion">
+<div class="card-container">
+<img alt="CT Perfusion Reference Chart" class="ct-perf-image" src="../assets/ct_perfusion_chart.png"/>
+</div>
+</div>
+
+<div id="card-figure_15b_evt_eligibility" class="card-wrapper card-figure_15b_evt_eligibility landscape-card">
+<div class="card-container">
+<img alt="EVT Eligibility Flowchart" class="evt-elig-image" src="../assets/evt_eligibility_flowchart_v3.png"/>
+</div>
+</div>
+
+<div id="card-figure_14_lvo_contrast_allergy" class="card-wrapper card-figure_14_lvo_contrast_allergy">
+<div class="card-container" style="padding: 30px 40px 25px 40px;">
+<div class="card-content" style="justify-content: flex-start; gap: 15px;">
+<h1 style="margin-bottom: 15px; font-size: 16.5pt; border-bottom-color: var(--purple-soft); text-align: center;">Suspected LVO &amp; Contrast Allergy Protocol</h1>
+<div class="flowchart-container" style="margin-top: 15px;">
+<!-- WHO Box -->
+<div class="flow-box flow-box-who">
+<div class="label">Who: Target Patient Population</div>
+<div class="content">
+            Pt with a CT contrast allergy (mild, moderate, or unknown severity) AND suspected LVO
+          </div>
+<div class="nested-excludes-box">
+<strong>Excludes:</strong> any pt with known contrast related anaphylaxis (cardiovascular collapse).
+          </div>
+</div>
+<!-- Arrow 1 -->
+<svg fill="none" height="25" style="display: block; margin: 2px auto;" viewbox="0 0 20 40" width="12.5">
+<path d="M10 0V34" stroke="var(--slate)" stroke-width="2.5"></path>
+<path d="M5 29L10 34L15 29" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<!-- Consent + Approval Box -->
+<div class="flow-box flow-box-consent">
+<div class="label">Consent + Approval:</div>
+<ul class="flow-list">
+<li>Whenever possible, consent pt and/or LNOK</li>
+<li>Must have pre-administration approval from Stroke phone, Emergency MD, and Neuroradiology</li>
+<li>Stroke phone will alert IR attending</li>
+</ul>
+</div>
+<!-- Split Fork SVG -->
+<svg fill="none" height="35" style="display: block; margin: 2px auto;" viewbox="0 0 745 50" width="745">
+<!-- Center vertical line down -->
+<path d="M372.5 0V18" stroke="var(--slate)" stroke-width="2.5"></path>
+<!-- Horizontal crossbar -->
+<path d="M185 18H560" stroke="var(--slate)" stroke-width="2.5"></path>
+<!-- Left branch down with arrow -->
+<path d="M185 18V42" stroke="var(--slate)" stroke-width="2.5"></path>
+<path d="M180 37L185 42L190 37" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- Right branch down with arrow -->
+<path d="M560 18V42" stroke="var(--slate)" stroke-width="2.5"></path>
+<path d="M555 37L560 42L565 37" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<!-- Bottom Columns -->
+<div class="flow-cols">
+<!-- Left Column (What) -->
+<div class="flow-col col-left">
+<div class="flow-col-header">Emergency Pre-Medication</div>
+<div class="flow-col-content">
+<div style="font-size: 9.5pt; font-weight: 700; color: var(--red-deep); margin-bottom: 8px; text-align: center;">
+                Administer immediately prior to contrast study:
+              </div>
+<div class="med-card">
+<div class="title" style="font-size: 10.8pt;">Hydrocortisone 200mg IV</div>
+<div style="font-size: 8.5pt; font-weight: 700; color: #c62828; margin: 4px 0; text-align: center; text-transform: uppercase;">— OR —</div>
+<div class="title" style="color: var(--slate); font-size: 10.8pt;">Methylprednisolone 40mg</div>
+</div>
+<div class="med-card">
+<div class="title" style="color: var(--purple-deep); font-size: 10.8pt;">Diphenhydramine 50mg IV</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Communication) -->
+<div class="flow-col col-right">
+<div class="flow-col-header">Communication &amp; Documentation</div>
+<div class="flow-col-content">
+<ul style="margin: 0; padding-left: 15px; font-size: 9.8pt; line-height: 1.5; color: var(--ink);">
+<li style="margin-bottom: 10px;">
+                  Clear communication during stroke code re: plan and face-to-face discussion with ED team
+                </li>
+<li style="margin-bottom: 10px;">
+                  Message plan in Pulsara and ensure reported during IR handoff
+                </li>
+<li>
+                  Must document in the Neurology note consent and include physicians who approved/agreed to plan.
+                </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="card-figure_19_bp_ischemic" class="card-wrapper card-figure_19_bp_ischemic">
+<div class="card-container">
+<img class="card-image" src="../assets/bp_ischemic.png"/>
+</div>
+</div>
+
+
+  </div>
+
+  <script>
+    // Copy template utility for bedside consent template
+    document.addEventListener("DOMContentLoaded", function() {
+      const template = document.querySelector(".copyable-template");
+      if (template) {
+        template.addEventListener("click", function() {
+          const text = this.innerText.replace(/COPY TEMPLATE/g, "").trim();
+          navigator.clipboard.writeText(text).then(() => {
+            const badge = this.querySelector(".copy-badge");
+            if (badge) {
+              badge.classList.add("copied");
+              badge.innerText = "Copied!";
+              setTimeout(() => {
+                badge.classList.remove("copied");
+                badge.innerText = "Copy Template";
+              }, 2000);
+            }
+          }).catch(err => {
+            console.error("Clipboard error:", err);
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

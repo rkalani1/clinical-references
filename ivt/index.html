@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intravenous Thrombolysis (IVT) Protocol</title>
+  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  
+  <!-- Navigation Header Styles -->
+  <style>
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .portal-nav a:hover {
+      color: #38bdf8;
+    }
+    .portal-nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .portal-nav-links a {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .portal-nav-links a:hover {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .cards-wrapper-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+      background: #f3f1f6;
+      min-height: calc(100vh - 50px);
+    }
+    @media (max-width: 850px) {
+      .portal-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .portal-nav-links {
+        justify-content: flex-start;
+        gap: 0.4rem;
+      }
+      .portal-nav-links a {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.4rem 0.2rem;
+        font-size: 0.75rem;
+      }
+      .cards-wrapper-outer {
+        padding: 0;
+        gap: 0;
+        background: #ffffff;
+      }
+    }
+    @media print {
+      .portal-nav {
+        display: none !important;
+      }
+      .cards-wrapper-outer {
+        padding: 0 !important;
+        background: #ffffff !important;
+        gap: 0 !important;
+      }
+      .card-wrapper {
+        page-break-after: always;
+        break-after: page;
+        margin-bottom: 0 !important;
+      }
+    }
+  </style>
+  
+  <!-- Scoped Figure Styles -->
+  
+<style>
+
+.card-figure_06_ivt_eligibility_algorithm {
+
+      --purple: #4B2E83;
+      --purple-deep: #39226a;
+      --purple-soft: #ece8f3;
+      --teal: #1f6b8a;
+      --teal-soft: #e3eef3;
+      --teal-deep: #155770;
+      --red: #a62828;
+      --red-soft: #f7e9e9;
+      --red-deep: #7a1d1d;
+      --magenta: #d81b60;
+      --magenta-soft: #fdf2f5;
+      --magenta-deep: #c2185b;
+      --amber: #b8740a;
+      --amber-soft: #fbf1de;
+      --amber-deep: #8a5605;
+      --ink: #1f2024;
+      --ink-soft: #4a4954;
+      --ink-mute: #6b6a76;
+      --paper: #ffffff;
+    
+}
+.card-figure_06_ivt_eligibility_algorithm .card-container {
+
+      width: 825px;
+      height: 1275px;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      background: var(--paper);
+      box-sizing: border-box;
+      overflow: hidden;
+    
+}
+.card-figure_06_ivt_eligibility_algorithm .flow-box {
+
+      position: absolute;
+      border-radius: 10px;
+      padding: 10px 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      box-sizing: border-box;
+      overflow: hidden;
+    
+}
+.card-figure_06_ivt_eligibility_algorithm .border-blue-dark {
+ border: 2px solid #0f355c; 
+}
+.card-figure_06_ivt_eligibility_algorithm .bg-blue-dark {
+ background: #0f355c; color: white; 
+}
+.card-figure_06_ivt_eligibility_algorithm .border-blue {
+ border: 2px solid #1f6b8a; 
+}
+.card-figure_06_ivt_eligibility_algorithm .bg-blue-soft {
+ background: #f0f6f9; 
+}
+.card-figure_06_ivt_eligibility_algorithm .border-orange {
+ border: 2px solid #ff9800; 
+}
+.card-figure_06_ivt_eligibility_algorithm .bg-orange-soft {
+ background: #fff8e1; 
+}
+.card-figure_06_ivt_eligibility_algorithm .border-yellow {
+ border: 2px solid #ffb74d; 
+}
+.card-figure_06_ivt_eligibility_algorithm .bg-yellow-soft {
+ background: #fffde7; 
+}
+.card-figure_06_ivt_eligibility_algorithm .border-red {
+ border: 2px solid #a62828; 
+}
+.card-figure_06_ivt_eligibility_algorithm .bg-red-soft {
+ background: #fdf8f8; 
+}
+.card-figure_06_ivt_eligibility_algorithm .border-green {
+ border: 2px solid #2e7d32; 
+}
+.card-figure_06_ivt_eligibility_algorithm .bg-green-soft {
+ background: #e8f5e9; 
+}
+.card-figure_06_ivt_eligibility_algorithm .box-title {
+
+      font-weight: 700;
+      font-size: 11.5pt;
+      line-height: 1.25;
+    
+}
+.card-figure_06_ivt_eligibility_algorithm .box-desc {
+
+      font-size: 10.0pt;
+      line-height: 1.35;
+      color: #2d3748;
+    
+}
+.card-figure_06_ivt_eligibility_algorithm .color-red-deep {
+ color: #a62828; 
+}
+.card-figure_06_ivt_eligibility_algorithm .color-blue-deep {
+ color: #155770; 
+}
+.card-figure_06_ivt_eligibility_algorithm .color-orange-deep {
+ color: #b8740a; 
+}
+.card-figure_06_ivt_eligibility_algorithm .color-green-deep {
+ color: #2e7d32; 
+}
+.card-figure_06_ivt_eligibility_algorithm .color-ink {
+ color: #1f2024; 
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_07_ivt_contraindications {
+
+      --purple-deep: #39226a;
+      --purple-soft: #ece8f3;
+      --ink: #1f2024;
+      --ink-soft: #4a4954;
+      --paper: #ffffff;
+      --border-color: #d8d6db;
+      --border-light: #e2e8f0;
+    
+}
+.card-figure_07_ivt_contraindications .card-container {
+
+      width: 825px;
+      height: 1275px;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      background: var(--paper);
+      box-sizing: border-box;
+      overflow: hidden;
+    
+}
+.card-figure_07_ivt_contraindications .title-block {
+
+      position: absolute;
+      top: 30px;
+      left: 40px;
+      width: 745px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    
+}
+.card-figure_07_ivt_contraindications .title-block span {
+
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 16.5pt;
+      font-weight: 700;
+      color: #0f355c;
+      letter-spacing: 0.02em;
+      text-align: center;
+    
+}
+.card-figure_07_ivt_contraindications .title-block .divider {
+
+      width: 100%;
+      height: 3px;
+      background: #1f6b8a;
+      margin-top: 5px;
+    
+}
+.card-figure_07_ivt_contraindications .table-container {
+
+      position: absolute;
+      top: 80px;
+      left: 40px;
+      width: 745px;
+      height: 1160px;
+      overflow: hidden;
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table {
+
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'IBM Plex Sans', sans-serif;
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table th {
+
+      font-weight: 700;
+      text-align: left;
+      font-size: 10.5pt;
+      padding: 7px 12px;
+      letter-spacing: 0.03em;
+      border: 1px solid var(--border-color);
+      text-transform: uppercase;
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table th.header-absolute {
+
+      background-color: #d32f2f;
+      color: #ffffff;
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table th.header-relative {
+
+      background-color: #ff9800;
+      color: #ffffff;
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table th.header-benefit {
+
+      background-color: #2e7d32;
+      color: #ffffff;
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table td {
+
+      padding: 5.5px 12px;
+      font-size: 9.8pt;
+      line-height: 1.3;
+      border: 1px solid var(--border-light);
+      vertical-align: middle;
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table td.col-left {
+
+      width: 42%;
+      font-weight: 600;
+      color: var(--ink);
+    
+}
+.card-figure_07_ivt_contraindications table.contra-table td.col-right {
+
+      width: 58%;
+      font-weight: 500;
+      color: #2d3748;
+    
+}
+.card-figure_07_ivt_contraindications /* Alternating backgrounds */
+    .bg-pink {
+ background-color: #fdf2f2; 
+}
+.card-figure_07_ivt_contraindications .bg-yellow {
+ background-color: #fffde7; 
+}
+.card-figure_07_ivt_contraindications .bg-green {
+ background-color: #e8f5e9; 
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_08_ivt_consent_guidelines .guideline-box {
+
+      border: 1.5px solid var(--purple);
+      background: var(--purple-soft);
+      border-radius: 8px;
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      font-size: 11.0pt;
+      line-height: 1.45;
+      border-left: 5px solid var(--purple);
+    
+}
+.card-figure_08_ivt_consent_guidelines .guideline-box strong {
+
+      color: var(--purple-deep);
+    
+}
+.card-figure_08_ivt_consent_guidelines .grid-stats {
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 6px 0;
+    
+}
+.card-figure_08_ivt_consent_guidelines .stat-card {
+
+      background: var(--teal-soft);
+      border: 1.5px solid rgba(31,107,138,0.15);
+      border-radius: 8px;
+      padding: 8px 10px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      border-top: 4px solid var(--teal);
+    
+}
+.card-figure_08_ivt_consent_guidelines .stat-card.red-card {
+
+      background: var(--red-soft);
+      border-top-color: var(--red);
+      border-color: rgba(166,40,40,0.15);
+    
+}
+.card-figure_08_ivt_consent_guidelines .stat-card .val {
+
+      font-size: 16.5pt;
+      font-weight: 700;
+      color: var(--teal-deep);
+      line-height: 1.2;
+    
+}
+.card-figure_08_ivt_consent_guidelines .stat-card.red-card .val {
+
+      color: var(--red-deep);
+    
+}
+.card-figure_08_ivt_consent_guidelines .stat-card .lbl {
+
+      font-size: 9.2pt;
+      color: var(--ink-soft);
+      font-weight: 600;
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    
+}
+.card-figure_08_ivt_consent_guidelines .quote-box {
+
+      background: var(--fill-soft);
+      border-left: 4px solid var(--slate);
+      padding: 8px 14px;
+      font-size: 10.5pt;
+      line-height: 1.45;
+      margin: 6px 0 8px 0;
+      font-style: italic;
+      border-radius: 0 8px 8px 0;
+    
+}
+.card-figure_08_ivt_consent_guidelines .note-reqs {
+
+      border: 1.5px solid rgba(166,40,40,0.15);
+      background: var(--red-soft);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 10.8pt;
+      margin-top: 8px;
+      color: var(--red-deep);
+      border-left: 5px solid var(--red);
+    
+}
+.card-figure_08_ivt_consent_guidelines .copyable-template {
+
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: all;
+      -webkit-user-select: all;
+      padding-right: 90px !important;
+    
+}
+.card-figure_08_ivt_consent_guidelines .copyable-template:hover {
+
+      background: var(--slate-soft) !important;
+      border-left-color: var(--purple) !important;
+    
+}
+.card-figure_08_ivt_consent_guidelines .copyable-template:active {
+
+      background: var(--fill) !important;
+    
+}
+.card-figure_08_ivt_consent_guidelines .copy-badge {
+
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 7.2pt;
+      font-weight: 700;
+      color: var(--ink-mute);
+      background: rgba(0, 0, 0, 0.06);
+      padding: 3px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+    
+}
+.card-figure_08_ivt_consent_guidelines .copyable-template:hover .copy-badge {
+
+      opacity: 1;
+    
+}
+@media (hover: none) {
+.card-figure_08_ivt_consent_guidelines .copy-badge {
+
+        opacity: 0.85;
+        background: rgba(0, 0, 0, 0.08);
+      
+}
+
+    
+}
+.card-figure_08_ivt_consent_guidelines .copy-badge.copied {
+
+      background: #e2f5e9 !important;
+      color: #1e7e34 !important;
+      border: 1px solid #c3e6cb !important;
+      opacity: 1 !important;
+    
+}
+@media print {
+.card-figure_08_ivt_consent_guidelines .copy-badge {
+
+        display: none !important;
+      
+}
+.card-figure_08_ivt_consent_guidelines .copyable-template {
+
+        padding-right: 20px !important;
+      
+}
+
+    
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_09_doac_exposed_lytics .flowchart-container {
+
+      width: 745px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-box-top {
+
+      background: var(--slate);
+      color: white;
+      font-weight: 700;
+      font-size: 15.0pt;
+      text-align: center;
+      padding: 10px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      width: 580px;
+      letter-spacing: 0.01em;
+      margin-top: 5px;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-box-criteria {
+
+      border: 2.5px solid var(--teal);
+      background: #f1f8fc;
+      border-radius: 8px;
+      padding: 12px 20px;
+      width: 680px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      text-align: center;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-box-criteria .title {
+
+      font-size: 14.0pt;
+      font-weight: 700;
+      color: var(--teal-deep);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-cols {
+
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 35px;
+      margin: 0;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-col {
+
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+      background: white;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-col.col-left {
+
+      border: 2.5px solid var(--teal);
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-col.col-right {
+
+      border: 2.5px solid var(--amber);
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-col-header {
+
+      color: white;
+      font-weight: 700;
+      font-size: 14.0pt;
+      text-align: center;
+      padding: 12px 16px;
+      letter-spacing: 0.02em;
+    
+}
+.card-figure_09_doac_exposed_lytics .col-left .flow-col-header {
+
+      background: var(--teal);
+    
+}
+.card-figure_09_doac_exposed_lytics .col-right .flow-col-header {
+
+      background: var(--amber);
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-col-content {
+
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+      min-height: 120px;
+    
+}
+.card-figure_09_doac_exposed_lytics .col-right .flow-col-content {
+
+      background: var(--amber-soft);
+    
+}
+.card-figure_09_doac_exposed_lytics .inner-req-box {
+
+      border: 2px solid var(--teal);
+      background: white;
+      border-radius: 6px;
+      padding: 12px 20px;
+      font-weight: 700;
+      color: var(--teal-deep);
+      font-size: 14.0pt;
+      text-align: center;
+      margin: 10px 0;
+      width: 100%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-box-bottom {
+
+      border: 2.5px solid #2e7d32;
+      background: #e2f0d9;
+      color: #275d2b;
+      border-radius: 8px;
+      padding: 10px 24px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      margin-bottom: 5px;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-box-bottom .main-text {
+
+      font-size: 15.5pt;
+      font-weight: 700;
+      color: #1e5a22;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    
+}
+.card-figure_09_doac_exposed_lytics .flow-box-bottom .sub-text {
+
+      font-size: 10.5pt;
+      color: #385e3c;
+      font-weight: 500;
+    
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_11_orolingual_angioedema .angio-table-container {
+
+      width: 100%;
+      border: 1.5px solid var(--slate);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+      margin-top: 10px;
+    
+}
+.card-figure_11_orolingual_angioedema .angio-header {
+
+      display: flex;
+      width: 100%;
+      border-bottom: 1.5px solid var(--slate);
+    
+}
+.card-figure_11_orolingual_angioedema .angio-header-cell {
+
+      width: 50%;
+      padding: 4px 8px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 10.5pt;
+      letter-spacing: 0.02em;
+    
+}
+.card-figure_11_orolingual_angioedema .angio-header-cor {
+
+      background: #fda228;
+      color: #1f2024;
+    
+}
+.card-figure_11_orolingual_angioedema .angio-header-loe {
+
+      background: #9bc5e6;
+      color: #1f2024;
+      border-left: 1.5px solid var(--slate);
+    
+}
+.card-figure_11_orolingual_angioedema .angio-table {
+
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    
+}
+.card-figure_11_orolingual_angioedema .angio-table td {
+
+      padding: 4px 8px;
+      border-bottom: 1.5px solid var(--rule-soft);
+      font-size: 10.0pt;
+      line-height: 1.4;
+      color: var(--ink);
+      font-weight: 500;
+    
+}
+.card-figure_11_orolingual_angioedema .angio-table tr:last-child td {
+
+      border-bottom: none;
+    
+}
+.card-figure_11_orolingual_angioedema .angio-row-main-airway {
+
+      background: var(--fill-soft);
+      font-weight: 700 !important;
+      color: var(--purple-deep) !important;
+      font-size: 11.0pt !important;
+      border-bottom: 1.5px solid var(--rule) !important;
+    
+}
+.card-figure_11_orolingual_angioedema .angio-row-sub-airway {
+
+      padding-left: 16px !important;
+    
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_19_bp_ischemic {
+
+      margin: 0;
+      padding: 0;
+      background: white;
+    
+}
+.card-figure_19_bp_ischemic .card-container {
+
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: white;
+      padding: 40px 20px;
+    
+}
+.card-figure_19_bp_ischemic .card-image {
+
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+    
+}
+
+  
+
+</style>
+
+</head>
+<body>
+
+  <nav class="portal-nav">
+    <a href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Portal Dashboard
+    </a>
+    <div class="portal-nav-links">
+      <a href="#card-figure_06_ivt_eligibility_algorithm">Eligibility</a>
+      <a href="#card-figure_07_ivt_contraindications">Contraindications</a>
+      <a href="#card-figure_08_ivt_consent_guidelines">Consent</a>
+      <a href="#card-figure_09_doac_exposed_lytics">DOACs</a>
+      <a href="#card-figure_11_orolingual_angioedema">Angioedema</a>
+      <a href="#card-figure_19_bp_ischemic">BP Guidelines</a>
+    </div>
+  </nav>
+
+  <div class="cards-wrapper-outer">
+    <div id="card-figure_06_ivt_eligibility_algorithm" class="card-wrapper card-figure_06_ivt_eligibility_algorithm">
+<div class="card-container">
+<!-- Title Block -->
+<div style="position: absolute; top: 30px; left: 40px; width: 745px; height: 40px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+<span style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16.5pt; font-weight: 700; color: #0f355c; letter-spacing: 0.02em; text-align: center; width: 100%;">IVT ELIGIBILITY DECISION ALGORITHM</span>
+<div style="width: 100%; height: 3px; background: #1f6b8a; margin-top: 5px;"></div>
+</div>
+<!-- Suspected Stroke Box (Node 1) -->
+<div class="flow-box bg-blue-dark border-blue-dark" style="top: 100px; left: 262.5px; width: 300px; height: 50px; display: flex; align-items: center; justify-content: center; text-align: center;">
+<div style="font-weight: 700; font-size: 12.5pt; letter-spacing: 0.02em;">Suspected Stroke</div>
+</div>
+<!-- Focused History Box (Node 2) -->
+<div class="flow-box border-blue bg-white" style="top: 190px; left: 200px; width: 425px; height: 75px; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 8px 12px;">
+<div class="box-title color-blue-deep" style="font-size: 11.5pt; margin-bottom: 2px;">Focused history + NIHSS + NCCT Head + Labs</div>
+<div style="font-size: 9.5pt; color: #6b6a76; font-family: monospace;">Stroke panel: PT/INR, PTT, anti-Xa, CBC, glucose, BMP</div>
+</div>
+<!-- Glucose side box (Node 2b) -->
+<div class="flow-box border-yellow bg-yellow-soft" style="top: 190px; left: 650px; width: 140px; height: 75px; display: flex; flex-direction: column; justify-content: center; padding: 6px 10px;">
+<div class="box-title color-orange-deep" style="font-size: 9.5pt; margin-bottom: 2px;">Glucose &lt;50 or &gt;400?</div>
+<div style="font-size: 8.5pt; line-height: 1.25; color: #4a4954;">Correct first; proceed with IVT if deficits persist (COR 1)</div>
+</div>
+<!-- ICH Diamond overlay text (Node 3) -->
+<div style="position: absolute; top: 310px; left: 362.5px; width: 100px; height: 60px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 700; font-size: 11.0pt; color: #a62828; z-index: 20; pointer-events: none;">
+      ICH on CT?
+    </div>
+<!-- YES ICH Side box (Node 3b) -->
+<div class="flow-box border-red bg-red-soft" style="top: 315px; left: 570px; width: 215px; height: 50px; display: flex; align-items: center; justify-content: center; text-align: center;">
+<div class="box-title color-red-deep" style="font-size: 11.5pt;">IVT not recommended</div>
+</div>
+<!-- Disabling Deficit Diamond overlay text (Node 4) -->
+<div style="position: absolute; top: 430px; left: 362.5px; width: 100px; height: 60px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 700; font-size: 11.0pt; color: #155770; z-index: 20; pointer-events: none;">
+      Disabling deficit?
+    </div>
+<!-- ADLs Impair Side box (Node 4a) -->
+<div class="flow-box border-blue bg-blue-soft" style="top: 420px; left: 30px; width: 290px; height: 80px; display: flex; flex-direction: column; justify-content: center; padding: 8px 12px;">
+<div class="box-title color-blue-deep" style="font-size: 10.0pt; margin-bottom: 4px;">Would deficits impair ADLs or return to work?</div>
+<div style="font-size: 8.5pt; line-height: 1.25; color: #556070;">BATHE = Bathing - Ambulating - Toileting - Hygiene - Eating</div>
+</div>
+<!-- NO Disabling deficit Side box (Node 4b) -->
+<div class="flow-box border-red bg-red-soft" style="top: 425px; left: 570px; width: 215px; height: 75px; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 6px 10px;">
+<div class="box-title color-red-deep" style="font-size: 11.0pt; margin-bottom: 2px;">IVT NOT recommended</div>
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.0pt; font-weight: 700; color: #a62828; margin-bottom: 2px;">COR 3: NB | B-R</div>
+<div style="font-size: 9.0pt; font-style: italic; color: #7a1d1d;">Consider early DAPT</div>
+</div>
+<!-- Review Contraindications Box (Node 5) -->
+<div class="flow-box border-yellow bg-yellow-soft" style="top: 540px; left: 245px; width: 335px; height: 60px; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 6px 10px;">
+<div class="box-title color-orange-deep" style="font-size: 11.5pt; margin-bottom: 2px;">Review Contraindications</div>
+<div class="box-desc" style="font-size: 9.8pt;">Relative → individualize risk/benefit</div>
+</div>
+<!-- LKN Diamond overlay text (Node 6) -->
+<div style="position: absolute; top: 650px; left: 362.5px; width: 100px; height: 60px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 700; font-size: 11.0pt; color: #155770; z-index: 20; pointer-events: none;">
+      Time from LKN?
+    </div>
+<!-- TNK RECOMMENDED (LKN <= 4.5h) Box (Node 6b) -->
+<div class="flow-box border-green bg-green-soft" style="top: 655px; left: 30px; width: 200px; height: 55px; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 6px 10px;">
+<div class="box-title color-green-deep" style="font-size: 11.5pt; margin-bottom: 1px;">TNK RECOMMENDED</div>
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5pt; font-weight: 700; color: #2e7d32;">COR 1 | LOE A</div>
+</div>
+<!-- Advanced Imaging Box (Node 7) -->
+<div class="flow-box border-blue bg-blue-soft" style="top: 760px; left: 200px; width: 400px; height: 85px; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 8px 14px;">
+<div class="box-title color-blue-deep" style="font-size: 11.5pt; margin-bottom: 2px;">Advanced Imaging Selection</div>
+<div class="box-desc" style="font-weight: 700; font-size: 10.0pt; margin-bottom: 3px; color: #0f355c;">CTP or MRI DWI-FLAIR mismatch required</div>
+<div style="font-size: 8.5pt; color: #6b6a76;">Prefer MRI if: small vessel, posterior circ, contrast allergy</div>
+</div>
+<!-- IVT not recommended (Imaging NO) Side Box (Node 7b) -->
+<div class="flow-box border-red bg-red-soft" style="top: 780px; left: 55px; width: 120px; height: 45px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px;">
+<div class="box-title color-red-deep" style="font-size: 9.8pt; line-height: 1.1;">IVT not recommended</div>
+</div>
+<!-- 4.5-9h MRI Box (Node 8a) -->
+<div class="flow-box border-yellow bg-yellow-soft" style="top: 890px; left: 190px; width: 205px; height: 70px; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 6px 10px;">
+<div class="box-desc" style="font-weight: 600; color: #7a1d1d; font-size: 9.0pt; margin-bottom: 1px;">4.5-9h or Wake-up (MRI)</div>
+<div class="box-title color-orange-deep" style="font-size: 11.5pt; margin-bottom: 1px;">CONSIDER TNK</div>
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.0pt; font-weight: 700; color: #b8740a;">COR 2a | LOE B-R</div>
+</div>
+<!-- 9-24h CTP Box (Node 8b) -->
+<div class="flow-box border-orange bg-orange-soft" style="top: 890px; left: 405px; width: 205px; height: 70px; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 6px 10px;">
+<div class="box-desc" style="font-weight: 600; color: #7a1d1d; font-size: 9.0pt; margin-bottom: 2px;">9-24h (CTP)</div>
+<div class="box-title color-orange-deep" style="font-size: 11.5pt;">CONSIDER TNK</div>
+</div>
+<!-- 4.5-24h Criteria Side Box (Node 8c) -->
+<div class="flow-box border-orange bg-orange-soft" style="top: 760px; left: 625px; width: 175px; height: 200px; padding: 10px; display: flex; flex-direction: column; justify-content: flex-start;">
+<div>
+<div class="box-title color-orange-deep" style="font-size: 10.0pt; margin-bottom: 4px; border-bottom: 1px solid rgba(255,152,0,0.25); padding-bottom: 2px;">4.5-24h IVT Criteria:</div>
+<ul style="margin: 0; padding-left: 10px; font-size: 8.4pt; line-height: 1.25; color: #2d3748; list-style-type: square;">
+<li style="margin-bottom: 2px;">Baseline mRS ≤ 1</li>
+<li style="margin-bottom: 2px;">CTP: core &lt;50 mL, ratio ≥ 1.2, mismatch vol ≥ 10 mL</li>
+<li style="margin-bottom: 2px;"><strong>NOT</strong> an EVT candidate</li>
+</ul>
+<div style="font-size: 7.4pt; line-height: 1.2; color: #6b6a76; margin-top: 4px; font-style: italic;">
+          (IVT may be considered in select patients with LVO if EVT within 24h is not feasible - e.g., transport delay (unable to fly), patient declines EVT, etc.)
+        </div>
+</div>
+</div>
+<!-- Consent REQUIRED label centered below the two CONSIDER TNK boxes -->
+<div style="position: absolute; top: 964px; left: 40px; width: 745px; text-align: center; font-family: 'IBM Plex Sans', sans-serif; font-size: 11.0pt; font-weight: 700; color: #a62828; z-index: 30; letter-spacing: 0.02em;">
+  • Consent REQUIRED
+</div>
+<!-- TNK Dosing Box (Node 9) -->
+<div class="flow-box border-blue bg-blue-soft" style="top: 990px; left: 40px; width: 745px; height: 120px; display: flex; flex-direction: column; justify-content: space-between; padding: 12px 20px;">
+<div class="box-title color-blue-deep" style="font-size: 13.0pt; text-align: center; letter-spacing: 0.01em;">
+        TNK Dosing: 0.25 mg/kg IV push (max 25 mg)
+      </div>
+<div style="font-weight: 700; color: #a62828; font-size: 11.5pt; text-align: center;">
+        Safety Pause: confirm consent, BP &lt;185/110, review contraindications
+      </div>
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.2pt; color: #4a4954; text-align: center; border-top: 1px dashed rgba(31,107,138,0.2); padding-top: 6px;">
+        Document in Pulsara + note lytic safety pause ".STROKESAFETYPAUSE" | Obtain consent for lytic
+      </div>
+</div>
+<!-- CRAO Box (Footer) -->
+<div style="position: absolute; top: 1140px; left: 40px; width: 745px; height: 80px; box-sizing: border-box; line-height: 1.4;">
+<span style="font-weight: 700; color: #0f355c; font-size: 11.5pt;">Central Retinal Artery Occlusion (CRAO):</span>
+<span style="font-size: 10.2pt; color: #4a4954;">Consider IVT in select cases with informed consent and shared decision-making. Trial evidence does not support efficacy.</span>
+</div>
+<!-- Flow Chart Connectors & Diamonds -->
+<svg height="1275" style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10;" width="825">
+<defs>
+<!-- Arrow markers -->
+<marker id="arrow-blue" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="6" refy="5" viewbox="0 0 10 10">
+<path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f6b8a"></path>
+</marker>
+<marker id="arrow-red" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="6" refy="5" viewbox="0 0 10 10">
+<path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#a62828"></path>
+</marker>
+<marker id="arrow-green" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="6" refy="5" viewbox="0 0 10 10">
+<path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#2e7d32"></path>
+</marker>
+</defs>
+<!-- Render the SVG Diamonds -->
+<!-- ICH Diamond 1 (Y: 300 to 380, X: 352.5 to 472.5) -->
+<path d="M 412.5 300 L 472.5 340 L 412.5 380 L 352.5 340 Z" fill="#fdf8f8" stroke="#a62828" stroke-width="2.5"></path>
+<!-- Disabling Diamond 2 (Y: 420 to 500, X: 352.5 to 472.5) -->
+<path d="M 412.5 420 L 472.5 460 L 412.5 500 L 352.5 460 Z" fill="#f0f6f9" stroke="#1f6b8a" stroke-width="2.5"></path>
+<!-- LKN Diamond 3 (Y: 640 to 720, X: 352.5 to 472.5) -->
+<path d="M 412.5 640 L 472.5 680 L 412.5 720 L 352.5 680 Z" fill="#f0f6f9" stroke="#1f6b8a" stroke-width="2.5"></path>
+<!-- Arrows -->
+<!-- Suspected Stroke (bottom-center 412.5, 150) to Focused history (top-center 412.5, 190) -->
+<path d="M 412.5 148 L 412.5 185" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
+<!-- Focused history (bottom-center 412.5, 265) to ICH CT diamond (top-vertex 412.5, 300) -->
+<path d="M 412.5 263 L 412.5 295" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
+<!-- Focused history (right-center 625, 227.5) to Glucose check (left-center 650, 227.5) -->
+<path d="M 623 227.5 L 651 227.5" fill="none" stroke="#ff9800" stroke-dasharray="4" stroke-width="2"></path>
+<!-- ICH diamond YES branch (right-vertex 472.5, 340) to YES box (left-center 570, 340) -->
+<path d="M 470.5 340 L 565 340" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
+<!-- ICH diamond NO branch (bottom-vertex 412.5, 380) to Disabling deficit (top-vertex 412.5, 420) -->
+<path d="M 412.5 378 L 412.5 415" fill="none" marker-end="url(#arrow-green)" stroke="#2e7d32" stroke-width="2.5"></path>
+<!-- Disabling deficit NO branch (right-vertex 472.5, 460) to NO box (left-center 570, 460) -->
+<path d="M 470.5 460 L 565 460" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
+<!-- Disabling deficit YES branch (bottom-vertex 412.5, 500) to Review Contraindications (top-center 412.5, 540) -->
+<path d="M 412.5 498 L 412.5 535" fill="none" marker-end="url(#arrow-green)" stroke="#2e7d32" stroke-width="2.5"></path>
+<!-- Disabling deficit left dashed line (left-vertex 352.5, 460) to ADLs box (right-center 320, 460) -->
+<path d="M 354.5 460 L 320 460" fill="none" stroke="#1f6b8a" stroke-dasharray="4" stroke-width="2"></path>
+<!-- Review Contraindications (bottom-center 412.5, 600) to Time from LKN diamond (top-vertex 412.5, 640) -->
+<path d="M 412.5 598 L 412.5 635" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
+<!-- LKN diamond <= 4.5h branch (left-vertex 352.5, 680) to TNK RECOMMENDED (right-center 230, 680) -->
+<path d="M 354.5 680 L 235 680" fill="none" marker-end="url(#arrow-green)" stroke="#2e7d32" stroke-width="2.5"></path>
+<!-- LKN diamond > 4.5h branch (bottom-vertex 412.5, 720) to Advanced Imaging (top-center 412.5, 760) -->
+<path d="M 412.5 720 L 412.5 755" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
+<!-- Advanced Imaging NO branch (left-center 200, 802.5) to NO box (right-center 175, 802.5) -->
+<path d="M 202 802.5 L 180 802.5" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
+<!-- Advanced Imaging bottom branches to 8a and 8b -->
+<path d="M 292.5 843 L 292.5 885" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
+<path d="M 507.5 843 L 507.5 885" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
+</svg>
+<!-- Text Labels overlaying arrows -->
+<div style="position: absolute; top: 320px; left: 505px; font-size: 8.5pt; font-weight: 700; color: #a62828; z-index: 30;">YES</div>
+<div style="position: absolute; top: 388px; left: 420px; font-size: 8.5pt; font-weight: 700; color: #2e7d32; z-index: 30;">NO</div>
+<div style="position: absolute; top: 440px; left: 505px; font-size: 8.5pt; font-weight: 700; color: #a62828; z-index: 30;">NO</div>
+<div style="position: absolute; top: 508px; left: 420px; font-size: 8.5pt; font-weight: 700; color: #2e7d32; z-index: 30;">YES</div>
+<div style="position: absolute; top: 660px; left: 265px; font-size: 8.5pt; font-weight: 700; color: #2e7d32; z-index: 30;">≤ 4.5 h</div>
+<div style="position: absolute; top: 728px; left: 420px; font-size: 8.5pt; font-weight: 700; color: #1f6b8a; z-index: 30;">&gt; 4.5 h</div>
+<div style="position: absolute; top: 783px; left: 182px; font-size: 8.0pt; font-weight: 700; color: #a62828; z-index: 30;">NO</div>
+</div>
+</div>
+
+<div id="card-figure_07_ivt_contraindications" class="card-wrapper card-figure_07_ivt_contraindications">
+<div class="card-container">
+<!-- Title Block -->
+<div class="title-block">
+<span>IVT ELIGIBILITY</span>
+<div class="divider"></div>
+</div>
+<!-- Table Container -->
+<div class="table-container">
+<table class="contra-table">
+<thead>
+<!-- Red Header -->
+<tr>
+<th class="header-absolute" colspan="2">Absolute Contraindications</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-pink">
+<td class="col-left">CT with hemorrhage</td>
+<td class="col-right">Acute intracranial hemorrhage</td>
+</tr>
+<tr class="bg-pink">
+<td class="col-left">CT with extensive hypodensity</td>
+<td class="col-right">Clear hypodensity responsible for symptoms</td>
+</tr>
+<tr>
+<td class="col-left">Neurosurgery &lt;14 days</td>
+<td class="col-right">Risk of intracranial or spinal hemorrhage</td>
+</tr>
+<tr class="bg-pink">
+<td class="col-left">Acute spinal cord injury &lt;3 months</td>
+<td class="col-right">Risk of spinal hemorrhage</td>
+</tr>
+<tr>
+<td class="col-left">Intra-axial neoplasm</td>
+<td class="col-right">Primary or metastatic brain tumor</td>
+</tr>
+<tr class="bg-pink">
+<td class="col-left">Infective endocarditis</td>
+<td class="col-right">High risk of mycotic aneurysm rupture</td>
+</tr>
+<tr>
+<td class="col-left">Severe coagulopathy</td>
+<td class="col-right">Plt &lt;100K, INR &gt;1.7, aPTT &gt;40s, PT &gt;15s</td>
+</tr>
+<tr class="bg-pink">
+<td class="col-left">Aortic arch dissection</td>
+<td class="col-right">Risk of aortic rupture or extension</td>
+</tr>
+<tr>
+<td class="col-left">Moderate-severe TBI &lt;14 days</td>
+<td class="col-right">GCS &lt;13 OR hemorrhage/contusion/skull fracture</td>
+</tr>
+<tr class="bg-pink">
+<td class="col-left">Amyloid immunotherapy / ARIA</td>
+<td class="col-right">ICH risk unknown</td>
+</tr>
+<!-- Orange Header -->
+<tr>
+<th class="header-relative" colspan="2" style="border-top: 2px solid var(--border-color);">Relative Contraindications</th>
+</tr>
+<tr>
+<td class="col-left">Pre-existing disability/frailty</td>
+<td class="col-right">Benefit/risk remains uncertain</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">DOAC exposure &lt;48h</td>
+<td class="col-right">Safety unknown; limited observational data only</td>
+</tr>
+<tr>
+<td class="col-left">Prior ischemic stroke &lt;3 months</td>
+<td class="col-right">Weigh timing and size of prior infarct</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">Prior ICH</td>
+<td class="col-right">CAA = higher risk; HTN/modifiable etiology may have benefit</td>
+</tr>
+<tr>
+<td class="col-left">Major non-CNS trauma (14d–3mo)</td>
+<td class="col-right">Surgical consultation recommended; risk of systemic bleed</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">Major non-CNS surgery &lt;10 days</td>
+<td class="col-right">Risk of surgical site hemorrhage</td>
+</tr>
+<tr>
+<td class="col-left">GI/GU bleeding &lt;21 days</td>
+<td class="col-right">GI/GU consult to verify bleeding is treated/modified</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">Arterial/dural puncture &lt;7 days</td>
+<td class="col-right">Arterial (non-compressible site): safety unknown. Dural (LP): acceptable.</td>
+</tr>
+<tr>
+<td class="col-left">Intracranial vascular malformations</td>
+<td class="col-right">Safety unknown for unruptured/untreated malformations</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">Intracranial arterial dissection</td>
+<td class="col-right">Safety unknown</td>
+</tr>
+<tr>
+<td class="col-left">Recent STEMI &lt;3 months</td>
+<td class="col-right">Cardiology consult; risk of hemopericardium</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">Acute pericarditis</td>
+<td class="col-right">Emergent cardiology consult (hemopericardium risk)</td>
+</tr>
+<tr>
+<td class="col-left">Left atrial or ventricular thrombus</td>
+<td class="col-right">Cardiology consult</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">Pregnancy / post-partum</td>
+<td class="col-right">Obstetric consult; risk of uterine bleeding</td>
+</tr>
+<tr>
+<td class="col-left">Systemic active malignancy</td>
+<td class="col-right">Oncology consult; safety unknown</td>
+</tr>
+<tr class="bg-yellow">
+<td class="col-left">Neurosurgery 14 days–3 months</td>
+<td class="col-right">Neurosurgical consultation recommended</td>
+</tr>
+<tr>
+<td class="col-left">Moderate-severe TBI 14 days–3 months</td>
+<td class="col-right">Neurosurgical / neurocritical care consult</td>
+</tr>
+<!-- Green Header -->
+<tr>
+<th class="header-benefit" colspan="2" style="border-top: 2px solid var(--border-color);">Benefit Likely &gt; Risk : Consider IVT</th>
+</tr>
+<tr>
+<td class="col-left">Extracranial cervical dissection</td>
+<td class="col-right">Reasonably safe</td>
+</tr>
+<tr class="bg-green">
+<td class="col-left">Extra-axial intracranial neoplasm</td>
+<td class="col-right">Likely low risk of hemorrhage</td>
+</tr>
+<tr>
+<td class="col-left">Unruptured intracranial aneurysm</td>
+<td class="col-right">Likely low risk of rupture</td>
+</tr>
+<tr class="bg-green">
+<td class="col-left">Angiographic procedural stroke</td>
+<td class="col-right">During or immediately post-procedure</td>
+</tr>
+<tr>
+<td class="col-left">History of GI/GU bleeding (remote)</td>
+<td class="col-right">Candidates if bleeding is stable</td>
+</tr>
+<tr class="bg-green">
+<td class="col-left">History of MI (remote)</td>
+<td class="col-right">No increased risk of cardiac complications</td>
+</tr>
+<tr>
+<td class="col-left">Recreational drug use</td>
+<td class="col-right">No increased hemorrhagic risk</td>
+</tr>
+<tr class="bg-green">
+<td class="col-left">Stroke mimic uncertainty</td>
+<td class="col-right">Low risk of hemorrhage (0.5% HT risk)</td>
+</tr>
+<tr>
+<td class="col-left">Moya-Moya disease</td>
+<td class="col-right">No increased risk of ICH</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="card-figure_08_ivt_consent_guidelines" class="card-wrapper card-figure_08_ivt_consent_guidelines">
+<div class="card-container" style="padding: 15px 45px 10px 45px;">
+<div class="card-content" style="justify-content: flex-start; gap: 4px;">
+<h1 style="margin-bottom: 6px; font-size: 16.5pt; border-bottom-color: var(--purple-soft); padding-bottom: 2px; text-align: center;">IV Thrombolysis (IVT) Consent Guidelines</h1>
+<div class="guideline-box">
+<strong>Consent Requirements:</strong> Neurology obtains consent for thrombolytic therapy (not for thrombectomy - we assist ED in obtaining family contacts).
+        <div style="margin-top: 6px; font-weight: 700; color: var(--red-deep);">
+          Do NOT delay lytics. If the patient lacks capacity and no family/surrogate is available, treat immediately as standard of care.
+        </div>
+</div>
+<h2 style="margin: 6px 0 4px 0; font-size: 14.5pt;">Key Risks, Benefits &amp; Alternatives</h2>
+<p style="font-size: 10.2pt; margin-bottom: 4px; color: var(--ink-soft); line-height: 1.4;">
+        Tenecteplase (TNK) dissolves blood clots to restore cerebral perfusion, significantly improving the probability of a good functional recovery when given within 4.5h.
+      </p>
+<div class="grid-stats">
+<div class="stat-card">
+<div class="val">1 in 3 – 4</div>
+<div class="lbl">Improved Outcome</div>
+</div>
+<div class="stat-card">
+<div class="val">1 in 8</div>
+<div class="lbl">Excellent Outcome</div>
+</div>
+<div class="stat-card red-card">
+<div class="val">1 in 25</div>
+<div class="lbl">Symptomatic Bleed (4%)</div>
+</div>
+<div class="stat-card red-card">
+<div class="val" style="font-size: 16.5pt; line-height: 1.25;">No Guarantee</div>
+<div class="lbl">Disability Still Possible</div>
+</div>
+</div>
+
+<h2 style="margin: 8px 0 4px 0; font-size: 14.5pt;">Consent Discussion Scripts</h2>
+<div style="font-size: 10.0pt; line-height: 1.45;">
+<strong style="color: var(--purple-deep); font-size: 10.5pt;">Standard Window: "GIST" Version (0–4.5 Hours)</strong>
+<div class="quote-box" style="border-left-color: var(--teal); background: var(--teal-soft); color: var(--teal-deep); margin: 4px 0 6px 0; padding: 6px 12px; font-size: 9.8pt; line-height: 1.4;">
+        "Getting this clot buster after a stroke reduces your risk of permanent disability. People who get this have a much better chance of recovering and getting back to normal activities compared to those who do not. All medicines have risk. With this one, there is a 4% risk of serious bleeding in the brain. However, time is critical. The faster we give it, the greater the chance of a good outcome."
+</div>
+<strong style="color: var(--purple-deep); font-size: 10.5pt; display: block; margin-top: 6px;">Extended Window Script (4.5–24 Hours)</strong>
+<div class="quote-box" style="border-left-color: var(--purple); background: var(--purple-soft); color: var(--purple-deep); margin: 4px 0 6px 0; padding: 6px 12px; font-size: 9.8pt; line-height: 1.4;">
+        "Tenecteplase, a clot-dissolving medication, is a treatment for your suspected stroke that can be given beyond the usual 4.5-hour window when brain imaging shows there is still tissue that can be saved. In clinical trials, people who received this treatment in the extended time window had about a 9–11% better chance of recovering without disability compared with people who did not receive the treatment. However, all medicines have some risk, and with clot-dissolving drugs, there is a risk of serious bleeding. Bleeding into the brain that leads to new symptoms can occur in up to about 3% of those treated. This use of clot-dissolving medications beyond 4.5 hours from stroke onset is supported by limited evidence from clinical trials and many uncertainties remain. Your alternatives include standard stroke care without thrombolysis. Based on your imaging findings and clinical presentation, we suspect the benefit of treatment outweighs the risk and recommend proceeding with Tenecteplase treatment."
+</div>
+<div style="font-size: 8.5pt; color: var(--ink-soft); line-height: 1.35; margin-bottom: 6px; border-left: 2px solid var(--rule); padding-left: 10px; font-weight: 500;">
+        <strong>Usage Guide:</strong> Read or paraphrase this script to the patient or legally authorized representative when obtaining consent for Tenecteplase administration in the 4.5 to 24-hour window. Document the discussion and consent decision in the EHR note.
+</div>
+</div>
+
+<h2 style="margin: 8px 0 4px 0; font-size: 14.5pt;">EHR Documentation Guidance</h2>
+<div style="font-size: 10.0pt; line-height: 1.45;">
+<strong style="color: var(--purple-deep); font-size: 10.0pt;">If Patient is ABLE to Consent:</strong>
+<div class="quote-box" style="margin: 4px 0 6px 0; padding: 6px 12px; font-size: 9.8pt;">
+  "After establishing eligibility for IV thrombolysis, I discussed the risks, benefits, and alternatives of TNK with the patient/family. They understood the issues, had a chance to ask questions, and agreed to proceed."
+</div>
+<strong style="color: var(--purple-deep); font-size: 10.0pt;">If Patient is UNABLE to Consent:</strong>
+<div class="quote-box" style="margin: 4px 0 6px 0; padding: 6px 12px; font-size: 9.8pt;">
+  "The patient lacks capacity to consent due to severe stroke deficits, and no family/surrogate was immediately reachable. I proceeded with TNK treatment as a guideline-endorsed, evidence-based standard of care."
+</div>
+</div>
+<div class="note-reqs" style="margin-top: 6px; padding: 8px 12px;">
+<strong>Mandatory EHR Note Checklist:</strong>
+<ol style="margin: 4px 0 0 0; padding-left: 16px; font-size: 9.8pt; font-weight: 500; line-height: 1.4;">
+<li>Document the face-to-face safety pause by typing <strong>.STROKESAFETYPAUSE</strong> in your note.</li>
+<li>If TNK was withheld after a stroke code, document the clinical rationale.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="card-figure_09_doac_exposed_lytics" class="card-wrapper card-figure_09_doac_exposed_lytics">
+<div class="card-container" style="padding: 40px 40px; display: flex; flex-direction: column; justify-content: flex-start;">
+<div class="card-content" style="justify-content: flex-start; flex-grow: 0;">
+<!-- Top Flowchart Section -->
+<div class="flowchart-container">
+<h1 style="margin: 0 0 20px 0; font-size: 16.5pt; text-transform: uppercase; color: var(--purple-deep); border-bottom: 2.5px solid var(--purple-soft); padding-bottom: 6px; letter-spacing: 0.03em; width: 100%; text-align: center;">DOAC Exposed Patients: IV Thrombolysis</h1>
+<!-- Top Box -->
+<div class="flow-box-top">
+          AIS patient with DOAC exposure &lt;48h
+        </div>
+<!-- Arrow 1 -->
+<svg fill="none" height="20" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 20 20" width="20">
+<path d="M10 -2V20" stroke="var(--teal)" stroke-width="2.5"></path>
+<path d="M5 15L10 20L15 15" stroke="var(--teal)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<!-- Criteria Box -->
+<div class="flow-box-criteria">
+<div class="title">Criteria:</div>
+<div style="display: flex; justify-content: center; gap: 32px; font-size: 12.0pt; font-weight: 600; color: #1a4f73; margin-top: 4px;">
+<div><span style="color: #0288d1; font-weight: bold; margin-right: 4px;">✓</span> Disabling stroke deficits</div>
+<div><span style="color: #0288d1; font-weight: bold; margin-right: 4px;">✓</span> NOT an endovascular candidate</div>
+</div>
+<div style="display: flex; justify-content: center; font-size: 12.0pt; font-weight: 600; color: #1a4f73; margin-top: 8px;">
+<div><span style="color: #0288d1; font-weight: bold; margin-right: 4px;">✓</span> All other IVT exclusion criteria reviewed</div>
+</div>
+</div>
+<!-- Split Fork -->
+<svg fill="none" height="25" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 745 25" width="745">
+<path d="M372.5 -2V10" stroke="var(--teal)" stroke-width="2.5"></path>
+<path d="M175 10H570" stroke="var(--teal)" stroke-width="2.5"></path>
+<path d="M175 10V25" stroke="var(--teal)" stroke-width="2.5"></path>
+<path d="M170 20L175 25L180 20" stroke="var(--teal)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M570 10V25" stroke="var(--teal)" stroke-width="2.5"></path>
+<path d="M565 20L570 25L575 20" stroke="var(--teal)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<!-- Two Columns -->
+<div class="flow-cols">
+<!-- Left Column -->
+<div class="flow-col col-left">
+<div class="flow-col-header">Clinical Centers</div>
+<div class="flow-col-content">
+<div style="font-size: 11.5pt; font-weight: 700; color: var(--teal-deep); margin-bottom: 4px;">Additional requirement:</div>
+<div class="inner-req-box">
+                Anti-Xa UNDETECTABLE
+              </div>
+<div style="font-size: 10.0pt; color: var(--ink-mute); font-style: italic; margin-top: 6px; text-align: center;">
+                Documentation: Attending attestation recommended
+              </div>
+</div>
+</div>
+<!-- Right Column -->
+<div class="flow-col col-right">
+<div class="flow-col-header">Telestroke Sites</div>
+<div class="flow-col-content">
+<div style="font-size: 11.5pt; font-weight: 700; color: var(--amber-deep); margin-bottom: 10px; text-align: center; width: 100%;">Additional requirements:</div>
+<div style="display: inline-block; text-align: left; font-size: 11.5pt; line-height: 1.6; font-weight: 600; color: var(--ink);">
+<div style="margin-bottom: 6px;"><span style="color: #2e7d32; font-weight: bold; margin-right: 4px;">✓</span> Normal renal function</div>
+<div style="margin-bottom: 6px;"><span style="color: #2e7d32; font-weight: bold; margin-right: 4px;">✓</span> Last known dose ≥24 hours</div>
+<div><span style="color: #c62828; font-weight: bold; margin-right: 4px;">✓</span> <span style="color: #c62828; font-weight: 700;">Consent REQUIRED</span></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Arrows to bottom -->
+<svg fill="none" height="20" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 745 20" width="745">
+<path d="M175 -2V20" stroke="#2e7d32" stroke-width="2.5"></path>
+<path d="M170 15L175 20L180 15" stroke="#2e7d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M570 -2V20" stroke="#2e7d32" stroke-width="2.5"></path>
+<path d="M565 15L570 20L575 15" stroke="#2e7d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<!-- Bottom Box -->
+<div class="flow-box-bottom">
+<div class="main-text">IVT may be considered</div>
+<div class="sub-text">Based on observational data only · no RCTs</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="card-figure_11_orolingual_angioedema" class="card-wrapper card-figure_11_orolingual_angioedema">
+<div class="card-container" style="padding: 25px 40px 20px 40px;">
+<div class="card-content" style="justify-content: flex-start; gap: 10px;">
+<h1 style="font-size: 16.5pt; margin-bottom: 6px; padding-bottom: 2px; border-bottom-color: var(--purple-soft); text-align: center;">Orolingual Angioedema Protocol</h1>
+<p style="font-size: 10.2pt; color: var(--ink-soft); margin-bottom: 12px; font-weight: 500;">
+        Emergency management of orolingual angioedema associated with IV thrombolytic administration for acute ischemic stroke.
+      </p>
+<!-- Table Block -->
+<div class="angio-table-container">
+<div class="angio-header">
+<div class="angio-header-cell angio-header-cor">COR IIb</div>
+<div class="angio-header-cell angio-header-loe">LOE C-EO</div>
+</div>
+<table class="angio-table">
+<tbody>
+<tr>
+<td class="angio-row-main-airway">Maintain airway</td>
+</tr>
+<tr>
+<td class="angio-row-sub-airway">Endotracheal intubation may not be necessary if edema is limited to anterior tongue and lips.</td>
+</tr>
+<tr>
+<td class="angio-row-sub-airway">Edema involving larynx, palate, floor of mouth, or oropharynx with rapid progression (within 30 min) poses higher risk of requiring intubation.</td>
+</tr>
+<tr>
+<td class="angio-row-sub-airway">Awake fiberoptic intubation is optimal. Nasal-tracheal intubation may be required but poses risk of epistaxis after IV alteplase. Cricothyroidotomy is rarely needed and also problematic after IV alteplase.</td>
+</tr>
+<tr>
+<td>Discontinue IV thrombolytic and hold ACE inhibitors</td>
+</tr>
+<tr>
+<td>Administer IV methylprednisolone 125 mg</td>
+</tr>
+<tr>
+<td>Administer IV diphenhydramine 50 mg</td>
+</tr>
+<tr>
+<td>Administer ranitidine 50 mg IV or famotidine 20 mg IV</td>
+</tr>
+<tr>
+<td>If there is further increase in angioedema, administer epinephrine (0.1%) 0.3 mL subcutaneously or by nebulizer 0.5 mL</td>
+</tr>
+<tr>
+<td>
+          Plasma-derived C1 esterase inhibitor (Berinert) (20IU/kg)<br/>
+          Refer to Epic Order set and choose IV Thrombolytic option:<br/>
+<strong>Life-Threatening Angioedema Treatment (Single Response)</strong>
+</td>
+</tr>
+<tr>
+<td>Supportive care</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer Note -->
+<div style="font-size: 9.0pt; color: var(--ink-mute); line-height: 1.4; margin-top: 15px; border-left: 2px solid var(--rule); padding-left: 8px;">
+        ACE indicates angiotensin-converting enzyme; AIS, acute ischemic stroke; COR, class of recommendation; IV, intravenous; and LOE, Level of Evidence.
+      </div>
+</div>
+</div>
+</div>
+
+<div id="card-figure_19_bp_ischemic" class="card-wrapper card-figure_19_bp_ischemic">
+<div class="card-container">
+<img class="card-image" src="../assets/bp_ischemic.png"/>
+</div>
+</div>
+
+
+  </div>
+
+  <script>
+    // Copy template utility for bedside consent template
+    document.addEventListener("DOMContentLoaded", function() {
+      const template = document.querySelector(".copyable-template");
+      if (template) {
+        template.addEventListener("click", function() {
+          const text = this.innerText.replace(/COPY TEMPLATE/g, "").trim();
+          navigator.clipboard.writeText(text).then(() => {
+            const badge = this.querySelector(".copy-badge");
+            if (badge) {
+              badge.classList.add("copied");
+              badge.innerText = "Copied!";
+              setTimeout(() => {
+                badge.classList.remove("copied");
+                badge.innerText = "Copy Template";
+              }, 2000);
+            }
+          }).catch(err => {
+            console.error("Clipboard error:", err);
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

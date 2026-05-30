@@ -619,6 +619,30 @@ table.card-table tbody td.label-cell {
     break-after: page !important;
     width: 825px !important;
     height: 1275px !important;
+}
+
+/* Mobile Responsiveness Overrides for Bedside Usage */
+@media (max-width: 850px) {
+  body {
+    padding: 10px 0 !important;
+  }
+  .card-container, .landscape-card {
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    padding: 15px 15px !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .landscape-card .card-container {
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    transform: none !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    padding: 15px 15px !important;
   }
 }
 

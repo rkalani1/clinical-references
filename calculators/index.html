@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Clinical Calculators - Stroke & Neurology</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,600;0,6..72,700;1,6..72,400&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #070d19;
+      --surface: #0e1726;
+      --surface-hover: #131f33;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(0, 242, 254, 0.3);
+      
+      --accent-cyan: #00f2fe;
+      --accent-blue: #4facfe;
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --accent-glow: rgba(0, 242, 254, 0.15);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --radius-card: 16px;
+      --radius-btn: 8px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navigation */
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .portal-nav a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .portal-nav svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+    }
+
+    /* Layout */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex: 1;
+      padding: 2rem 1.5rem;
+      gap: 2rem;
+    }
+
+    /* Sidebar Switcher */
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-btn);
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-btn:hover {
+      background: var(--surface-hover);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .sidebar-btn.active {
+      background: var(--accent-gradient);
+      color: var(--bg);
+      border-color: transparent;
+      box-shadow: 0 8px 20px -6px var(--accent-glow);
+    }
+
+    .sidebar-btn .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+    }
+
+    .sidebar-btn.active .badge {
+      background: rgba(0, 0, 0, 0.15);
+      color: var(--bg);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .calc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 2.5rem;
+      display: none;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+    }
+
+    .calc-card.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Headings */
+    .calc-header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    .calc-header h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Form Fields */
+    .question-block {
+      margin-bottom: 2rem;
+    }
+
+    .question-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+    }
+
+    /* Button Radio Selectors */
+    .opt-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-btn);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .opt-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .opt-btn.selected {
+      background: rgba(0, 242, 254, 0.08);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.1);
+    }
+
+    /* Sub Calculator (ABC/2 volume) */
+    .sub-calc-box {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .sub-calc-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-group label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .input-group input {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      padding: 0.75rem;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 8px rgba(0, 242, 254, 0.15);
+    }
+
+    /* Result Panel */
+    .result-panel {
+      background: linear-gradient(135deg, rgba(14, 23, 38, 0.8) 0%, rgba(20, 32, 54, 0.8) 100%);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-card);
+      padding: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      margin-top: 2rem;
+    }
+
+    .result-left h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .result-score {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .result-right {
+      flex: 1;
+      text-align: right;
+    }
+
+    .result-interpretation {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+
+    .result-details {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .app-container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+      }
+      .sidebar-btn {
+        flex: 0 0 auto;
+        padding: 0.75rem 1rem;
+      }
+      .calc-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="portal-nav">
+    <a href="../index.html">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Portal Dashboard
+    </a>
+    <span style="font-size:0.85rem; font-weight:600; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.05em;">Interactive Calculators</span>
+  </nav>
+
+  <div class="app-container">
+    
+    <!-- Sidebar / Switcher -->
+    <aside class="sidebar">
+      <button class="sidebar-btn active" onclick="switchCalc('gcs')">
+        GCS <span class="badge">3-15</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('ich')">
+        ICH Score <span class="badge">0-6</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('abcd2')">
+        ABCD2 <span class="badge">0-7</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('chads')">
+        CHADS2-VASc <span class="badge">0-9</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('rope')">
+        RoPE / PASCAL <span class="badge">0-10</span>
+      </button>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Calculator 1: GCS -->
+      <div id="calc-gcs" class="calc-card active">
+        <div class="calc-header">
+          <h1>Glasgow Coma Scale</h1>
+          <p>Standardized scale for assessing conscious state in patients.</p>
+        </div>
+        
+        <div class="question-block">
+          <div class="question-title">Eye Opening Response (E)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="4" onclick="selectOpt('gcs-e', this)">Spontaneous (4)</div>
+            <div class="opt-btn" data-val="3" onclick="selectOpt('gcs-e', this)">To Sound (3)</div>
+            <div class="opt-btn" data-val="2" onclick="selectOpt('gcs-e', this)">To Pain (2)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('gcs-e', this)">None (1)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Verbal Response (V)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="5" onclick="selectOpt('gcs-v', this)">Oriented (5)</div>
+            <div class="opt-btn" data-val="4" onclick="selectOpt('gcs-v', this)">Confused (4)</div>
+            <div class="opt-btn" data-val="3" onclick="selectOpt('gcs-v', this)">Inappropriate (3)</div>
+            <div class="opt-btn" data-val="2" onclick="selectOpt('gcs-v', this)">Incomprehensible (2)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('gcs-v', this)">None (1)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Motor Response (M)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="6" onclick="selectOpt('gcs-m', this)">Obeying commands (6)</div>
+            <div class="opt-btn" data-val="5" onclick="selectOpt('gcs-m', this)">Localizing pain (5)</div>
+            <div class="opt-btn" data-val="4" onclick="selectOpt('gcs-m', this)">Normal Flexion (4)</div>
+            <div class="opt-btn" data-val="3" onclick="selectOpt('gcs-m', this)">Abnormal Flexion (3)</div>
+            <div class="opt-btn" data-val="2" onclick="selectOpt('gcs-m', this)">Extending to pain (2)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('gcs-m', this)">None (1)</div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>GCS Score</h3>
+            <div class="result-score" id="gcs-score-val">15</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="gcs-interp">Oriented / Mild Impairment</div>
+            <div class="result-details" id="gcs-details">E4 V5 M6</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 2: ICH Score -->
+      <div id="calc-ich" class="calc-card">
+        <div class="calc-header">
+          <h1>ICH Score & Volume Calculator</h1>
+          <p>Predicts 30-day mortality risk for intracerebral hemorrhage.</p>
+        </div>
+
+        <!-- Volume sub-calc -->
+        <div class="sub-calc-box">
+          <div class="sub-calc-title">ICH Volume Calculator (ABC/2)</div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label for="ich-vol-a">Diameter A (cm)</label>
+              <input type="number" step="0.1" id="ich-vol-a" placeholder="Largest (cm)" oninput="calcVol()">
+            </div>
+            <div class="input-group">
+              <label for="ich-vol-b">Diameter B (90° to A, cm)</label>
+              <input type="number" step="0.1" id="ich-vol-b" placeholder="Width (cm)" oninput="calcVol()">
+            </div>
+            <div class="input-group">
+              <label for="ich-vol-c">Height C (# Slices x Thickness)</label>
+              <input type="number" step="0.1" id="ich-vol-c" placeholder="Height (cm)" oninput="calcVol()">
+            </div>
+          </div>
+          <div style="font-size:0.88rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
+            <span>Volume = <strong id="calculated-volume-text" style="color:var(--accent-cyan);">0.0</strong> cc</span>
+            <span id="volume-pts-msg" style="font-weight:600;">(Adds 0 points to ICH Score)</span>
+          </div>
+        </div>
+        
+        <div class="question-block">
+          <div class="question-title">GCS Score</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="2" onclick="selectOpt('ich-gcs', this)">3-4 (+2 points)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('ich-gcs', this)">5-12 (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('ich-gcs', this)">13-15 (0 points)</div>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; font-style:italic;">
+            Note: Auto-populates if you have filled out the GCS tab.
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Age (years)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('ich-age', this)">≥ 80 (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('ich-age', this)">&lt; 80 (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">ICH Volume</div>
+          <div class="option-grid">
+            <div class="opt-btn" id="ich-vol-ge30" data-val="1" onclick="selectOpt('ich-vol', this)">≥ 30 cc (+1 point)</div>
+            <div class="opt-btn" id="ich-vol-lt30" data-val="0" onclick="selectOpt('ich-vol', this)">&lt; 30 cc (0 points)</div>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; font-style:italic;">
+            Note: Will auto-toggle based on the ABC/2 sub-calculator above.
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Intraventricular Hemorrhage (IVH)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('ich-ivh', this)">Present (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('ich-ivh', this)">Absent (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Infratentorial Origin</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('ich-infra', this)">Yes (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('ich-infra', this)">No (0 points)</div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>ICH Score</h3>
+            <div class="result-score" id="ich-score-val">0</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="ich-interp">Mortality Risk: 0.9%</div>
+            <div class="result-details" id="ich-details">HMC mortality (2005-2008, comfort care excluded)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 3: ABCD2 -->
+      <div id="calc-abcd2" class="calc-card">
+        <div class="calc-header">
+          <h1>ABCD2 Score</h1>
+          <p>Assesses the short-term stroke risk after a TIA.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Age</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('abcd-age', this)">≥ 60 yo (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('abcd-age', this)">&lt; 60 yo (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Initial Blood Pressure</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('abcd-bp', this)">SBP ≥ 140 or DBP ≥ 90 (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('abcd-bp', this)">Normal (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Clinical Presentation of TIA</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="2" onclick="selectOpt('abcd-clin', this)">Unilateral Weakness (+2)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('abcd-clin', this)">Speech disturbance w/o weakness (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('abcd-clin', this)">Other symptoms (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Duration of TIA Symptoms</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="2" onclick="selectOpt('abcd-dur', this)">≥ 60 mins (+2)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('abcd-dur', this)">10 - 59 mins (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('abcd-dur', this)">&lt; 10 mins (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Diabetes Mellitus History</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('abcd-dm', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('abcd-dm', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>ABCD2 Score</h3>
+            <div class="result-score" id="abcd-score-val">0</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="abcd-interp">Low Risk (Score 0-3)</div>
+            <div class="result-details" id="abcd-details">2-day risk: 1.0% | 7-day risk: 1.2% | 90-day risk: 3.1%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 4: CHADS2-VASc -->
+      <div id="calc-chads" class="calc-card">
+        <div class="calc-header">
+          <h1>CHADS2-VASc Score</h1>
+          <p>Predicts stroke risk in patients with non-valvular atrial fibrillation.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">CHF History (Congestive Heart Failure)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('chads-chf', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('chads-chf', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">HTN History (Hypertension)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('chads-htn', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('chads-htn', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Age (years)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="2" onclick="selectOpt('chads-age', this)">≥ 75 (+2)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('chads-age', this)">65-74 (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('chads-age', this)">&lt; 65 (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Diabetes Mellitus History</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('chads-dm', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('chads-dm', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Prior Stroke / TIA / Thromboembolism</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="2" onclick="selectOpt('chads-stroke', this)">Yes (+2)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('chads-stroke', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Vascular Disease History (prior MI, PAD, aortic plaque)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('chads-vasc', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('chads-vasc', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Female Biological Sex</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('chads-sex', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('chads-sex', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>Score</h3>
+            <div class="result-score" id="chads-score-val">0</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="chads-interp">Annual Stroke Risk: 0.0%</div>
+            <div class="result-details" id="chads-details">Based on clinical registry trials for Afib ischemic stroke risk.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 5: RoPE & PASCAL -->
+      <div id="calc-rope" class="calc-card">
+        <div class="calc-header">
+          <h1>RoPE & PASCAL Score</h1>
+          <p>Evaluates Patent Foramen Ovale (PFO) relatedness in cryptogenic stroke.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Hypertension History</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rope-htn', this)">No (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rope-htn', this)">Yes (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Diabetes History</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rope-dm', this)">No (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rope-dm', this)">Yes (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Stroke / TIA History</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rope-hx', this)">No (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rope-hx', this)">Yes (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Smoking History</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rope-smoke', this)">Nonsmoker (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rope-smoke', this)">Smoker (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Imaging: Cortical Infarct on Neuroimaging</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rope-cort', this)">Present (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rope-cort', this)">Absent (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Age (years)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="5" onclick="selectOpt('rope-age', this)">18 - 29 (+5 points)</div>
+            <div class="opt-btn" data-val="4" onclick="selectOpt('rope-age', this)">30 - 39 (+4 points)</div>
+            <div class="opt-btn" data-val="3" onclick="selectOpt('rope-age', this)">40 - 49 (+3 points)</div>
+            <div class="opt-btn" data-val="2" onclick="selectOpt('rope-age', this)">50 - 59 (+2 points)</div>
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rope-age', this)">60 - 69 (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rope-age', this)">≥ 70 (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block" style="border-top:1px dashed var(--border); padding-top:1.5rem;">
+          <div class="question-title" style="color:var(--accent-blue);">PASCAL Classification Check</div>
+          <p style="font-size:0.82rem; margin-bottom:0.75rem;">Select if patient has PFO High Risk Features (Large PFO or Atrial Septal Aneurysm):</p>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rope-hrf', this)">Yes, High Risk Features present</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rope-hrf', this)">No High Risk Features</div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>RoPE Score</h3>
+            <div class="result-score" id="rope-score-val">0</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="rope-interp">PFO-Related Stroke Likelihood: Unlikely</div>
+            <div class="result-details" id="rope-details">Attributable Fraction: 0% | PASCAL: Unlikely</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    // Selected options states
+    const states = {
+      // GCS
+      'gcs-e': 4,
+      'gcs-v': 5,
+      'gcs-m': 6,
+      // ICH
+      'ich-gcs': 0,
+      'ich-age': 0,
+      'ich-vol': 0,
+      'ich-ivh': 0,
+      'ich-infra': 0,
+      // ABCD2
+      'abcd-age': 0,
+      'abcd-bp': 0,
+      'abcd-clin': 0,
+      'abcd-dur': 0,
+      'abcd-dm': 0,
+      // CHADS
+      'chads-chf': 0,
+      'chads-htn': 0,
+      'chads-age': 0,
+      'chads-dm': 0,
+      'chads-stroke': 0,
+      'chads-vasc': 0,
+      'chads-sex': 0,
+      // RoPE
+      'rope-htn': 0,
+      'rope-dm': 0,
+      'rope-hx': 0,
+      'rope-smoke': 0,
+      'rope-cort': 0,
+      'rope-age': 0,
+      'rope-hrf': 0
+    };
+
+    // Initialize option layouts
+    function selectOpt(category, elem) {
+      const parent = elem.parentElement;
+      const buttons = parent.querySelectorAll('.opt-btn');
+      buttons.forEach(btn => btn.classList.remove('selected'));
+      
+      elem.classList.add('selected');
+      states[category] = parseInt(elem.getAttribute('data-val'));
+      
+      // Trigger calculations
+      if (category.startsWith('gcs-')) {
+        calcGCS();
+      } else if (category.startsWith('ich-')) {
+        calcICH();
+      } else if (category.startsWith('abcd-')) {
+        calcABCD2();
+      } else if (category.startsWith('chads-')) {
+        calcCHADS();
+      } else if (category.startsWith('rope-')) {
+        calcRoPE();
+      }
+    }
+
+    // Tab Switcher
+    function switchCalc(calcId) {
+      const btns = document.querySelectorAll('.sidebar-btn');
+      btns.forEach(btn => btn.classList.remove('active'));
+      
+      const activeBtn = Array.from(btns).find(btn => btn.getAttribute('onclick').includes(calcId));
+      if (activeBtn) activeBtn.classList.add('active');
+      
+      const cards = document.querySelectorAll('.calc-card');
+      cards.forEach(card => card.classList.remove('active'));
+      
+      document.getElementById('calc-' + calcId).classList.add('active');
+    }
+
+    // 1. GCS Calculation
+    function calcGCS() {
+      const e = states['gcs-e'] || 0;
+      const v = states['gcs-v'] || 0;
+      const m = states['gcs-m'] || 0;
+      const total = e + v + m;
+      
+      document.getElementById('gcs-score-val').innerText = total;
+      
+      let interp = "Severe Impairment / Coma (GCS ≤ 8)";
+      if (total >= 13) {
+        interp = "Mild Impairment / Normal";
+      } else if (total >= 9) {
+        interp = "Moderate Impairment";
+      }
+      
+      document.getElementById('gcs-interp').innerText = interp;
+      document.getElementById('gcs-details').innerText = `Eye: ${e} | Verbal: ${v} | Motor: ${m}`;
+      
+      // Auto-populate GCS in ICH calculator
+      let ichGcsPoints = 0;
+      if (total <= 4) {
+        ichGcsPoints = 2; // GCS 3-4
+      } else if (total <= 12) {
+        ichGcsPoints = 1; // GCS 5-12
+      } else {
+        ichGcsPoints = 0; // GCS 13-15
+      }
+      
+      // Find the option grid in the ICH section and toggle GCS point buttons
+      const ichGcsBtns = document.querySelectorAll('[onclick*="ich-gcs"]');
+      ichGcsBtns.forEach(btn => {
+        if (parseInt(btn.getAttribute('data-val')) === ichGcsPoints) {
+          selectOpt('ich-gcs', btn);
+        }
+      });
+    }
+
+    // 2. ICH Calculator Volume Subcalculator
+    function calcVol() {
+      const a = parseFloat(document.getElementById('ich-vol-a').value) || 0;
+      const b = parseFloat(document.getElementById('ich-vol-b').value) || 0;
+      const c = parseFloat(document.getElementById('ich-vol-c').value) || 0;
+      
+      const vol = (a * b * c) / 2.0;
+      document.getElementById('calculated-volume-text').innerText = vol.toFixed(1);
+      
+      const volumePoints = (vol >= 30.0) ? 1 : 0;
+      
+      // Set points warning message
+      const msg = document.getElementById('volume-pts-msg');
+      if (volumePoints === 1) {
+        msg.innerText = "(Adds 1 point to ICH Score: ≥30 cc)";
+        msg.style.color = "var(--accent-cyan)";
+      } else {
+        msg.innerText = "(Adds 0 points to ICH Score: <30 cc)";
+        msg.style.color = "var(--text-muted)";
+      }
+      
+      // Auto toggle ICH volume selectors
+      const ichVolBtns = document.querySelectorAll('[onclick*="ich-vol"]');
+      ichVolBtns.forEach(btn => {
+        const val = parseInt(btn.getAttribute('data-val'));
+        if (val === volumePoints) {
+          selectOpt('ich-vol', btn);
+        }
+      });
+    }
+
+    function calcICH() {
+      const gcs = states['ich-gcs'] || 0;
+      const age = states['ich-age'] || 0;
+      const vol = states['ich-vol'] || 0;
+      const ivh = states['ich-ivh'] || 0;
+      const infra = states['ich-infra'] || 0;
+      
+      const total = gcs + age + vol + ivh + infra;
+      document.getElementById('ich-score-val').innerText = total;
+      
+      const mortality = {
+        0: "0.9%",
+        1: "0.7%",
+        2: "5.3%",
+        3: "15.3%",
+        4: "36.8%",
+        5: "60.0%",
+        6: "100.0% (predicted)"
+      };
+      
+      document.getElementById('ich-interp').innerText = `Predictive 30-day Mortality: ${mortality[total]}`;
+      document.getElementById('ich-details').innerText = `HMC mortality (comfort care excluded) for score of ${total}.`;
+    }
+
+    // 3. ABCD2 Calculator
+    function calcABCD2() {
+      const age = states['abcd-age'] || 0;
+      const bp = states['abcd-bp'] || 0;
+      const clin = states['abcd-clin'] || 0;
+      const dur = states['abcd-dur'] || 0;
+      const dm = states['abcd-dm'] || 0;
+      
+      const total = age + bp + clin + dur + dm;
+      document.getElementById('abcd-score-val').innerText = total;
+      
+      let interp = "Low Risk (Score 0-3)";
+      let riskStr = "2-day risk: 1.0% | 7-day risk: 1.2% | 90-day risk: 3.1%";
+      
+      if (total >= 6) {
+        interp = "High Risk (Score 6-7)";
+        riskStr = "2-day risk: 8.1% | 7-day risk: 11.7% | 90-day risk: 17.8%";
+      } else if (total >= 4) {
+        interp = "Moderate Risk (Score 4-5)";
+        riskStr = "2-day risk: 4.1% | 7-day risk: 5.9% | 90-day risk: 9.8%";
+      }
+      
+      document.getElementById('abcd-interp').innerText = interp;
+      document.getElementById('abcd-details').innerText = riskStr;
+    }
+
+    // 4. CHADS2-VASc
+    function calcCHADS() {
+      const chf = states['chads-chf'] || 0;
+      const htn = states['chads-htn'] || 0;
+      const age = states['chads-age'] || 0;
+      const dm = states['chads-dm'] || 0;
+      const stroke = states['chads-stroke'] || 0;
+      const vasc = states['chads-vasc'] || 0;
+      const sex = states['chads-sex'] || 0;
+      
+      const total = chf + htn + age + dm + stroke + vasc + sex;
+      document.getElementById('chads-score-val').innerText = total;
+      
+      const annualRisk = {
+        0: "0.0%",
+        1: "0.6%",
+        2: "2.2%",
+        3: "3.2%",
+        4: "4.8%",
+        5: "7.2%",
+        6: "9.7%",
+        7: "11.2%",
+        8: "10.8%",
+        9: "12.2%"
+      };
+      
+      const risk = annualRisk[total] || "12.2%+";
+      document.getElementById('chads-interp').innerText = `Estimated Annual Stroke Risk: ${risk}`;
+      document.getElementById('chads-details').innerText = `Annual stroke risk for CHADS2-VASc score of ${total} in non-anticoagulated patients.`;
+    }
+
+    // 5. RoPE & PASCAL
+    function calcRoPE() {
+      const htn = states['rope-htn'] || 0;
+      const dm = states['rope-dm'] || 0;
+      const hx = states['rope-hx'] || 0;
+      const smoke = states['rope-smoke'] || 0;
+      const cort = states['rope-cort'] || 0;
+      const age = states['rope-age'] || 0;
+      const hrf = states['rope-hrf'] || 0;
+      
+      const total = htn + dm + hx + smoke + cort + age;
+      document.getElementById('rope-score-val').innerText = total;
+      
+      // Get relatedness percentage
+      let pfoAttributedStr = "0%";
+      if (total === 4) pfoAttributedStr = "38% (25-48%)";
+      else if (total === 5) pfoAttributedStr = "34% (21-45%)";
+      else if (total === 6) pfoAttributedStr = "62% (54-68%)";
+      else if (total === 7) pfoAttributedStr = "72% (66-76%)";
+      else if (total === 8) pfoAttributedStr = "84% (79-87%)";
+      else if (total >= 9) pfoAttributedStr = "88% (83-91%)";
+      
+      // PASCAL classification logic
+      let pascalText = "";
+      let riskPostClosure = "";
+      let riskPersistentAF = "";
+      
+      if (total < 7 && hrf === 0) {
+        pascalText = "Unlikely";
+        riskPostClosure = "Rel Risk: 1.1 (0.53-2.5)";
+        riskPersistentAF = "Rel Risk: 3.7 (1.3-10.8)";
+      } else if ((total < 7 && hrf === 1) || (total >= 7 && hrf === 0)) {
+        pascalText = "Possible";
+        riskPostClosure = "Rel Risk: 0.38 (0.2-0.7)";
+        riskPersistentAF = "Rel Risk: 3.1 (1.3-7.7)";
+      } else {
+        pascalText = "Probable";
+        riskPostClosure = "Rel Risk: 0.10 (0.03-0.4)";
+        riskPersistentAF = "Rel Risk: 2.06 (0.63-6.78)";
+      }
+      
+      document.getElementById('rope-interp').innerText = `PFO Relatedness: ${pascalText} (Attributable Fraction: ${pfoAttributedStr})`;
+      document.getElementById('rope-details').innerText = `PASCAL: ${pascalText} | Closure Stroke Risk ${riskPostClosure} | AF Post Closure ${riskPersistentAF}`;
+    }
+
+    // Set defaults on load
+    window.addEventListener("DOMContentLoaded", () => {
+      // Find E4 V5 M6 buttons and select them to trigger default calculations
+      const eBtn = document.querySelector('[onclick*="gcs-e"][data-val="4"]');
+      const vBtn = document.querySelector('[onclick*="gcs-v"][data-val="5"]');
+      const mBtn = document.querySelector('[onclick*="gcs-m"][data-val="6"]');
+      
+      if (eBtn) selectOpt('gcs-e', eBtn);
+      if (vBtn) selectOpt('gcs-v', vBtn);
+      if (mBtn) selectOpt('gcs-m', mBtn);
+      
+      // Select 0s for default calculators
+      document.querySelectorAll('.calc-card .question-block').forEach(qBlock => {
+        const defaultBtn = qBlock.querySelector('.opt-btn[data-val="0"]') || qBlock.querySelector('.opt-btn');
+        if (defaultBtn) {
+          const onclickAttr = defaultBtn.getAttribute('onclick');
+          const match = reExtractParams(onclickAttr);
+          if (match) {
+            selectOpt(match[0], defaultBtn);
+          }
+        }
+      });
+      
+      // Trigger other defaults
+      calcICH();
+      calcABCD2();
+      calcCHADS();
+      calcRoPE();
+    });
+
+    function reExtractParams(str) {
+      // extracts parameter string from: selectOpt('ich-gcs', this) -> ['ich-gcs']
+      const regex = /selectOpt\('([^']*)'/;
+      const match = str.match(regex);
+      return match ? [match[1]] : null;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIHSS Stroke Scale Reference</title>
+  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  
+  <!-- Navigation Header Styles -->
+  <style>
+    .portal-nav {
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .portal-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .portal-nav a:hover {
+      color: #38bdf8;
+    }
+    .portal-nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .portal-nav-links a {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .portal-nav-links a:hover {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .cards-wrapper-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px 0;
+      background: #f3f1f6;
+      min-height: calc(100vh - 50px);
+    }
+    @media (max-width: 850px) {
+      .portal-nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .portal-nav-links {
+        justify-content: flex-start;
+        gap: 0.4rem;
+      }
+      .portal-nav-links a {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.4rem 0.2rem;
+        font-size: 0.75rem;
+      }
+      .cards-wrapper-outer {
+        padding: 0;
+        gap: 0;
+        background: #ffffff;
+      }
+    }
+    @media print {
+      .portal-nav {
+        display: none !important;
+      }
+      .cards-wrapper-outer {
+        padding: 0 !important;
+        background: #ffffff !important;
+        gap: 0 !important;
+      }
+      .card-wrapper {
+        page-break-after: always;
+        break-after: page;
+        margin-bottom: 0 !important;
+      }
+    }
+  </style>
+  
+  <!-- Scoped Figure Styles -->
+  
+<style>
+
+.card-figure_02_nihss_scores {
+
+      margin: 0;
+      padding: 0;
+      background: white;
+    
+}
+.card-figure_02_nihss_scores .card-container {
+
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+}
+.card-figure_02_nihss_scores .card-image {
+
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    
+}
+.card-figure_02_nihss_scores .pediatric-link-line {
+
+      position: absolute;
+      top: 1025px;
+      left: 160px;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 10.5pt;
+      font-weight: 500;
+      color: #333333;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    
+}
+.card-figure_02_nihss_scores .pediatric-link-line a {
+
+      color: #1f6b8a;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      background: #e3eef3;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    
+}
+.card-figure_02_nihss_scores .pediatric-link-line a:hover {
+
+      background: #1f6b8a;
+      color: #ffffff;
+    
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_03_nihss_pictures {
+
+      margin: 0;
+      padding: 0;
+      background: white;
+    
+}
+.card-figure_03_nihss_pictures .card-container {
+
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+}
+.card-figure_03_nihss_pictures .card-image {
+
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_04_nihss_painting {
+
+      margin: 0;
+      padding: 0;
+      background: white;
+    
+}
+.card-figure_04_nihss_painting .card-container {
+
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+}
+.card-figure_04_nihss_painting .card-image {
+
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    
+}
+
+  
+
+</style>
+
+<style>
+
+.card-figure_05_nihss_sentences {
+
+      margin: 0;
+      padding: 0;
+      background: white;
+    
+}
+.card-figure_05_nihss_sentences .card-container {
+
+      width: 825px;
+      height: 1275px;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+}
+.card-figure_05_nihss_sentences .card-image {
+
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    
+}
+
+  
+
+</style>
+
+</head>
+<body>
+
+  <nav class="portal-nav">
+    <a href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Portal Dashboard
+    </a>
+    <div class="portal-nav-links">
+      <a href="#card-figure_02_nihss_scores">Scores</a>
+      <a href="#card-figure_03_nihss_pictures">Naming</a>
+      <a href="#card-figure_04_nihss_painting">Cookie Theft</a>
+      <a href="#card-figure_05_nihss_sentences">Sentences</a>
+    </div>
+  </nav>
+
+  <div class="cards-wrapper-outer">
+    <div id="card-figure_02_nihss_scores" class="card-wrapper card-figure_02_nihss_scores">
+<div class="card-container">
+<img class="card-image" src="../assets/nihss_page_5.png"/>
+<div class="pediatric-link-line">
+<span>Pediatric NIH Stroke Scale (PedNIHSS):</span>
+<a href="https://www.mdcalc.com/calc/10270/pediatric-nih-stroke-scale-nihss" target="_blank">
+<span>MDCalc</span>
+<svg fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" style="margin-left: 4px; display: inline-block; vertical-align: middle;" viewbox="0 0 24 24" width="12">
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+<polyline points="15 3 21 3 21 9"></polyline>
+<line x1="10" x2="21" y1="14" y2="3"></line>
+</svg>
+</a>
+</div>
+</div>
+</div>
+
+<div id="card-figure_03_nihss_pictures" class="card-wrapper card-figure_03_nihss_pictures">
+<div class="card-container">
+<img class="card-image" src="../assets/nihss_page_6.png"/>
+</div>
+</div>
+
+<div id="card-figure_04_nihss_painting" class="card-wrapper card-figure_04_nihss_painting">
+<div class="card-container">
+<img class="card-image" src="../assets/nihss_page_7.png"/>
+</div>
+</div>
+
+<div id="card-figure_05_nihss_sentences" class="card-wrapper card-figure_05_nihss_sentences">
+<div class="card-container">
+<img class="card-image" src="../assets/nihss_page_8.png"/>
+</div>
+</div>
+
+
+  </div>
+
+  <script>
+    // Copy template utility for bedside consent template
+    document.addEventListener("DOMContentLoaded", function() {
+      const template = document.querySelector(".copyable-template");
+      if (template) {
+        template.addEventListener("click", function() {
+          const text = this.innerText.replace(/COPY TEMPLATE/g, "").trim();
+          navigator.clipboard.writeText(text).then(() => {
+            const badge = this.querySelector(".copy-badge");
+            if (badge) {
+              badge.classList.add("copied");
+              badge.innerText = "Copied!";
+              setTimeout(() => {
+                badge.classList.remove("copied");
+                badge.innerText = "Copy Template";
+              }, 2000);
+            }
+          }).catch(err => {
+            console.error("Clipboard error:", err);
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
