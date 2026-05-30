@@ -3,135 +3,329 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lipids &amp; Diabetes Control in Stroke</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Lipids & Diabetes Control in Stroke Bedside Guide</title>
+  <meta name="description" content="Bedside guide and decision support for lipids, statin targets, diabetes control, and SHINE trial acute glycemic parameters.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
+    /* Scoped styles for Lipids & Diabetes */
+    .metabolic-input-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1.7fr;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-color);
     }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
+    
+    .metabolic-input-row label {
+      font-size: 0.8rem;
       font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
+      color: var(--text-main);
     }
-    .portal-nav a:hover {
-      color: #38bdf8;
+    
+    .metabolic-input-row select, .metabolic-input-row input {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.8rem;
+      outline: none;
+      width: 100%;
     }
-    .cards-wrapper-outer {
+
+    .tab-btn-group {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
+      gap: 8px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
     }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
+
+    .tab-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .tab-btn.active {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper landscape-card">
-      <div class="card-container" style="box-sizing: border-box; width: 825px; min-height: 1050px; padding: 25px 40px;">
-        <div class="card-content" style="justify-content: flex-start; gap: 10px;">
-          
-          <div class="card-header" style="display: flex;">
-            <div class="title-logo">UW Medicine</div>
-            <div class="doc-id">DOC.REF.LIPID.DIABETES</div>
-          </div>
-
-          <h1 style="font-size: 16.5pt; margin-bottom: 4px; padding-bottom: 2px; text-align: center;">Lipids &amp; Diabetes Control in Stroke</h1>
-          <p style="font-size: 9.2pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
-            Atherosclerotic risk factor targets, metabolic biomarkers, and acute glycemic control evidence.
-          </p>
-
-          <!-- Lipid-Stroke Duality -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Lipid Management &amp; Statin Targets</h2>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-            <div style="border: 1px solid var(--purple-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
-              <strong style="color: var(--purple-deep); font-size: 9.2pt; display: block; margin-bottom: 6px;">Lipid-Stroke Duality &amp; Targets</strong>
-              • **Ischemic Stroke**: Strong positive association between elevated total cholesterol / LDL-C and large artery atherosclerosis and small vessel disease.
-              <br>• **Hemorrhagic Stroke**: **Inverse association**. Extremely low total cholesterol &amp; LDL-C values are associated with an increased risk of intracerebral hemorrhage (ICH) and lobar hemorrhage.
-              <br>• **Treatment Target**: LDL-C &lt;70 mg/dL using high-intensity statins (Atorvastatin 80mg) &plusmn; Ezetimibe &plusmn; PCSK9i.
-              <br>• **SPARCL Trial (2006)**: Secondary prevention stroke patients. Atorvastatin 80mg reduced recurrent stroke rate by 16% (HR 0.84, p=0.03).
-            </div>
-            <div style="border: 1px solid var(--teal-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
-              <strong style="color: var(--teal-deep); font-size: 9.2pt; display: block; margin-bottom: 6px;">Emerging Lipid Biomarkers</strong>
-              • **Apolipoprotein B (ApoB)**: Measures total number of atherogenic particles (LDL, VLDL, IDL). Better predictor of cardiovascular events than LDL-C in statin-treated cohorts.
-              <br>• **Apolipoprotein A1 (ApoA1)**: Primary structural protein of HDL. Reflects reverse cholesterol transport.
-              <br>• **Lipoprotein (a) [Lp(a)]**: Genetically determined particle. Highly atherogenic and prothrombotic.
-              <br>• **Lp-PLA2**: Biomarker of vascular inflammation within the atherosclerotic plaque itself.
-            </div>
-          </div>
-
-          <!-- Diabetes and Hyperglycemia -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Diabetes Mellitus &amp; Acute Hyperglycemia</h2>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-            <div style="border: 1px solid var(--amber-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
-              <strong style="color: var(--amber-deep); font-size: 9.2pt; display: block; margin-bottom: 4px;">Metabolic Targets &amp; Screening</strong>
-              • **Stroke Risk**: Diabetes increases ischemic stroke risk 2-fold (higher in women, longer duration). 
-              <br>• **Prediabetes**: Impaired fasting glucose or HbA1c 5.7–6.4% increases risk.
-              <br>• **Insulin Resistance**: Insulin resistance (HOMA-IR &gt;3) increases risk even in non-diabetic patients.
-              <br>• **Long-term Target**: HbA1c &lt;7.0% for secondary stroke prevention (Class I, LOE A). Screen post-stroke patients with fasting plasma glucose or HbA1c.
-            </div>
-            <div style="border: 1px solid var(--red-soft); background: #fff5f5; padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
-              <strong style="color: var(--red-deep); font-size: 9.2pt; display: block; margin-bottom: 4px;">SHINE Trial (Acute Hyperglycemia)</strong>
-              • **Design**: RCT in acute stroke hyperglycemic patients. Intensive IV Insulin (target 80–130 mg/dL) vs. Standard subq sliding scale insulin (target 80–179 mg/dL) for 72 hours.
-              <br>• **Efficacy**: **No difference** in 90-day functional outcomes (mRS 0-2 shift).
-              <br>• **Harm**: Intensive group had **highly significantly higher severe hypoglycemia** (glucose &lt;40 mg/dL: 11.2% vs. 0%).
-              <br>• **Clinical Takeaway**: Use standard subq sliding scale (target &lt;180 mg/dL) in acute phase. Avoid intensive IV infusion.
-            </div>
-          </div>
-
-          <!-- Document References -->
-          <div style="font-size: 8.5pt; color: #64748b; margin-top: 15px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 8px; display: flex; justify-content: center; gap: 30px;">
-            <span>PDF: <a href="../documents/epidemiology/Diabetes and stroke.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">Diabetes and Stroke.pdf</a></span>
-            <span>PDF: <a href="../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">Lipids and Stroke.pdf</a></span>
-          </div>
-
-          <div class="card-footer" style="display: flex;">
-            <div class="disclaimer-text">For educational &amp; clinical decision support. Verify local institutional protocols prior to application.</div>
-            <div class="page-num">Page 1</div>
-          </div>
-
-        </div>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Atherosclerotic Prevention</span>
+        <h1 id="app-title">Lipids & Diabetes Control</h1>
+        <p class="subtitle">Atherosclerotic risk factor targets, biomarkers, and acute glycemic control</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
       </div>
     </div>
-  </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: RISK TARGETS CALCULATOR -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <h2>Secondary Prevention Targets</h2>
+            <span class="card-label">Secondary Prevention</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div class="metabolic-input-row">
+              <label>1. Stroke Subtype</label>
+              <select id="inp-subtype" onchange="runMetabolicPlanner()">
+                <option value="ischemic">Ischemic Stroke (Atherosclerotic)</option>
+                <option value="hemorrhagic">Hemorrhagic Stroke (ICH)</option>
+              </select>
+            </div>
+
+            <div class="metabolic-input-row">
+              <label>2. Current LDL-C (mg/dL)</label>
+              <input type="number" id="inp-ldl" value="110" onchange="runMetabolicPlanner()" onkeyup="runMetabolicPlanner()">
+            </div>
+
+            <div class="metabolic-input-row">
+              <label>3. Current HbA1c (%)</label>
+              <input type="number" id="inp-a1c" value="7.8" step="0.1" onchange="runMetabolicPlanner()" onkeyup="runMetabolicPlanner()">
+            </div>
+          </div>
+
+          <div id="metabolic-summary" class="lcd-screen" style="margin-top:10px; margin-bottom:0;">
+            <span class="lcd-label">Recommended Targets</span>
+            <div id="ldl-target" style="font-size: 1.1rem; font-weight:700; color:var(--color-cyan);">Target LDL-C: &lt;70 mg/dL</div>
+            <div id="a1c-target" style="font-size: 1.1rem; font-weight:700; color:var(--color-green); margin-top:4px;">Target HbA1c: &lt;7.0%</div>
+          </div>
+
+          <div id="statin-warning" class="status-summary-box warning" style="margin-bottom:0; display:none;">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
+            <div class="status-desc">
+              <h4>Lipid-Stroke Duality warning</h4>
+              <p>In hemorrhagic stroke (ICH), extremely low total cholesterol & LDL-C levels are associated with increased recurrence risks. Use high-dose statins with caution unless there is strong concomitant CAD.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: DETAILED EVIDENCE AND MARKERS -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
+          <div class="tab-btn-group">
+            <button class="tab-btn active" onclick="switchTab('tab-lipid-duality')">Lipid Duality & Biomarkers</button>
+            <button class="tab-btn" onclick="switchTab('tab-shine')">Diabetes & SHINE Trial</button>
+            <button class="tab-btn" onclick="switchTab('tab-metabolic-files')">Literature Hub</button>
+          </div>
+
+          <!-- TAB 1: LIPID DUALITY & BIOMARKERS -->
+          <div id="tab-lipid-duality" class="tab-pane active">
+            <h2>Lipid Management & Biomarkers</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-cyan);">SPARCL Trial (2006)</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  In patients with recent TIA or stroke and no history of coronary artery disease, <strong>Atorvastatin 80mg daily</strong> reduced the relative risk of recurrent stroke by 16% (HR 0.84, p=0.03).
+                </p>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-purple);">Emerging Biomarkers</h3>
+                <ul class="step-list" style="font-size:0.8rem; margin-top:5px;">
+                  <li><strong>Apolipoprotein B (ApoB):</strong> Measures total atherogenic particles; better cardiac predictor than LDL-C in statin-treated cohorts.</li>
+                  <li><strong>Apolipoprotein A1 (ApoA1):</strong> Measures structural HDL; reflects reverse cholesterol transport.</li>
+                  <li><strong>Lipoprotein (a) [Lp(a)]:</strong> Genetically determined particle. Highly atherogenic and prothrombotic.</li>
+                  <li><strong>Lp-PLA2:</strong> Biomarker of vascular inflammation within the plaque.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: DIABETES & SHINE TRIAL -->
+          <div id="tab-shine" class="tab-pane">
+            <h2>Diabetes Mellitus & SHINE Trial Guidelines</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+              <div class="status-summary-box danger" style="margin-bottom:0;">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div class="status-desc">
+                  <h4>SHINE Trial (Acute Glycemia)</h4>
+                  <p>In acute ischemic stroke, intensive IV insulin therapy (target 80–130 mg/dL) showed <strong>no difference</strong> in 90-day functional recovery compared to standard subq sliding scale insulin (target 80–179 mg/dL).</p>
+                  <p style="font-size:0.75rem; margin-top:4px; opacity:0.85;">However, the intensive group experienced <strong>severe hypoglycemia</strong> (11.2% vs. 0% standard). Use standard sliding scale (target &lt;180 mg/dL) in acute stroke.</p>
+                </div>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-yellow);">Metabolic Targets & Screening</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  Screen post-stroke patients with fasting plasma glucose or HbA1c. Long-term target is <strong>HbA1c &lt;7.0%</strong> for secondary stroke prevention (Class I, LOE A).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: LITERATURE HUB -->
+          <div id="tab-metabolic-files" class="tab-pane">
+            <h2>Lipids & Diabetes Literature PDFs</h2>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">Open the following files in the local workspace directory for detailed guides:</p>
+            <ul class="step-list">
+              <li>📄 <a href="../documents/epidemiology/Diabetes and stroke.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">Diabetes and Stroke.pdf</a></li>
+              <li>📄 <a href="../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">Lipids and Stroke.pdf</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Lipids & Diabetes Control in Stroke</h1>
+          <div class="print-subtitle">Metabolic Risk Factor Targets & SHINE Trial Evidence Card</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box">
+            <h3>🔬 Lipid-Stroke Duality & Targets</h3>
+            <ul class="print-list" style="margin-bottom: 8px;">
+              <li><strong>Ischemic Stroke Target:</strong> LDL-C &lt;70 mg/dL using high-intensity statins (Atorvastatin 80mg daily) &plusmn; Ezetimibe.</li>
+              <li><strong>Hemorrhagic Stroke Warning:</strong> Inverse relationship. Very low total cholesterol and LDL-C are associated with increased lobar and deep ICH recurrence.</li>
+              <li><strong>SPARCL Trial (2006):</strong> Atorvastatin 80mg daily reduced recurrent stroke rate by 16% (HR 0.84, p=0.03) in secondary prevention.</li>
+            </ul>
+          </div>
+
+          <div class="print-box">
+            <h3>🩸 Emerging Lipid Biomarkers</h3>
+            <ul class="print-list">
+              <li><strong>Apolipoprotein B (ApoB):</strong> Measures total count of all atherogenic particles (LDL, VLDL, IDL). Better cardiovascular predictor than LDL-C in statin cohorts.</li>
+              <li><strong>Apolipoprotein A1 (ApoA1):</strong> Primary structural protein of HDL; reflects reverse cholesterol transport.</li>
+              <li><strong>Lipoprotein (a) [Lp(a)]:</strong> Genetically determined particle. Highly atherogenic and prothrombotic.</li>
+              <li><strong>Lp-PLA2:</strong> Biomarker of active vascular wall inflammation.</li>
+            </ul>
+          </div>
+
+          <div class="print-box">
+            <h3>📋 Diabetes & Metabolic Targets</h3>
+            <ul class="print-list">
+              <li><strong>Secondary Prevention:</strong> Target HbA1c &lt;7.0% for all ischemic stroke patients (Class I, LOE A).</li>
+              <li><strong>Screening:</strong> Obtain fasting plasma glucose or HbA1c in all post-stroke/TIA patients who do not have a prior history of diabetes.</li>
+              <li><strong>Prediabetes Risk:</strong> HbA1c 5.7–6.4% or insulin resistance (HOMA-IR &gt;3) significantly increases stroke risk.</li>
+            </ul>
+          </div>
+
+          <div class="print-box" style="border-left:4px solid #000;">
+            <h3>⚡ SHINE Trial: Acute Glycemic Target</h3>
+            <p style="font-size:0.75rem; line-height:1.4; color:#111;">
+              <strong>Design:</strong> RCT comparing intensive IV insulin (target 80-130 mg/dL) vs. standard subcutaneous sliding scale (target 80-179 mg/dL) for 72h acute phase.<br>
+              <strong>Efficacy:</strong> No difference in 90-day functional independence (mRS 0-2).<br>
+              <strong>Harm:</strong> Severe hypoglycemia (glucose &lt;40 mg/dL) occurred in 11.2% of intensive group vs. 0% standard.<br>
+              <strong>Takeaway:</strong> Use standard subcutaneous sliding scale insulin (target &lt;180 mg/dL) in acute phase; avoid intensive IV.
+            </p>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] SPARCL. N Engl J Med. 2006. [2] SHINE. JAMA. 2019. [3] AHA/ASA Primary & Secondary Prevention Guidelines.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function runMetabolicPlanner() {
+      const strokeType = document.getElementById('inp-subtype').value;
+      const ldlVal = parseFloat(document.getElementById('inp-ldl').value) || 0;
+      const a1cVal = parseFloat(document.getElementById('inp-a1c').value) || 0;
+      
+      const ldlTargetBox = document.getElementById('ldl-target');
+      const a1cTargetBox = document.getElementById('a1c-target');
+      const statinWarn = document.getElementById('statin-warning');
+      
+      if (strokeType === 'hemorrhagic') {
+        ldlTargetBox.innerText = `Target LDL-C: Avoid extreme lows (<50-70 mg/dL)`;
+        ldlTargetBox.style.color = 'var(--color-yellow)';
+        statinWarn.style.display = 'flex';
+      } else {
+        ldlTargetBox.innerText = `Target LDL-C: <70 mg/dL (Statin indicated)`;
+        ldlTargetBox.style.color = 'var(--color-cyan)';
+        statinWarn.style.display = 'none';
+      }
+      
+      if (a1cVal >= 6.5) {
+        a1cTargetBox.innerText = `Target HbA1c: <7.0% (Optimize diabetes meds)`;
+        a1cTargetBox.style.color = 'var(--color-red)';
+      } else if (a1cVal >= 5.7) {
+        a1cTargetBox.innerText = `Target HbA1c: 5.7-6.4% (Lifestyle optimization)`;
+        a1cTargetBox.style.color = 'var(--color-yellow)';
+      } else {
+        a1cTargetBox.innerText = `Target HbA1c: <5.7% (Normal)`;
+        a1cTargetBox.style.color = 'var(--color-green)';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      runMetabolicPlanner();
+    });
+  </script>
 </body>
 </html>

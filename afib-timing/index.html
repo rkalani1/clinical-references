@@ -3,277 +3,486 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AFib Anticoagulation Restart Timing</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>AFib DOAC Start Timing Guide & Calculator</title>
+  <meta name="description" content="Bedside calculator and decision support for starting or restarting DOACs after acute ischemic stroke or TIA.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
+    /* Scoped styles for AFib Timing */
+    .timing-input-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1.7fr;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #38bdf8;
-    }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
-    }
-    @media print {
-      .portal-nav {
-        display: none !important;
-      }
-      .cards-wrapper-outer {
-        padding: 0 !important;
-        background: #ffffff !important;
-        gap: 0 !important;
-      }
-    }
-  </style>
-  <style>
-    /* Scoped AFib Timing Styles */
-    .card-add_figure_05_afib_anticoag_timing table.card-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 8.8pt;
-      margin-bottom: 15px;
-    }
-    .card-add_figure_05_afib_anticoag_timing table.card-table th, 
-    .card-add_figure_05_afib_anticoag_timing table.card-table td {
-      border: 1px solid var(--rule-soft);
-      padding: 6px 8px;
-      vertical-align: top;
-    }
-    .card-add_figure_05_afib_anticoag_timing table.card-table th {
-      background: #0f355c;
-      color: white;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 8pt;
-      letter-spacing: 0.02em;
-    }
-    .card-add_figure_05_afib_anticoag_timing table.card-table tr:nth-child(even) {
-      background: rgba(0,0,0,0.01);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
     }
     
-    @media (max-width: 850px) {
-      .card-add_figure_05_afib_anticoag_timing .severity-grid {
-        grid-template-columns: 1fr !important;
-      }
-      .card-add_figure_05_afib_anticoag_timing table.card-table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
+    .timing-input-row label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+    
+    .timing-input-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.8rem;
+      outline: none;
+      width: 100%;
+    }
+    
+    .timeline-svg {
+      width: 100%;
+      height: 150px;
+      background: #020408;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    
+    .svg-active-rect {
+      transition: fill-opacity 0.3s ease, stroke-width 0.3s ease;
+    }
+    
+    .timing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin: 10px 0;
+    }
+    
+    .timing-table th, .timing-table td {
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      text-align: left;
+    }
+    
+    .timing-table th {
+      background-color: hsla(223, 30%, 8%, 0.8);
+      font-weight: 700;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper card-add_figure_05_afib_anticoag_timing landscape-card">
-      <div class="card-container" style="box-sizing: border-box;">
-        <div class="card-content">
-          <h1 style="text-align: center; margin-bottom: 4px;">AFib Anticoagulation Restart Timing</h1>
-          <p style="font-size: 8.8pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
-            Evidence-based schedule for starting or restarting DOACs after acute ischemic stroke or TIA.
-          </p>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Secondary Stroke Prevention</span>
+        <h1 id="app-title">AFib DOAC Start Timing</h1>
+        <p class="subtitle">Evidence-based initiation timing and dosing for DOACs post-stroke</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
 
-          <!-- Clinical Principle Callout -->
-          <div style="border-left: 4px solid var(--teal); background: var(--teal-soft); padding: 8px 12px; border-radius: 6px; font-size: 7.8pt; margin-bottom: 8px; line-height: 1.45; box-shadow: 0 2px 8px var(--teal-glow);">
-            <strong style="color: var(--teal-deep); text-transform: uppercase; font-size: 7.2pt; letter-spacing: 0.05em; display: block; margin-bottom: 1px;">Clinical Efficacy &amp; Safety</strong>
-            Early DOAC initiation in patients with AFib and recent stroke is safe and reasonable (Class I, LOE A). It does not increase the risk of symptomatic intracranial hemorrhage (sICH) compared to delayed initiation, and reduces recurrent ischemic stroke. DOACs are preferred over warfarin.
-          </div>
-
-          <!-- ELAN Stroke Severity Definitions Grid -->
-          <div style="border: 1px solid var(--rule-soft); border-radius: 8px; padding: 6px 8px; background: var(--fill-soft); margin-bottom: 8px;">
-            <strong style="color: var(--purple-deep); font-size: 9.0pt; display: block; margin-bottom: 4px;">1. Stroke Severity Classification (ELAN Criteria)</strong>
-            <div class="severity-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; font-size: 8.8pt; line-height: 1.45;">
-              <div style="border: 1px solid rgba(24,132,158,0.2); border-radius: 6px; padding: 4px 6px; background: white;">
-                <strong style="color: var(--teal-deep); display: block;">Mild Stroke (NIHSS &lt; 8)</strong>
-                • TIA or infarct <strong>&lt; 1.5 cm</strong> on brain imaging (cortical or deep subcortical).
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid">
+        
+        <!-- LEFT COLUMN: CALCULATOR -->
+        <div class="glass-card" style="display:flex; flex-direction:column; gap:15px;">
+          <div>
+            <div class="card-header" style="margin-bottom:0.8rem;">
+              <h2>Interactive Initiation Timing Calculator</h2>
+              <span class="card-label">ELAN Protocol Optimizer</span>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div class="timing-input-row">
+                <label>1. Stroke Severity (ELAN)</label>
+                <select id="inp-severity" onchange="runTimingAlgorithm()">
+                  <option value="mild">Mild (NIHSS &lt;8) or TIA</option>
+                  <option value="moderate">Moderate (NIHSS 8-15)</option>
+                  <option value="severe">Severe (NIHSS &ge;16)</option>
+                </select>
               </div>
-              <div style="border: 1px solid rgba(217,134,11,0.2); border-radius: 6px; padding: 4px 6px; background: white;">
-                <strong style="color: var(--amber-deep); display: block;">Moderate (NIHSS 8–15)</strong>
-                • Occlusion of a <strong>single superficial branch</strong> of the MCA, PCA, or ACA, or isolated brainstem/cerebellar lesion.
+              
+              <div class="timing-input-row">
+                <label>2. Repeat CT/MRI Scan</label>
+                <select id="inp-scan" onchange="runTimingAlgorithm()">
+                  <option value="none">No hemorrhagic transformation (or not yet done)</option>
+                  <option value="small">Small HI-1/HI-2 hemorrhagic conversion</option>
+                  <option value="large">Large PH-2 (Parenchymal Hematoma)</option>
+                </select>
               </div>
-              <div style="border: 1px solid rgba(198,46,46,0.2); border-radius: 6px; padding: 4px 6px; background: white;">
-                <strong style="color: var(--red-deep); display: block;">Severe (NIHSS &ge; 16)</strong>
-                • <strong>Multilobar</strong> infarct, major main stem occlusion (e.g. M1 MCA, P1 PCA, A1 ACA), or large brainstem/cerebellar lesion.
+              
+              <div class="timing-input-row">
+                <label>3. Renal Function (CrCl)</label>
+                <select id="inp-crcl" onchange="runTimingAlgorithm()">
+                  <option value="normal">Normal / Mild (CrCl &gt;50 mL/min)</option>
+                  <option value="moderate">Moderate (CrCl 30-50 mL/min)</option>
+                  <option value="severe">Severe (CrCl 15-30 mL/min)</option>
+                  <option value="esrd">ESRD / Dialysis (CrCl &lt;15 mL/min)</option>
+                </select>
               </div>
             </div>
           </div>
-
+          
+          <div id="timing-result-box" class="status-summary-box safe" style="margin-bottom:0; flex:1;">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="status-desc">
+              <h4 id="timing-title">EARLY INITIATION RECOMMENDED</h4>
+              <p id="timing-text">Loading...</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN: DIAGRAM & REFERENCE -->
+        <div class="glass-card" style="display:flex; flex-direction:column; gap:15px; margin-bottom:0;">
+          <div class="card-header" style="margin-bottom:0.8rem;">
+            <h2>Timeline Axis & Reference Guide</h2>
+            <span class="card-label">Initiation Timeline</span>
+          </div>
+          
           <!-- Timeline Axis Diagram SVG -->
-          <svg viewBox="0 0 735 150" style="width: 100%; height: 150px; margin-bottom: 12px;">
-            <rect x="0" y="0" width="735" height="150" rx="8" fill="var(--fill-soft)" stroke="var(--rule-soft)" stroke-width="1"/>
-            <line x1="20" y1="95" x2="715" y2="95" stroke="var(--ink-mute)" stroke-width="2"/>
-            <line x1="20" y1="90" x2="20" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="20" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 1</text>
-            <line x1="73.5" y1="90" x2="73.5" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="73.5" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 2</text>
-            <line x1="127" y1="90" x2="127" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="127" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 3</text>
-            <line x1="180.5" y1="90" x2="180.5" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="180.5" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 4</text>
-            <line x1="234" y1="90" x2="234" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="234" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 5</text>
-            <line x1="287.5" y1="90" x2="287.5" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="287.5" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 6</text>
-            <line x1="341" y1="90" x2="341" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="341" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 7</text>
-            <line x1="394.5" y1="90" x2="394.5" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="394.5" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 8</text>
-            <line x1="448" y1="90" x2="448" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="448" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 9</text>
-            <line x1="501.5" y1="90" x2="501.5" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="501.5" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 10</text>
-            <line x1="555" y1="90" x2="555" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="555" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 11</text>
-            <line x1="608.5" y1="90" x2="608.5" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="608.5" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 12</text>
-            <line x1="662" y1="90" x2="662" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="662" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 13</text>
-            <line x1="715" y1="90" x2="715" y2="100" stroke="var(--ink-mute)" stroke-width="2"/>
-            <text x="715" y="112" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Day 14</text>
+          <svg class="timeline-svg" viewBox="0 0 735 150">
+            <line x1="20" y1="95" x2="715" y2="95" stroke="var(--text-muted)" stroke-width="2"/>
+            <line x1="20" y1="90" x2="20" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="20" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 1</text>
+            <line x1="73.5" y1="90" x2="73.5" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="73.5" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 2</text>
+            <line x1="127" y1="90" x2="127" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="127" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 3</text>
+            <line x1="180.5" y1="90" x2="180.5" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="180.5" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 4</text>
+            <line x1="234" y1="90" x2="234" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="234" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 5</text>
+            <line x1="287.5" y1="90" x2="287.5" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="287.5" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 6</text>
+            <line x1="341" y1="90" x2="341" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="341" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 7</text>
+            <line x1="394.5" y1="90" x2="394.5" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="394.5" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 8</text>
+            <line x1="448" y1="90" x2="448" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="448" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 9</text>
+            <line x1="501.5" y1="90" x2="501.5" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="501.5" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 10</text>
+            <line x1="555" y1="90" x2="555" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="555" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 11</text>
+            <line x1="608.5" y1="90" x2="608.5" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="608.5" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 12</text>
+            <line x1="662" y1="90" x2="662" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="662" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 13</text>
+            <line x1="715" y1="90" x2="715" y2="100" stroke="var(--text-muted)" stroke-width="2"/>
+            <text x="715" y="112" fill="var(--text-muted)" font-size="7pt" font-family="JetBrains Mono" font-weight="600" text-anchor="middle">Day 14</text>
             
             <!-- Mild Stroke (Day 1-2) -->
-            <rect x="20" y="65" width="53.5" height="15" rx="3" fill="var(--teal)" opacity="0.15"/>
-            <rect x="20" y="65" width="53.5" height="15" rx="3" fill="none" stroke="var(--teal)" stroke-width="1.5"/>
-            <text x="46.7" y="76" fill="var(--teal-deep)" font-size="6.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">MILD / TIA</text>
-            <path d="M 46.7 80 L 46.7 93" stroke="var(--teal)" stroke-width="1" stroke-dasharray="2,2"/>
+            <rect id="svg-rect-mild" class="svg-active-rect" x="20" y="65" width="53.5" height="15" rx="3" fill="var(--color-cyan)" fill-opacity="0.1" stroke="var(--color-cyan)" stroke-width="1"/>
+            <text x="46.7" y="75" fill="var(--color-cyan)" font-size="6.5pt" font-family="Montserrat" font-weight="700" text-anchor="middle">MILD / TIA</text>
             
             <!-- Moderate Stroke (Day 3-4) -->
-            <rect x="127" y="65" width="53.5" height="15" rx="3" fill="var(--amber)" opacity="0.15"/>
-            <rect x="127" y="65" width="53.5" height="15" rx="3" fill="none" stroke="var(--amber)" stroke-width="1.5"/>
-            <text x="153.7" y="76" fill="var(--amber-deep)" font-size="6.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">MODERATE</text>
-            <path d="M 153.7 80 L 153.7 93" stroke="var(--amber)" stroke-width="1" stroke-dasharray="2,2"/>
-            
-            <!-- Repeat CT/MRI Day 2-3 -->
-            <rect x="73.5" y="15" width="107" height="30" rx="4" fill="white" stroke="var(--amber)" stroke-width="1" style="filter: drop-shadow(0 2px 4px var(--amber-glow));"/>
-            <text x="127" y="26" fill="var(--amber-deep)" font-size="6.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">REPEAT CT/MRI</text>
-            <text x="127" y="37" fill="var(--ink-soft)" font-size="6pt" font-family="IBM Plex Sans" text-anchor="middle">Day 2-3 (Pre-DOAC)</text>
-            <path d="M 127 45 L 127 60" stroke="var(--amber)" stroke-width="1"/>
+            <rect id="svg-rect-mod" class="svg-active-rect" x="127" y="65" width="53.5" height="15" rx="3" fill="var(--color-yellow)" fill-opacity="0.1" stroke="var(--color-yellow)" stroke-width="1"/>
+            <text x="153.7" y="75" fill="var(--color-yellow)" font-size="6.5pt" font-family="Montserrat" font-weight="700" text-anchor="middle">MODERATE</text>
             
             <!-- Severe Stroke (Day 6-7) -->
-            <rect x="287.5" y="65" width="53.5" height="15" rx="3" fill="var(--red)" opacity="0.15"/>
-            <rect x="287.5" y="65" width="53.5" height="15" rx="3" fill="none" stroke="var(--red)" stroke-width="1.5"/>
-            <text x="314.2" y="76" fill="var(--red-deep)" font-size="6.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">SEVERE</text>
-            <path d="M 314.2 80 L 314.2 93" stroke="var(--red)" stroke-width="1" stroke-dasharray="2,2"/>
-            
-            <!-- Repeat CT/MRI Day 5-6 -->
-            <rect x="234" y="15" width="107" height="30" rx="4" fill="white" stroke="var(--red)" stroke-width="1" style="filter: drop-shadow(0 2px 4px var(--red-glow));"/>
-            <text x="287.5" y="26" fill="var(--red-deep)" font-size="6.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">REPEAT CT/MRI</text>
-            <text x="287.5" y="37" fill="var(--ink-soft)" font-size="6pt" font-family="IBM Plex Sans" text-anchor="middle">Day 5-6 (Pre-DOAC)</text>
-            <path d="M 287.5 45 L 287.5 60" stroke="var(--red)" stroke-width="1"/>
+            <rect id="svg-rect-sev" class="svg-active-rect" x="287.5" y="65" width="53.5" height="15" rx="3" fill="var(--color-orange)" fill-opacity="0.1" stroke="var(--color-orange)" stroke-width="1"/>
+            <text x="314.2" y="75" fill="var(--color-orange)" font-size="6.5pt" font-family="Montserrat" font-weight="700" text-anchor="middle">SEVERE</text>
             
             <!-- Severe Stroke with Large PH-2 (Day 12-14) -->
-            <rect x="608.5" y="61" width="106.5" height="22" rx="3" fill="var(--red)" opacity="0.25"/>
-            <rect x="608.5" y="61" width="106.5" height="22" rx="3" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <text x="661.7" y="70" fill="var(--red-deep)" font-size="6.0pt" font-family="Outfit" font-weight="800" text-anchor="middle">SEVERE +</text>
-            <text x="661.7" y="79" fill="var(--red-deep)" font-size="6.0pt" font-family="Outfit" font-weight="800" text-anchor="middle">PH-2 HEMORRHAGE</text>
-            <path d="M 661.7 83 L 661.7 93" stroke="var(--red)" stroke-width="1" stroke-dasharray="2,2"/>
-            <text x="661.7" y="137" fill="var(--red-deep)" font-size="5.8pt" font-family="IBM Plex Sans" font-weight="600" text-anchor="middle">Delay initiation to Day 12-14</text>
-            
-            <!-- General Label -->
-            <text x="367" y="141" fill="var(--ink-mute)" font-size="7pt" font-family="Outfit" font-weight="700" text-anchor="middle">DOAC INITIATION TIMELINE AXIS (DAYS POST-AIS)</text>
+            <rect id="svg-rect-ph2" class="svg-active-rect" x="608.5" y="61" width="106.5" height="22" rx="3" fill="var(--color-red)" fill-opacity="0.1" stroke="var(--color-red)" stroke-width="1" stroke-dasharray="3,2"/>
+            <text x="661.7" y="75" fill="var(--color-red)" font-size="6.5pt" font-family="Montserrat" font-weight="700" text-anchor="middle">LARGE PH-2</text>
           </svg>
-
-          <!-- Bedside DOAC Dosing Guide -->
-          <div style="border: 1px solid var(--rule-soft); border-radius: 8px; padding: 12px 14px; background: white; margin-bottom: 20px;">
-            <strong style="color: var(--purple-deep); font-size: 9.2pt; display: block; margin-bottom: 4px;">2. Bedside DOAC Dosing &amp; Adjustment Guide</strong>
-            <table class="card-table">
+          
+          <div class="scenarios-grid" style="margin-top:10px;">
+            <button id="tab-btn-dosing" class="btn-scenario active" onclick="switchTimingTab('dosing')">DOAC Dosing</button>
+            <button id="tab-btn-elan" class="btn-scenario" onclick="switchTimingTab('elan')">Landmark Trials</button>
+          </div>
+          
+          <div id="timing-tab-content" style="min-height: 250px; display:flex; flex-direction:column; justify-content:center;">
+            <!-- Tab content loaded dynamically -->
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>AFib Post-Stroke DOAC Restart Guidelines</h1>
+          <div class="print-subtitle">Bedside Quick Reference Card (ELAN Criteria)</div>
+        </div>
+        
+        <div class="print-grid">
+          <div class="print-box">
+            <h3>⚡ Stroke Severity Timing Grid (ELAN 2023)</h3>
+            <table class="print-table">
               <thead>
-                <tr style="background: var(--fill-soft); color: var(--purple-deep); font-weight: 700;">
-                  <th style="width: 22%;">Drug</th>
-                  <th style="width: 28%;">Standard Dose</th>
-                  <th style="width: 50%;">Dose Reduction Criteria</th>
+                <tr>
+                  <th>Severity (NIHSS)</th>
+                  <th>Imaging / Core Definition</th>
+                  <th>Repeat Imaging</th>
+                  <th>DOAC Start Day</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td style="font-weight: 700; color: var(--purple-deep);">Apixaban (Eliquis)</td>
-                  <td>5 mg BID</td>
-                  <td style="color: var(--ink-soft);"><strong>Reduce to 2.5 mg BID</strong> if &ge; 2 criteria are met:
-                    <br/>• Age &ge; 80 years | • Weight &le; 60 kg | • Serum creatinine &ge; 1.5 mg/dL
-                  </td>
+                <tr class="alert-row-teal">
+                  <td><strong>TIA / Mild Stroke</strong> (NIHSS &lt;8)</td>
+                  <td>Core **&lt; 1.5 cm** in cortex or deep structures.</td>
+                  <td>Not routinely required prior to DOAC start.</td>
+                  <td>**Day 1 or 2**</td>
                 </tr>
-                <tr>
-                  <td style="font-weight: 700; color: var(--purple-deep);">Rivaroxaban (Xarelto)</td>
-                  <td>20 mg daily (with food)</td>
-                  <td style="color: var(--ink-soft);"><strong>Reduce to 15 mg daily</strong> if CrCl is 15–50 mL/min.
-                    <br/><span style="color: var(--red);">Hold if CrCl &lt; 15 mL/min</span>.
-                  </td>
+                <tr class="alert-row-yellow">
+                  <td><strong>Moderate Stroke</strong> (NIHSS 8-15)</td>
+                  <td>Single superficial MCA/PCA/ACA branch occlusion.</td>
+                  <td>Repeat Head CT on **Day 2–3** to exclude hemorrhage.</td>
+                  <td>**Day 3 or 4**</td>
                 </tr>
-                <tr>
-                  <td style="font-weight: 700; color: var(--purple-deep);">Dabigatran (Pradaxa)</td>
-                  <td>150 mg BID</td>
-                  <td style="color: var(--ink-soft);"><strong>Reduce to 75 mg BID</strong> if CrCl is 15–30 mL/min.
-                    <br/><span style="color: var(--red);">Avoid if CrCl &lt; 15 mL/min</span>.
-                  </td>
+                <tr class="alert-row-orange">
+                  <td><strong>Severe Stroke</strong> (NIHSS &ge;16)</td>
+                  <td>Multilobar core, main MCA stem trunk occlusion.</td>
+                  <td>Repeat Head CT on **Day 5–6** to exclude hemorrhage.</td>
+                  <td>**Day 6 or 7**</td>
                 </tr>
-                <tr>
-                  <td style="font-weight: 700; color: var(--purple-deep);">Edoxaban (Savaysa)</td>
-                  <td>60 mg daily</td>
-                  <td style="color: var(--ink-soft);"><strong>Reduce to 30 mg daily</strong> if CrCl is 15–50 mL/min or weight &le; 60 kg.
-                    <br/><span style="color: var(--red);">Avoid if CrCl &gt; 95 mL/min</span> (high renal clearance reduces efficacy).
-                  </td>
+                <tr class="alert-row-danger">
+                  <td><strong>Hemorrhagic Conversion</strong></td>
+                  <td>Parenchymal Hematoma (PH-2) on repeat scans.</td>
+                  <td>Obtain follow-up imaging at Day 10–12.</td>
+                  <td>**Day 12, 13, or 14**</td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <!-- Citations -->
-          <div class="ref-citation" style="margin-top: 0; padding: 6px 10px; font-size: 7.5pt; line-height: 1.45;">
-            <strong>ELAN Trial:</strong> Fischer U et al. <em>N Engl J Med</em>. 2023;388:2411-2421. <a href="https://pubmed.ncbi.nlm.nih.gov/37222476/" target="_blank">PMID: 37222476</a><br/>
-            <strong>CATALYST Meta-Analysis:</strong> Fischer U et al. <a href="https://pubmed.ncbi.nlm.nih.gov/40570866/" target="_blank"><em>Lancet</em> 2025; PMID: 40570866</a>. Pooled data (n=5,441) from <a href="https://pubmed.ncbi.nlm.nih.gov/37222476/" target="_blank">ELAN (PMID: 37222476)</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/39491870/" target="_blank">OPTIMAS (<em>Lancet</em> 2024; PMID: 39491870)</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/36065821/" target="_blank">TIMING (<em>Circulation</em> 2022; PMID: 36065821)</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/40163159/" target="_blank">START (<em>JAMA Neurol</em> 2025; PMID: 40163159)</a>. Early DOAC (median Day 2) is non-inferior to delayed (median Day 7–8) with equivalent low sICH (0.6% vs 0.7%).<br/>
-            <strong>AFib Guidelines:</strong> Joglar JA et al. 2023 ACC/AHA/ACCP/HRS Guideline. <em>Circulation</em>. 2024;149:e1-e156. <a href="https://pubmed.ncbi.nlm.nih.gov/38043043/" target="_blank">PMID: 38043043</a>
+          
+          <div class="print-box alert-row-danger">
+            <h3>🚨 DOAC Dosing & Dose Reduction Criteria</h3>
+            <table class="print-table" style="font-size:0.65rem;">
+              <thead>
+                <tr>
+                  <th>Drug</th>
+                  <th>Standard Dosing</th>
+                  <th>Dose Reduction Guidelines</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Apixaban</strong> (Eliquis)</td>
+                  <td>5 mg orally twice daily</td>
+                  <td>**Reduce to 2.5 mg BID** if &ge; 2 criteria met: Age &ge;80 years, Weight &le;60 kg, or Serum creatinine &ge;1.5 mg/dL.</td>
+                </tr>
+                <tr>
+                  <td><strong>Rivaroxaban</strong> (Xarelto)</td>
+                  <td>20 mg orally daily (with food)</td>
+                  <td>**Reduce to 15 mg daily** if CrCl is 15–50 mL/min.<br>Hold if CrCl &lt; 15 mL/min.</td>
+                </tr>
+                <tr>
+                  <td><strong>Dabigatran</strong> (Pradaxa)</td>
+                  <td>150 mg orally twice daily</td>
+                  <td>**Reduce to 75 mg BID** if CrCl is 15–30 mL/min.<br>Avoid if CrCl &lt; 15 mL/min.</td>
+                </tr>
+                <tr>
+                  <td><strong>Edoxaban</strong> (Savaysa)</td>
+                  <td>60 mg orally daily</td>
+                  <td>**Reduce to 30 mg daily** if CrCl is 15–50 mL/min or weight &le;60 kg.<br>Avoid if CrCl &gt;95 mL/min (increased clearance).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-box full-width">
+            <h3>📈 Landmark Anticoagulation Initiation Evidence</h3>
+            <table class="print-table" style="font-size:0.65rem;">
+              <thead>
+                <tr>
+                  <th>Clinical Study</th>
+                  <th>Cohort</th>
+                  <th>Inclusions & Timing Strategies</th>
+                  <th>Major Efficacy & Bleeding Safety Findings</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ELAN (NEJM, 2023)</strong></td>
+                  <td>2,013 patients with AFib and recent stroke.</td>
+                  <td>Early DOAC (Day 1-2 for mild, 3-4 moderate, 6-7 severe) vs. Delayed DOAC (Day 3-4 mild, 6-7 moderate, 12-14 severe).</td>
+                  <td>Early DOAC was safe and non-inferior to delayed DOAC. Recurrent stroke rates were lower in early group (1.9% vs 3.1% at 30d). sICH was identical (0.6% vs 0.7%).</td>
+                </tr>
+                <tr>
+                  <td><strong>OPTIMAS / TIMING (Lancet, 2024 / Circ, 2022)</strong></td>
+                  <td>Pooled meta-analyses of early vs late anticoagulation.</td>
+                  <td>TIMING: Day &le;4 vs Day 5-10. OPTIMAS: Day &le;4 vs Day 7-14.</td>
+                  <td>Confirmed zero excess risk of hemorrhage with early initiation. Strongly supports starting DOACs in first week. DOACs are preferred over Warfarin.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Fischer U, et al. ELAN. NEJM 2023. [2] Fischer U, et al. OPTIMAS. Lancet 2024. [3] Oldgren J, et al. TIMING. Circulation 2022. [4] 2023 ACC/AHA Atrial Fibrillation Guidelines.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
       </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
     </div>
-  </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    // Tab content definitions
+    const tabContents = {
+      dosing: `
+        <div class="glass-card" style="margin-bottom:0; flex:1; font-size:0.8rem;">
+          <h3>DOAC Bedside Dosing Guides</h3>
+          <table class="timing-table">
+            <thead>
+              <tr>
+                <th>Drug</th>
+                <th>Standard Dose</th>
+                <th>Dose Reduction Criteria</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Apixaban</strong></td>
+                <td>5 mg BID</td>
+                <td><strong>Reduce to 2.5 mg BID</strong> if &ge; 2 criteria met: Age &ge;80, Weight &le;60 kg, Creatinine &ge;1.5 mg/dL.</td>
+              </tr>
+              <tr>
+                <td><strong>Rivaroxaban</strong></td>
+                <td>20 mg daily</td>
+                <td><strong>Reduce to 15 mg daily</strong> if CrCl 15-50 mL/min. Hold if CrCl &lt;15.</td>
+              </tr>
+              <tr>
+                <td><strong>Dabigatran</strong></td>
+                <td>150 mg BID</td>
+                <td><strong>Reduce to 75 mg BID</strong> if CrCl 15-30 mL/min. Avoid if CrCl &lt;15.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      elan: `
+        <div class="glass-card" style="margin-bottom:0; flex:1; font-size:0.8rem;">
+          <h3>ELAN & CATALYST Evidence Base</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">Landmark studies comparing early vs. delayed DOAC initiation in AFib patients.</p>
+          <ul class="step-list">
+            <li><strong>ELAN Trial (NEJM 2023):</strong> Early DOAC initiation (median Day 2) is non-inferior to delayed DOAC (median Day 7–8) with equivalent low sICH (0.6% vs 0.7%) and lower recurrent stroke.</li>
+            <li><strong>CATALYST Meta-Analysis (2025):</strong> Pooled data (n=5,441) from ELAN, OPTIMAS (Lancet 2024), TIMING (Circulation 2022), and START (JAMA Neurol 2025). Strongly confirms the safety of starting DOACs early (Day 1 to 4) over late.</li>
+          </ul>
+        </div>
+      `
+    };
+
+    function switchTimingTab(tabId) {
+      document.getElementById('tab-btn-dosing').classList.toggle('active', tabId === 'dosing');
+      document.getElementById('tab-btn-elan').classList.toggle('active', tabId === 'elan');
+      
+      document.getElementById('timing-tab-content').innerHTML = tabContents[tabId];
+    }
+
+    // Timing and dosing calculation logic
+    function runTimingAlgorithm() {
+      const severity = document.getElementById('inp-severity').value;
+      const scan = document.getElementById('inp-scan').value;
+      const crcl = document.getElementById('inp-crcl').value;
+      
+      const rBox = document.getElementById('timing-result-box');
+      const rTitle = document.getElementById('timing-title');
+      const rText = document.getElementById('timing-text');
+      
+      // Reset all SVG rectangles opacity
+      document.getElementById('svg-rect-mild').setAttribute('fill-opacity', '0.1');
+      document.getElementById('svg-rect-mild').setAttribute('stroke-width', '1');
+      document.getElementById('svg-rect-mod').setAttribute('fill-opacity', '0.1');
+      document.getElementById('svg-rect-mod').setAttribute('stroke-width', '1');
+      document.getElementById('svg-rect-sev').setAttribute('fill-opacity', '0.1');
+      document.getElementById('svg-rect-sev').setAttribute('stroke-width', '1');
+      document.getElementById('svg-rect-ph2').setAttribute('fill-opacity', '0.1');
+      document.getElementById('svg-rect-ph2').setAttribute('stroke-width', '1');
+      
+      // 1. ESRD / Dialysis check
+      if (crcl === 'esrd') {
+        rBox.className = 'status-summary-box danger';
+        rTitle.innerText = 'CONTRAINDICATED / WARFARIN PREFERRED';
+        rText.innerHTML = '<strong>ESRD Caution:</strong> DOACs are not standard for patients with CrCl &lt; 15 mL/min or on Dialysis. Warfarin remains the primary anticoagulant (INVICTUS / clinical standards). If Apixaban is used, dose is 5 mg BID or reduced to 2.5 mg BID depending on criteria. Transition to nephrology consult.';
+        return;
+      }
+      
+      // 2. Large PH-2 Hemorrhagic Transformation
+      if (scan === 'large') {
+        rBox.className = 'status-summary-box danger';
+        rTitle.innerText = 'DELAYED DOAC START (DAY 12 - 14)';
+        rText.innerHTML = '<strong>PH-2 Hemorrhage:</strong> Repeat imaging shows a large parenchymal hematoma with mass effect. <strong>Delay DOAC initiation until Day 12 to 14.</strong> Obtain a repeat Head CT on Day 10–12 to ensure hemorrhage stability prior to DOAC start.';
+        
+        // Highlight PH2 rect on SVG
+        document.getElementById('svg-rect-ph2').setAttribute('fill-opacity', '0.4');
+        document.getElementById('svg-rect-ph2').setAttribute('stroke-width', '2.5');
+        return;
+      }
+      
+      // 3. Normal / Mild / Moderate / Severe algorithm based on ELAN
+      if (severity === 'mild') {
+        rBox.className = 'status-summary-box safe';
+        rTitle.innerText = 'EARLY DOAC START (DAY 1 OR 2)';
+        rText.innerHTML = '<strong>TIA / Mild Stroke:</strong> Infarct is small (&lt;1.5cm) and GCS/NIHSS &lt;8. Start DOAC on <strong>Day 1 or Day 2</strong>. Repeat imaging is NOT required prior to starting DOAC unless clinically indicated.';
+        
+        // Highlight mild rect on SVG
+        document.getElementById('svg-rect-mild').setAttribute('fill-opacity', '0.4');
+        document.getElementById('svg-rect-mild').setAttribute('stroke-width', '2.5');
+      } else if (severity === 'moderate') {
+        rBox.className = 'status-summary-box safe';
+        rTitle.innerText = 'DOAC START DAY 3 OR 4';
+        
+        if (scan === 'small') {
+          rText.innerHTML = '<strong>Moderate Stroke + HI-1/2:</strong> Start DOAC on <strong>Day 3 or Day 4</strong>. Small hemorrhagic transformation (HI-1/2) is not a contraindication to starting DOAC on schedule. Hold antiplatelets and begin DOAC.';
+        } else {
+          rText.innerHTML = '<strong>Moderate Stroke:</strong> Start DOAC on <strong>Day 3 or Day 4</strong>. <em>Standard:</em> Obtain a repeat non-contrast Head CT or MRI on Day 2–3 to rule out parenchymal hemorrhage prior to starting DOAC.';
+        }
+        
+        // Highlight moderate rect on SVG
+        document.getElementById('svg-rect-mod').setAttribute('fill-opacity', '0.4');
+        document.getElementById('svg-rect-mod').setAttribute('stroke-width', '2.5');
+      } else if (severity === 'severe') {
+        rBox.className = 'status-summary-box safe';
+        rTitle.innerText = 'DOAC START DAY 6 OR 7';
+        
+        if (scan === 'small') {
+          rText.innerHTML = '<strong>Severe Stroke + HI-1/2:</strong> Start DOAC on <strong>Day 6 or Day 7</strong>. Perform close neuro exams. Small hemorrhagic conversion (HI-1/2) is safe to start DOAC on Day 6-7. Avoid further delay.';
+        } else {
+          rText.innerHTML = '<strong>Severe Stroke (NIHSS &ge;16):</strong> Start DOAC on <strong>Day 6 or Day 7</strong>. <strong>Mandatory:</strong> Obtain a repeat non-contrast Head CT or MRI on Day 5–6 to rule out large parenchymal hematoma prior to initiating DOAC.';
+        }
+        
+        // Highlight severe rect on SVG
+        document.getElementById('svg-rect-sev').setAttribute('fill-opacity', '0.4');
+        document.getElementById('svg-rect-sev').setAttribute('stroke-width', '2.5');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      switchTimingTab('dosing');
+      runTimingAlgorithm();
+    });
+  </script>
 </body>
 </html>

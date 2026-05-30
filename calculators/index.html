@@ -4,6 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clinical Calculators - Stroke & Neurology</title>
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -503,9 +504,9 @@
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
 
-  <nav class="portal-nav">
+  <nav class="portal-nav" style="display:none;">
     <a href="../index.html">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -515,7 +516,29 @@
     <span style="font-size:0.85rem; font-weight:600; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.05em;">Bedside Calculators</span>
   </nav>
 
-  <div class="app-container">
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Clinical Reference</span>
+        <h1 id="app-title">Bedside Calculators</h1>
+        <p class="subtitle">Interactive multi-parameter neurology calculators</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="dashboard-view" class="view-section active">
+      <div class="app-container">
     
     <!-- Sidebar / Switcher -->
     <aside class="sidebar">
@@ -1786,6 +1809,100 @@
       return match ? [match[1]] : null;
     }
   </script>
+
+  </div> <!-- End of app-container -->
+  </section> <!-- End of dashboard-view -->
+  
+  <!-- PRINT VIEW -->
+  <section id="print-view" class="view-section">
+    <div class="print-page">
+      <div class="print-header">
+        <h1>Clinical Calculators Cheat Sheet</h1>
+        <div class="print-subtitle">Pocket Reference for Neurology & Stroke Scores</div>
+      </div>
+      
+      <div class="print-grid">
+        <div class="print-box">
+          <h3>🧠 GCS (Glasgow Coma Scale)</h3>
+          <ul class="print-list" style="margin-top:0.25rem;">
+            <li><strong>Eyes (1-4):</strong> 4: Spontaneous, 3: To speech, 2: To pain, 1: None</li>
+            <li><strong>Verbal (1-5):</strong> 5: Oriented, 4: Confused, 3: Inappropriate words, 2: Incomprehensible sounds, 1: None</li>
+            <li><strong>Motor (1-6):</strong> 6: Obeys, 5: Localizes, 4: Withdraws, 3: Flexion (decorticate), 2: Extension (decerebrate), 1: None</li>
+          </ul>
+        </div>
+        
+        <div class="print-box">
+          <h3>⚡ HAS-BLED (Bleeding Risk in AFib)</h3>
+          <p>Score &ge; 3 indicates high bleeding risk; caution advised.</p>
+          <ul class="print-list" style="margin-top:0.25rem;">
+            <li><strong>H (1):</strong> Hypertension (SBP &ge; 160)</li>
+            <li><strong>A (1):</strong> Abnormal renal or liver function (1 pt each, max 2)</li>
+            <li><strong>S (1):</strong> Stroke history</li>
+            <li><strong>B (1):</strong> Bleeding predisposition / history</li>
+            <li><strong>L (1):</strong> Labile INRs (high variability, time in range &lt; 60%)</li>
+            <li><strong>E (1):</strong> Elderly (Age &ge; 65)</li>
+            <li><strong>D (1):</strong> Drugs (antiplatelets/NSAIDs) or Alcohol (1 pt each, max 2)</li>
+          </ul>
+        </div>
+        
+        <div class="print-box">
+          <h3>📋 CHA2DS2-VASc (Stroke Risk in AFib)</h3>
+          <ul class="print-list" style="margin-top:0.25rem;">
+            <li><strong>C (1):</strong> Congestive Heart Failure / LV dysfunction</li>
+            <li><strong>H (1):</strong> Hypertension history</li>
+            <li><strong>A2 (2):</strong> Age &ge; 75 years</li>
+            <li><strong>D (1):</strong> Diabetes Mellitus</li>
+            <li><strong>S2 (2):</strong> Stroke, TIA, or thromboembolism history</li>
+            <li><strong>V (1):</strong> Vascular disease (prior MI, PAD, aortic plaque)</li>
+            <li><strong>A (1):</strong> Age 65 - 74 years</li>
+            <li><strong>Sc (1):</strong> Sex category (Female)</li>
+          </ul>
+        </div>
+        
+        <div class="print-box">
+          <h3>🔍 RCVS2 (Reversible Cerebral Vasoconstriction)</h3>
+          <ul class="print-list" style="margin-top:0.25rem;">
+            <li><strong>R (5):</strong> Recurrent thunderclap headaches (TCHs)</li>
+            <li><strong>C (1):</strong> Carotid / vertebral artery dissection</li>
+            <li><strong>V (1):</strong> Vasoconstrictor trigger identified</li>
+            <li><strong>S (1):</strong> Sex category (Female)</li>
+            <li><strong>2 (-2):</strong> Subarachnoid hemorrhage present (**minus 2 points**)</li>
+          </ul>
+          <p style="font-size:0.75rem; margin-top:0.25rem; font-weight:600;">Score &ge; 5: High probability of RCVS (~99% specificity).</p>
+        </div>
+        
+        <div class="print-box full-width">
+          <h3>📈 mRS (Modified Rankin Scale) for Functional Outcomes</h3>
+          <table class="print-table">
+            <thead>
+              <tr>
+                <th style="width:15%;">mRS Score</th>
+                <th style="width:85%;">Clinical Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>0</strong></td><td>No symptoms at all.</td></tr>
+              <tr><td><strong>1</strong></td><td>No significant disability; able to carry out all usual duties and activities.</td></tr>
+              <tr><td><strong>2</strong></td><td>Slight disability; unable to carry out all previous activities, but able to look after own affairs without assistance.</td></tr>
+              <tr><td><strong>3</strong></td><td>Moderate disability; requiring some help, but able to walk without assistance.</td></tr>
+              <tr><td><strong>4</strong></td><td>Moderately severe disability; unable to walk without assistance and unable to attend to own bodily needs without assistance.</td></tr>
+              <tr><td><strong>5</strong></td><td>Severe disability; bedridden, incontinent and requiring constant nursing care and attention.</td></tr>
+              <tr><td><strong>6</strong></td><td>Dead.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="print-footer-references">
+          <p><strong>References:</strong> [1] Teasdale G, et al. Lancet 1974. [2] Lip GY, et al. Chest 2010. [3] Putaala J, et al. Stroke 2018. [4] Rocha EA, et al. Stroke 2019.</p>
+          <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  </main>
+  
+  <script src="../assets/dual_view.js"></script>
 
 </body>
 </html>

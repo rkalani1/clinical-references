@@ -27,7 +27,7 @@ const predictionIch = document.getElementById('prediction-ich');
 const predictionStroke = document.getElementById('prediction-stroke');
 
 // Switch View (Dashboard vs Print)
-function switchView(view) {
+function switchView(view, saveToStorage = true) {
   const dashboardView = document.getElementById('dashboard-view');
   const printView = document.getElementById('print-view');
   const btnDashboard = document.getElementById('toggle-dashboard');
@@ -43,6 +43,10 @@ function switchView(view) {
     dashboardView.classList.remove('active');
     btnPrint.classList.add('active');
     btnDashboard.classList.remove('active');
+  }
+
+  if (saveToStorage) {
+    localStorage.setItem('preferredView', view);
   }
 }
 
@@ -274,5 +278,16 @@ function interpretClinicalMetrics(npi, cv, change, diff) {
 
 // Initial setup on load
 window.addEventListener('DOMContentLoaded', () => {
+  const preferredView = localStorage.getItem('preferredView') || 'dashboard';
+  switchView(preferredView, false);
   updateSliders();
+
+  window.addEventListener('beforeprint', () => {
+    switchView('print', false);
+  });
+
+  window.addEventListener('afterprint', () => {
+    const currentPreferred = localStorage.getItem('preferredView') || 'dashboard';
+    switchView(currentPreferred, false);
+  });
 });

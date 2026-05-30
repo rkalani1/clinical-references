@@ -3,150 +3,335 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cardio &amp; Atrial Fibrillation in Stroke</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Cardio & Atrial Fibrillation in Stroke Bedside Guide</title>
+  <meta name="description" content="Bedside guide and decision support for AFib anticoagulation, LAA occlusion, and post-ICH antithrombotic resumption.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #38bdf8;
-    }
-    .cards-wrapper-outer {
+    /* Scoped styles for Cardio-AFib */
+    .cardio-select-row {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
+      gap: 5px;
+      margin-bottom: 12px;
     }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
+    
+    .cardio-select-row label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    
+    .cardio-select-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 0.85rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .cardio-display {
+      background-color: hsl(223, 30%, 4%);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      margin-top: 10px;
+    }
+
+    .tab-btn-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .tab-btn.active {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper landscape-card">
-      <div class="card-container" style="box-sizing: border-box; width: 825px; min-height: 1100px; padding: 25px 40px;">
-        <div class="card-content" style="justify-content: flex-start; gap: 10px;">
-          
-          <div class="card-header" style="display: flex;">
-            <div class="title-logo">UW Medicine</div>
-            <div class="doc-id">DOC.REF.CARDIO.AFIB</div>
-          </div>
-
-          <h1 style="font-size: 16.5pt; margin-bottom: 4px; padding-bottom: 2px; text-align: center;">Cardio &amp; Atrial Fibrillation in Stroke</h1>
-          <p style="font-size: 9.2pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
-            Bedside guidelines for anticoagulation in special AFib populations, left atrial appendage occlusion, and post-ICH antithrombotic resumption.
-          </p>
-
-          <!-- AFib in Special Populations Table -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">AFib: Management in Special Populations</h2>
-          <table style="width: 100%; border-collapse: collapse; font-size: 8pt; line-height: 1.35; margin-bottom: 15px;">
-            <thead>
-              <tr style="background: var(--teal-deep); color: white;">
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 25%;">Special Population</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 45%;">Guideline Directive &amp; Trial Evidence</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 30%;">Anticoagulation Choice</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Valvular AFib<br><span style="font-size: 7.2pt; font-weight: normal; color: var(--ink-soft);">(Mechanical Valves or Rheumatic Mitral Stenosis)</span></td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">DOACs are **contraindicated** (Mechanical Valves) or inferior (Mitral Stenosis). **INVICTUS Trial (2022)**: Warfarin had lower stroke and death rates than rivaroxaban in rheumatic MS. **PROACT Xa**: Apixaban failed vs. warfarin.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--red-deep);">Warfarin only (Target INR per valve type)</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Bioprosthetic Heart Valves</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">**RIVER Trial (2020)**: Rivaroxaban was non-inferior to warfarin for major clinical events at 12 months in patients with bioprosthetic mitral valves and AFib.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--teal-deep);">DOAC (Apixaban/Rivaroxaban) or Warfarin</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">ESRD on Dialysis</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">DOAC registration trials excluded dialysis. Observational registries show apixaban 2.5mg BID or 5mg BID has similar or lower bleeding risk than warfarin.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Apixaban (dose adjusted) or Warfarin</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Post-PCI (Coronary Stent)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Double therapy (DOAC + P2Y12 inhibitor) significantly reduces major hemorrhage and intracranial bleeding compared to triple therapy (DOAC + DAPT).</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--teal-deep);">DOAC + Clopidogrel (Hold Aspirin after discharge)</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- LAAO & Anticoagulation Resumption After ICH -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Left Atrial Appendage Occlusion (LAAO) &amp; ICH Resumption</h2>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-            <div style="border: 1px solid var(--purple-soft); background: #fdfafc; padding: 12px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--purple-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">LAA Occlusion (LAAO) Evidence</strong>
-              • **Percutaneous LAAO (Watchman)**: Evaluated in **PROTECT AF** and **PREVAIL** trials. Watchman is non-inferior to warfarin for stroke prevention, with lower long-term bleeding rates but carries procedural and device-related thrombosis risks (2–5%).
-              <br>• **Surgical LAAO (LAAOS-III, 2021)**: Performed during cardiac surgery. Surgical occlusion **significantly reduced ischemic stroke or systemic embolism by 33%** (HR 0.67, p=0.001) in patients with AFib, even when anticoagulation was continued.
-            </div>
-            <div style="border: 1px solid var(--red-soft); background: #fff5f5; padding: 12px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--red-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">Anticoagulation Resumption After ICH</strong>
-              • **ICH Recurrence Risks**:
-              <br>&nbsp;&nbsp;– Cerebral Amyloid Angiopathy (CAA / Lobar): **~9% / year**
-              <br>&nbsp;&nbsp;– Hypertensive (Deep): **&lt;2% / year**
-              <br>• **Antiplatelet (RESTART Trial, 2019)**: Restarting antiplatelet therapy after ICH is safe and does not increase recurrent ICH.
-              <br>• **Anticoagulation (OAC)**: Resumption timing is generally **~8 weeks** post-ICH if the thromboembolic risk is high (deep deep location, high CHA2DS2-VASc). Enroll in **ASPIRE** clinical trial.
-            </div>
-          </div>
-
-          <!-- Document References -->
-          <div style="font-size: 8pt; color: #64748b; margin-top: 10px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 8px; display: flex; justify-content: center; gap: 20px;">
-            <span>PDF: <a href="../documents/afib/AF & secondary stroke prevention July 2024.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">AF &amp; Secondary Prevention.pdf</a></span>
-            <span>PDF: <a href="../documents/afib/AC timing after AF-related Stroke.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">OAC Restart Timing.pdf</a></span>
-            <span>PDF: <a href="../documents/afib/AFib Stroke EPI519.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">AFib Stroke EPI519.pdf</a></span>
-          </div>
-
-          <div class="card-footer" style="display: flex;">
-            <div class="disclaimer-text">For educational &amp; clinical decision support. Verify local institutional protocols prior to application.</div>
-            <div class="page-num">Page 1</div>
-          </div>
-
-        </div>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Cardio-Neurology</span>
+        <h1 id="app-title">Cardio & AFib in Stroke</h1>
+        <p class="subtitle">Anticoagulation in special populations, Watchman evidence, and post-ICH resumption</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
       </div>
     </div>
-  </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: AFIB SPECIAL POPULATIONS SELECTOR -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <h2>Special AFib Populations</h2>
+            <span class="card-label">Guideline Selector</span>
+          </div>
+
+          <div class="cardio-select-row">
+            <label>Select Target Cohort</label>
+            <select id="cardio-selector" onchange="updateCardioDisplay()">
+              <option value="valvular">Valvular AFib (Mech Valve / Rheumatic MS)</option>
+              <option value="bioprosthetic">Bioprosthetic Heart Valves</option>
+              <option value="esrd">ESRD on Dialysis</option>
+              <option value="postpci">Post-PCI Coronary Stenting</option>
+            </select>
+          </div>
+
+          <div id="cardio-display" class="cardio-display">
+            <!-- Dynamic cohort details -->
+          </div>
+
+          <div class="status-summary-box danger" style="margin-top:12px; margin-bottom:0;">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="status-desc">
+              <h4>Valvular Anticoagulation Mandate</h4>
+              <p>DOACs are strictly **contraindicated** in patients with mechanical heart valves or moderate-to-severe rheumatic mitral stenosis. Warfarin is the only approved therapy.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: LAAO, RESUMPTION, & PDF LIBRARY -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
+          <div class="tab-btn-group">
+            <button class="tab-btn active" onclick="switchTab('tab-laao')">LAA Occlusion</button>
+            <button class="tab-btn" onclick="switchTab('tab-ich-resumption')">Post-ICH Resumption</button>
+            <button class="tab-btn" onclick="switchTab('tab-cardio-files')">Literature Library</button>
+          </div>
+
+          <!-- TAB 1: LAAO -->
+          <div id="tab-laao" class="tab-pane active">
+            <h2>Left Atrial Appendage Occlusion (LAAO)</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-purple);">Percutaneous LAAO (Watchman)</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  Evaluated in **PROTECT AF** and **PREVAIL** trials. Watchman is non-inferior to warfarin for stroke prevention, with lower long-term bleeding rates but carries procedural and device-related thrombosis risks (2–5%).
+                </p>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-cyan);">Surgical LAAO (LAAOS-III Trial, 2021)</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  Performed during concurrent cardiac surgery. Surgical occlusion **significantly reduced ischemic stroke or systemic embolism by 33%** (HR 0.67, p=0.001) in patients with AFib, even when anticoagulation was continued.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: POST-ICH RESUMPTION -->
+          <div id="tab-ich-resumption" class="tab-pane">
+            <h2>Anticoagulation Resumption After ICH</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:12px;">
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-red);">Recurrence Risks based on Location</h3>
+                <ul class="step-list" style="font-size:0.8rem; margin-top:5px;">
+                  <li><strong>Lobar ICH (Cerebral Amyloid Angiopathy):</strong> Recurrence rate is **~9% per year**. High caution with OAC.</li>
+                  <li><strong>Deep ICH (Hypertensive Vasculopathy):</strong> Recurrence rate is **&lt;2% per year**. Safe to resume.</li>
+                </ul>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-yellow);">Key Trial Digests</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  • **RESTART (2019)**: Restarting antiplatelet therapy after ICH is safe and does not increase recurrent ICH.<br>
+                  • **OAC Resumption**: Generally target **~8 weeks** post-ICH if thromboembolic risk is high (deep location, high CHA2DS2-VASc). Consider enrollment in **ASPIRE** trial.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: LITERATURE LIBRARY -->
+          <div id="tab-cardio-files" class="tab-pane">
+            <h2>Cardio-Neurology Literature PDFs</h2>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">Open the following files in the local workspace directory for detailed guides:</p>
+            <ul class="step-list">
+              <li>📄 <a href="../documents/afib/AF & secondary stroke prevention July 2024.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">AF & Secondary Prevention.pdf</a></li>
+              <li>📄 <a href="../documents/afib/AC timing after AF-related Stroke.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">OAC Restart Timing.pdf</a></li>
+              <li>📄 <a href="../documents/afib/AFib Stroke EPI519.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">AFib Stroke EPI519.pdf</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Cardio & Atrial Fibrillation in Stroke Bedside Card</h1>
+          <div class="print-subtitle">Anticoagulation in Special Populations & Post-ICH Resumption</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box full-width">
+            <h3>📋 AFib Management in Special Populations</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:25%;">Special Population</th>
+                  <th style="width:50%;">Guideline Directive & Trial Evidence</th>
+                  <th style="width:25%;">Anticoagulation Choice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="alert-row-danger">
+                  <td><strong>Valvular AFib</strong> (Mechanical Valves or Rheumatic MS)</td>
+                  <td>DOACs are **contraindicated** (Mechanical) or inferior (MS). **INVICTUS Trial (2022)**: Warfarin had lower stroke and death rates than rivaroxaban in rheumatic MS.</td>
+                  <td><strong>Warfarin only</strong> (Target INR per valve type)</td>
+                </tr>
+                <tr class="alert-row-teal">
+                  <td><strong>Bioprosthetic Heart Valves</strong></td>
+                  <td>**RIVER Trial (2020)**: Rivaroxaban was non-inferior to warfarin for clinical events at 12 months in patients with bioprosthetic mitral valves.</td>
+                  <td><strong>DOAC</strong> or <strong>Warfarin</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>ESRD on Dialysis</strong></td>
+                  <td>Trials excluded dialysis. Observational registries show apixaban 2.5mg BID or 5mg BID has similar/lower bleeding risk than warfarin.</td>
+                  <td><strong>Apixaban</strong> (dose-adjusted) or <strong>Warfarin</strong></td>
+                </tr>
+                <tr class="alert-row-cyan">
+                  <td><strong>Post-PCI</strong> (Coronary Stent)</td>
+                  <td>Double therapy (DOAC + P2Y12 inhibitor) significantly reduces major hemorrhage and intracranial bleeding compared to triple therapy (DOAC + DAPT).</td>
+                  <td><strong>DOAC + Clopidogrel</strong> (Hold Aspirin)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>🔬 Left Atrial Appendage Occlusion (LAAO)</h3>
+            <ul class="print-list">
+              <li><strong>Percutaneous LAAO (Watchman):</strong> Non-inferior to warfarin for stroke prevention in PROTECT AF / PREVAIL, with lower long-term bleeding. Device thrombosis rate 2-5%.</li>
+              <li><strong>Surgical LAAO (LAAOS-III):</strong> Surgical occlusion during cardiac surgery **reduced stroke or systemic embolism by 33%** (HR 0.67, p=0.001) in AFib, even with OAC.</li>
+            </ul>
+          </div>
+
+          <div class="print-box">
+            <h3>🔴 Anticoagulation Resumption After ICH</h3>
+            <ul class="print-list">
+              <li><strong>Lobar ICH (CAA):</strong> Recurrence rate is **~9% per year**. High caution with OAC resumption.</li>
+              <li><strong>Deep ICH (Hypertensive):</strong> Recurrence rate is **&lt;2% per year**. Generally safe to resume.</li>
+              <li><strong>Antiplatelet (RESTART):</strong> Restarting antiplatelet therapy after ICH is safe and does not increase recurrent ICH.</li>
+              <li><strong>OAC Timing:</strong> Resume around **8 weeks** post-ICH in high-risk (deep location, high CHA2DS2-VASc). Enroll in ASPIRE.</li>
+            </ul>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] INVICTUS. N Engl J Med. 2022. [2] RIVER. N Engl J Med. 2020. [3] LAAOS-III. N Engl J Med. 2021. [4] RESTART. Lancet. 2019.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    const cohorts = {
+      valvular: {
+        title: "Valvular AFib (Mechanical Valves or Rheumatic MS)",
+        text: "<strong>Directive:</strong> DOACs are strictly <strong>contraindicated</strong> (Mechanical Valves) or inferior (Mitral Stenosis).<br><strong>Evidence:</strong> <em>INVICTUS Trial (2022)</em>: Warfarin had significantly lower stroke and death rates than Rivaroxaban in rheumatic MS. <em>PROACT Xa</em>: Apixaban failed vs. Warfarin in mechanical valves.<br><strong>Choice:</strong> Warfarin only (Target INR 2.0-3.0 or 2.5-3.5 per valve location)."
+      },
+      bioprosthetic: {
+        title: "Bioprosthetic Heart Valves",
+        text: "<strong>Directive:</strong> DOACs are non-inferior to Warfarin after the initial surgical phase (usually first 3 months).<br><strong>Evidence:</strong> <em>RIVER Trial (2020)</em>: Rivaroxaban was non-inferior to Warfarin for major clinical events at 12 months in patients with bioprosthetic mitral valves and AFib.<br><strong>Choice:</strong> DOAC (Apixaban or Rivaroxaban) or Warfarin."
+      },
+      esrd: {
+        title: "ESRD on Dialysis",
+        text: "<strong>Directive:</strong> Registration trials excluded ESRD. Observational data guides dosing.<br><strong>Evidence:</strong> Registry studies show Apixaban 5mg BID (or 2.5mg BID if age &ge;80 or weight &le;60 kg) has similar or lower bleeding risk than Warfarin with equivalent stroke prevention.<br><strong>Choice:</strong> Apixaban (dose-adjusted) or Warfarin."
+      },
+      postpci: {
+        title: "Post-PCI (Coronary Stent)",
+        text: "<strong>Directive:</strong> Dual therapy is superior to triple therapy due to bleeding harms.<br><strong>Evidence:</strong> Multiple trials (PIONEER, REDUAL, AUGUSTUS, ENTRUST) show that double therapy (DOAC + P2Y12 inhibitor, e.g., Clopidogrel) significantly reduces major bleeding, including intracranial bleeding, compared to triple therapy (DOAC + DAPT).<br><strong>Choice:</strong> DOAC + Clopidogrel (Hold Aspirin after initial hospital discharge)."
+      }
+    };
+
+    function updateCardioDisplay() {
+      const val = document.getElementById('cardio-selector').value;
+      const data = cohorts[val];
+      document.getElementById('cardio-display').innerHTML = `
+        <h3 style="color:var(--color-cyan); margin-bottom:5px;">${data.title}</h3>
+        <p>${data.text}</p>
+      `;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCardioDisplay();
+    });
+  </script>
 </body>
 </html>

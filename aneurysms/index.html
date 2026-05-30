@@ -3,192 +3,421 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unruptured Cerebral Aneurysms Guide</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Unruptured Cerebral Aneurysms Bedside Guide</title>
+  <meta name="description" content="Bedside guide and interactive PHASES score calculator for unruptured cerebral aneurysms, surveillance intervals, and treatment targets.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
+    /* Scoped styles for Aneurysms */
+    .phases-input-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-color);
     }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
+    
+    .phases-input-row label {
+      font-size: 0.8rem;
       font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
+      color: var(--text-main);
     }
-    .portal-nav a:hover {
-      color: #38bdf8;
+    
+    .phases-input-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.8rem;
+      outline: none;
+      width: 100%;
     }
-    .cards-wrapper-outer {
+
+    .tab-btn-group {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
+      gap: 8px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
     }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
+
+    .tab-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .tab-btn.active {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper landscape-card">
-      <div class="card-container" style="box-sizing: border-box; width: 825px; min-height: 1050px; padding: 25px 40px;">
-        <div class="card-content" style="justify-content: flex-start; gap: 10px;">
-          
-          <div class="card-header" style="display: flex;">
-            <div class="title-logo">UW Medicine</div>
-            <div class="doc-id">DOC.REF.ANEURYSMS</div>
-          </div>
-
-          <h1 style="font-size: 16.5pt; margin-bottom: 4px; padding-bottom: 2px; text-align: center;">Unruptured Cerebral Aneurysms</h1>
-          <p style="font-size: 9.2pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
-            Epidemiology, rupture risk assessment (PHASES score), diagnostic modalities, and re-imaging intervals.
-          </p>
-
-          <!-- Classification & Risk Factors Grid -->
-          <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 15px; margin-bottom: 15px;">
-            <div style="border: 1px solid var(--purple-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
-              <strong style="color: var(--purple-deep); font-size: 9.5pt; display: block; margin-bottom: 6px;">Classification &amp; Distribution</strong>
-              • **Saccular (Berry)**: Thin/absent media, fragmented internal elastic lamina. Accounts for most aSAH.
-              <br>• **Fusiform**: Dilation of the entire arterial circumference, highly associated with atherosclerosis.
-              <br>• **Mycotic**: Infective, saccular or fusiform. Located on distal branches of anterior circulation.
-              <br>• **Distribution**: Solitary in 70–75%; multiple in 20–30%.
-              <br>• **Location**: Anterior circulation bifurcations of the Circle of Willis (85%).
-              <br>• **CN III Palsy**: Mass effect from posterior communicating junction can compress CN III, causing a **pupil-involving third nerve palsy** (surgical emergency).
-            </div>
-            <div style="border: 1px solid var(--amber-soft); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8.2pt; line-height: 1.45;">
-              <strong style="color: var(--amber-deep); font-size: 9.5pt; display: block; margin-bottom: 6px;">Epidemiology &amp; Screening</strong>
-              • **Prevalence**: ~3% in the general population. Post-50y shows strong female predominance (2:1) due to estrogen deficiency and reduced collagen.
-              <br>• **Genetic Syndromes**: Autosomal Dominant Polycystic Kidney Disease (AD-PCKD: **7x increased risk**), Ehlers-Danlos, Moyamoya.
-              <br>• **Asymptomatic Screening**: Indicated if &ge;2 first-degree relatives have intracranial aneurysms or SAH, or if a high-risk syndromic association exists.
-            </div>
-          </div>
-
-          <!-- PHASES Score Rupture Risk Table -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">PHASES Rupture Risk Prediction Model</h2>
-          <table style="width: 100%; border-collapse: collapse; font-size: 8pt; line-height: 1.35; margin-bottom: 15px;">
-            <thead>
-              <tr style="background: var(--teal-deep); color: white;">
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 15%;">Parameter</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 55%;">Clinical Criteria &amp; Scoring Points</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 30%;">Rupture Risk Reference</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">P – Population</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">North American/European (0) | Japanese (3) | Finnish (4)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; rowspan=6; vertical-align: middle; font-weight: bold; font-size: 8.5pt;" rowspan="6">
-                  **Annual Risk of Rupture**:<br>
-                  • Score 0–3: **0.1% / year**<br>
-                  • Score 4–7: **0.5% / year**<br>
-                  • Score 8–11: **1.2% / year**<br>
-                  • Score 12–15: **2.5% / year**<br>
-                  • Score &ge;16: **&gt;10% / year**
-                </td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">H – Hypertension</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">No (0) | Yes (1) (Chronic high blood pressure)</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">A – Age</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">&lt; 70 years (0) | &ge; 70 years (1)</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">S – Size</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">&lt; 7mm (0) | 7–9.9mm (3) | 10–19.9mm (6) | &ge; 20mm (10)</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">E – Earlier SAH</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">No prior SAH (0) | Yes, prior aneurysmal SAH (1)</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">S – Site</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">ICA (0) | MCA (2) | ACA/PCom/Posterior Circulation (4)</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Diagnostic & Re-imaging Guidance -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Diagnostic Modalities &amp; Re-imaging Schedule</h2>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-            <div style="border: 1px solid var(--border-color); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--teal-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">Diagnostic Modality Accuracy</strong>
-              • **DSA**: Gold standard. Best resolution for planning treatments.
-              <br>• **MRA / CTA**: Lower accuracy for very small aneurysms (&lt;4mm).
-              <br>&nbsp;&nbsp;– *3T TOF-MRA*: Sensitivity 99%, Specificity 94%.
-              <br>&nbsp;&nbsp;– *CTA*: Sensitivity 97%, Specificity 98%.
-              <br>• **Bedside Tip**: If noninvasive studies are negative but clinical pretest probability remains high (e.g. sentinel headache, CN palsy), obtain a conventional DSA.
-            </div>
-            <div style="border: 1px solid var(--border-color); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--teal-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">Monitoring Re-imaging Intervals</strong>
-              • **Re-imaging Schedule**: For unruptured, untreated aneurysms managed conservatively:
-              <br>&nbsp;&nbsp;– Obtain follow-up MRA or CTA **6 months** after initial diagnosis.
-              <br>&nbsp;&nbsp;– If stable, obtain **annually** for 2–3 years.
-              <br>&nbsp;&nbsp;– If stable, transition to **q2–3 years** or longer.
-              <br>• **Antithrombotics**:
-              <br>&nbsp;&nbsp;– *Aspirin*: Safe and appears to reduce risk of aneurysm inflammation/growth (NASCET post-hoc).
-              <br>&nbsp;&nbsp;– *Anticoagulation*: May exacerbate SAH severity. Perform careful risk/benefit analysis.
-            </div>
-          </div>
-
-          <!-- General Intervention Indications -->
-          <div style="border: 1px solid var(--red-soft); background: #fff5f5; padding: 10px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-            <strong style="color: var(--red-deep); font-size: 8.8pt; display: block; margin-bottom: 4px;">General Indications for Intervention (Clipping vs. Coiling):</strong>
-            • **Intervention is indicated for**: Symptomatic aneurysms (mass effect, cranial neuropathy) or large size (&ge; 7–10 mm).
-            <br>• **Consider intervention for**: Basilar tip location, young patient age, coexisting aneurysms with prior SAH, or documented growth on serial monitoring scans.
-            <br>• **Treatment Options**: Endovascular coiling / flow diversion (lower periprocedural morbidity) vs. Surgical clipping (lower rates of aneurysm recurrence/regrowth).
-          </div>
-
-          <!-- Document References -->
-          <div style="font-size: 8pt; color: #64748b; margin-top: 10px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 8px;">
-            Refer to the full PDF under: <a href="../documents/aneurysms/Unruptured Cerebral Aneurysms.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">Unruptured Cerebral Aneurysms.pdf</a>
-          </div>
-
-          <div class="card-footer" style="display: flex;">
-            <div class="disclaimer-text">For educational &amp; clinical decision support. Verify local institutional protocols prior to application.</div>
-            <div class="page-num">Page 1</div>
-          </div>
-
-        </div>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Vascular Neurosurgery</span>
+        <h1 id="app-title">Unruptured Cerebral Aneurysms</h1>
+        <p class="subtitle">PHASES rupture risk calculator, surveillance schedules, and intervention thresholds</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
       </div>
     </div>
-  </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: PHASES RISK CALCULATOR -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <h2>PHASES Rupture Risk Model</h2>
+            <span class="card-label">Calculator</span>
+          </div>
+
+          <div class="lcd-screen">
+            <span class="lcd-label">Estimated 5-Year Rupture Risk</span>
+            <div id="phases-risk-display" style="font-size: 1.4rem; font-weight:700; color:var(--color-green);">0.5% (Low Risk)</div>
+            <div id="phases-score-display" class="formula-box">Total Score: 4 points</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div class="phases-input-row">
+              <label>1. Population</label>
+              <select id="inp-pop" onchange="runPhasesCalculator()">
+                <option value="0">North American / European (+0)</option>
+                <option value="3">Japanese (+3)</option>
+                <option value="4">Finnish (+4)</option>
+              </select>
+            </div>
+
+            <div class="phases-input-row">
+              <label>2. Hypertension History</label>
+              <select id="inp-htn" onchange="runPhasesCalculator()">
+                <option value="0">No (+0)</option>
+                <option value="1">Yes (Chronic high blood pressure) (+1)</option>
+              </select>
+            </div>
+
+            <div class="phases-input-row">
+              <label>3. Age</label>
+              <select id="inp-age" onchange="runPhasesCalculator()">
+                <option value="0">&lt;70 years (+0)</option>
+                <option value="1">&ge;70 years (+1)</option>
+              </select>
+            </div>
+
+            <div class="phases-input-row">
+              <label>4. Aneurysm Size</label>
+              <select id="inp-size" onchange="runPhasesCalculator()">
+                <option value="0">&lt;7 mm (+0)</option>
+                <option value="3">7–9.9 mm (+3)</option>
+                <option value="6">10–19.9 mm (+6)</option>
+                <option value="10">&ge;20 mm (+10)</option>
+              </select>
+            </div>
+
+            <div class="phases-input-row">
+              <label>5. Earlier SAH</label>
+              <select id="inp-sah" onchange="runPhasesCalculator()">
+                <option value="0">No prior SAH (+0)</option>
+                <option value="1">Yes, prior aneurysmal SAH (+1)</option>
+              </select>
+            </div>
+
+            <div class="phases-input-row">
+              <label>6. Aneurysm Site</label>
+              <select id="inp-site" onchange="runPhasesCalculator()">
+                <option value="0">ICA (+0)</option>
+                <option value="2">MCA (+2)</option>
+                <option value="4">ACA / PCom / Posterior (+4)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: CLASSIFICATION, DIAGNOSTICS & SURVEILLANCE -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
+          <div class="tab-btn-group">
+            <button class="tab-btn active" onclick="switchTab('tab-aneurysm-class')">Classification & Screening</button>
+            <button class="tab-btn" onclick="switchTab('tab-aneurysm-surveillance')">Surveillance Schedule</button>
+            <button class="tab-btn" onclick="switchTab('tab-aneurysm-intervention')">Intervention Guidelines</button>
+          </div>
+
+          <!-- TAB 1: CLASSIFICATION & SCREENING -->
+          <div id="tab-aneurysm-class" class="tab-pane active">
+            <h2>Epidemiology & Genetic Screening</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:12px;">
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-cyan);">Classification & Distribution</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  • **Saccular (Berry):** Thin media, fragmented elastic lamina. Most common cause of SAH.<br>
+                  • **Fusiform:** Circumferential dilatation, highly linked to atherosclerosis.<br>
+                  • **CN III Warning:** PCom aneurysms compressing the nerve can cause <strong>pupil-involving third nerve palsy</strong> (surgical emergency).
+                </p>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-purple);">Genetic Screening Mandates</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  • Screen all patients with **&ge;2 first-degree relatives** with aneurysms/SAH.<br>
+                  • Screen patients with genetic syndromes such as **AD-PCKD (7x risk)** or Ehlers-Danlos.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: SURVEILLANCE SCHEDULE -->
+          <div id="tab-aneurysm-surveillance" class="tab-pane">
+            <h2>Untreated Aneurysm Surveillance Schedule</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-yellow);">Imaging Modality Accuracy</h3>
+                <p style="font-size:0.8rem; line-height:1.4; color:var(--text-muted);">
+                  • **MRA / CTA:** Variable accuracy for very small lesions (&lt;4mm). 3T TOF-MRA (Sens 99%, Spec 94%) or CTA (Sens 97%, Spec 98%) preferred.<br>
+                  • **DSA (Gold Standard):** Best resolution. Procedural complication risk is ~1-2%.
+                </p>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-green);">Recommended Re-imaging Intervals</h3>
+                <ul class="step-list" style="font-size:0.8rem; margin-top:5px;">
+                  <li>Obtain follow-up MRA or CTA **6 months** after initial diagnosis.</li>
+                  <li>If stable, repeat **annually** for 2–3 years.</li>
+                  <li>If stable, transition to **q2–3 years** or longer.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: INTERVENTION GUIDELINES -->
+          <div id="tab-aneurysm-intervention" class="tab-pane">
+            <h2>Clipping vs. Coiling Guidelines</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+              <div class="status-summary-box danger" style="margin-bottom:0;">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div class="status-desc">
+                  <h4>General Indications for Intervention</h4>
+                  <p>• Symptomatic aneurysms (mass effect, cranial neuropathy) or large size (**&ge;7–10 mm**).</p>
+                  <p>• Basilar tip location, young patient age, or documented growth on serial scans.</p>
+                </div>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-cyan);">Reference Document</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  Open the full literature reference: <a href="../documents/aneurysms/Unruptured Cerebral Aneurysms.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">Unruptured Cerebral Aneurysms.pdf</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Unruptured Cerebral Aneurysms Bedside Card</h1>
+          <div class="print-subtitle">PHASES Score Rupture Risk Model & Surveillance Intervals</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box full-width">
+            <h3>📊 PHASES Rupture Risk Prediction Model</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:25%;">Predictor Variable</th>
+                  <th style="width:45%;">Points Assigned</th>
+                  <th style="width:30%;">5-Year Rupture Risk</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>P – Population</strong></td>
+                  <td>North American/European (0) | Japanese (3) | Finnish (4)</td>
+                  <td rowspan="6" style="font-weight:700; vertical-align:middle; text-align:left;">
+                    • 0–3 points: <strong>0.5%</strong><br>
+                    • 4–7 points: <strong>0.7% - 1.2%</strong><br>
+                    • 8–11 points: <strong>2.2% - 4.3%</strong><br>
+                    • 12–15 points: <strong>7.2% - 17.8%</strong><br>
+                    • &ge;16 points: <strong>&gt;40%</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>H – Hypertension</strong></td>
+                  <td>No (0) | Yes (1)</td>
+                </tr>
+                <tr>
+                  <td><strong>A – Age</strong></td>
+                  <td>&lt;70 years (0) | &ge;70 years (1)</td>
+                </tr>
+                <tr>
+                  <td><strong>S – Size</strong></td>
+                  <td>&lt;7mm (0) | 7–9.9mm (3) | 10–19.9mm (6) | &ge;20mm (10)</td>
+                </tr>
+                <tr>
+                  <td><strong>E – Earlier SAH</strong></td>
+                  <td>No (0) | Yes (1)</td>
+                </tr>
+                <tr>
+                  <td><strong>S – Site</strong></td>
+                  <td>ICA (0) | MCA (2) | ACA/PCom/Posterior (4)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>👁️ CN III Compression Alert</h3>
+            <p style="font-size:0.75rem; line-height:1.4;">
+              Aneurysms near the PCom junction can cause mass effect, presenting as a **pupil-involving third nerve palsy**. This represents a clinical surgical emergency indicating micro-rupture or acute expansion.
+            </p>
+          </div>
+
+          <div class="print-box">
+            <h3>🛡️ Surveillance Scan Intervals</h3>
+            <ul class="print-list">
+              <li><strong>6 Months:</strong> Repeat non-invasive imaging (MRA/CTA) at 6 months post-initial diagnosis.</li>
+              <li><strong>Annual:</strong> Scan annually for 2–3 years if stable.</li>
+              <li><strong>Extended:</strong> Transition to q2–3 years thereafter if no growth.</li>
+              <li><strong>Aspirin:</strong> Clinically safe; reduces wall inflammation.</li>
+            </ul>
+          </div>
+
+          <div class="print-box full-width">
+            <h3>🛠️ Intervention Indications (Clipping vs. Coiling)</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:30%;">Intervention Target</th>
+                  <th style="width:70%;">Clinical Criteria & Treatment Choice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Absolute Indications</strong></td>
+                  <td>Symptomatic aneurysms (cranial neuropathy, mass effect) or large size (&ge; 7–10 mm).</td>
+                </tr>
+                <tr>
+                  <td><strong>Relative Indications</strong></td>
+                  <td>Young patient age, basilar tip location, family history of SAH, or documented growth on serial scans.</td>
+                </tr>
+                <tr>
+                  <td><strong>Modality Choice</strong></td>
+                  <td>Endovascular (coiling, flow diversion) has lower perioperative risks. Open surgery (clipping) has lower recurrence rates.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Greving JP, et al. PHASES Score. Lancet Neurol. 2014. [2] 2015 AHA/ASA Unruptured Aneurysm Guidelines.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function runPhasesCalculator() {
+      const pop = parseInt(document.getElementById('inp-pop').value);
+      const htn = parseInt(document.getElementById('inp-htn').value);
+      const age = parseInt(document.getElementById('inp-age').value);
+      const size = parseInt(document.getElementById('inp-size').value);
+      const sah = parseInt(document.getElementById('inp-sah').value);
+      const site = parseInt(document.getElementById('inp-site').value);
+      
+      const score = pop + htn + age + size + sah + site;
+      
+      const riskDisplay = document.getElementById('phases-risk-display');
+      const scoreDisplay = document.getElementById('phases-score-display');
+      
+      scoreDisplay.innerText = `Total Score: ${score} points`;
+      
+      if (score >= 16) {
+        riskDisplay.innerText = ">40% (Extreme Risk)";
+        riskDisplay.style.color = "var(--color-red)";
+      } else if (score >= 12) {
+        riskDisplay.innerText = "7.2% - 17.8% (High Risk)";
+        riskDisplay.style.color = "var(--color-orange)";
+      } else if (score >= 8) {
+        riskDisplay.innerText = "2.2% - 4.3% (Moderate Risk)";
+        riskDisplay.style.color = "var(--color-yellow)";
+      } else if (score >= 4) {
+        riskDisplay.innerText = "0.7% - 1.2% (Low-Moderate Risk)";
+        riskDisplay.style.color = "var(--color-primary)";
+      } else {
+        riskDisplay.innerText = "0.5% (Low Risk)";
+        riskDisplay.style.color = "var(--color-green)";
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      runPhasesCalculator();
+    });
+  </script>
 </body>
 </html>

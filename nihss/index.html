@@ -3,350 +3,470 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NIHSS Stroke Scale Reference</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>NIHSS Stroke Scale Guide & Score Calculator</title>
+  <meta name="description" content="Bedside calculator and diagnostic reference for the NIH Stroke Scale (NIHSS) with visual cards.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
   
-  <!-- Navigation Header Styles -->
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
+    /* Scoped styles for NIHSS naming files and tabs */
+    .nihss-img-container {
+      background: #020408;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+    
+    .nihss-img-container img {
+      max-width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    
+    .calc-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .calc-row label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+    
+    .calc-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.85rem;
+      outline: none;
+      width: 100%;
+    }
+    
+    .pediatric-banner {
+      background: rgba(139, 92, 246, 0.12);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #38bdf8;
-    }
-    .portal-nav-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .portal-nav-links a {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
-    }
-    .portal-nav-links a:hover {
-      background: rgba(56, 189, 248, 0.08);
-      border-color: rgba(56, 189, 248, 0.3);
-    }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .portal-nav-links {
-        justify-content: flex-start;
-        gap: 0.4rem;
-      }
-      .portal-nav-links a {
-        flex: 1 1 auto;
-        text-align: center;
-        padding: 0.4rem 0.2rem;
-        font-size: 0.75rem;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
-    }
-    @media print {
-      .portal-nav {
-        display: none !important;
-      }
-      .cards-wrapper-outer {
-        padding: 0 !important;
-        background: #ffffff !important;
-        gap: 0 !important;
-      }
-      .card-wrapper {
-        page-break-after: always;
-        break-after: page;
-        margin-bottom: 0 !important;
-      }
+      margin-bottom: 1rem;
     }
   </style>
-  
-  <!-- Scoped Figure Styles -->
-  
-<style>
-
-.card-figure_02_nihss_scores {
-
-      margin: 0;
-      padding: 0;
-      background: white;
-    
-}
-.card-figure_02_nihss_scores .card-container {
-
-      width: 825px;
-      height: 1275px;
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    
-}
-.card-figure_02_nihss_scores .card-image {
-
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    
-}
-.card-figure_02_nihss_scores .pediatric-link-line {
-
-      position: absolute;
-      top: 1025px;
-      left: 160px;
-      font-family: "IBM Plex Sans", sans-serif;
-      font-size: 10.5pt;
-      font-weight: 500;
-      color: #333333;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    
-}
-.card-figure_02_nihss_scores .pediatric-link-line a {
-
-      color: #1f6b8a;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 6px;
-      background: #e3eef3;
-      border-radius: 4px;
-      transition: background 0.2s, color 0.2s;
-    
-}
-.card-figure_02_nihss_scores .pediatric-link-line a:hover {
-
-      background: #1f6b8a;
-      color: #ffffff;
-    
-}
-
-  
-
-</style>
-
-<style>
-
-.card-figure_03_nihss_pictures {
-
-      margin: 0;
-      padding: 0;
-      background: white;
-    
-}
-.card-figure_03_nihss_pictures .card-container {
-
-      width: 825px;
-      height: 1275px;
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    
-}
-.card-figure_03_nihss_pictures .card-image {
-
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    
-}
-
-  
-
-</style>
-
-<style>
-
-.card-figure_04_nihss_painting {
-
-      margin: 0;
-      padding: 0;
-      background: white;
-    
-}
-.card-figure_04_nihss_painting .card-container {
-
-      width: 825px;
-      height: 1275px;
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    
-}
-.card-figure_04_nihss_painting .card-image {
-
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    
-}
-
-  
-
-</style>
-
-<style>
-
-.card-figure_05_nihss_sentences {
-
-      margin: 0;
-      padding: 0;
-      background: white;
-    
-}
-.card-figure_05_nihss_sentences .card-container {
-
-      width: 825px;
-      height: 1275px;
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    
-}
-.card-figure_05_nihss_sentences .card-image {
-
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    
-}
-
-  
-
-</style>
-
 </head>
-<body>
+<body class="dark-mode">
 
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
-    <div class="portal-nav-links">
-      <a href="#card-figure_02_nihss_scores">Scores</a>
-      <a href="#card-figure_03_nihss_pictures">Naming</a>
-      <a href="#card-figure_04_nihss_painting">Cookie Theft</a>
-      <a href="#card-figure_05_nihss_sentences">Sentences</a>
-    </div>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div id="card-figure_02_nihss_scores" class="card-wrapper card-figure_02_nihss_scores">
-<div class="card-container">
-<img class="card-image" src="../assets/nihss_page_5.png"/>
-<div class="pediatric-link-line">
-<span>Pediatric NIH Stroke Scale (PedNIHSS):</span>
-<a href="https://www.mdcalc.com/calc/10270/pediatric-nih-stroke-scale-nihss" target="_blank">
-<span>MDCalc</span>
-<svg fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" style="margin-left: 4px; display: inline-block; vertical-align: middle;" viewbox="0 0 24 24" width="12">
-<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-<polyline points="15 3 21 3 21 9"></polyline>
-<line x1="10" x2="21" y1="14" y2="3"></line>
-</svg>
-</a>
-</div>
-</div>
-</div>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Neurological Triage</span>
+        <h1 id="app-title">NIH Stroke Scale (NIHSS)</h1>
+        <p class="subtitle">Standardized assessment tool for acute stroke severity</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
 
-<div id="card-figure_03_nihss_pictures" class="card-wrapper card-figure_03_nihss_pictures">
-<div class="card-container">
-<img class="card-image" src="../assets/nihss_page_6.png"/>
-</div>
-</div>
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      
+      <div class="pediatric-banner">
+        <span>Looking for pediatric stroke assessment? Use the <strong>Pediatric NIH Stroke Scale (PedNIHSS)</strong>.</span>
+        <a href="https://www.mdcalc.com/calc/10270/pediatric-nih-stroke-scale-nihss" target="_blank" class="btn-primary" style="padding: 4px 8px; font-size: 0.75rem; box-shadow: none;">MDCalc Link</a>
+      </div>
 
-<div id="card-figure_04_nihss_painting" class="card-wrapper card-figure_04_nihss_painting">
-<div class="card-container">
-<img class="card-image" src="../assets/nihss_page_7.png"/>
-</div>
-</div>
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: DYNAMIC CALCULATOR -->
+        <div class="glass-card" style="margin-bottom:0;">
+          <div class="card-header">
+            <h2>NIHSS Score Calculator</h2>
+            <span class="card-label">Interactive Calculator</span>
+          </div>
+          
+          <div class="lcd-screen">
+            <span class="lcd-label">Total NIHSS Score</span>
+            <div id="nihss-total-display" class="lcd-value">0</div>
+            <span id="nihss-severity-badge" class="status-badge status-normal" style="align-self: flex-start; margin-top: 4px;">NO STROKE (0)</span>
+          </div>
+          
+          <div id="nihss-calculator-form" style="display: flex; flex-direction: column; max-height: 520px; overflow-y: auto; padding-right: 5px;">
+            <div class="calc-row">
+              <label>1a. Level of Consciousness</label>
+              <select id="nih-1a" onchange="calculateNIHSS()">
+                <option value="0">0 - Alert</option>
+                <option value="1">1 - Drowsy / Minor stimulation</option>
+                <option value="2">2 - Stuporous / Repeated stimulation</option>
+                <option value="3">3 - Comatose / Reflex motor only</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>1b. LOC Questions (Month, Age)</label>
+              <select id="nih-1b" onchange="calculateNIHSS()">
+                <option value="0">0 - Answers both correctly</option>
+                <option value="1">1 - Answers one correctly</option>
+                <option value="2">2 - Answers neither correctly</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>1c. LOC Commands (Open/Close Eyes, Grip)</label>
+              <select id="nih-1c" onchange="calculateNIHSS()">
+                <option value="0">0 - Performs both correctly</option>
+                <option value="1">1 - Performs one correctly</option>
+                <option value="2">2 - Performs neither correctly</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>2. Best Gaze (Horizontal)</label>
+              <select id="nih-2" onchange="calculateNIHSS()">
+                <option value="0">0 - Normal</option>
+                <option value="1">1 - Partial gaze palsy</option>
+                <option value="2">2 - Forced deviation</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>3. Visual Fields (Hemianopia)</label>
+              <select id="nih-3" onchange="calculateNIHSS()">
+                <option value="0">0 - No visual loss</option>
+                <option value="1">1 - Partial hemianopia</option>
+                <option value="2">2 - Complete hemianopia</option>
+                <option value="3">3 - Bilateral hemianopia / Blind</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>4. Facial Palsy</label>
+              <select id="nih-4" onchange="calculateNIHSS()">
+                <option value="0">0 - Normal symmetric movement</option>
+                <option value="1">1 - Minor paralysis (flat nasolabial fold)</option>
+                <option value="2">2 - Partial paralysis (lower face)</option>
+                <option value="3">3 - Complete unilateral paralysis</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>5a. Motor Arm - Left</label>
+              <select id="nih-5a" onchange="calculateNIHSS()">
+                <option value="0">0 - No drift for 10s</option>
+                <option value="1">1 - Drift before 10s (does not hit bed)</option>
+                <option value="2">2 - Some effort against gravity (hits bed)</option>
+                <option value="3">3 - No effort against gravity (limb drops)</option>
+                <option value="4">4 - No movement at all</option>
+                <option value="UN">0 - Untestable (Amputated/Fused)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>5b. Motor Arm - Right</label>
+              <select id="nih-5b" onchange="calculateNIHSS()">
+                <option value="0">0 - No drift for 10s</option>
+                <option value="1">1 - Drift before 10s (does not hit bed)</option>
+                <option value="2">2 - Some effort against gravity (hits bed)</option>
+                <option value="3">3 - No effort against gravity (limb drops)</option>
+                <option value="4">4 - No movement at all</option>
+                <option value="UN">0 - Untestable (Amputated/Fused)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>6a. Motor Leg - Left</label>
+              <select id="nih-6a" onchange="calculateNIHSS()">
+                <option value="0">0 - No drift for 5s</option>
+                <option value="1">1 - Drift before 5s (does not hit bed)</option>
+                <option value="2">2 - Some effort against gravity (hits bed)</option>
+                <option value="3">3 - No effort against gravity (limb drops)</option>
+                <option value="4">4 - No movement at all</option>
+                <option value="UN">0 - Untestable (Amputated/Fused)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>6b. Motor Leg - Right</label>
+              <select id="nih-6b" onchange="calculateNIHSS()">
+                <option value="0">0 - No drift for 5s</option>
+                <option value="1">1 - Drift before 5s (does not hit bed)</option>
+                <option value="2">2 - Some effort against gravity (hits bed)</option>
+                <option value="3">3 - No effort against gravity (limb drops)</option>
+                <option value="4">4 - No movement at all</option>
+                <option value="UN">0 - Untestable (Amputated/Fused)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>7. Limb Ataxia (Finger-nose, Heel-shin)</label>
+              <select id="nih-7" onchange="calculateNIHSS()">
+                <option value="0">0 - Absent / Normal</option>
+                <option value="1">1 - Present in one limb</option>
+                <option value="2">2 - Present in two limbs</option>
+                <option value="UN">0 - Untestable (Amputated/Paralyzed)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>8. Sensory (Pinprick)</label>
+              <select id="nih-8" onchange="calculateNIHSS()">
+                <option value="0">0 - Normal; no sensory loss</option>
+                <option value="1">1 - Mild-to-moderate loss (dull feel)</option>
+                <option value="2">2 - Severe-to-complete loss (no touch)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>9. Best Language (Naming, Sentences)</label>
+              <select id="nih-9" onchange="calculateNIHSS()">
+                <option value="0">0 - Normal; no aphasia</option>
+                <option value="1">1 - Mild-to-moderate aphasia (comprehends some)</option>
+                <option value="2">2 - Severe aphasia (fragmented, jargon)</option>
+                <option value="3">3 - Mute / Global aphasia (no responses)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>10. Dysarthria (Articulating Words)</label>
+              <select id="nih-10" onchange="calculateNIHSS()">
+                <option value="0">0 - Normal pronunciation</option>
+                <option value="1">1 - Mild-to-moderate slurring (comprehensible)</option>
+                <option value="2">2 - Severe slurring (incomprehensible or mute)</option>
+                <option value="UN">0 - Untestable (Intubated/Aphasic)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label>11. Extinction & Inattention (Neglect)</label>
+              <select id="nih-11" onchange="calculateNIHSS()">
+                <option value="0">0 - No inattention</option>
+                <option value="1">1 - Visual/tactile/spatial sensory inattention</option>
+                <option value="2">2 - Profound hemi-inattention / Neglect</option>
+              </select>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- RIGHT COLUMN: TABBED SCOPE IMAGES -->
+        <div class="glass-card" style="margin-bottom:0;">
+          <div class="card-header">
+            <h2>NIHSS Bedside Assessment Cards</h2>
+            <span class="card-label">Diagnostic Visuals</span>
+          </div>
+          
+          <div class="scenarios-grid">
+            <button id="tab-btn-naming" class="btn-scenario active" onclick="switchNihssTab('naming')">Naming Objects</button>
+            <button id="tab-btn-cookie" class="btn-scenario" onclick="switchNihssTab('cookie')">Cookie Theft</button>
+            <button id="tab-btn-sentences" class="btn-scenario" onclick="switchNihssTab('sentences')">Read Sentences</button>
+            <button id="tab-btn-words" class="btn-scenario" onclick="switchNihssTab('words')">Read Words</button>
+          </div>
+          
+          <div class="nihss-img-container">
+            <img id="nihss-active-img" src="../assets/nihss_page_6.png" alt="NIHSS Diagnostic Visual"/>
+          </div>
+          <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:8px;">Ask the patient to identify the objects, describe what is happening in the picture, read the sentences, or read the words listed.</p>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>NIH Stroke Scale (NIHSS) Scoring Sheet</h1>
+          <div class="print-subtitle">Bedside Quick Reference Card</div>
+        </div>
+        
+        <div class="print-grid">
+          <div class="print-box full-width">
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:25%;">NIHSS Item</th>
+                  <th style="width:75%;">Scoring Definitions & Clinical Criteria</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1a. Level of Consciousness</strong></td>
+                  <td><strong>0</strong> = Alert; <strong>1</strong> = Not alert, arousable by minor stimulation; <strong>2</strong> = Not alert, requires repeated stimulation; <strong>3</strong> = Comatose, reflex motor response only.</td>
+                </tr>
+                <tr>
+                  <td><strong>1b. LOC Questions</strong></td>
+                  <td>Ask month and age: <strong>0</strong> = Answers both correctly; <strong>1</strong> = Answers one correctly; <strong>2</strong> = Answers neither correctly (or aphasic/intubated).</td>
+                </tr>
+                <tr>
+                  <td><strong>1c. LOC Commands</strong></td>
+                  <td>Ask to open/close eyes and grip/release non-paretic hand: <strong>0</strong> = Performs both correctly; <strong>1</strong> = Performs one correctly; <strong>2</strong> = Performs neither.</td>
+                </tr>
+                <tr>
+                  <td><strong>2. Best Gaze</strong></td>
+                  <td>Horizontal eye movements: <strong>0</strong> = Normal; <strong>1</strong> = Partial gaze palsy; <strong>2</strong> = Forced deviation or total gaze palsy.</td>
+                </tr>
+                <tr>
+                  <td><strong>3. Visual Fields</strong></td>
+                  <td>Confrontation: <strong>0</strong> = No visual loss; <strong>1</strong> = Partial hemianopia; <strong>2</strong> = Complete hemianopia; <strong>3</strong> = Bilateral hemianopia (blind).</td>
+                </tr>
+                <tr>
+                  <td><strong>4. Facial Palsy</strong></td>
+                  <td>Show teeth, raise eyebrows, squeeze eyes shut: <strong>0</strong> = Normal; <strong>1</strong> = Minor paralysis; <strong>2</strong> = Partial paralysis; <strong>3</strong> = Complete unilateral paralysis.</td>
+                </tr>
+                <tr>
+                  <td><strong>5a / 5b. Motor Arm (L/R)</strong></td>
+                  <td>Hold arm at 90° (sitting) or 45° (supine) for 10s: <strong>0</strong> = No drift; <strong>1</strong> = Drift before 10s, does not hit bed; <strong>2</strong> = Some effort against gravity, hits bed; <strong>3</strong> = No effort against gravity, drops; <strong>4</strong> = No movement; <strong>UN</strong> = Untestable.</td>
+                </tr>
+                <tr>
+                  <td><strong>6a / 6b. Motor Leg (L/R)</strong></td>
+                  <td>Hold leg at 30° (supine) for 5s: <strong>0</strong> = No drift; <strong>1</strong> = Drift before 5s, does not hit bed; <strong>2</strong> = Some effort against gravity, hits bed; <strong>3</strong> = No effort against gravity, drops; <strong>4</strong> = No movement; <strong>UN</strong> = Untestable.</td>
+                </tr>
+                <tr>
+                  <td><strong>7. Limb Ataxia</strong></td>
+                  <td>Finger-to-nose and heel-to-shin (test bilaterally): <strong>0</strong> = Absent / Normal; <strong>1</strong> = Present in one limb; <strong>2</strong> = Present in two limbs. (Score 0 if paralyzed).</td>
+                </tr>
+                <tr>
+                  <td><strong>8. Sensory</strong></td>
+                  <td>Pinprick test on face, arms, trunk, and legs: <strong>0</strong> = Normal, no sensory loss; <strong>1</strong> = Mild-to-moderate loss; <strong>2</strong> = Severe-to-complete sensory loss.</td>
+                </tr>
+                <tr>
+                  <td><strong>9. Best Language</strong></td>
+                  <td>Name items, describe picture, read sentences: <strong>0</strong> = Normal, no aphasia; <strong>1</strong> = Mild-to-moderate aphasia; <strong>2</strong> = Severe aphasia; <strong>3</strong> = Mute, global aphasia.</td>
+                </tr>
+                <tr>
+                  <td><strong>10. Dysarthria</strong></td>
+                  <td>Read words: <strong>0</strong> = Normal pronunciation; <strong>1</strong> = Mild-to-moderate slurring; <strong>2</strong> = Severe slurring, incomprehensible; <strong>UN</strong> = Untestable (e.g. intubated).</td>
+                </tr>
+                <tr>
+                  <td><strong>11. Extinction / Inattention</strong></td>
+                  <td>Simultaneous bilateral visual/tactile stimulation: <strong>0</strong> = Normal, no inattention; <strong>1</strong> = Partial inattention (one modality); <strong>2</strong> = Profound neglect.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-box alert-row-cyan">
+            <h3>📊 Stroke Severity Classifications</h3>
+            <ul class="print-list" style="list-style-type:none;">
+              <li>• <strong>0:</strong> No Stroke Symptoms</li>
+              <li>• <strong>1 - 4:</strong> Minor Stroke</li>
+              <li>• <strong>5 - 15:</strong> Moderate Stroke</li>
+              <li>• <strong>16 - 20:</strong> Moderate-to-Severe Stroke</li>
+              <li>• <strong>21 - 42:</strong> Severe Stroke</li>
+            </ul>
+          </div>
+          
+          <div class="print-box">
+            <h3>⚠️ Clinical Triages & Warnings</h3>
+            <ul class="print-list">
+              <li><strong>Large Vessel Occlusion (LVO):</strong> NIHSS &ge; 6 has a high positive predictive value for LVO. Triage immediately for CTA and EVT screening.</li>
+              <li><strong>tPA Bleeding Risk:</strong> NIHSS &gt; 25 indicates very large infarctions with significantly elevated risk of symptomatic intracranial hemorrhage.</li>
+              <li><strong>Minor Stroke DAPT:</strong> If NIHSS &le; 5 (and non-cardioembolic), screen for dual antiplatelet therapy (DAPT) starting within 24 hours (POINT/CHANCE).</li>
+            </ul>
+          </div>
+          
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Brott T, et al. Stroke. 1989;20(7):864-870. [2] AHA/ASA Guidelines for the Early Management of Patients with Acute Ischemic Stroke (2019).</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
 
-<div id="card-figure_05_nihss_sentences" class="card-wrapper card-figure_05_nihss_sentences">
-<div class="card-container">
-<img class="card-image" src="../assets/nihss_page_8.png"/>
-</div>
-</div>
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
 
-
-  </div>
-
+  <script src="../assets/dual_view.js"></script>
   <script>
-    // Copy template utility for bedside consent template
-    document.addEventListener("DOMContentLoaded", function() {
-      const template = document.querySelector(".copyable-template");
-      if (template) {
-        template.addEventListener("click", function() {
-          const text = this.innerText.replace(/COPY TEMPLATE/g, "").trim();
-          navigator.clipboard.writeText(text).then(() => {
-            const badge = this.querySelector(".copy-badge");
-            if (badge) {
-              badge.classList.add("copied");
-              badge.innerText = "Copied!";
-              setTimeout(() => {
-                badge.classList.remove("copied");
-                badge.innerText = "Copy Template";
-              }, 2000);
-            }
-          }).catch(err => {
-            console.error("Clipboard error:", err);
-          });
-        });
+    // Tab switching for visual cards
+    const nihssImages = {
+      naming: '../assets/nihss_page_6.png',
+      cookie: '../assets/nihss_page_7.png',
+      sentences: '../assets/nihss_page_8.png',
+      words: '../assets/nihss_page_5.png'
+    };
+
+    function switchNihssTab(tabId) {
+      // Toggle button classes
+      document.getElementById('tab-btn-naming').classList.toggle('active', tabId === 'naming');
+      document.getElementById('tab-btn-cookie').classList.toggle('active', tabId === 'cookie');
+      document.getElementById('tab-btn-sentences').classList.toggle('active', tabId === 'sentences');
+      document.getElementById('tab-btn-words').classList.toggle('active', tabId === 'words');
+      
+      // Update image
+      const img = document.getElementById('nihss-active-img');
+      if (img && nihssImages[tabId]) {
+        img.src = nihssImages[tabId];
       }
+    }
+
+    // Dynamic calculator logic
+    const nihssIds = [
+      'nih-1a', 'nih-1b', 'nih-1c', 'nih-2', 'nih-3', 'nih-4',
+      'nih-5a', 'nih-5b', 'nih-6a', 'nih-6b', 'nih-7', 'nih-8',
+      'nih-9', 'nih-10', 'nih-11'
+    ];
+
+    function calculateNIHSS() {
+      let total = 0;
+      
+      nihssIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          const val = el.value;
+          if (val !== 'UN') {
+            total += parseInt(val, 10);
+          }
+        }
+      });
+      
+      // Update display
+      document.getElementById('nihss-total-display').innerText = total;
+      
+      // Update badge
+      const badge = document.getElementById('nihss-severity-badge');
+      if (total === 0) {
+        badge.className = 'status-badge status-normal';
+        badge.innerText = 'NO STROKE (0)';
+      } else if (total >= 1 && total <= 4) {
+        badge.className = 'status-badge status-normal';
+        badge.innerText = `MINOR STROKE (${total})`;
+      } else if (total >= 5 && total <= 15) {
+        badge.className = 'status-badge status-warning';
+        badge.innerText = `MODERATE STROKE (${total})`;
+      } else if (total >= 16 && total <= 20) {
+        badge.className = 'status-badge status-danger';
+        badge.innerText = `MODERATE-TO-SEVERE STROKE (${total})`;
+      } else {
+        badge.className = 'status-badge status-critical';
+        badge.innerText = `SEVERE STROKE (${total})`;
+      }
+    }
+
+    // Run calculation once on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      calculateNIHSS();
     });
   </script>
-
 </body>
 </html>

@@ -25,12 +25,23 @@ let wavePhase = 0;
 // 2. Initialization & View Swapping
 // ==========================================================================
 window.onload = function() {
+  const preferredView = localStorage.getItem('preferredView') || 'dashboard';
+  switchView(preferredView, false);
   initWaveformCanvas();
   loadCase('normal');
   animateCSFDrop();
+
+  window.addEventListener('beforeprint', () => {
+    switchView('print', false);
+  });
+
+  window.addEventListener('afterprint', () => {
+    const currentPreferred = localStorage.getItem('preferredView') || 'dashboard';
+    switchView(currentPreferred, false);
+  });
 };
 
-function switchView(viewName) {
+function switchView(viewName, saveToStorage = true) {
   state.activeView = viewName;
   document.getElementById('toggle-dashboard').classList.toggle('active', viewName === 'dashboard');
   document.getElementById('toggle-print').classList.toggle('active', viewName === 'print');
@@ -41,6 +52,10 @@ function switchView(viewName) {
   if (viewName === 'dashboard') {
     // Redraw canvas if dashboard is active
     initWaveformCanvas();
+  }
+
+  if (saveToStorage) {
+    localStorage.setItem('preferredView', viewName);
   }
 }
 

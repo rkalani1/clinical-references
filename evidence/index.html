@@ -4,1260 +4,774 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Central Evidence Library and Evidence-Based Medicine (EBM) tutorial for acute neurology and stroke services.">
-  <title>Evidence Library &amp; EBM Portal</title>
-  
-  <!-- Typography from Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <title>Evidence Library & EBM Portal</title>
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
   
   <style>
-    :root {
-      /* Theme matches the sleek dark slate medical style */
-      --bg: #070d19;
-      --surface: #0e1726;
-      --surface-hover: #131f33;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(0, 242, 254, 0.3);
-      
-      --accent-cyan: #00f2fe;
-      --accent-blue: #4facfe;
-      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --accent-glow: rgba(0, 242, 254, 0.15);
-      
-      --color-ebm: #f59e0b;
-      --bg-ebm: rgba(245, 158, 11, 0.12);
-      --color-stroke: #f43f5e;
-      --bg-stroke: rgba(244, 63, 94, 0.12);
-      --color-icu: #a855f7;
-      --bg-icu: rgba(168, 85, 247, 0.12);
-      --color-prev: #10b981;
-      --bg-prev: rgba(16, 185, 129, 0.12);
-      
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      
-      --radius-card: 16px;
-      --radius-tag: 6px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(circle at 5% 10%, rgba(79, 172, 254, 0.03) 0%, transparent 35%),
-        radial-gradient(circle at 95% 90%, rgba(0, 242, 254, 0.03) 0%, transparent 35%);
-      color: var(--text-main);
-      font-family: 'Inter', -apple-system, sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 0 0 4rem 0;
-    }
-
-    .portal-nav {
-      background: rgba(14, 23, 38, 0.95);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.85rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .portal-nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .portal-nav a:hover {
-      color: var(--accent-cyan);
-    }
-
-    .portal-nav .brand {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 2.5rem 1.5rem;
-    }
-
-    header {
-      margin-bottom: 3.5rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .logo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      padding: 0.5rem 1.2rem;
-      border-radius: 99px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--accent-cyan);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    h1 {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      color: var(--text-muted);
-      max-width: 720px;
-      margin: 0 auto;
-      font-weight: 400;
-      line-height: 1.55;
-    }
-
-    /* Section Styles */
-    .section-title {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: 1.85rem;
-      font-weight: 600;
-      margin: 3rem 0 1.5rem 0;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.75rem;
-    }
-
-    .section-title svg {
-      width: 24px;
-      height: 24px;
-      stroke: var(--accent-cyan);
-      fill: none;
-      stroke-width: 2;
-    }
-
-    /* EBM Interactive Tutorial Grid */
-    .ebm-tutorial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3.5rem;
-    }
-
+    /* Scoped styles for Evidence */
     .ebm-step-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 1.75rem;
+      background: hsla(223, 30%, 8%, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
       position: relative;
-      overflow: hidden;
-      transition: var(--transition);
     }
-
     .ebm-step-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 4px;
+      width: 3px;
       height: 100%;
-      background: var(--accent-gradient);
+      background: var(--color-cyan);
     }
-
-    .ebm-step-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--border-hover);
-      box-shadow: 0 10px 25px -10px rgba(0, 242, 254, 0.1);
-    }
-
     .ebm-step-num {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-      color: var(--accent-cyan);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--color-cyan);
       text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      display: block;
     }
-
     .ebm-step-card h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-top: 2px;
+      margin-bottom: 4px;
     }
-
     .ebm-step-card p {
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      line-height: 1.5;
+      line-height: 1.4;
     }
-
-    /* Interactive Calculator / Demonstration Box inside Step Card */
-    .ebm-demo-box {
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-      font-size: 0.85rem;
-    }
-
-    .ebm-demo-box strong {
-      color: #ffffff;
-    }
-
+    
     .ebm-calc-inputs {
       display: flex;
-      gap: 0.75rem;
-      margin-top: 0.75rem;
-      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
     }
-
     .ebm-calc-group {
       flex: 1;
-      min-width: 80px;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 3px;
     }
-
     .ebm-calc-group label {
       font-size: 0.7rem;
       color: var(--text-muted);
       text-transform: uppercase;
       font-weight: 600;
     }
-
     .ebm-calc-group input {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
+      background-color: hsl(223, 30%, 8%);
+      border: 1px solid var(--border-color);
       border-radius: 4px;
-      color: #ffffff;
-      padding: 0.35rem 0.5rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-      width: 100%;
-    }
-
-    .ebm-calc-group input:focus {
+      color: white;
+      padding: 5px;
+      font-size: 0.8rem;
       outline: none;
-      border-color: var(--accent-cyan);
     }
-
     .ebm-calc-result {
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
-      border-top: 1px dashed var(--border);
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-      color: var(--accent-cyan);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-color);
       display: flex;
       justify-content: space-between;
+      font-size: 0.8rem;
+    }
+    .ebm-calc-result strong {
+      color: var(--color-cyan);
     }
 
-    /* Document Search & Filter Controls */
     .filter-bar {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      gap: 10px;
+      margin-bottom: 15px;
+      background: hsla(223, 30%, 8%, 0.3);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
     }
-
-    @media (min-width: 768px) {
-      .filter-bar {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-
     .search-wrapper {
       position: relative;
-      flex: 1;
-      max-width: 480px;
     }
-
     .search-wrapper input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem 1rem 0.75rem 2.5rem;
-      color: #ffffff;
-      font-size: 0.95rem;
-      transition: var(--transition);
-    }
-
-    .search-wrapper input:focus {
+      background: hsl(223, 30%, 4%);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 8px 8px 30px;
+      color: white;
+      font-size: 0.85rem;
       outline: none;
-      border-color: var(--accent-cyan);
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
     }
-
+    .search-wrapper input:focus {
+      border-color: var(--color-cyan);
+    }
     .search-icon {
       position: absolute;
-      left: 0.85rem;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       stroke: var(--text-muted);
       fill: none;
-      pointer-events: none;
     }
 
     .tags-wrapper {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 5px;
     }
-
     .filter-tag {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
       color: var(--text-muted);
-      padding: 0.4rem 0.85rem;
-      border-radius: 99px;
-      font-size: 0.85rem;
-      font-weight: 500;
       cursor: pointer;
-      transition: var(--transition);
       user-select: none;
+      transition: var(--transition);
     }
-
     .filter-tag:hover {
-      color: #ffffff;
+      color: white;
       border-color: var(--text-muted);
     }
-
     .filter-tag.active {
-      background: var(--accent-gradient);
-      color: var(--bg);
+      background-color: var(--color-primary);
+      color: white;
       border-color: transparent;
-      font-weight: 600;
-      box-shadow: 0 4px 12px var(--accent-glow);
     }
 
-    /* Document Library Grid */
     .docs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      max-height: 800px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    @media (min-width: 640px) {
+      .docs-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     .doc-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      transition: var(--transition);
+      gap: 8px;
     }
-
-    .doc-card:hover {
-      border-color: var(--border-hover);
-      background: var(--surface-hover);
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px -15px rgba(0, 242, 254, 0.15);
-    }
-
-    .doc-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: var(--accent-gradient);
-      opacity: 0.3;
-    }
-
-    .doc-card:hover::before {
-      opacity: 1;
-    }
-
     .doc-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.25rem;
-    }
-
-    .category-badge {
       font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.25rem 0.55rem;
-      border-radius: var(--radius-tag);
     }
-
-    .category-badge.ebm { color: var(--color-ebm); background: var(--bg-ebm); }
-    .category-badge.stroke { color: var(--color-stroke); background: var(--bg-stroke); }
-    .category-badge.icu { color: var(--color-icu); background: var(--bg-icu); }
-    .category-badge.prev { color: var(--color-prev); background: var(--bg-prev); }
+    .category-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .category-badge.ebm { color: var(--color-yellow); background: rgba(245, 158, 11, 0.12); }
+    .category-badge.stroke { color: var(--color-red); background: rgba(244, 63, 94, 0.12); }
+    .category-badge.icu { color: var(--color-purple); background: rgba(168, 85, 247, 0.12); }
+    .category-badge.prev { color: var(--color-green); background: rgba(16, 185, 129, 0.12); }
 
     .doc-icon-badge {
-      font-size: 0.75rem;
-      font-family: 'Fira Code', monospace;
-      color: var(--accent-cyan);
+      color: var(--color-cyan);
       background: rgba(0, 242, 254, 0.08);
       border: 1px solid rgba(0, 242, 254, 0.2);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-family: var(--font-mono);
     }
-
     .doc-card h3 {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #ffffff;
-      line-height: 1.3;
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
     }
-
     .doc-card p {
-      font-size: 0.88rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      flex: 1;
-      line-height: 1.45;
-    }
-
-    /* Clinical Trial High-Yield Metric Block */
-    .metric-badge {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.82rem;
       line-height: 1.4;
     }
-
-    .metric-badge strong {
-      color: var(--accent-cyan);
-      font-family: 'Fira Code', monospace;
-      font-size: 0.88rem;
+    .metric-badge {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.75rem;
+      line-height: 1.35;
     }
-
+    .metric-badge strong {
+      color: var(--color-cyan);
+    }
     .doc-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+      display: flex;
+      gap: 6px;
       margin-top: auto;
     }
-
     .doc-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.65rem 0.75rem;
-      border-radius: 8px;
-      font-size: 0.82rem;
+      flex: 1;
+      padding: 5px;
+      font-size: 0.75rem;
       font-weight: 600;
+      border-radius: 4px;
       text-decoration: none;
+      text-align: center;
       transition: var(--transition);
       cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
     }
-
     .doc-btn.view {
       background: rgba(0, 242, 254, 0.08);
       border: 1px solid rgba(0, 242, 254, 0.2);
-      color: var(--accent-cyan);
+      color: var(--color-cyan);
     }
-
     .doc-btn.view:hover {
-      background: var(--accent-gradient);
-      color: var(--bg);
+      background: var(--color-primary);
+      color: white;
       border-color: transparent;
-      box-shadow: 0 4px 15px var(--accent-glow);
     }
-
     .doc-btn.download {
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      color: #ffffff;
+      border: 1px solid var(--border-color);
+      color: white;
     }
-
     .doc-btn.download:hover {
       background: rgba(255, 255, 255, 0.08);
-      border-color: var(--text-muted);
-    }
-
-    .doc-btn.email-link {
-      grid-column: span 2;
-      background: rgba(245, 158, 11, 0.08);
-      border: 1px solid rgba(245, 158, 11, 0.2);
-      color: #f59e0b;
-    }
-
-    .doc-btn.email-link:hover {
-      background: #f59e0b;
-      color: var(--bg);
-      border-color: transparent;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
-    }
-
-    /* DAPT Infographic Accordion */
-    .infographic-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      margin-top: 3.5rem;
-      overflow: hidden;
-    }
-
-    .infographic-header {
-      padding: 1.5rem 2rem;
-      background: rgba(255, 255, 255, 0.01);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .infographic-header h2 {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #ffffff;
-    }
-
-    .infographic-content {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
     }
 
     .infographic-wrapper {
       width: 100%;
-      max-width: 960px;
       border-radius: 8px;
       overflow: hidden;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-color);
       background: #000;
-      position: relative;
     }
-
     .infographic-wrapper img {
       width: 100%;
       height: auto;
       display: block;
-      transition: transform 0.3s ease;
       cursor: zoom-in;
     }
-
     .infographic-wrapper.zoomed img {
       transform: scale(1.6);
       cursor: zoom-out;
     }
-
-    .infographic-caption {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    /* External Links Panel */
-    .external-links-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 2rem;
-      margin-top: 3rem;
-    }
-
-    .links-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.25rem;
-    }
-
-    .link-item {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      transition: var(--transition);
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .link-item:hover {
-      border-color: var(--accent-blue);
-      background: rgba(79, 172, 254, 0.05);
-      transform: translateY(-2px);
-    }
-
-    .link-item h4 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .link-item h4 svg {
-      width: 14px;
-      height: 14px;
-      stroke: var(--accent-cyan);
-      fill: none;
-    }
-
-    .link-item p {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      body {
-        padding-bottom: 2rem;
-      }
-      .portal-nav {
-        padding: 0.85rem 1.25rem;
-      }
-      .container {
-        padding: 1.5rem 1rem;
-      }
-      .section-title {
-        font-size: 1.6rem;
-        margin: 2rem 0 1.25rem 0;
-      }
-      .doc-card {
-        padding: 1.25rem;
-      }
-    }
   </style>
 </head>
-<body>
+<body class="dark-mode">
 
   <nav class="portal-nav">
-    <a href="../index.html" class="brand">Clinical References</a>
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      Dashboard
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
+      Portal Dashboard
     </a>
   </nav>
 
-  <div class="container">
-    <header>
-      <div class="logo-badge">
-        <svg viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-        Evidence-Based Medicine
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">EBM Hub</span>
+        <h1 id="app-title">Evidence & Literature Library</h1>
+        <p class="subtitle">Searchable local PDF library and superiority RCT appraisal portal</p>
       </div>
-      <h1>Evidence Library &amp; EBM Portal</h1>
-      <p class="subtitle">A centralized repository hosting all 19 local clinical reference documents, paired with an interactive critical appraisal dashboard for superiority RCTs.</p>
-    </header>
-
-    <!-- Interactive EBM Tutorial Section -->
-    <h2 class="section-title">
-      <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h0a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-      Critical Appraisal &amp; Trial Interpretation
-    </h2>
-    <div class="ebm-tutorial-grid">
-      
-      <!-- Step 1: Prognostic Balance -->
-      <div class="ebm-step-card">
-        <span class="ebm-step-num">Step 1</span>
-        <h3>Baseline Prognostic Balance</h3>
-        <p>Ensure patient cohorts start with the same prognosis. Look at Table 1 for known confounders and verify enroller allocation concealment to prevent investigator selection bias.</p>
-        <div class="ebm-demo-box">
-          <strong>Key Questions:</strong>
-          <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.25rem;">
-            <li>Was randomization truly computer-generated?</li>
-            <li>Were recruiters blinded to the next allocation?</li>
-            <li>Were baseline characteristics statistically comparable?</li>
-          </ul>
-        </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
       </div>
+    </div>
+  </header>
 
-      <!-- Step 2: Maintained Prognosis -->
-      <div class="ebm-step-card">
-        <span class="ebm-step-num">Step 2</span>
-        <h3>Maintained Balance &amp; Blinding</h3>
-        <p>Ensure prognostic balance is maintained during the study. Double-blinding of patients, caregivers, and outcome adjudicators is essential to prevent performance and detection biases.</p>
-        <div class="ebm-demo-box">
-          <strong>Key Dangers:</strong>
-          <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.25rem;">
-            <li>Co-interventions (e.g. ICU steroids) unequal between groups.</li>
-            <li>Surgical/device trials where sham control is lacking.</li>
-            <li>Unblinding due to distinct side effects (e.g. CGRP mAbs).</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Step 3: Analysis Integrity -->
-      <div class="ebm-step-card">
-        <span class="ebm-step-num">Step 3</span>
-        <h3>Intention-to-Treat (ITT)</h3>
-        <p>Analyze patients in the groups to which they were randomized, regardless of nonadherence, protocol deviations, or crossovers. This preserves baseline prognostic balance.</p>
-        <div class="ebm-demo-box">
-          <strong>ITT vs. Per-Protocol:</strong>
-          <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.25rem;">
-            <li><strong>ITT:</strong> Minimizes bias; represents real-world efficacy.</li>
-            <li><strong>Per-Protocol:</strong> Overestimates effect; prone to attrition bias.</li>
-            <li>Missing data &gt;20% severely compromises trial validity.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Step 4: Results & Precision -->
-      <div class="ebm-step-card">
-        <span class="ebm-step-num">Step 4</span>
-        <h3>Efficacy &amp; NNT Calculator</h3>
-        <p>Determine the magnitude (Absolute Risk Reduction) and precision (Confidence Intervals) of the treatment effect. Calculate the Number Needed to Treat (NNT).</p>
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
         
-        <div class="ebm-demo-box">
-          <strong>Bedside Precision Helper:</strong>
-          <div class="ebm-calc-inputs">
-            <div class="ebm-calc-group">
-              <label for="cer-input">Control %</label>
-              <input type="number" id="cer-input" value="10" step="0.1" min="0" max="100">
+        <!-- LEFT COLUMN: CRITICAL APPRAISAL WIZARD -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <h2>Critical Appraisal Framework</h2>
+            <span class="card-label">Superiority RCTs</span>
+          </div>
+
+          <div style="max-height: 480px; overflow-y: auto; padding-right: 5px;">
+            <div class="ebm-step-card">
+              <span class="ebm-step-num">Step 1</span>
+              <h3>Baseline Prognostic Balance</h3>
+              <p>Verify random computerized allocation and allocation concealment to prevent recruitment selection bias.</p>
             </div>
-            <div class="ebm-calc-group">
-              <label for="eer-input">Expt %</label>
-              <input type="number" id="eer-input" value="5" step="0.1" min="0" max="100">
+            
+            <div class="ebm-step-card">
+              <span class="ebm-step-num">Step 2</span>
+              <h3>Maintained Prognostic Balance</h3>
+              <p>Check double-blinding (patients, care teams, outcome assessors) to prevent performance and detection biases.</p>
+            </div>
+
+            <div class="ebm-step-card">
+              <span class="ebm-step-num">Step 3</span>
+              <h3>Intention-to-Treat (ITT)</h3>
+              <p>Analyze crossover/withdrawn patients in their randomized groups to preserve initial prognostic balance.</p>
+            </div>
+
+            <div class="ebm-step-card">
+              <span class="ebm-step-num">Step 4</span>
+              <h3>Precision & Magnitude</h3>
+              <p>Calculate ARR and NNT to evaluate impact. Check confidence intervals for statistical precision.</p>
             </div>
           </div>
-          <div class="ebm-calc-result">
-            <span>ARR: <strong id="arr-out">5.0%</strong></span>
-            <span>NNT: <strong id="nnt-out">20</strong></span>
+
+          <div class="control-card" style="margin-bottom:0;">
+            <h3>Bedside EBM Calculator</h3>
+            <div class="ebm-calc-inputs">
+              <div class="ebm-calc-group">
+                <label>Control %</label>
+                <input type="number" id="cer-input" value="10" step="0.1">
+              </div>
+              <div class="ebm-calc-group">
+                <label>Expt %</label>
+                <input type="number" id="eer-input" value="5" step="0.1">
+              </div>
+            </div>
+            <div class="ebm-calc-result">
+              <span>ARR: <strong id="arr-out">5.0%</strong></span>
+              <span>NNT: <strong id="nnt-out">20</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SEARCHABLE PDF GRID -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
+          <div class="card-header">
+            <h2>Reference Documents Library</h2>
+            <span class="card-label">Local PDFs</span>
+          </div>
+
+          <div class="filter-bar">
+            <div class="search-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              <input type="text" id="doc-search" placeholder="Search references, keywords, or trial tags..." onkeyup="filterDocs()">
+            </div>
+            <div class="tags-wrapper">
+              <span class="filter-tag active" onclick="filterCategory('all')">All</span>
+              <span class="filter-tag" onclick="filterCategory('ebm')">EBM</span>
+              <span class="filter-tag" onclick="filterCategory('stroke')">Acute Stroke</span>
+              <span class="filter-tag" onclick="filterCategory('icu')">ICU & Exams</span>
+              <span class="filter-tag" onclick="filterCategory('prev')">Prevention</span>
+            </div>
+          </div>
+
+          <div class="docs-grid" id="docs-grid-container">
+            
+            <!-- Doc 1 -->
+            <div class="doc-card" data-category="ebm" data-keywords="interpretation clinical trials ebm bias nnt sample size intention to treat itt relative absolute risk precision superiority">
+              <div class="doc-meta">
+                <span class="category-badge ebm">EBM & Appraisal</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Interpretation of Clinical Trials</h3>
+              <p>Slide deck focusing on prognostic imbalances, blinding, power calculation, and NNT/NNH calculations.</p>
+              <div class="metric-badge"><strong>Key Formula:</strong> NNT = 1 / ARR. ITT analysis preserves baseline balance.</div>
+              <div class="doc-actions">
+                <a href="../documents/ebm/Interpretation of Clinical Trials.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/ebm/Interpretation of Clinical Trials.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 2 -->
+            <div class="doc-card" data-category="stroke" data-keywords="basilar artery occlusion evt trials best basics baoche attention posterior circulation stroke thrombectomy lvo nihss mrs">
+              <div class="doc-meta">
+                <span class="category-badge stroke">Acute Stroke</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Basilar Artery Occlusion EVT Trials</h3>
+              <p>Comparative summary of critical randomized trials investigating EVT for basilar artery occlusions (BEST, BASICS, BAOCHE, ATTENTION).</p>
+              <div class="metric-badge"><strong>Key Efficacy:</strong> BAOCHE & ATTENTION show massive benefit for EVT up to 24h.</div>
+              <div class="doc-actions">
+                <a href="../documents/evt/Basilar Artery Occlusion EVT Trials.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/evt/Basilar Artery Occlusion EVT Trials.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 3 -->
+            <div class="doc-card" data-category="stroke" data-keywords="mevo distal vessel occlusion trials thrombectomy distal escape-mevo distal lvo sich safety efficacy complications">
+              <div class="doc-meta">
+                <span class="category-badge stroke">Acute Stroke</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>MeVO & Distal Vessel Occlusion Trials</h3>
+              <p>Aggregated trial evidence investigating EVT for medium and distal vessel occlusions (M2/M3 branches, ACA, PCA) from DISTAL and ESCAPE-MeVO.</p>
+              <div class="metric-badge"><strong>sICH Rate:</strong> Elevated up to 5-6% in distal intervention cohorts.</div>
+              <div class="doc-actions">
+                <a href="../documents/evt/MeVO & Distal Vessel Occlusion EVT Trials.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/evt/MeVO & Distal Vessel Occlusion EVT Trials.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 4 -->
+            <div class="doc-card" data-category="stroke" data-keywords="large core anterior circulation lvo evt trials select2 angel-aspect rescue-japan limit ASPECTS 3-5 ischemic core volume hemicraniectomy mrs shift">
+              <div class="doc-meta">
+                <span class="category-badge stroke">Acute Stroke</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Large Core LVO Trials</h3>
+              <p>Summary of EVT indications in large ischemic cores (ASPECTS 3–5) based on SELECT2, ANGEL-ASPECT, and RESCUE-Japan LIMIT.</p>
+              <div class="metric-badge"><strong>NNT:</strong> 4 to 7 for functional independence (mRS 0-2 shift).</div>
+              <div class="doc-actions">
+                <a href="../documents/evt/Large Core Anterior Circulation LVO EVT Trials.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/evt/Large Core Anterior Circulation LVO EVT Trials.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 5 -->
+            <div class="doc-card" data-category="stroke" data-keywords="symptomatic cervical carotid artery stenosis nascet ecst cea cas tcar stenting revascularization nnt stenosis mild moderate severe">
+              <div class="doc-meta">
+                <span class="category-badge stroke">Acute Stroke</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Symptomatic Cervical Carotid Stenosis</h3>
+              <p>NASCET/ECST trial statistics, Duplex ultrasound parameters, stenting risk factors, and CEA vs CAS vs TCAR selection.</p>
+              <div class="metric-badge"><strong>NASCET Stats:</strong> 70-99% stenosis: NNT = 6 (ARR 17% at 2 years).</div>
+              <div class="doc-actions">
+                <a href="../documents/lad/Symptomatic Cervical Carotid Artery Stenosis.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/lad/Symptomatic Cervical Carotid Artery Stenosis.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 6 -->
+            <div class="doc-card" data-category="prev" data-keywords="crest-2 trial asymptomatic carotid stenosis medical management cea cas intervention stenting risk factor control">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>CREST-2 Trial</h3>
+              <p>Trial profile comparing intensive medical management alone vs. medical + CEA or CAS for asymptomatic carotid stenosis.</p>
+              <div class="metric-badge"><strong>Objective:</strong> Test intervention vs. modern medical targets (LDL <70, SBP <130).</div>
+              <div class="doc-actions">
+                <a href="../documents/lad/CREST-2 Trial - Dec 2025.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/lad/CREST-2 Trial - Dec 2025.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 7 -->
+            <div class="doc-card" data-category="stroke" data-keywords="unruptured cerebral aneurysms phases rupture risk score monitoring surveillance screening mra cta coil clipping size threshold">
+              <div class="doc-meta">
+                <span class="category-badge stroke">Acute Stroke</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Unruptured Cerebral Aneurysms</h3>
+              <p>PHASES score details, surveillance intervals, and treatment decision thresholds.</p>
+              <div class="metric-badge"><strong>Intervention:</strong> Size threshold &ge;7-10mm (or &ge;5mm if high-risk).</div>
+              <div class="doc-actions">
+                <a href="../documents/aneurysms/Unruptured Cerebral Aneurysms.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/aneurysms/Unruptured Cerebral Aneurysms.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 8 -->
+            <div class="doc-card" data-category="prev" data-keywords="lacunar stroke csvd small vessel disease lipohyalinosis sps3 trial dapt aspirin blood pressure target sbp 130">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Lacunar Stroke & CSVD</h3>
+              <p>Small vessel disease pathology, classic lacunar syndromes, and SPS3 secondary prevention targets.</p>
+              <div class="metric-badge"><strong>SPS3 BP Target:</strong> SBP &lt;130 mmHg reduces ICH rates by 63% (HR 0.37).</div>
+              <div class="doc-actions">
+                <a href="../documents/csvd/Lacunar Stroke 7.13.22.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/csvd/Lacunar Stroke 7.13.22.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 9 -->
+            <div class="doc-card" data-category="stroke" data-keywords="thrombolytic therapy ais late window rcts option hope expects trace-iii chablis-t ii timeless extend wake-up dwi-flair mismatch ctp mismatch tenecteplase alteplase">
+              <div class="doc-meta">
+                <span class="category-badge stroke">Acute Stroke</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Thrombolytic Therapy AIS 4.5-24h</h3>
+              <p>Randomized clinical trials investigating IV thrombolysis in the late window or wake-up stroke profiles.</p>
+              <div class="metric-badge"><strong>Key Trial:</strong> TRACE-III shows TNK efficacy in late-window mismatch.</div>
+              <div class="doc-actions">
+                <a href="../documents/thrombolytic/Thrombolytic Therapy AIS 4.5-24h RCTs.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/thrombolytic/Thrombolytic Therapy AIS 4.5-24h RCTs.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 10 -->
+            <div class="doc-card" data-category="prev" data-keywords="ac timing anticoagulation timing atrial fibrillation doac restart elan trial mild moderate severe stroke timeline day 1 3 6 12">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Anticoagulation Restart Timing</h3>
+              <p>DOAC initiation timelines after acute cardioembolic stroke based on the ELAN trial.</p>
+              <div class="metric-badge"><strong>ELAN Timeline:</strong> Mild (Day 3); Moderate (Day 6); Severe (Day 12).</div>
+              <div class="doc-actions">
+                <a href="../documents/afib/AC timing after AF-related Stroke.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/afib/AC timing after AF-related Stroke.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 11 -->
+            <div class="doc-card" data-category="prev" data-keywords="afib stroke epi519 atrial fibrillation epidemiology risk factors chads-vasc has-bled secondary prevention screening device monitoring">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>AFib Stroke (EPI519)</h3>
+              <p>Atrial fibrillation epidemiology, risk factors, screening, and long-term device monitoring limits.</p>
+              <div class="metric-badge"><strong>Key Risk:</strong> AFib increases ischemic stroke risk by 5-fold.</div>
+              <div class="doc-actions">
+                <a href="../documents/afib/AFib Stroke EPI519.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/afib/AFib Stroke EPI519.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 12 -->
+            <div class="doc-card" data-category="prev" data-keywords="atrial fibrillation afib secondary stroke prevention mechanical heart valves mitral stenosis invictus proact-xa left atrial appendage occlusion watchman laaos-iii doac warfarin">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>AFib Secondary Stroke Prevention</h3>
+              <p>Antithrombotic choice in special AFib populations (valvular AFib, ESRD) and LAAO trials.</p>
+              <div class="metric-badge"><strong>LAAO:</strong> LAAOS-III trial: surgical occlusion reduces stroke by 33%.</div>
+              <div class="doc-actions">
+                <a href="../documents/afib/AF & secondary stroke prevention July 2024.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/afib/AF & secondary stroke prevention July 2024.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 13 -->
+            <div class="doc-card" data-category="prev" data-keywords="other antithrombotics secondary stroke prevention cilostazol csps.com factor xia inhibitors asundexian milvexian non-cardioembolic stroke double antiplatelet resistance">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Other Antithrombotics for Prevention</h3>
+              <p>Cilostazol evidence (CSPS.com) and emerging Factor XIa inhibitors (Asundexian, Milvexian).</p>
+              <div class="metric-badge"><strong>Cilostazol:</strong> Lower bleeding rate than Aspirin in Asian cohorts.</div>
+              <div class="doc-actions">
+                <a href="../documents/antiplatelet/Other Antithrombotics for Secondary Stroke Prevention.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/antiplatelet/Other Antithrombotics for Secondary Stroke Prevention.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 14 -->
+            <div class="doc-card" data-category="prev" data-keywords="dapt dual antiplatelet minor stroke high risk tia trials chance point thales clopidogrel ticagrelor aspirin bleeding risk time window loading dose">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>DAPT Minor Stroke-TIA Trials</h3>
+              <p>Comparative trial matrix reviewing CHANCE, POINT, and THALES.</p>
+              <div class="metric-badge"><strong>Efficacy:</strong> DAPT reduces stroke recurrence when loaded early (&le;24h) for 21 days.</div>
+              <div class="doc-actions">
+                <a href="../documents/antiplatelet/DAPT Minor Stroke-TIA Trials.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/antiplatelet/DAPT Minor Stroke-TIA Trials.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 15 -->
+            <div class="doc-card" data-category="icu" data-keywords="differentiating acute confusional state delirium from aphasia cortical signs wernicke language disorder fluctuation onset attention level of consciousness">
+              <div class="doc-meta">
+                <span class="category-badge icu">Neuro ICU & Exams</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Delirium vs. Aphasia Differential</h3>
+              <p>Diagnostic checklist distinguishing Acute Confusional State from Wernicke's sensory aphasia.</p>
+              <div class="metric-badge"><strong>Key:</strong> Delirium shows global inattention; aphasia has normal baseline alertness.</div>
+              <div class="doc-actions">
+                <a href="../documents/exam/Differentiating Acute Confusional State (Delirium) from Aphasia.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/exam/Differentiating Acute Confusional State (Delirium) from Aphasia.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 16 -->
+            <div class="doc-card" data-category="icu" data-keywords="coma exam bedside checklist brainstem reflexes level of consciousness corneal reflex pupillary response cold calorics motor responses breathing patterns herniation clinical protocol">
+              <div class="doc-meta">
+                <span class="category-badge icu">Neuro ICU & Exams</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Bedside Coma Exam Checklist</h3>
+              <p>Clinical protocol checklist evaluating arousal, GCS parameters, reflexes, and abnormal breathing.</p>
+              <div class="metric-badge"><strong>Reflexes:</strong> Corneas, pupils, doll's eyes, and caloric testing.</div>
+              <div class="doc-actions">
+                <a href="../documents/exam/coma exam.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/exam/coma exam.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 17 -->
+            <div class="doc-card" data-category="prev" data-keywords="diabetes and stroke hyperglycemia target hba1c prediabetes insulin risk factors secondary prevention epidemiology metabolic syndrome">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Diabetes and Stroke</h3>
+              <p>Review of diabetes risk factors, prediabetes screening, and secondary prevention metabolic targets.</p>
+              <div class="metric-badge"><strong>Target:</strong> HbA1c &lt;7.0% for secondary prevention (Class I).</div>
+              <div class="doc-actions">
+                <a href="../documents/epidemiology/Diabetes and stroke.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/epidemiology/Diabetes and stroke.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 18 -->
+            <div class="doc-card" data-category="prev" data-keywords="lipids and cerebrovascular disease cholesterol statin target ldl statin lipid duality sparcl trial stroke prevention ezetimibe pcsk9 biomarkers apob lpa">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">PDF</span>
+              </div>
+              <h3>Lipids & Cerebrovascular Disease</h3>
+              <p>Statin secondary prevention targets, SPARCL trial, and emerging cardiovascular biomarkers (ApoB, Lp-a).</p>
+              <div class="metric-badge"><strong>SPARCL:</strong> Atorvastatin 80mg daily reduces recurrent stroke by 16%.</div>
+              <div class="doc-actions">
+                <a href="../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+            <!-- Doc 19 -->
+            <div class="doc-card" data-category="prev" data-keywords="dapt minor stroke-tia flowchart selection match patient to trial chance point thales sammpris clopidogrel ticagrelor aspirin stenosis resistance infographic jpeg">
+              <div class="doc-meta">
+                <span class="category-badge prev">Secondary Prevention</span>
+                <span class="doc-icon-badge">Image</span>
+              </div>
+              <h3>DAPT Selection Flowchart</h3>
+              <p>Bedside flowchart infographic matching patients to POINT, CHANCE, THALES, or SAMMPRIS.</p>
+              <div class="metric-badge"><strong>Visual:</strong> Load parameters, durations (21 vs. 90 days), and resistances.</div>
+              <div class="doc-actions">
+                <a href="../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg" target="_blank" class="doc-btn view">View</a>
+                <a href="../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg" download class="doc-btn download">Download</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Evidence-Based Medicine (EBM) Bedside Guide</h1>
+          <div class="print-subtitle">Superiority Trial Appraisal Checklist & Critical Stroke Trial Summary</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box full-width">
+            <h3>📋 RCT Critical Appraisal Checklist (Superiority Design)</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:25%;">Appraisal Domain</th>
+                  <th style="width:75%;">Critical Evaluation Checklist Questions & Bedside Practice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. Prognostic Balance</strong></td>
+                  <td>• Was the randomization computer-generated and truly unpredictable?<br>
+                  • Was allocation concealed (e.g. centralized phone or web allocation) to prevent investigator selection bias?<br>
+                  • Were baseline characteristics statistically comparable in Table 1?</td>
+                </tr>
+                <tr>
+                  <td><strong>2. Blinding & Maintenance</strong></td>
+                  <td>• Were patients, clinical care teams, and outcome assessors blinded to prevent performance/detection biases?<br>
+                  • Were co-interventions (e.g. critical care, drugs) standardized and balanced between the treatment arms?</td>
+                </tr>
+                <tr>
+                  <td><strong>3. Analysis Integrity</strong></td>
+                  <td>• Was **Intention-to-Treat (ITT)** used? Were crossed-over or withdrawn patients analyzed in their randomized groups?<br>
+                  • Did follow-up exceed 80-90%? Verify that attrition rates did not introduce systematic drop-out bias.</td>
+                </tr>
+                <tr>
+                  <td><strong>4. Magnitude & Precision</strong></td>
+                  <td>• Calculate ARR: **|Control Risk - Treatment Risk|** and NNT: **1 / ARR**.<br>
+                  • Assess precision of results: Check if the 95% Confidence Interval (CI) spans the line of no-effect (1.0 for HR/OR, 0 for ARR).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>🔬 EBM Calculation Reference</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th>Metric Name</th>
+                  <th>Formula / Calculation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Absolute Risk Red (ARR)</strong></td>
+                  <td>ARR = |CER - EER|</td>
+                </tr>
+                <tr>
+                  <td><strong>Relative Risk Red (RRR)</strong></td>
+                  <td>RRR = ARR / CER</td>
+                </tr>
+                <tr>
+                  <td><strong>Number Needed to Treat (NNT)</strong></td>
+                  <td>NNT = 1 / ARR (Round up)</td>
+                </tr>
+                <tr>
+                  <td><strong>Number Needed to Harm (NNH)</strong></td>
+                  <td>NNH = 1 / ARI (Absolute Risk Increase)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>🧠 Key Stroke Trials High-Yield Summary</h3>
+            <ul class="print-list" style="font-size:0.7rem; line-height:1.3;">
+              <li><strong>SPARCL (Atorvastatin):</strong> Secondary prevention ischemic stroke. Atorvastatin 80mg daily reduces recurrent stroke by 16% (HR 0.84, NNT = 40).</li>
+              <li><strong>SHINE (Acute Glycemia):</strong> Standard subcutaneous sliding scale (target &lt;180) is equal to intensive IV insulin (80-130) but avoids severe hypoglycemia.</li>
+              <li><strong>SPS3 (Small Vessel BP):</strong> Target SBP &lt;130 mmHg reduces intracranial hemorrhage risk by 63% (HR 0.37). DAPT is harmful long-term.</li>
+              <li><strong>LAAOS-III (LAA Occlusion):</strong> Surgical LAA occlusion during cardiac surgery reduces systemic emboli by 33% (HR 0.67).</li>
+              <li><strong>ELAN (DOAC Start):</strong> Day 3 (mild), Day 6 (mod), Day 12 (severe) is safe and non-inferior to late resumption.</li>
+            </ul>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Guyatt G, et al. Users' Guides to the Medical Literature. JAMA. [2] Stroke trial database summaries (SPARCL, SHINE, SPS3, LAAOS-III, ELAN).</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
       </div>
+    </section>
+    
+  </main>
 
-      <!-- Step 5: Generalizability -->
-      <div class="ebm-step-card">
-        <span class="ebm-step-num">Step 5</span>
-        <h3>Clinical Generalizability</h3>
-        <p>Confirm the study population matches your bedside patient. Check inclusion/exclusion parameters, and confirm that surrogate/intermediate outcomes translate to patient-centered clinical endpoints.</p>
-        <div class="ebm-demo-box">
-          <strong>surrogate vs. Hard Endpoints:</strong>
-          <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.25rem;">
-            <li><strong>Surrogate:</strong> MRI lesion burden, angiographic recanalization.</li>
-            <li><strong>Hard Endpoint:</strong> 90-day modified Rankin Scale (mRS) 0-2 shift.</li>
-            <li>Trial populations are selected to maximize benefit &amp; minimize harm.</li>
-          </ul>
-        </div>
-      </div>
-
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
     </div>
+  </footer>
 
-    <!-- Central PDF & Infographics Library -->
-    <h2 class="section-title">
-      <svg viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-      Searchable Reference Documents
-    </h2>
-
-    <div class="filter-bar">
-      <div class="search-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-        <input type="text" id="doc-search" placeholder="Search references, trials, or key metrics..." aria-label="Search documents">
-      </div>
-      
-      <div class="tags-wrapper">
-        <span class="filter-tag active" data-category="all">All</span>
-        <span class="filter-tag" data-category="ebm">EBM &amp; Appraisal</span>
-        <span class="filter-tag" data-category="stroke">Acute Stroke</span>
-        <span class="filter-tag" data-category="icu">Neuro ICU &amp; Exams</span>
-        <span class="filter-tag" data-category="prev">Secondary Prevention</span>
-      </div>
-    </div>
-
-    <div class="docs-grid" id="docs-grid-container">
-      
-      <!-- Document 1: Interpretation of Clinical Trials -->
-      <div class="doc-card" data-category="ebm" data-keywords="interpretation clinical trials ebm bias nnt sample size intention to treat itt relative absolute risk precision superiority">
-        <div class="doc-meta">
-          <span class="category-badge ebm">EBM &amp; Appraisal</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Interpretation of Clinical Trials</h3>
-        <p>Comprehensive framework slide deck for evaluating superiority randomized clinical trials. Focuses on identifying prognostic imbalances, double-blinding mechanics, sample size power calculations, and calculating NNT vs. NNH.</p>
-        <div class="metric-badge">
-          <strong>Key Formula:</strong> NNT = 1 / Absolute Risk Reduction (ARR)<br>
-          <strong>Focus:</strong> ITT analysis ignores crossovers and protocol violations to preserve baseline randomization balance.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/ebm/Interpretation of Clinical Trials.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/ebm/Interpretation of Clinical Trials.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Interpretation of Clinical Trials', '../documents/ebm/Interpretation of Clinical Trials.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 2: Basilar Artery Occlusion EVT Trials -->
-      <div class="doc-card" data-category="stroke" data-keywords="basilar artery occlusion evt trials best basics baoche attention posterior circulation stroke thrombectomy lvo nihss mrs">
-        <div class="doc-meta">
-          <span class="category-badge stroke">Acute Stroke</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Basilar Artery Occlusion EVT Trials</h3>
-        <p>Comparative summary of critical randomized trials investigating endovascular thrombectomy for basilar artery occlusions (BEST, BASICS, BAOCHE, ATTENTION). Evaluates outcomes based on time window, NIHSS, and pre-tPA status.</p>
-        <div class="metric-badge">
-          <strong>Key Efficacy:</strong> BAOCHE &amp; ATTENTION show massive benefit for EVT up to 24 hours (mRS 0-3 shift).<br>
-          <strong>Metric:</strong> Basilar stenting or angioplasty rates during EVT range from 10.4% to 18.0%.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/evt/Basilar Artery Occlusion EVT Trials.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/evt/Basilar Artery Occlusion EVT Trials.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Basilar Artery Occlusion EVT Trials', '../documents/evt/Basilar Artery Occlusion EVT Trials.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 3: MeVO & Distal Vessel Occlusion EVT Trials -->
-      <div class="doc-card" data-category="stroke" data-keywords="mevo distal vessel occlusion trials thrombectomy distal escape-mevo distal lvo sich safety efficacy complications">
-        <div class="doc-meta">
-          <span class="category-badge stroke">Acute Stroke</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>MeVO &amp; Distal Vessel Occlusion Trials</h3>
-        <p>Aggregated trial evidence investigating EVT for medium and distal vessel occlusions (M2/M3 branches, ACA, PCA). Compares the safety profile, sICH rates, and functional outcomes from DISTAL and ESCAPE-MeVO.</p>
-        <div class="metric-badge">
-          <strong>Clinical Warning:</strong> Routine EVT for distal occlusions is **not** supported; trials demonstrate elevated procedural risks (perforation, vasospasm) without clear superiority.<br>
-          <strong>sICH Rate:</strong> Elevated up to 5-6% in distal intervention cohorts.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/evt/MeVO & Distal Vessel Occlusion EVT Trials.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/evt/MeVO & Distal Vessel Occlusion EVT Trials.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('MeVO & Distal Vessel Occlusion EVT Trials', '../documents/evt/MeVO & Distal Vessel Occlusion EVT Trials.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 4: Large Core Anterior Circulation LVO EVT Trials -->
-      <div class="doc-card" data-category="stroke" data-keywords="large core anterior circulation lvo evt trials select2 angel-aspect rescue-japan limit ASPECTS 3-5 ischemic core volume hemicraniectomy mrs shift">
-        <div class="doc-meta">
-          <span class="category-badge stroke">Acute Stroke</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Large Core Anterior Circulation LVO Trials</h3>
-        <p>Reference sheet summarizing the expansion of EVT indications to patients with large ischemic cores (ASPECTS 3–5 or core volume &ge;50cc) based on SELECT2, ANGEL-ASPECT, and RESCUE-Japan LIMIT.</p>
-        <div class="metric-badge">
-          <strong>Primary Metric:</strong> Number Needed to Treat (NNT) for functional independence (mRS 0-2 shift) is ~4 to 7.<br>
-          <strong>Safety:</strong> Moderate increase in sICH (~5-6% vs. 1-2% medical) is offset by massive reductions in mortality.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/evt/Large Core Anterior Circulation LVO EVT Trials.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/evt/Large Core Anterior Circulation LVO EVT Trials.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Large Core Anterior Circulation LVO EVT Trials', '../documents/evt/Large Core Anterior Circulation LVO EVT Trials.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 5: Symptomatic Cervical Carotid Artery Stenosis -->
-      <div class="doc-card" data-category="stroke" data-keywords="symptomatic cervical carotid artery stenosis nascet ecst cea cas tcar stenting revascularization nnt stenosis mild moderate severe">
-        <div class="doc-meta">
-          <span class="category-badge stroke">Acute Stroke</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Symptomatic Cervical Carotid Stenosis</h3>
-        <p>Guideline card on diagnostic criteria, Duplex ultrasound parameters, stenting risk factors, and revascularization trial outcomes (NASCET/ECST). Outlines CEA vs. CAS vs. TCAR selection profiles.</p>
-        <div class="metric-badge">
-          <strong>NASCET Stats:</strong> 70-99% stenosis: NNT = 6 (ARR 17% at 2 years); 50-69% stenosis: NNT = 22.<br>
-          <strong>CEA Timing:</strong> Highly beneficial if performed early (&le;14 days from initial event).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/lad/Symptomatic Cervical Carotid Artery Stenosis.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/lad/Symptomatic Cervical Carotid Artery Stenosis.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Symptomatic Cervical Carotid Artery Stenosis', '../documents/lad/Symptomatic Cervical Carotid Artery Stenosis.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 6: CREST-2 Trial -->
-      <div class="doc-card" data-category="prev" data-keywords="crest-2 trial asymptomatic carotid stenosis medical management cea cas intervention stenting risk factor control">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>CREST-2 Trial</h3>
-        <p>Reference sheet for the ongoing CREST-2 randomized controlled trial comparing intensive medical management alone vs. CEA or CAS plus intensive medical management for asymptomatic carotid stenosis.</p>
-        <div class="metric-badge">
-          <strong>Objective:</strong> Test whether stenting or endarterectomy reduces stroke risk when stacked against modern, aggressive risk factor target control (LDL <70 mg/dL, SBP <130 mmHg).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/lad/CREST-2 Trial - Dec 2025.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/lad/CREST-2 Trial - Dec 2025.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('CREST-2 Trial (December 2025)', '../documents/lad/CREST-2 Trial - Dec 2025.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 7: Unruptured Cerebral Aneurysms -->
-      <div class="doc-card" data-category="stroke" data-keywords="unruptured cerebral aneurysms phases rupture risk score monitoring surveillance screening mra cta coil clipping size threshold">
-        <div class="doc-meta">
-          <span class="category-badge stroke">Acute Stroke</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Unruptured Cerebral Aneurysms</h3>
-        <p>Reference sheet for the clinical evaluation, surveillance imaging schedules (6m, 1y, q2-3y), and treatment decision algorithms for unruptured saccular intracranial aneurysms. Integrates the PHASES score.</p>
-        <div class="metric-badge">
-          <strong>PHASES Predictors:</strong> Population, HTN, Age, Size, Earlier subarachnoid hemorrhage, Site (Basilar/ICA/MCA).<br>
-          <strong>Intervention Target:</strong> Size threshold &ge;7-10mm (or &ge;5mm if posterior circulation/young age).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/aneurysms/Unruptured Cerebral Aneurysms.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/aneurysms/Unruptured Cerebral Aneurysms.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Unruptured Cerebral Aneurysms', '../documents/aneurysms/Unruptured Cerebral Aneurysms.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 8: Lacunar Stroke -->
-      <div class="doc-card" data-category="prev" data-keywords="lacunar stroke csvd small vessel disease lipohyalinosis sps3 trial dapt aspirin blood pressure target sbp 130">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Lacunar Stroke &amp; CSVD</h3>
-        <p>Detailed analysis of cerebral small vessel disease pathophysiology (lipohyalinosis, microatheroma), clinical lacunar syndromes, and key secondary prevention targets evaluated in the landmark SPS3 trial.</p>
-        <div class="metric-badge">
-          <strong>SPS3 BP Target:</strong> SBP &lt;130 mmHg significantly reduces ICH rates (HR 0.37, p=0.03).<br>
-          <strong>Antiplatelet Safety:</strong> Long-term DAPT in lacunes is harmful (HR 1.52 for major bleeding).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/csvd/Lacunar Stroke 7.13.22.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/csvd/Lacunar Stroke 7.13.22.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Lacunar Stroke', '../documents/csvd/Lacunar Stroke 7.13.22.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 9: Thrombolytic Therapy AIS 4.5-24h RCTs -->
-      <div class="doc-card" data-category="stroke" data-keywords="thrombolytic therapy ais late window rcts option hope expects trace-iii chablis-t ii timeless extend wake-up dwi-flair mismatch ctp mismatch tenecteplase alteplase">
-        <div class="doc-meta">
-          <span class="category-badge stroke">Acute Stroke</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Thrombolytic Therapy AIS 4.5-24h</h3>
-        <p>Database guide detailing randomized clinical trials investigating IV thrombolysis (Alteplase / Tenecteplase) in the late window (4.5–24 hours) or wake-up stroke profiles. Identifies imaging mismatch criteria.</p>
-        <div class="metric-badge">
-          <strong>Selection Criteria:</strong> Core-penumbra perfusion mismatch on CTP or DWI-FLAIR MRI mismatch (WAKE-UP).<br>
-          <strong>Tenecteplase Efficacy:</strong> TRACE-III shows TNK efficacy in late-window LVO mismatch up to 24h.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/thrombolytic/Thrombolytic Therapy AIS 4.5-24h RCTs.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/thrombolytic/Thrombolytic Therapy AIS 4.5-24h RCTs.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Thrombolytic Therapy AIS 4.5-24h RCTs', '../documents/thrombolytic/Thrombolytic Therapy AIS 4.5-24h RCTs.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 10: AC timing after AF-related Stroke -->
-      <div class="doc-card" data-category="prev" data-keywords="ac timing anticoagulation timing atrial fibrillation doac restart elan trial mild moderate severe stroke timeline day 1 3 6 12">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Anticoagulation Restart Timing</h3>
-        <p>Guideline database on oral anticoagulation (OAC/DOAC) initiation timelines after acute cardioembolic stroke. Integrates data from the ELAN trial supporting early restart schedules.</p>
-        <div class="metric-badge">
-          <strong>ELAN Timeline:</strong> TIA (Day 1); Mild (Day 3); Moderate (Day 6); Severe (Day 12 after repeat imaging to rule out hemorrhagic transformation).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/afib/AC timing after AF-related Stroke.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/afib/AC timing after AF-related Stroke.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('AC timing after AF-related Stroke', '../documents/afib/AC timing after AF-related Stroke.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 11: AFib Stroke EPI519 -->
-      <div class="doc-card" data-category="prev" data-keywords="afib stroke epi519 atrial fibrillation epidemiology risk factors chads-vasc has-bled secondary prevention screening device monitoring">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>AFib Stroke (EPI519)</h3>
-        <p>Epidemiological study guidelines regarding atrial fibrillation as a driver of ischemic stroke. Discusses screening methodologies, subclinical AF detection, device monitoring limits, and risk stratification.</p>
-        <div class="metric-badge">
-          <strong>Key Risk:</strong> AFib increases ischemic stroke risk by 5-fold; responsible for ~20-30% of all ischemic strokes.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/afib/AFib Stroke EPI519.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/afib/AFib Stroke EPI519.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('AFib Stroke EPI519', '../documents/afib/AFib Stroke EPI519.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 12: AF & secondary stroke prevention July 2024 -->
-      <div class="doc-card" data-category="prev" data-keywords="atrial fibrillation afib secondary stroke prevention mechanical heart valves mitral stenosis invictus proact-xa left atrial appendage occlusion watchman laaos-iii doac warfarin">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>AFib Secondary Stroke Prevention</h3>
-        <p>Review document focusing on antithrombotic choice in special AFib populations, mechanical valves, rheumatic mitral stenosis, ESRD/hemodialysis, and Left Atrial Appendage Occlusion (LAAO) trials.</p>
-        <div class="metric-badge">
-          <strong>Valvular AFib:</strong> Warfarin is mandatory; DOACs are contraindicated or inferior (INVICTUS).<br>
-          <strong>LAAO:</strong> LAAOS-III trial demonstrates surgical LAA closure during cardiac surgery reduces stroke rate by 33%.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/afib/AF & secondary stroke prevention July 2024.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/afib/AF & secondary stroke prevention July 2024.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('AF & secondary stroke prevention July 2024', '../documents/afib/AF & secondary stroke prevention July 2024.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 13: Other Antithrombotics for Prevention -->
-      <div class="doc-card" data-category="prev" data-keywords="other antithrombotics secondary stroke prevention cilostazol csps.com factor xia inhibitors asundexian milvexian non-cardioembolic stroke double antiplatelet resistance">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Other Antithrombotics for Prevention</h3>
-        <p>Scientific summary of non-standard antiplatelets and anticoagulants for non-cardioembolic ischemic stroke. Incorporates Cilostazol (CSPS.com) evidence and emerging Factor XIa inhibitors (Asundexian, Milvexian).</p>
-        <div class="metric-badge">
-          <strong>Cilostazol:</strong> Reduces ischemic recurrence vs. Aspirin in Asian cohorts with lower bleeding rates.<br>
-          <strong>Factor XIa:</strong> Halts propagation of thrombus while sparing primary hemostasis (lower bleeding risk).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/antiplatelet/Other Antithrombotics for Secondary Stroke Prevention.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/antiplatelet/Other Antithrombotics for Secondary Stroke Prevention.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Other Antithrombotics for Prevention', '../documents/antiplatelet/Other Antithrombotics for Secondary Stroke Prevention.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 14: DAPT Minor Stroke-TIA Trials -->
-      <div class="doc-card" data-category="prev" data-keywords="dapt dual antiplatelet minor stroke high risk tia trials chance point thales clopidogrel ticagrelor aspirin bleeding risk time window loading dose">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>DAPT Minor Stroke-TIA Trials</h3>
-        <p>Comparative trial matrix reviewing the landmark trials for dual antiplatelet therapy in acute minor stroke (NIHSS &le;3) and high-risk TIA (ABCD2 &ge;4): CHANCE, POINT, and THALES.</p>
-        <div class="metric-badge">
-          <strong>CHANCE &amp; POINT:</strong> DAPT (ASA + Clopidogrel) reduces recurrent stroke; must be initiated within 12-24h; benefit is concentrated in first 21 days.<br>
-          <strong>THALES:</strong> ASA + Ticagrelor for NIHSS &le;5 or TIA with stenosis.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/antiplatelet/DAPT Minor Stroke-TIA Trials.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/antiplatelet/DAPT Minor Stroke-TIA Trials.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('DAPT Minor Stroke-TIA Trials', '../documents/antiplatelet/DAPT Minor Stroke-TIA Trials.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 15: Differentiating Delirium from Aphasia -->
-      <div class="doc-card" data-category="icu" data-keywords="differentiating acute confusional state delirium from aphasia cortical signs wernicke language disorder fluctuation onset attention level of consciousness">
-        <div class="doc-meta">
-          <span class="category-badge icu">Neuro ICU &amp; Exams</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Delirium vs. Aphasia Differential</h3>
-        <p>Clinical diagnostic matrix distinguishing Acute Confusional State (delirium) from Primary Aphasic Syndromes (especially Wernicke's sensory aphasia). Analyzes speech, focus, onset, fluctuations, and EEG.</p>
-        <div class="metric-badge">
-          <strong>Key Distinction:</strong> Delirium involves global inattention and waxing/waning sensorium; Wernicke's is characterized by paraphasias, neologisms, and impaired comprehension with normal alert baseline.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/exam/Differentiating Acute Confusional State (Delirium) from Aphasia.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/exam/Differentiating Acute Confusional State (Delirium) from Aphasia.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Delirium vs Aphasia', '../documents/exam/Differentiating Acute Confusional State (Delirium) from Aphasia.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 16: Coma Exam -->
-      <div class="doc-card" data-category="icu" data-keywords="coma exam bedside checklist brainstem reflexes level of consciousness corneal reflex pupillary response cold calorics motor responses breathing patterns herniation clinical protocol">
-        <div class="doc-meta">
-          <span class="category-badge icu">Neuro ICU &amp; Exams</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Bedside Coma Exam Checklist</h3>
-        <p>Step-by-step clinical examination protocol for the comatose patient. Details checks for Level of Consciousness, Brainstem Reflexes (pupils, EOMs, corneal, cough/gag), Motor responses (posturing), and Breathing patterns.</p>
-        <div class="metric-badge">
-          <strong>Reflex Check:</strong> Evaluates pupillary size/reactivity (NPi), oculocephalic/vestibulocular (cold calorics), corneal, and gag/tracheal reflex.<br>
-          <strong>Posturing:</strong> Decorticate (flexion/red nucleus sparing) vs. Decerebrate (extension/vestibulospinal tract).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/exam/coma exam.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/exam/coma exam.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Coma Exam', '../documents/exam/coma exam.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 17: Diabetes and Stroke -->
-      <div class="doc-card" data-category="prev" data-keywords="diabetes and stroke hyperglycemia target hba1c prediabetes insulin risk factors secondary prevention epidemiology metabolic syndrome">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Diabetes and Stroke</h3>
-        <p>Review of diabetes mellitus as a driver of vascular disease, atherogenesis, and ischemic stroke risk. Focuses on prediabetes screening, primary prevention, and long-term metabolic targets.</p>
-        <div class="metric-badge">
-          <strong>Diabetes Risk:</strong> 2.0x relative risk increase for ischemic stroke; associated with worse clinical outcomes and higher post-stroke cognitive decline rates.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/epidemiology/Diabetes and stroke.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/epidemiology/Diabetes and stroke.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Diabetes and Stroke', '../documents/epidemiology/Diabetes and stroke.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 18: Lipids and Cerebrovascular Disease -->
-      <div class="doc-card" data-category="prev" data-keywords="lipids and cerebrovascular disease cholesterol statin target ldl statin lipid duality sparcl trial stroke prevention ezetimibe pcsk9 biomarkers apob lpa">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">PDF</span>
-        </div>
-        <h3>Lipids &amp; Cerebrovascular Disease</h3>
-        <p>Scientific review of lipids in cerebrovascular health, outlining the lipid-stroke duality (high LDL-C drives ischemic stroke; very low LDL-C is associated with hemorrhagic stroke risk) and SPARCL trial targets.</p>
-        <div class="metric-badge">
-          <strong>Secondary Target:</strong> LDL-C &lt;70 mg/dL (or &lt;55 mg/dL if recurrent stroke on statin).<br>
-          <strong>Biomarkers:</strong> Evaluates emerging targets: ApoB, Lp(a), and Lp-PLA2.
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf" target="_blank" class="doc-btn view">View</a>
-          <a href="../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('Lipids and Cerebrovascular Disease', '../documents/epidemiology/Lipids and Cerebrovascular Disease.pdf')">Email Document Link</button>
-        </div>
-      </div>
-
-      <!-- Document 19: DAPT After Ischemic Stroke-TIA (Infographic) -->
-      <div class="doc-card" data-category="prev" data-keywords="dapt minor stroke-tia flowchart selection match patient to trial chance point thales sammpris clopidogrel ticagrelor aspirin stenosis resistance infographic jpeg">
-        <div class="doc-meta">
-          <span class="category-badge prev">Secondary Prevention</span>
-          <span class="doc-icon-badge">Image</span>
-        </div>
-        <h3>DAPT Selection Flowchart</h3>
-        <p>A bedside infographic mapping ischemic stroke and high-risk TIA patients to their corresponding clinical trial regimens (CHANCE, POINT, THALES, SAMMPRIS) based on NIHSS, symptom duration, and stenosis severity.</p>
-        <div class="metric-badge">
-          <strong>Key Visual:</strong> Flowchart detailing loading doses (Clopidogrel 300-600mg vs. Ticagrelor 180mg) and duration of DAPT (21 vs. 30 vs. 90 days).
-        </div>
-        <div class="doc-actions">
-          <a href="../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg" target="_blank" class="doc-btn view">View Image</a>
-          <a href="../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg" download class="doc-btn download">Download</a>
-          <button class="doc-btn email-link" onclick="emailDocLink('DAPT After Ischemic Stroke-TIA Infographic', '../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg')">Email Document Link</button>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- DAPT Infographic Accordion -->
-    <div class="infographic-section">
-      <div class="infographic-header" id="info-header-toggle">
-        <h2>Featured Bedside Infographic: DAPT Selection Flowchart</h2>
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" id="info-chevron">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </div>
-      <div class="infographic-content" id="info-content-panel" style="display: none;">
-        <div class="infographic-wrapper" id="infographic-zoom-container">
-          <img src="../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg" alt="DAPT Selection Flowchart Infographic" id="infographic-img">
-        </div>
-        <p class="infographic-caption">Click on the image above to zoom. Bedside clinical decision flowchart matching patients to trial-directed antiplatelet therapy based on NIHSS and ABCD2 scores.</p>
-      </div>
-    </div>
-
-    <!-- External References Panel -->
-    <div class="external-links-panel">
-      <h2>Important External Guidelines &amp; Resources</h2>
-      <p class="subtitle" style="text-align: left; margin: 0.5rem 0 1.25rem 0; font-size: 0.9rem;">
-        Direct links to primary literature publications, international guidelines, and academic appraisal organizations.
-      </p>
-      <div class="links-grid">
-        
-        <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000001193" target="_blank" rel="noopener noreferrer" class="link-item">
-          <h4>
-            2023 AHA/ASA AFib Guidelines
-            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          </h4>
-          <p>Comprehensive guidelines for the management of patients with atrial fibrillation, including stroke risk scoring and oral anticoagulation timing.</p>
-        </a>
-
-        <a href="https://academic.oup.com/eurheartj/article/45/36/3314/7738779" target="_blank" rel="noopener noreferrer" class="link-item">
-          <h4>
-            2024 ESC AFib Guidelines
-            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          </h4>
-          <p>European Society of Cardiology guidelines for AFib management, covering secondary prevention, DOAC strategies, and surgical left atrial appendage closure.</p>
-        </a>
-
-        <a href="https://www.cebm.ox.ac.uk/resources" target="_blank" rel="noopener noreferrer" class="link-item">
-          <h4>
-            Oxford CEBM Resources
-            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          </h4>
-          <p>Centre for Evidence-Based Medicine (University of Oxford) templates, levels of evidence grading charts, and critical appraisal worksheets.</p>
-        </a>
-
-        <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa1804355" target="_blank" rel="noopener noreferrer" class="link-item">
-          <h4>
-            WAKE-UP Trial Publication
-            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          </h4>
-          <p>Primary WAKE-UP trial report in the New England Journal of Medicine, validating MRI DWI-FLAIR mismatch selection for thrombolysis in unknown onset stroke.</p>
-        </a>
-
-      </div>
-    </div>
-
-  </div>
-
+  <script src="../assets/dual_view.js"></script>
   <script>
     // 1. EBM Calculator logic
     const cerInput = document.getElementById('cer-input');
@@ -1290,14 +804,20 @@
     eerInput.addEventListener('input', calculateEBM);
 
     // 2. Search and filter functionality
-    const docSearch = document.getElementById('doc-search');
-    const filterTags = document.querySelectorAll('.filter-tag');
-    const docCards = document.querySelectorAll('.doc-card');
-
     let currentCategory = 'all';
     let searchQuery = '';
 
+    function filterCategory(cat) {
+      document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      currentCategory = cat;
+      filterDocs();
+    }
+
     function filterDocs() {
+      searchQuery = document.getElementById('doc-search').value.toLowerCase().trim();
+      const docCards = document.querySelectorAll('.doc-card');
+
       docCards.forEach(card => {
         const category = card.getAttribute('data-category');
         const keywords = card.getAttribute('data-keywords').toLowerCase();
@@ -1316,50 +836,9 @@
       });
     }
 
-    docSearch.addEventListener('input', (e) => {
-      searchQuery = e.target.value.toLowerCase().trim();
-      filterDocs();
-    });
-
-    filterTags.forEach(tag => {
-      tag.addEventListener('click', () => {
-        filterTags.forEach(t => t.classList.remove('active'));
-        tag.classList.add('active');
-        currentCategory = tag.getAttribute('data-category');
-        filterDocs();
-      });
-    });
-
-    // 3. Email link trigger
-    function emailDocLink(title, relativePath) {
-      // Resolve absolute path from window location
-      const fullUrl = window.location.origin + window.location.pathname.replace('evidence/index.html', '') + relativePath.replace('../', '');
-      const subject = encodeURIComponent(`Stroke References: ${title} Document Link`);
-      const body = encodeURIComponent(`Hello,\n\nPlease find the requested clinical reference document link below:\n\n${title}\nLink: ${fullUrl}\n\nClinical References Portal`);
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
-    }
-
-    // 4. Infographic Toggle & Zoom
-    const infoHeader = document.getElementById('info-header-toggle');
-    const infoChevron = document.getElementById('info-chevron');
-    const infoPanel = document.getElementById('info-content-panel');
-    const infoContainer = document.getElementById('infographic-zoom-container');
-
-    infoHeader.addEventListener('click', () => {
-      const isHidden = infoPanel.style.display === 'none';
-      if (isHidden) {
-        infoPanel.style.display = 'flex';
-        infoChevron.style.transform = 'rotate(180deg)';
-      } else {
-        infoPanel.style.display = 'none';
-        infoChevron.style.transform = 'rotate(0deg)';
-      }
-    });
-
-    infoContainer.addEventListener('click', () => {
-      infoContainer.classList.toggle('zoomed');
+    document.addEventListener('DOMContentLoaded', () => {
+      calculateEBM();
     });
   </script>
-
 </body>
 </html>

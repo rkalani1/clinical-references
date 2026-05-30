@@ -3,259 +3,447 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neuroprognostication & Goals of Care Guidelines</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Neuroprognostication & Goals of Care Bedside Guide</title>
+  <meta name="description" content="Bedside guide and decision support for neuroprognostication, goals of care, and family communication scripts in acute stroke.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
   
-  <!-- Navigation Header Styles -->
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #f43f5e;
-    }
-    .portal-nav-links {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-    .portal-nav-links a {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
-    }
-    .portal-nav-links a:hover {
-      background: rgba(244, 63, 94, 0.08);
-      border-color: rgba(244, 63, 94, 0.3);
-    }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-
-    /* Custom styles for prognosis sections */
-    .prognosis-grid {
+    /* Scoped styles for Prognosis */
+    .prognosis-input-row {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      margin-bottom: 15px;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 10px;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-color);
     }
-    @media (min-width: 768px) {
-      .prognosis-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+    
+    .prognosis-input-row label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-main);
     }
-
-    .talking-points {
-      background: var(--purple-soft);
-      border-left: 4px solid var(--purple);
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 15px;
-      box-shadow: 0 4px 10px var(--purple-glow);
+    
+    .prognosis-input-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.8rem;
+      outline: none;
+      width: 100%;
     }
-
-    .talking-points ul {
-      margin-bottom: 0;
-    }
-
-    .talking-points li {
-      font-size: 9.8pt;
+    
+    .script-box {
+      background-color: hsla(223, 30%, 8%, 0.6);
+      border-left: 4px solid var(--color-purple);
+      padding: 12px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
       line-height: 1.45;
-      margin-bottom: 8px;
-    }
-    .talking-points li:last-child {
-      margin-bottom: 0;
+      margin-top: 10px;
     }
 
-    @media (max-width: 850px) {
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
+    .tab-btn-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .tab-btn.active {
+      background-color: rgba(139, 92, 246, 0.15);
+      color: #c084fc;
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
 
-  <!-- Navigation header linked back to the index portal -->
-  <div class="portal-nav">
+  <nav class="portal-nav">
     <a href="../index.html">
-      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
-      Back to Dashboard
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
+      Portal Dashboard
     </a>
-    <div class="portal-nav-links">
-      <a href="#dnr-rule">DNR Delay Rule</a>
-      <a href="#ich-prognosis">ICH Prognosis</a>
-      <a href="#ais-prognosis">Severe AIS Prognosis</a>
-      <a href="#communication">Talking to Families</a>
-    </div>
-  </div>
+  </nav>
 
-  <div class="cards-wrapper-outer">
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Decision Support</span>
+        <h1 id="app-title">Neuroprognostication & Care</h1>
+        <p class="subtitle">Evidence-based guidelines, DNR delay rules, and communication templates</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
     
-    <!-- Page 1: Guidelines and Prognostication Scales -->
-    <div class="card-container" id="dnr-rule">
-      <div class="card-header">
-        <span class="title-logo">Clinical References</span>
-        <span class="doc-id">PROGNOSIS-v1.0</span>
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: MANDATES & FRAMING -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <h2>Critical Mandates & Framing</h2>
+            <span class="card-label">Guidelines</span>
+          </div>
+
+          <div class="status-summary-box danger" style="margin-bottom:0;">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
+            <div class="status-desc">
+              <h4>AHA/ASA 2022 DNR Mandate</h4>
+              <p><strong>Postpone new DNR orders until at least the second full day of inpatient stay (Class IIa, LOE C-LD).</strong></p>
+              <p style="font-size:0.75rem; margin-top:4px; opacity:0.85;">Early care limitations are a strong predictor of poor outcomes. Early WOLST creates a "self-fulfilling prophecy" of mortality.</p>
+            </div>
+          </div>
+
+          <div class="status-summary-box safe" style="margin-bottom:0;">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div class="status-desc">
+              <h4>Clinical Framing Rule</h4>
+              <p><strong>"We are early. The brain needs time. Let us provide aggressive medical care for 72 hours, then re-evaluate the trajectory together."</strong></p>
+              <p style="font-size:0.75rem; margin-top:4px; opacity:0.85;">Ensures families are not forced into making premature life-or-death decisions when edema peaks and recovery capacity is unknown.</p>
+            </div>
+          </div>
+
+          <div class="control-card" style="margin-bottom:0;">
+            <h3>Prognostic Pitfalls checklist</h3>
+            <div class="checklist-grid" style="grid-template-columns:1fr; gap:6px;">
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Avoid Subjective Labels:</strong> Say "damage to speech areas" instead of "catastrophic".</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Focus on Patient Values:</strong> Ask what patient would consider an acceptable quality of life.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Define What We WILL Do:</strong> Pivot from "withdrawing care" to choosing a comfort pathway.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Structure Timeline:</strong> Schedule formal updates at 24h/72h intervals rather than ad-hoc.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: INTERACTIVE CALCULATOR & CHANNELS -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
+          <div class="tab-btn-group">
+            <button class="tab-btn active" onclick="switchTab('tab-func')">FUNC Score (ICH Independence)</button>
+            <button class="tab-btn" onclick="switchTab('tab-ais')">Severe AIS Outlook</button>
+            <button class="tab-btn" onclick="switchTab('tab-comm')">Communication Frameworks</button>
+          </div>
+
+          <!-- TAB 1: FUNC SCORE CALCULATOR -->
+          <div id="tab-func" class="tab-pane active">
+            <div class="card-header" style="border:none; margin-bottom:5px; padding-bottom:0;">
+              <h2>FUNC Score Calculator</h2>
+              <span class="card-label">mRS &le;3 Independence Predictor</span>
+            </div>
+
+            <div class="lcd-screen">
+              <span class="lcd-label">Predicted 90-Day Independence (mRS &le;3)</span>
+              <div id="func-result-display" style="font-size: 1.4rem; font-weight:700; color:var(--color-green);">80-90% Chance</div>
+              <div id="func-score-display" class="formula-box">Total Score: 11 / 14</div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div class="prognosis-input-row">
+                <label>Age</label>
+                <select id="func-age" onchange="runFuncScore()">
+                  <option value="4">&lt;70 years (+4)</option>
+                  <option value="3">70-79 years (+3)</option>
+                  <option value="0">&ge;80 years (+0)</option>
+                </select>
+              </div>
+
+              <div class="prognosis-input-row">
+                <label>GCS Score</label>
+                <select id="func-gcs" onchange="runFuncScore()">
+                  <option value="4">&ge;9 (+4)</option>
+                  <option value="2">5-8 (+2)</option>
+                  <option value="0">3-4 (+0)</option>
+                </select>
+              </div>
+
+              <div class="prognosis-input-row">
+                <label>ICH Volume</label>
+                <select id="func-vol" onchange="runFuncScore()">
+                  <option value="4">&lt;30 mL (+4)</option>
+                  <option value="2">30-60 mL (+2)</option>
+                  <option value="0">&gt;60 mL (+0)</option>
+                </select>
+              </div>
+
+              <div class="prognosis-input-row">
+                <label>Location</label>
+                <select id="func-loc" onchange="runFuncScore()">
+                  <option value="2">Lobar (+2)</option>
+                  <option value="1">Deep / Infratentorial (+1)</option>
+                </select>
+              </div>
+
+              <div class="prognosis-input-row">
+                <label>Pre-ICH Cognitive Impairment</label>
+                <select id="func-cog" onchange="runFuncScore()">
+                  <option value="1">No (+1)</option>
+                  <option value="0">Yes (+0)</option>
+                </select>
+              </div>
+            </div>
+            
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:10px; line-height:1.4;">
+              * Note: Deep or infratentorial location, advanced age, volume >60 mL, and poor GCS reduce the score. A score of &ge;11 indicates a high probability of functional independence at 90 days.
+            </p>
+          </div>
+
+          <!-- TAB 2: SEVERE AIS OUTLOOK -->
+          <div id="tab-ais" class="tab-pane">
+            <h2>Severe Acute Ischemic Stroke Prognosis</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px; font-size:0.85rem; line-height:1.45;">
+              <p>
+                <strong>1. Early NIHSS Limitations:</strong> Immediate post-reperfusion NIHSS is <em>not</em> predictive of long-term functional recovery. Dramatic delayed neurological improvements (weeks to months) are common.
+              </p>
+              <p>
+                <strong>2. ASPECTS & Recanalization:</strong> Patients with ASPECTS &ge;6 who undergo successful endovascular recanalization (TICI 2b/3) achieve functional independence (mRS 0-2) in up to 50% of cases, despite high initial NIHSS.
+              </p>
+              <p>
+                <strong>3. Malignant MCA Infarction:</strong> Decompressive hemicraniectomy within 48h (age &lt;60) has an NNT of 2 for survival and 4 for functional recovery (mRS 0-3) based on DECIMAL/DESTINY/HAMLET trials.
+              </p>
+              <p>
+                <strong>4. Basilar Artery Occlusion:</strong> Endovascular therapy (ATTENTION/BAOCHE trials) significantly improves functional outcomes even in extended windows. Do not assume clinical futility early.
+              </p>
+            </div>
+          </div>
+
+          <!-- TAB 3: COMMUNICATION FRAMEWORKS -->
+          <div id="tab-comm" class="tab-pane">
+            <h2>Best / Realistic / Worst Case Framework</h2>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">Describe the spectrum of outcomes to manage expectations while preserving hope:</p>
+            
+            <div class="scenarios-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+              <button id="btn-best" class="btn-scenario active" onclick="selectScenario('best')">Best Case</button>
+              <button id="btn-real" class="btn-scenario" onclick="selectScenario('real')">Realistic Case</button>
+              <button id="btn-worst" class="btn-scenario" onclick="selectScenario('worst')">Worst Case</button>
+            </div>
+
+            <div id="scenario-script-box" class="script-box">
+              <strong>Best Case Script:</strong> "With aggressive rehab and time, he may regain the ability to walk with a cane and communicate basic needs, though some arm weakness will remain."
+            </div>
+          </div>
+        </div>
+
       </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Neuroprognostication & Goals of Care Bedside Card</h1>
+          <div class="print-subtitle">AHA/ASA Guidelines & Communication Templates</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box full-width" style="border-left: 4px solid #000;">
+            <h3>⚡ AHA/ASA 2022 Mandate: Postpone Early DNR</h3>
+            <p style="font-size: 0.75rem; line-height: 1.4; color: #111;">
+              <strong>Postpone new DNR orders until at least the second full day of inpatient stay (Class IIa, LOE C-LD).</strong>
+              Early care limitations are a strong independent predictor of poor outcomes. Early withdrawal of life-sustaining treatment (WOLST) creates a <strong>"self-fulfilling prophecy"</strong> where predicted mortality is guaranteed by withdrawing care, rather than reflecting true biological prognosis.
+            </p>
+          </div>
+
+          <div class="print-box">
+            <h3>📋 FUNC Score for 90-Day Independence</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th>Predictor Variable</th>
+                  <th>Points Assigned</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Age</strong></td>
+                  <td>&lt;70 (4) | 70-79 (3) | &ge;80 (0)</td>
+                </tr>
+                <tr>
+                  <td><strong>GCS Score</strong></td>
+                  <td>&ge;9 (4) | 5-8 (2) | 3-4 (0)</td>
+                </tr>
+                <tr>
+                  <td><strong>ICH Volume</strong></td>
+                  <td>&lt;30 mL (4) | 30-60 mL (2) | &gt;60 mL (0)</td>
+                </tr>
+                <tr>
+                  <td><strong>ICH Location</strong></td>
+                  <td>Lobar (2) | Deep / Infratentorial (1)</td>
+                </tr>
+                <tr>
+                  <td><strong>Pre-ICH Cognitive</strong></td>
+                  <td>No Impairment (1) | Impairment (0)</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:0.65rem; margin-top:5px; line-height:1.2;">
+              <strong>Score Interpretation:</strong><br>
+              • 11-14: **High** (~80-90% Functional Independence mRS &le;3)<br>
+              • 8-10: **Moderate** (~40-60%) | • 5-7: **Low** (~10-20%) | • 0-4: **Extremely Low** (&lt;5%)
+            </div>
+          </div>
+
+          <div class="print-box">
+            <h3>🧠 Severe AIS Prognostication Pearls</h3>
+            <ul class="print-list">
+              <li><strong>Immediate Post-Reperfusion NIHSS:</strong> Highly unreliable indicator of recovery. Deficits often improve dramatically over weeks.</li>
+              <li><strong>ASPECTS & Recanalization:</strong> ASPECTS &ge;6 + successful recanalization (TICI 2b/3) leads to independence (mRS 0-2) in up to 50%.</li>
+              <li><strong>Malignant MCA Decompression:</strong> Hemicraniectomy within 48h (age &lt;60) has NNT of 2 for survival, 4 for mRS &le;3 recovery.</li>
+              <li><strong>Basilar Artery Occlusion:</strong> Revascularization provides robust benefits even in extended windows. Do not declare futility early.</li>
+            </ul>
+          </div>
+
+          <div class="print-box full-width">
+            <h3>💬 Family Goals of Care Communication Guide</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:25%;">Framework/ pearl</th>
+                  <th style="width:75%;">Specific Scripting & Bedside Application</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Best / Real / Worst</strong></td>
+                  <td>• <strong>Best Case:</strong> "With rehab and time, he may walk with a cane and communicate basic needs."<br>
+                  • <strong>Realistic Case:</strong> "He will likely require help with daily tasks and may need long-term feeding tube support."<br>
+                  • <strong>Worst Case:</strong> "The swelling could lead to death. If he survives, he may remain bedbound and dependent."</td>
+                </tr>
+                <tr>
+                  <td><strong>Clinical Framing</strong></td>
+                  <td><em>"We are early. The brain needs time. Let us provide aggressive medical care for 72 hours, then re-evaluate the trajectory together."</em> (Avoids forced premature decisions during peak edema).</td>
+                </tr>
+                <tr>
+                  <td><strong>Key Pearls</strong></td>
+                  <td>• **Avoid Subjective Labels:** Use functional descriptions instead of words like "devastating" or "catastrophic".<br>
+                  • **Focus on Patient Values:** Ask: <em>"What would [Patient Name] consider an acceptable quality of life?"</em><br>
+                  • **Define What We WILL Do:** Pivot from "withdrawing care" to comfort-focused active treatments.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] AHA/ASA ICH Guidelines. Stroke. 2022. [2] Rost NS, et al. FUNC Score. Stroke. 2008. [3] DESTINY II. N Engl J Med. 2014.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       
-      <div class="card-content">
-        <h1>Neuroprognostication</h1>
-        
-        <!-- DNR Delay Guideline Alert -->
-        <div class="card-callout red">
-          <div class="tag" style="color: var(--red-deep);">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" style="margin-right: 2px;"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            AHA/ASA 2022 Guideline: Postpone Early DNR Orders
-          </div>
-          <strong>Postpone new DNR orders until at least the second full day of inpatient stay (Class IIa, LOE C-LD).</strong>
-          <p style="margin-top: 5px; font-size: 9.5pt; line-height: 1.4; color: var(--ink-soft);">
-            Early care limitations are a strong independent predictor of poor outcomes. Early withdrawal of life-sustaining treatment (WOLST) creates a <strong>"self-fulfilling prophecy"</strong> where predicted mortality is guaranteed by withdrawing care, rather than reflecting true biological prognosis.
-          </p>
-        </div>
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
 
-        <div class="prognosis-grid" id="ich-prognosis">
-          
-          <!-- ICH Prognostication -->
-          <div class="contact-section">
-            <h3 style="color: var(--red-deep); border-bottom-color: var(--red-soft); font-size: 13pt;">ICH Prognostication</h3>
-            <ul style="padding-left: 14px; font-size: 9.2pt; line-height: 1.45; color: var(--ink-soft); margin: 5px 0;">
-              <li>• <strong>ICH Score Limitations:</strong> Highly validated for 30-day <em>mortality</em> (see Calculators). However, it <strong>overestimates mortality</strong> when aggressive care is provided, as it was derived in populations with high early DNR rates.</li>
-              <li>• <strong>FUNC Score for Independence:</strong> Predicts 90-day <em>functional independence</em> (mRS ≤3). Use FUNC to balance family discussion with positive, objective framing.</li>
-              <li>• <strong>Volume Trajectory:</strong> Hematoma expansion occurs mostly in the first 3-6 hours. Stable or shrinking volume on repeat CT at 6h carries a significantly better prognosis.</li>
-              <li>• <strong>Location & Size:</strong> Lobar and small deep (&lt;30 mL) hemorrhages have the highest recovery potential. Infratentorial (brainstem) and large deep (&gt;60 mL) carry the highest risk of severe disability.</li>
-            </ul>
-          </div>
+    function runFuncScore() {
+      const age = parseInt(document.getElementById('func-age').value);
+      const gcs = parseInt(document.getElementById('func-gcs').value);
+      const vol = parseInt(document.getElementById('func-vol').value);
+      const loc = parseInt(document.getElementById('func-loc').value);
+      const cog = parseInt(document.getElementById('func-cog').value);
+      
+      const total = age + gcs + vol + loc + cog;
+      
+      const resultDisplay = document.getElementById('func-result-display');
+      const scoreDisplay = document.getElementById('func-score-display');
+      
+      scoreDisplay.innerText = `Total Score: ${total} / 14`;
+      
+      if (total >= 11) {
+        resultDisplay.innerText = 'High (~80-90% Chance of Independence)';
+        resultDisplay.style.color = 'var(--color-green)';
+      } else if (total >= 8) {
+        resultDisplay.innerText = 'Moderate (~40-60% Chance of Independence)';
+        resultDisplay.style.color = 'var(--color-yellow)';
+      } else if (total >= 5) {
+        resultDisplay.innerText = 'Low (~10-20% Chance of Independence)';
+        resultDisplay.style.color = 'var(--color-orange)';
+      } else {
+        resultDisplay.innerText = 'Extremely Low (<5% Chance of Independence)';
+        resultDisplay.style.color = 'var(--color-red)';
+      }
+    }
 
-          <!-- Severe AIS Prognostication -->
-          <div class="contact-section" id="ais-prognosis">
-            <h3 style="color: var(--teal-deep); border-bottom-color: var(--teal-soft); font-size: 13pt;">Severe AIS Prognostication</h3>
-            <ul style="padding-left: 14px; font-size: 9.2pt; line-height: 1.45; color: var(--ink-soft); margin: 5px 0;">
-              <li>• <strong>Early NIHSS Limitations:</strong> Immediate post-reperfusion NIHSS is <em>not</em> predictive of long-term functional recovery. Dramatic delayed neurological improvements (weeks to months) are common.</li>
-              <li>• <strong>ASPECTS & Recanalization:</strong> Patients with ASPECTS ≥6 who undergo successful endovascular recanalization (TICI 2b/3) achieve functional independence (mRS 0-2) in up to 50% of cases, despite high initial NIHSS.</li>
-              <li>• <strong>Malignant MCA Infarction:</strong> Decompressive hemicraniectomy within 48h (age &lt;60) has an NNT of 2 for survival and 4 for functional recovery (mRS 0-3) based on pooled DECIMAL/DESTINY/HAMLET trials.</li>
-              <li>• <strong>Basilar Artery Occlusion:</strong> Endovascular therapy (ATTENTION/BAOCHE trials) significantly improves functional outcomes even in extended windows. Do not assume clinical futility early.</li>
-            </ul>
-          </div>
+    const scenarios = {
+      best: '<strong>Best Case Script:</strong> "With aggressive rehab and time, he may regain the ability to walk with a cane and communicate basic needs, though some arm weakness will remain."',
+      real: '<strong>Most Realistic Outcome Script:</strong> "He will likely require assistance with daily tasks (dressing, transfers) and may need long-term feeding tube support due to swallowing deficits."',
+      worst: '<strong>Worst Case Script:</strong> "The swelling could continue to worsen, leading to loss of consciousness or death. If he survives, he may remain completely bedbound and dependent."'
+    };
 
-        </div>
+    function selectScenario(type) {
+      document.querySelectorAll('.btn-scenario').forEach(el => el.classList.remove('active'));
+      document.getElementById('btn-' + type).classList.add('active');
+      document.getElementById('scenario-script-box').innerHTML = scenarios[type];
+    }
 
-        <div class="card-callout teal" style="margin-top: 5px; margin-bottom: 5px;">
-          <div class="tag" style="color: var(--teal-deep);">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Clinical Framing Rule
-          </div>
-          <strong>"We are early. The brain needs time. Let us provide aggressive medical care for 72 hours, then re-evaluate the trajectory together."</strong>
-          <div style="font-size: 8.8pt; margin-top: 3px; font-style: italic; color: var(--ink-soft);">
-            Ensures that families are not forced into making premature life-or-death decisions when cerebral edema is at its peak and the ultimate recovery capacity is still unknown.
-          </div>
-        </div>
-
-        <p style="font-size: 7.5pt; color: var(--ink-mute); text-align: center; margin-top: 5px;">
-          AHA/ASA ICH Guidelines. Stroke. 2022;53(7):e282-e361. | Jüttler E, et al. DESTINY II. N Engl J Med. 2014;370:1091-1100.
-        </p>
-      </div>
-
-      <div class="card-footer">
-        <span class="disclaimer-text">Guidelines are for clinical decision support. Always individualize care plans.</span>
-        <span class="page-num">Page 1 of 2</span>
-      </div>
-    </div>
-
-    <!-- Page 2: Communication Templates and Scripts -->
-    <div class="card-container" id="communication">
-      <div class="card-header">
-        <span class="title-logo">Clinical References</span>
-        <span class="doc-id">COMM-GOALS-v1.0</span>
-      </div>
-
-      <div class="card-content">
-        <h1>Family Communication Guide</h1>
-        
-        <p style="font-size: 10pt; color: var(--ink-soft); margin-bottom: 10px;">
-          Bedside communication frameworks to assist families in navigating high-stakes medical decisions during acute stroke admissions.
-        </p>
-
-        <div class="contact-section" style="margin-bottom: 15px;">
-          <h3 style="color: var(--purple-deep); border-bottom-color: var(--purple-soft); font-size: 13pt; margin-bottom: 8px;">1. The "Best / Realistic / Worst" Case Framework</h3>
-          <p style="font-size: 9.2pt; color: var(--ink-soft); line-height: 1.45; margin-bottom: 8px;">
-            Instead of presenting a single, arbitrary percentage of recovery, describe the spectrum of possible clinical scenarios. This manages expectations while preserving hope.
-          </p>
-          <div style="display: grid; grid-template-columns: 1fr; gap: 8px; font-size: 8.8pt;">
-            <div style="background: rgba(46, 125, 50, 0.05); border-left: 3px solid #2e7d32; padding: 6px 10px; border-radius: 0 6px 6px 0;">
-              <strong>Best Case Scenario:</strong> "With aggressive rehab and time, he may regain the ability to walk with a cane and communicate basic needs, though some arm weakness will remain."
-            </div>
-            <div style="background: rgba(31, 107, 138, 0.05); border-left: 3px solid #1f6b8a; padding: 6px 10px; border-radius: 0 6px 6px 0;">
-              <strong>Most Realistic Outcome:</strong> "He will likely require assistance with daily tasks (dressing, transfers) and may need long-term feeding tube support due to swallowing deficits."
-            </div>
-            <div style="background: rgba(198, 46, 46, 0.05); border-left: 3px solid #c62e2e; padding: 6px 10px; border-radius: 0 6px 6px 0;">
-              <strong>Worst Case Scenario:</strong> "The swelling could continue to worsen, leading to loss of consciousness or death. If he survives, he may remain completely bedbound and dependent."
-            </div>
-          </div>
-        </div>
-
-        <div class="talking-points" style="margin-top: 0;">
-          <h3 style="color: var(--purple-deep); margin-top: 0; font-size: 12pt; border-bottom: 1px solid rgba(91,59,156,0.15); padding-bottom: 4px; margin-bottom: 8px;">
-            Key Bedside Communication Pearls
-          </h3>
-          <ul style="padding-left: 16px;">
-            <li>
-              <strong>Avoid Subjective Labels:</strong> Do not use words like <em>"devastating"</em> or <em>"catastrophic."</em> Instead, use clear, functional descriptions: <em>"The stroke has damaged the area of the brain responsible for speech and movement of the right side."</em>
-            </li>
-            <li>
-              <strong>Focus on Patient Values:</strong> Ask: <em>"What would [Patient Name] consider an acceptable quality of life? If she could sit at this table and tell us, what would she say about this situation?"</em>
-            </li>
-            <li>
-              <strong>Define What We WILL Do:</strong> Shift the focus from "withdrawing care" to choosing a pathway of comfort. Explain: <em>"We are continuing aggressive medical monitoring, medication adjustments, and therapy, but focusing on comfort rather than invasive surgeries."</em>
-            </li>
-            <li>
-              <strong>Structure the Timeline:</strong> Schedule formal updates at predetermined intervals (e.g., 24h, 72h) rather than frequent, ad-hoc discussions. This reduces family anxiety and gives the brain time to show its clinical trajectory.
-            </li>
-            <li>
-              <strong>Document Structured Summaries:</strong> Write an explicit note in the chart: who was present (including phone/video links), specific functional outcomes discussed, family questions, and agreed-upon step-wise goals of care.
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card-footer">
-        <span class="disclaimer-text">Bedside communication is an art. Adapt scripts to family dynamics and cultural values.</span>
-        <span class="page-num">Page 2 of 2</span>
-      </div>
-    </div>
-
-  </div>
-
+    document.addEventListener('DOMContentLoaded', () => {
+      runFuncScore();
+    });
+  </script>
 </body>
 </html>

@@ -3,1285 +3,474 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intracerebral Hemorrhage (ICH) Management</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Intracerebral Hemorrhage (ICH) Bedside Guide & Calculator</title>
+  <meta name="description" content="Bedside calculator and emergency guidelines for intracerebral hemorrhage (ICH) score and anticoagulant reversal.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
   
-  <!-- Navigation Header Styles -->
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
+    /* Scoped styles for ICH Calculator */
+    .ich-calc-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
     }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
+    
+    .ich-calc-row label {
       font-size: 0.85rem;
       font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
+      color: var(--text-main);
     }
-    .portal-nav a:hover {
-      color: #38bdf8;
-    }
-    .portal-nav-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .portal-nav-links a {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 0.35rem 0.75rem;
+    
+    .ich-calc-row select, .ich-calc-row input {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
       border-radius: 6px;
-      font-size: 0.8rem;
-    }
-    .portal-nav-links a:hover {
-      background: rgba(56, 189, 248, 0.08);
-      border-color: rgba(56, 189, 248, 0.3);
-    }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .portal-nav-links {
-        justify-content: flex-start;
-        gap: 0.4rem;
-      }
-      .portal-nav-links a {
-        flex: 1 1 auto;
-        text-align: center;
-        padding: 0.4rem 0.2rem;
-        font-size: 0.75rem;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
-    }
-    @media print {
-      .portal-nav {
-        display: none !important;
-      }
-      .cards-wrapper-outer {
-        padding: 0 !important;
-        background: #ffffff !important;
-        gap: 0 !important;
-      }
-      .card-wrapper {
-        page-break-after: always;
-        break-after: page;
-        margin-bottom: 0 !important;
-      }
+      padding: 6px;
+      font-size: 0.85rem;
+      outline: none;
+      width: 100%;
     }
   </style>
-  
-  <!-- Scoped Figure Styles -->
-  
-<style>
-
-.card-figure_12_ich_suspension_flowchart .flow-container {
-
-      width: 745px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-box-outline {
-
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.03);
-      padding: 12px 18px;
-      box-sizing: border-box;
-      border: 1.5px solid var(--rule);
-      background: white;
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-box-trigger {
-
-      border: 2px solid var(--purple-deep);
-      background: var(--purple-soft);
-      border-left: 6px solid var(--purple);
-      text-align: center;
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-box-stop {
-
-      background: linear-gradient(135deg, var(--red-deep) 0%, var(--red) 100%);
-      color: white;
-      border: none;
-      font-weight: 700;
-      text-align: center;
-      font-size: 13.0pt;
-      padding: 10px 20px;
-      box-shadow: 0 4px 10px rgba(166,40,40,0.15);
-      border-radius: 6px;
-      width: 480px;
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-box-diagnostics {
-
-      border: 1.5px solid var(--slate);
-      border-left: 5px solid var(--slate);
-      background: var(--fill-soft);
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-box-delay-q {
-
-      border: 1.5px solid var(--amber);
-      background: var(--amber-soft);
-      color: var(--ink);
-      font-size: 10.8pt;
-      line-height: 1.4;
-      font-weight: 600;
-      text-align: center;
-      padding: 12px 16px;
-      width: 320px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-box-delay-a {
-
-      border: 1.5px solid var(--red);
-      background: var(--red-soft);
-      color: var(--ink);
-      font-size: 10.8pt;
-      line-height: 1.4;
-      font-weight: 500;
-      text-align: center;
-      padding: 10px 16px;
-      width: 340px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
-    
-}
-.card-figure_12_ich_suspension_flowchart .decision-bar {
-
-      width: 100%;
-      background: var(--slate);
-      color: white;
-      font-weight: 700;
-      font-size: 12.5pt;
-      text-align: center;
-      padding: 8px 16px;
-      border-radius: 6px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      letter-spacing: 0.02em;
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-cols {
-
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      gap: 20px;
-      margin: 0;
-    
-}
-.card-figure_12_ich_suspension_flowchart .flow-box-outcome {
-
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.03);
-      box-sizing: border-box;
-    
-}
-
-  
-
-</style>
-
-<style>
-
-.card-figure_20_bp_ich {
-
-      margin: 0;
-      padding: 0;
-      background: white;
-    
-}
-.card-figure_20_bp_ich .card-container {
-
-      width: 825px;
-      height: 1275px;
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      background: white;
-      padding: 40px 20px;
-    
-}
-.card-figure_20_bp_ich .card-image {
-
-      width: 100%;
-      height: auto;
-      max-height: 100%;
-      object-fit: contain;
-    
-}
-
-  
-
-</style>
-
-<style>
-
-.card-figure_21_ich_warfarin_reversal .title-block {
-
-      background: linear-gradient(135deg, #107c41 0%, #1f6b8a 100%);
-      color: white;
-      padding: 14px 20px;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 8px rgba(16,124,65,0.12);
-      text-align: center;
-    
-}
-.card-figure_21_ich_warfarin_reversal .title-block h1 {
-
-      color: white;
-      border: none;
-      padding: 0;
-      margin: 0;
-      font-size: 16.5pt;
-      font-weight: 700;
-      line-height: 1.25;
-      text-align: center;
-    
-}
-.card-figure_21_ich_warfarin_reversal .title-block h2 {
-
-      color: rgba(255,255,255,0.95);
-      margin: 4px 0 0 0;
-      font-size: 14.0pt;
-      font-weight: 600;
-      border: none;
-      padding: 0;
-      text-align: center;
-    
-}
-.card-figure_21_ich_warfarin_reversal .url-link-btn {
-
-      display: inline-block;
-      color: white;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 3px 12px;
-      border-radius: 4px;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 8.0pt;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      font-weight: 500;
-    
-}
-.card-figure_21_ich_warfarin_reversal .url-link-btn:hover {
-
-      background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    
-}
-.card-figure_21_ich_warfarin_reversal .all-patients-box {
-
-      border: 2px solid var(--purple);
-      border-radius: 8px;
-      padding: 10px 16px;
-      margin-bottom: 6px;
-      background: var(--paper);
-      box-shadow: 0 2px 4px rgba(75,46,131,0.04);
-    
-}
-.card-figure_21_ich_warfarin_reversal .all-patients-title {
-
-      color: var(--purple-deep);
-      font-weight: 700;
-      font-size: 11.0pt;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    
-}
-.card-figure_21_ich_warfarin_reversal .all-patients-list {
-
-      margin: 0;
-      padding-left: 14px;
-      font-size: 10.2pt;
-      line-height: 1.45;
-      color: var(--ink-soft);
-    
-}
-.card-figure_21_ich_warfarin_reversal .all-patients-list li {
-
-      margin-bottom: 4px;
-    
-}
-.card-figure_21_ich_warfarin_reversal .all-patients-list li:last-child {
-
-      margin-bottom: 0;
-    
-}
-.card-figure_21_ich_warfarin_reversal /* Flowchart styles */
-    .flowchart-container {
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      margin: 4px 0;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-arrow-container {
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 20px;
-      margin: 1px 0;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-green {
-
-      width: 100%;
-      border: 2px solid #107c41;
-      background: #f0f7f3;
-      border-radius: 8px;
-      padding: 8px 14px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(16,124,65,0.04);
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-green .title {
-
-      font-weight: 700;
-      color: #107c41;
-      font-size: 12.5pt;
-      margin-bottom: 2px;
-      letter-spacing: 0.02em;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-green .desc {
-
-      font-size: 11.0pt;
-      color: var(--ink);
-      font-weight: 600;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-red {
-
-      width: 100%;
-      border: 2px solid var(--red);
-      background: var(--red-soft);
-      border-radius: 8px;
-      padding: 8px 14px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(166,40,40,0.04);
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-red .title {
-
-      font-weight: 700;
-      color: var(--red-deep);
-      font-size: 12.5pt;
-      margin-bottom: 2px;
-      font-family: "IBM Plex Mono", monospace;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-red .desc {
-
-      font-size: 10.5pt;
-      color: var(--ink-soft);
-      font-weight: 500;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-blue {
-
-      width: 100%;
-      border: 2px solid var(--teal);
-      background: var(--paper);
-      border-radius: 8px;
-      padding: 10px 16px;
-      box-shadow: 0 3px 6px rgba(31,107,138,0.06);
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-blue .title {
-
-      font-weight: 700;
-      color: var(--teal-deep);
-      font-size: 13.0pt;
-      margin-bottom: 6px;
-      border-bottom: 1.5px solid var(--teal-soft);
-      padding-bottom: 4px;
-      text-align: center;
-      letter-spacing: 0.02em;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-blue .bullet-points {
-
-      font-size: 10.2pt;
-      line-height: 1.45;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-blue .bullet-points li {
-
-      margin-bottom: 4px;
-      padding-left: 12px;
-      position: relative;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-blue .bullet-points li::before {
-
-      content: "•";
-      color: var(--teal);
-      position: absolute;
-      left: 0;
-      font-weight: bold;
-    
-}
-.card-figure_21_ich_warfarin_reversal .flow-step-blue .bullet-points li:last-child {
-
-      margin-bottom: 0;
-    
-}
-.card-figure_21_ich_warfarin_reversal .contra-box {
-
-      border: 2px solid #b8740a;
-      border-radius: 8px;
-      padding: 10px 16px;
-      margin-top: 8px;
-      background: #fdfaf3;
-    
-}
-.card-figure_21_ich_warfarin_reversal .contra-title-absolute {
-
-      font-weight: 700;
-      color: var(--red-deep);
-      font-size: 11.0pt;
-      border-bottom: 1px solid rgba(166,40,40,0.15);
-      padding-bottom: 3px;
-      margin-bottom: 6px;
-    
-}
-.card-figure_21_ich_warfarin_reversal .contra-title-relative {
-
-      font-weight: 700;
-      color: #8a5605;
-      font-size: 10.5pt;
-      margin-top: 6px;
-      margin-bottom: 4px;
-    
-}
-.card-figure_21_ich_warfarin_reversal .contra-list {
-
-      margin: 0;
-      padding-left: 14px;
-      font-size: 9.8pt;
-      line-height: 1.45;
-      color: var(--ink-soft);
-    
-}
-.card-figure_21_ich_warfarin_reversal .contra-list li {
-
-      margin-bottom: 3px;
-    
-}
-.card-figure_21_ich_warfarin_reversal .contra-list li:last-child {
-
-      margin-bottom: 0;
-    
-}
-.card-figure_21_ich_warfarin_reversal .ffp-box {
-
-      border: 2px solid #5a3d7c;
-      border-radius: 8px;
-      padding: 10px 16px;
-      margin-top: 8px;
-      background: #f7f4fa;
-    
-}
-.card-figure_21_ich_warfarin_reversal .ffp-title {
-
-      color: #5a3d7c;
-      font-weight: 700;
-      font-size: 11.5pt;
-      margin-bottom: 6px;
-      border-bottom: 1.5px solid rgba(90,61,124,0.15);
-      padding-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    
-}
-
-  
-
-</style>
-
-<style>
-
-.card-figure_22_ich_doac_reversal {
-
-      --purple: #4B2E83;
-      --purple-deep: #39226a;
-      --purple-soft: #ece8f3;
-      --teal: #1f6b8a;
-      --teal-soft: #e3eef3;
-      --teal-deep: #155770;
-      --red: #a62828;
-      --red-soft: #f7e9e9;
-      --red-deep: #7a1d1d;
-      --magenta: #d81b60;
-      --magenta-soft: #fdf2f5;
-      --magenta-deep: #c2185b;
-      --amber: #b8740a;
-      --amber-soft: #fbf1de;
-      --amber-deep: #8a5605;
-      --ink: #1f2024;
-      --ink-soft: #4a4954;
-      --ink-mute: #6b6a76;
-      --paper: #ffffff;
-    
-}
-.card-figure_22_ich_doac_reversal .card-container {
-
-      width: 825px;
-      height: 1275px;
-      padding: 0;
-      margin: 0;
-      position: relative;
-      background: var(--paper);
-      box-sizing: border-box;
-      overflow: hidden;
-    
-}
-.card-figure_22_ich_doac_reversal .title-block {
-
-      position: absolute;
-      top: 30px;
-      left: 40px;
-      width: 745px;
-      height: 152px;
-      background: linear-gradient(135deg, #1f6b8a 0%, #155770 55%, #4b2e83 100%);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(31,107,138,0.15);
-      border: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-    
-}
-.card-figure_22_ich_doac_reversal .title-block h1 {
-
-      font-size: 16.5pt;
-      font-weight: 700;
-      margin: 0;
-      padding: 0;
-      border: none;
-      color: white;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      line-height: 1.25;
-      text-align: center;
-    
-}
-.card-figure_22_ich_doac_reversal .title-block h2 {
-
-      font-size: 11.5pt;
-      font-weight: 600;
-      margin: 2px 0 0 0;
-      padding: 0;
-      color: #e2f1f8;
-      line-height: 1.25;
-      text-align: center;
-    
-}
-.card-figure_22_ich_doac_reversal .title-block .subtitle {
-
-      font-size: 8.8pt;
-      font-weight: 500;
-      color: #b0d3e6;
-      margin-top: 2px;
-      text-align: center;
-    
-}
-.card-figure_22_ich_doac_reversal .title-block .link-container {
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 4px;
-      border-top: 1px solid rgba(255,255,255,0.25);
-      padding-top: 6px;
-    
-}
-.card-figure_22_ich_doac_reversal .title-block .link-desc {
-
-      font-size: 8.0pt;
-      color: #e2f1f8;
-      max-width: 50%;
-      line-height: 1.3;
-    
-}
-.card-figure_22_ich_doac_reversal .url-link-btn {
-
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      color: white !important;
-      padding: 3px 12px;
-      border-radius: 20px;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 8.0pt;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    
-}
-.card-figure_22_ich_doac_reversal .url-link-btn:hover {
-
-      background: rgba(255, 255, 255, 0.28);
-      border-color: rgba(255, 255, 255, 0.5);
-    
-}
-.card-figure_22_ich_doac_reversal .all-patients-box {
-
-      position: absolute;
-      top: 192px;
-      left: 40px;
-      width: 745px;
-      height: 128px;
-      border: 2px solid #1f6b8a;
-      background: #f0f6f9;
-      border-radius: 12px;
-      padding: 10px 18px;
-      box-shadow: 0 4px 10px rgba(31,107,138,0.06);
-      box-sizing: border-box;
-    
-}
-.card-figure_22_ich_doac_reversal .all-patients-box .box-header {
-
-      color: #155770;
-      font-weight: 700;
-      font-size: 11.0pt;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    
-}
-.card-figure_22_ich_doac_reversal .all-patients-box .patients-list {
-
-      margin: 0;
-      padding-left: 12px;
-      font-size: 9.5pt;
-      line-height: 1.45;
-      color: #2d3748;
-    
-}
-.card-figure_22_ich_doac_reversal .all-patients-box .patients-list li {
-
-      margin-bottom: 4px;
-    
-}
-.card-figure_22_ich_doac_reversal .all-patients-box .patients-list li:last-child {
-
-      margin-bottom: 0;
-    
-}
-.card-figure_22_ich_doac_reversal .flow-box {
-
-      position: absolute;
-      border-radius: 12px;
-      padding: 12px 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-      box-sizing: border-box;
-      overflow: hidden;
-    
-}
-.card-figure_22_ich_doac_reversal .border-red {
-
-      border: 2px solid #a62828;
-    
-}
-.card-figure_22_ich_doac_reversal .bg-red-soft {
-
-      background: #fdf8f8;
-    
-}
-.card-figure_22_ich_doac_reversal .border-teal {
-
-      border: 2px solid #1f6b8a;
-    
-}
-.card-figure_22_ich_doac_reversal .bg-teal-soft {
-
-      background: #f0f6f9;
-    
-}
-.card-figure_22_ich_doac_reversal .border-magenta {
-
-      border: 2px solid #d81b60;
-    
-}
-.card-figure_22_ich_doac_reversal .bg-magenta-soft {
-
-      background: #fdf2f5;
-    
-}
-.card-figure_22_ich_doac_reversal .box-title {
-
-      font-weight: 700;
-      font-size: 10.5pt;
-      margin-bottom: 4px;
-      line-height: 1.25;
-      letter-spacing: 0.01em;
-    
-}
-.card-figure_22_ich_doac_reversal .color-red-deep {
-
-      color: #7a1d1d;
-    
-}
-.card-figure_22_ich_doac_reversal .color-teal-deep {
-
-      color: #155770;
-    
-}
-.card-figure_22_ich_doac_reversal .color-magenta-deep {
-
-      color: #c2185b;
-    
-}
-.card-figure_22_ich_doac_reversal .box-desc {
-
-      font-size: 9.5pt;
-      line-height: 1.4;
-      color: #2d3748;
-    
-}
-
-  
-
-</style>
-
 </head>
-<body>
+<body class="dark-mode">
 
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
-    <div class="portal-nav-links">
-      <a href="#card-figure_12_ich_suspension_flowchart">ICH/IVT Suspension</a>
-      <a href="#card-figure_20_bp_ich">BP Guidelines</a>
-      <a href="#card-figure_21_ich_warfarin_reversal">Warfarin Reversal</a>
-      <a href="#card-figure_22_ich_doac_reversal">DOAC Reversal</a>
-    </div>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div id="card-figure_12_ich_suspension_flowchart" class="card-wrapper card-figure_12_ich_suspension_flowchart">
-<div class="card-container" style="padding: 25px 40px 20px 40px;">
-<div class="card-content" style="justify-content: flex-start;">
-<h1 style="font-size: 16.5pt; margin-bottom: 12px; padding-bottom: 2px; border-bottom-color: var(--purple-soft); text-align: center;">Post-Lytic Intracranial Hemorrhage (ICH) Protocol</h1>
-<div class="flow-container">
-<!-- Suspension Trigger Box -->
-<div class="flow-box-outline flow-box-trigger">
-<div style="font-size: 13.5pt; font-weight: 700; color: var(--purple-deep); text-decoration: underline; margin-bottom: 4px;">
-            Suspicion of Intracranial Hemorrhage
-          </div>
-<div style="font-size: 11.0pt; color: var(--ink); font-weight: 500;">
-            Prompted by sudden neurological deterioration, new headache, acute hypertension, nausea, or vomiting
-          </div>
-</div>
-<!-- Arrow 1 -->
-<svg fill="none" height="20" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 20 20" width="20">
-<path d="M10 -2V20" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M6 15L10 20L14 15" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<!-- Stop Lytic Box -->
-<div class="flow-box-stop">
-          Stop thrombolytic if still running
-        </div>
-<!-- Arrow 2 -->
-<svg fill="none" height="20" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 20 20" width="20">
-<path d="M10 -2V20" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M6 15L10 20L14 15" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<!-- Diagnostics Box -->
-<div class="flow-box-outline flow-box-diagnostics">
-<ol style="margin: 0; padding-left: 16px; font-size: 11.0pt; line-height: 1.45; font-weight: 500; color: var(--ink);">
-<li style="margin-bottom: 6px;">Arrange STAT non-contrast CT Head</li>
-<li style="margin-bottom: 6px;">
-              STAT blood Draw (while arranging CT Head)
-              <ul style="margin: 3px 0 0 0; padding-left: 16px; list-style-type: disc; font-size: 10.0pt; color: var(--ink-soft);">
-<li>Emergency Hemorrhage Panel (PT/INR, platelet count, fibrinogen)</li>
-<li>Complete coagulation screen (PTT, TT, D-dimers)</li>
-<li>CBC, type and cross</li>
-</ul>
-</li>
-<li style="margin-bottom: 6px;">
-              Call Transfusion Support Services (<span style="font-weight: 700; color: var(--purple-deep);">4-3088 / 8-8700</span>)
-              <ul style="margin: 3px 0 0 0; padding-left: 16px; list-style-type: disc; font-size: 10.0pt; color: var(--ink-soft);">
-<li>Order 2 pools Cryoprecipitate immediately (takes ~15-20min to obtain)</li>
-</ul>
-</li>
-<li>Notify patient's family of change in status</li>
-</ol>
-</div>
-<!-- Arrow 3 -->
-<svg fill="none" height="25" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 745 25" width="745">
-<path d="M160 -2v27" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M155 22L160 27L165 22" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<!-- Delay Check Grid Row -->
-<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-<!-- Left Delay Q -->
-<div class="flow-box-delay-q">
-<div style="font-weight: 700; font-size: 11.2pt; margin-bottom: 2px;">CT Scan Delayed?</div>
-<div style="font-size: 9.8pt; font-weight: 500; color: var(--ink-soft);">(i.e. if you expect results in &gt; 30min)</div>
-</div>
-<!-- Horizontal Arrow (Yes) -->
-<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 85px;">
-<span style="font-size: 10pt; font-weight: 700; color: var(--red); margin-bottom: 2px;">Yes</span>
-<svg fill="none" height="15" style="overflow: visible;" viewbox="0 0 85 15" width="85">
-<path d="M-2 7.5H87" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M82 2.5L87 7.5L82 12.5" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<!-- Right Delay A -->
-<div class="flow-box-delay-a">
-            Empirically administer 2 pools Cryoprecipitate over 10-30min if fibrinogen level &lt; 200
-          </div>
-</div>
-<!-- Delay Outcome Down Arrows to Decision Bar -->
-<svg fill="none" height="35" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 745 35" width="745">
-<!-- Left arrow (No) -->
-<path d="M160 -2V35" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M155 30L160 35L165 30" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-<text fill="var(--slate)" font-size="10pt" font-weight="700" x="170" y="20">No</text>
-<!-- Right arrow -->
-<path d="M575 -2V35" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M570 30L575 35L580 30" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<!-- Decision Bar -->
-<div class="decision-bar">
-          Intracranial blood on CT Head?
-        </div>
-<!-- Three Outcome Decision Arrows -->
-<svg fill="none" height="40" style="display: block; margin: -2px auto; overflow: visible;" viewbox="0 0 745 40" width="745">
-<!-- Left arrow (Yes) -->
-<path d="M87.5 -2V40" stroke="var(--red)" stroke-width="2"></path>
-<path d="M82.5 35L87.5 40L92.5 35" stroke="var(--red)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-<text fill="var(--red)" font-size="9.5pt" font-weight="700" x="97" y="22">Yes</text>
-<!-- Middle arrow (Yes + Cryo given empirically) -->
-<path d="M367.5 -2V40" stroke="var(--amber-deep)" stroke-width="2"></path>
-<path d="M362.5 35L367.5 40L372.5 35" stroke="var(--amber-deep)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-<text fill="var(--amber-deep)" font-size="9.0pt" font-weight="700" x="377" y="22">Yes + Cryo given empirically</text>
-<!-- Right arrow (No*) -->
-<path d="M642.5 -2V40" stroke="var(--teal-deep)" stroke-width="2"></path>
-<path d="M637.5 35L642.5 40L647.5 35" stroke="var(--teal-deep)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-<text fill="var(--teal-deep)" font-size="9.5pt" font-weight="700" x="652" y="22">No*</text>
-</svg>
-<!-- Three Columns Row -->
-<div class="flow-cols" style="align-items: flex-start;">
-<!-- Left + Middle Flow Area (Columns 1 & 2 Combined for alignment) -->
-<div style="width: 520px; display: flex; flex-direction: column;">
-<!-- Row 1: Left Box + Arrow + Middle Box -->
-<div style="display: flex; align-items: flex-start; width: 100%;">
-<!-- Left Box + Arrow -->
-<div style="display: flex; align-items: center; width: 215px;">
-<!-- Left Box -->
-<div class="flow-box-outcome" style="width: 175px; padding: 10px 12px; font-size: 9.6pt; line-height: 1.4; border: 1.5px solid var(--red); background: var(--red-soft); border-radius: 6px; color: var(--ink); font-weight: 500;">
-                  Give 2 pools Cryoprecipitate infused over 10-30 min
-                </div>
-<!-- Arrow -->
-<div style="width: 40px; display: flex; justify-content: center;">
-<svg fill="none" height="15" style="overflow: visible;" viewbox="0 0 40 15" width="40">
-<path d="M-2 7.5H42" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M37 2.5L42 7.5L37 12.5" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-</div>
-<!-- Middle Box -->
-<div style="width: 305px;">
-<div class="flow-box-outcome" style="padding: 10px 12px; font-size: 9.4pt; line-height: 1.4; border: 1.5px solid var(--amber); background: var(--amber-soft); border-radius: 6px; color: var(--ink); width: 100%;">
-<ol style="margin: 0; padding-left: 14px; font-weight: 500;">
-<li style="margin-bottom: 4px;">Order Tranexamic acid STAT and administer 1g IV infused over 10 min</li>
-<li style="margin-bottom: 4px;">Repeat Emergency Hemorrhage Panel</li>
-<li style="margin-bottom: 4px;">Call Stroke/Neurology Attending</li>
-<li>Consult Neurosurgery if needed</li>
-</ol>
-</div>
-</div>
-</div>
-<!-- Row 2: Down flow under the Middle Box -->
-<div style="display: flex; width: 100%;">
-<!-- Empty spacer equivalent to Left Box + Arrow -->
-<div style="width: 215px;"></div>
-<!-- Middle box down-flow -->
-<div style="width: 305px; display: flex; flex-direction: column; align-items: center;">
-<!-- Arrow down -->
-<svg fill="none" height="20" style="display: block; margin: -2px 0; overflow: visible;" viewbox="0 0 20 20" width="20">
-<path d="M10 -2V20" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M6 15L10 20L14 15" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<!-- Update Family -->
-<div class="flow-box-outcome" style="padding: 6px 12px; font-size: 9.6pt; text-align: center; font-weight: 700; border: 1.5px solid var(--slate); background: var(--fill-soft); border-radius: 6px; width: 180px;">
-                  Update family again
-                </div>
-<!-- Arrow down -->
-<svg fill="none" height="20" style="display: block; margin: -2px 0; overflow: visible;" viewbox="0 0 20 20" width="20">
-<path d="M10 -2V20" stroke="var(--slate)" stroke-width="2"></path>
-<path d="M6 15L10 20L14 15" stroke="var(--slate)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<!-- Follow-up q4h -->
-<div class="flow-box-outcome" style="padding: 10px 12px; font-size: 9.4pt; line-height: 1.4; border: 1.5px solid var(--purple); background: var(--purple-soft); border-radius: 6px; width: 100%;">
-<ol style="margin: 0; padding-left: 14px; font-weight: 500;">
-<li style="margin-bottom: 4px;">If labs remain abnormal on repeat testing or bleeding remains uncontrolled, consult with Hematology Attending</li>
-<li>Repeat Emergency Hemorrhagic Panel q4h until normal</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<!-- Column 3 (Right) -->
-<div style="width: 205px; display: flex; flex-direction: column;">
-<!-- End algorithm -->
-<div class="flow-box-outcome" style="padding: 12px 14px; font-size: 9.8pt; line-height: 1.45; border: 1.5px solid var(--teal); background: var(--teal-soft); border-radius: 6px; color: var(--ink); width: 100%;">
-<div style="margin-bottom: 6px; font-weight: 500;">Do NOT restart lytic.</div>
-<div style="font-weight: 700; font-size: 10.0pt; border-bottom: 1.5px solid var(--teal); padding-bottom: 3px; margin-bottom: 8px; text-transform: uppercase;"><u>End Algorithm</u></div>
-<div style="font-size: 9.4pt; color: var(--ink-soft); line-height: 1.4;">
-                Consider other causes (extending infarct, seizure, hypoxia, hypercarbia, hypoglycemia, electrolytes)
-              </div>
-</div>
-<!-- Footnote * -->
-<div style="font-size: 9.0pt; color: var(--red-deep); font-weight: 600; line-height: 1.35; margin-top: 10px; border-left: 2px solid var(--red); padding-left: 6px;">
-              *If Cryo started + infusing and CTH shows NO ICH, STOP infusion
-            </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div id="card-figure_20_bp_ich" class="card-wrapper card-figure_20_bp_ich">
-<div class="card-container">
-<img class="card-image" src="../assets/bp_ich.png"/>
-</div>
-</div>
-
-<div id="card-figure_21_ich_warfarin_reversal" class="card-wrapper card-figure_21_ich_warfarin_reversal">
-<div class="card-container" style="padding: 15px 22px 10px 22px; justify-content: flex-start; gap: 2px;">
-<div class="card-content">
-<!-- Title Block -->
-<div class="title-block">
-<h1>Spontaneous Intraparenchymal Hemorrhage</h1>
-<h2>Reversal Guide for Warfarin</h2>
-<div style="margin-top: 4px; font-size: 8.0pt; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-<span>For guideline updates and info on managing bleeds:</span>
-<a class="url-link-btn" href="https://occam.uwmedicine.org/hmc-uwmc-stroke-reference-kit/" target="_blank">
-            Stroke Reference Kit Online
-</a>
-</div>
-</div>
-<!-- For all patients -->
-<div class="all-patients-box">
-<div class="all-patients-title">For all patients:</div>
-<ul class="all-patients-list">
-<li><strong>1) Order STAT EMERGENCY STROKE PANEL</strong> (includes PT/INR, PTT, HB/HCT, PLT and DOAC screen)</li>
-<li><strong>2) Obtain history about use of antithrombotic agents</strong> (especially anticoagulants), including date/time of last dose</li>
-<li><strong>3) If crash craniotomy is considered, TYPE AND SCREEN - STAT</strong> and request 2 units emergency-release RBCs</li>
-</ul>
-</div>
-<!-- Flowchart -->
-<div class="flowchart-container">
-<!-- Step 1 -->
-<div class="flow-step-green">
-<div class="title">IF ON WARFARIN</div>
-<div class="desc">Immediately give vitamin K 10mg IV</div>
-</div>
-<!-- Arrow 1 -->
-<div class="flow-arrow-container">
-<svg fill="none" height="18" viewbox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 4V20M12 20L6 14M12 20L18 14" stroke="#107c41" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
-</svg>
-</div>
-<!-- Step 2 -->
-<div class="flow-step-red">
-<div class="title">INR ≥ 1.6</div>
-<div class="desc">Low evidence: INR 1.3-1.5, consider on case-by-case basis</div>
-</div>
-<!-- Arrow 2 -->
-<div class="flow-arrow-container">
-<svg fill="none" height="18" viewbox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 4V20M12 20L6 14M12 20L18 14" stroke="var(--red)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
-</svg>
-</div>
-<!-- Step 3 -->
-<div class="flow-step-blue">
-<div class="title">PCC (Kcentra)</div>
-<ul class="bullet-points">
-<li><strong>PCC (Kcentra) 2000 units IVPB x1</strong></li>
-<li>Check PT/INR 30min, then every 6 hrs for 24 hrs after completion of PCC.</li>
-<li>If INR &gt; 1.5 at 30 min, page Hematology and consider giving another 500 units PCC.</li>
-<li>If INR &gt; 1.5 at 24 hrs, repeat vitamin K 10mg IV over 30 min.</li>
-</ul>
-<div style="font-size: 7.2pt; color: var(--ink-mute); margin-top: 5px; text-align: right; font-style: italic; border-top: 1px solid var(--rule-soft); padding-top: 3px;">
-            PCC = Prothrombin Complex Concentrate; preferred agent is Kcentra
-          </div>
-</div>
-</div>
-<!-- Contraindications -->
-<div class="contra-box">
-<div class="contra-title-absolute">Absolute contraindications to PCC = DIC or HIT</div>
-<div class="contra-title-relative">Relative contraindications (apply to both PCC and FFP)</div>
-<ul class="contra-list">
-<li>History of thrombotic or thromboembolic event in past 6 weeks (DVT/PE, ischemic stroke, ACS, acute venous/arterial ischemia, etc.)</li>
-<li>Known prothrombotic condition (malignancy, hypercoagulable condition, hepatic disease, polytrauma, etc.)</li>
-<li>Major surgery within 6 weeks</li>
-</ul>
-</div>
-<!-- FFP Pathway -->
-<div class="ffp-box">
-<div class="ffp-title">Plasma (FFP) Pathway (if PCC unavailable)</div>
-<ol class="ffp-list" style="margin: 0; padding-left: 14px; font-size: 8.0pt; line-height: 1.38; color: var(--ink-soft);">
-<li style="margin-bottom: 4px;">
-            Immediately place prepare and transfuse orders for <strong>4 units emergency-release plasma</strong>, send a STAT type and screen, and request an additional 4 units.
-            <div style="font-size: 7.4pt; color: var(--ink-mute); margin-top: 2px; font-style: italic;">
-              (Note: ideal plasma dose is 15mL/kg and each unit is 250-300mL, so some patients may need additional doses). Consider furosemide if patient has CHF
-            </div>
-</li>
-<li style="margin-bottom: 4px;">Upon completion of infusion, repeat STAT Emergency Stroke Panel.</li>
-<li style="margin-bottom: 4px;">If INR still <strong>&gt; 1.5</strong>, give the 4 U FFP/Plasma.</li>
-<li style="margin-bottom: 4px;">Upon completion, repeat STAT Emergency Stroke Panel.</li>
-<li style="margin-bottom: 4px;">If INR still <strong>&gt; 1.5</strong> consult hematology.</li>
-<li style="margin-bottom: 4px;">Repeat INR every 6 hrs for 24 hrs.</li>
-<li style="margin-bottom: 0;">If INR remains or increases to <strong>&gt; 1.5</strong>, repeat vitamin K 10mg IV over 30 min at 24 hours and consult hematology.</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-
-<div id="card-figure_22_ich_doac_reversal" class="card-wrapper card-figure_22_ich_doac_reversal">
-<div class="card-container">
-<!-- Title Block -->
-<div class="title-block">
-<div>
-<h1>Spontaneous Intraparenchymal Hemorrhage</h1>
-<h2>Reversal Guide for Direct Oral Anticoagulants</h2>
-<div class="subtitle">Stroke Protocol September 2025</div>
-</div>
-<div class="link-container">
-<span class="link-desc">For guideline updates and info on managing bleeds:</span>
-<a class="url-link-btn" href="https://occam.uwmedicine.org/hmc-uwmc-stroke-reference-kit/" target="_blank">
-          Stroke Reference Kit Online
-</a>
-</div>
-</div>
-<!-- For all patients -->
-<div class="all-patients-box">
-<div class="box-header">For all patients:</div>
-<ul class="patients-list">
-<li><strong>1) Order STAT EMERGENCY STROKE PANEL</strong> (includes PT/INR, PTT, HB/HCT, PLT and DOAC screen)</li>
-<li><strong>2) Obtain history about use of antithrombotic agents</strong>, including date/time of last dose</li>
-<li><strong>3) TYPE AND SCREEN - STAT</strong></li>
-<li><strong>4) if crash craniectomy is considered, request 2 units emergency-release RBCs</strong></li>
-</ul>
-</div>
-<!-- Flowchart Row 1 Left: Dabigatran Condition -->
-<div class="flow-box border-red bg-red-soft" style="top: 360px; left: 40px; width: 335px; height: 110px; display: flex; flex-direction: column; justify-content: center;">
-<div class="box-title color-red-deep">IF ON DABIGATRAN (direct thrombin inhibitor)</div>
-<div class="box-desc color-ink" style="font-weight: 600;">
-<strong><em>AND</em></strong> TT is prolonged or not readily available
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Neurocritical Care</span>
+        <h1 id="app-title">ICH Management Guide</h1>
+        <p class="subtitle">ICH score calculator, hematoma volume estimator, and reversal dosing</p>
       </div>
-</div>
-<!-- Flowchart Row 1 Right: Xa Inhibitors Condition -->
-<div class="flow-box border-teal bg-teal-soft" style="top: 360px; left: 450px; width: 335px; height: 165px; display: flex; flex-direction: column; justify-content: space-between; padding: 10px 14px;">
-<div>
-<div class="box-title color-teal-deep" style="margin-bottom: 3px; font-size: 10.0pt;">IF ON RIVAROXABAN OR APIXABAN (factor Xa inhibitors)</div>
-<div class="box-desc color-ink" style="font-size: 9.0pt; line-height: 1.3;">
-<strong>AND</strong> Direct Xa inhibitor screen or anti-Xa for the specific anticoagulant (RIVAR1 or APIXN1) is elevated
-        </div>
-</div>
-<div style="border-top: 1px dashed rgba(31,107,138,0.25); padding-top: 4px; margin-top: 4px;">
-<div class="box-title color-teal-deep" style="margin-bottom: 2px; font-size: 10.0pt;">IF ON EDOXABAN (factor Xa inhibitor)</div>
-<div class="box-desc color-ink" style="font-size: 9.0pt; line-height: 1.3;">
-          Direct Xa inhibitor screen will exclude the presence of clinically relevant drug. No calibrated specific assays.
-        </div>
-</div>
-</div>
-<!-- Flowchart Row 2: Charcoal Box -->
-<div class="flow-box border-magenta bg-magenta-soft" style="top: 580px; left: 272.5px; width: 280px; height: 80px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px 16px;">
-<div class="box-desc color-magenta-deep" style="font-weight: 700; font-size: 9.8pt; line-height: 1.4;">
-        If ingestion within 2 hours, give one dose activated charcoal orally
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
       </div>
-</div>
-<!-- Flowchart Row 3 Left: Idarucizumab Treatment -->
-<div class="flow-box border-red bg-white" style="top: 710px; left: 40px; width: 335px; height: 140px; display: flex; flex-direction: column; justify-content: space-between;">
-<div>
-<div class="box-title color-red-deep" style="font-size: 10.2pt; margin-bottom: 6px;">Give idarucizumab (Praxbind) 5gm IV</div>
-<div class="box-desc color-ink" style="font-size: 9.5pt; line-height: 1.4;">
-          administered as two 2.5gm doses no more than 15 minutes apart, each infused over 5-10 minutes
-        </div>
-</div>
-<div style="border-top: 1px dashed rgba(166,40,40,0.25); padding-top: 6px; font-weight: 500; font-style: italic; font-size: 9.0pt; color: #a62828; line-height: 1.3;">
-        If idarucizumab is not available, proceed to consider PCC (Kcentra)
-      </div>
-</div>
-<!-- Flowchart Row 3 Right: PCC Treatment -->
-<div class="flow-box border-magenta bg-white" style="top: 710px; left: 450px; width: 335px; height: 210px; padding: 8px 12px; display: flex; flex-direction: column; justify-content: space-between;">
-<div>
-<div class="box-title color-magenta-deep" style="font-size: 10.2pt; margin-bottom: 4px; border-bottom: 1.5px solid rgba(216,27,96,0.15); padding-bottom: 4px;">
-<u>CONSIDER PCC (Kcentra) 2000 units</u> <strong><em>ONLY if the patient does not have:</em></strong>
-</div>
-<div style="margin-top: 4px; font-weight: 700; color: #a62828; font-size: 9.2pt; line-height: 1.25;">
-<u>Absolute contraindications to PCC = DIC or HIT</u>
-</div>
-<div style="font-weight: 700; color: #b8740a; font-size: 9.2pt; margin-top: 4px; margin-bottom: 2px;">
-<u>Relative contraindications to PCC</u>
-</div>
-</div>
-<ul style="margin: 0; padding-left: 12px; font-size: 8.5pt; line-height: 1.25; color: #4a4954; list-style-type: disc;">
-<li style="margin-bottom: 4px;"><strong>History of thrombotic or thromboembolic event in past 6 weeks</strong> (DVT/PE, ischemic stroke, ACS, acute venous/arterial ischemia, etc.)</li>
-<li style="margin-bottom: 4px;"><strong>Known prothrombotic condition</strong> (malignancy, hypercoagulable condition, hepatic disease, polytrauma, etc.)</li>
-<li style="margin-bottom: 0;"><strong>Major surgery within 6 weeks</strong></li>
-</ul>
-</div>
-<!-- Flowchart Row 4 Left: Dabigatran Dialysis -->
-<div class="flow-box border-red bg-red-soft" style="top: 970px; left: 40px; width: 335px; height: 130px; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 12px;">
-<div>
-<div class="box-desc color-ink" style="font-size: 9.5pt; line-height: 1.45;">
-          Emergent dialysis may be considered in certain circumstances (renal failure; known dabigatran overdose); ~ 65% removed by hemodialysis.
-        </div>
-</div>
-<div style="border-top: 1px dashed rgba(166,40,40,0.25); padding-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 9.2pt; font-weight: 700; color: #a62828; line-height: 1.35;">
-        Dabigatran t<sub>1/2</sub> = 14 hrs<br/>
-        (up to 34 hrs in severe renal impairment)
-      </div>
-</div>
-<!-- Flowchart Row 4 Right: Xa PK / Not Dialyzable -->
-<div class="flow-box border-teal bg-teal-soft" style="top: 970px; left: 450px; width: 335px; height: 155px; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 12px;">
-<div>
-<div class="box-desc color-teal-deep" style="font-weight: 700; font-size: 9.8pt; line-height: 1.35; margin-bottom: 6px;">
-          Rivaroxaban, Apixaban &amp; Edoxaban are NOT dialyzable
-        </div>
-</div>
-<div style="border-top: 1px dashed rgba(31,107,138,0.25); padding-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 9.0pt; font-weight: 600; color: #155770; line-height: 1.45;">
-        • Rivaroxaban t<sub>1/2</sub> = 9 hrs<br/>
-          (longer in renal impairment)<br/>
-        • Apixaban t<sub>1/2</sub> = 12 hrs<br/>
-          (longer in renal impairment)<br/>
-        • Edoxaban t<sub>1/2</sub> = 10-14 hrs<br/>
-          (longer in renal impairment)
-      </div>
-</div>
-<!-- Footer Note -->
-<div style="position: absolute; top: 1215px; left: 40px; width: 745px; height: 25px; text-align: center; font-size: 9.2pt; color: #6b6a76; font-style: italic; border-top: 1px dashed #d8d6db; padding-top: 5px; box-sizing: border-box;">
-      PCC = Prothrombin Complex Concentrate; preferred agent is Kcentra
     </div>
-<!-- Flow Chart Connectors -->
-<svg height="1275" style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10;" width="825">
-<defs>
-<!-- Arrow markers -->
-<marker id="arrow-red" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="6" refy="5" viewbox="0 0 10 10">
-<path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#a62828"></path>
-</marker>
-<marker id="arrow-blue" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="6" refy="5" viewbox="0 0 10 10">
-<path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f6b8a"></path>
-</marker>
-</defs>
-<!-- Arrows from 'For all patients' to Condition boxes -->
-<!-- Center of Dabigatran column: 207.5. Bottom of 'For all patients' is 320. Top of Dabigatran is 360. -->
-<path d="M 207.5 318 L 207.5 355" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
-<!-- Center of Xa column: 617.5. Top of Xa is 360. -->
-<path d="M 617.5 318 L 617.5 355" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
-<!-- Straight vertical arrow from Dabigatran Cond (bottom 470) to Idarucizumab (top 710) -->
-<path d="M 207.5 468 L 207.5 705" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
-<!-- Straight vertical arrow from Xa Cond (bottom 525) to PCC (top 710) -->
-<path d="M 617.5 523 L 617.5 705" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
-<!-- Diagonal arrow from Dabigatran Cond (bottom 470) to Charcoal (top 580) -->
-<path d="M 207.5 468 L 316 576" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
-<!-- Diagonal arrow from Xa Cond (bottom 525) to Charcoal (top 580) -->
-<path d="M 617.5 523 L 502.5 578.5" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
-<!-- Diagonal arrow from Charcoal (bottom 660) to Idarucizumab (top 710) -->
-<path d="M 310 658 L 253.5 706.5" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
-<!-- Diagonal arrow from Charcoal (bottom 660) to PCC (top 710) -->
-<path d="M 515 658 L 571.5 706.5" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
-<!-- Straight vertical arrow from Idarucizumab (bottom 850) to Dialysis (top 970) -->
-<path d="M 207.5 848 L 207.5 965" fill="none" marker-end="url(#arrow-red)" stroke="#a62828" stroke-width="2.5"></path>
-<!-- Straight vertical arrow from PCC (bottom 920) to Xa PK (top 970) -->
-<path d="M 617.5 918 L 617.5 965" fill="none" marker-end="url(#arrow-blue)" stroke="#1f6b8a" stroke-width="2.5"></path>
-</svg>
-</div>
-</div>
+  </header>
 
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: ICH & VOLUME CALCULATOR -->
+        <div class="glass-card" style="margin-bottom:0;">
+          <div class="card-header">
+            <h2>ICH Score & Volume Calculator</h2>
+            <span class="card-label">Topographic Risk Estimator</span>
+          </div>
+          
+          <div class="lcd-screen">
+            <span class="lcd-label">Total ICH Score</span>
+            <div id="ich-total-display" class="lcd-value">0</div>
+            <span id="ich-mortality-badge" class="status-badge status-normal" style="align-self: flex-start; margin-top: 4px;">MORTALITY RISK: 13% (Score 0)</span>
+          </div>
+          
+          <h3 class="card-subheader">1. Hematoma Volume (ABC/2 Method)</h3>
+          <div style="background: hsla(223, 30%, 8%, 0.5); padding:10px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:12px;">
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+              <div>
+                <label style="font-size:0.75rem; color:var(--text-muted);">A (Length, cm)</label>
+                <input type="number" id="vol-a" value="3.0" step="0.1" oninput="calculateVolume()" style="background:hsl(223,30%,5%); color:white; border:1px solid var(--border-color); padding:6px; border-radius:4px; width:100%;">
+              </div>
+              <div>
+                <label style="font-size:0.75rem; color:var(--text-muted);">B (Width, cm)</label>
+                <input type="number" id="vol-b" value="2.0" step="0.1" oninput="calculateVolume()" style="background:hsl(223,30%,5%); color:white; border:1px solid var(--border-color); padding:6px; border-radius:4px; width:100%;">
+              </div>
+              <div>
+                <label style="font-size:0.75rem; color:var(--text-muted);">C (Slices x cm)</label>
+                <input type="number" id="vol-c" value="2.5" step="0.1" oninput="calculateVolume()" style="background:hsl(223,30%,5%); color:white; border:1px solid var(--border-color); padding:6px; border-radius:4px; width:100%;">
+              </div>
+            </div>
+            <div style="margin-top:8px; font-size:0.8rem; display:flex; justify-content:space-between;">
+              <span>Calculated Volume:</span>
+              <strong id="vol-result" style="color:var(--color-cyan);">7.5 mL</strong>
+            </div>
+            <div class="formula-box">Volume = (A * B * C) / 2</div>
+          </div>
+          
+          <h3 class="card-subheader">2. ICH Score Criteria</h3>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div class="ich-calc-row">
+              <label>Glasgow Coma Scale (GCS)</label>
+              <select id="ich-gcs" onchange="calculateICH()">
+                <option value="0">13 - 15 (0 pts)</option>
+                <option value="1">5 - 12 (1 pt)</option>
+                <option value="2">3 - 4 (2 pts)</option>
+              </select>
+            </div>
+            <div class="ich-calc-row">
+              <label>Age</label>
+              <select id="ich-age" onchange="calculateICH()">
+                <option value="0">&lt; 80 years (0 pts)</option>
+                <option value="1">&ge; 80 years (1 pt)</option>
+              </select>
+            </div>
+            <div class="ich-calc-row">
+              <label>Infratentorial Origin</label>
+              <select id="ich-infra" onchange="calculateICH()">
+                <option value="0">Supratentorial (0 pts)</option>
+                <option value="1">Infratentorial (1 pt)</option>
+              </select>
+            </div>
+            <div class="ich-calc-row">
+              <label>ICH Volume</label>
+              <select id="ich-vol-score" onchange="calculateICH()">
+                <option value="0">&lt; 30 mL (0 pts)</option>
+                <option value="1">&ge; 30 mL (1 pt)</option>
+              </select>
+            </div>
+            <div class="ich-calc-row">
+              <label>Intraventricular Hemorrhage (IVH)</label>
+              <select id="ich-ivh" onchange="calculateICH()">
+                <option value="0">No IVH (0 pts)</option>
+                <option value="1">IVH Present (1 pt)</option>
+              </select>
+            </div>
+          </div>
+          
+        </div>
+        
+        <!-- RIGHT COLUMN: BP PROTOCOL & REVERSAL -->
+        <div class="glass-card" style="display:flex; flex-direction:column; gap:15px; margin-bottom:0;">
+          <div class="card-header" style="margin-bottom:0.8rem;">
+            <h2>Emergency Protocols & BP</h2>
+            <span class="card-label">Guideline Library</span>
+          </div>
+          
+          <div class="scenarios-grid">
+            <button id="tab-btn-bp" class="btn-scenario active" onclick="switchIchTab('bp')">BP Control</button>
+            <button id="tab-btn-reversal" class="btn-scenario" onclick="switchIchTab('reversal')">Coagulopathy Reversal</button>
+          </div>
+          
+          <div id="ich-tab-content" style="min-height: 480px; display:flex; flex-direction:column; gap:10px;">
+            <!-- Tab content loaded dynamically -->
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Intracerebral Hemorrhage (ICH) Emergency Sheet</h1>
+          <div class="print-subtitle">Bedside Quick Reference Card</div>
+        </div>
+        
+        <div class="print-grid">
+          
+          <div class="print-box">
+            <h3>🧠 The Bedside ICH Score Grid</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Clinical Criterion</th>
+                  <th>Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="3"><strong>GCS Score</strong></td>
+                  <td>13 – 15</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>5 – 12</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>3 – 4</td>
+                  <td>2</td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><strong>Age</strong></td>
+                  <td>&lt; 80 years</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>&ge; 80 years</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><strong>Infratentorial</strong></td>
+                  <td>Supratentorial origin</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>Infratentorial origin (brainstem/cerebellum)</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><strong>ICH Volume</strong></td>
+                  <td>&lt; 30 mL</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>&ge; 30 mL (based on ABC/2)</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><strong>IVH Present</strong></td>
+                  <td>No intraventricular hemorrhage</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>Intraventricular extension present</td>
+                  <td>1</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <h4 style="margin-top:0.4rem; font-size:0.75rem;">Score-Related 30-Day Mortality Rates:</h4>
+            <table class="print-table compact" style="text-align:center;">
+              <thead>
+                <tr>
+                  <th>ICH Score</th>
+                  <th>0</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>5+</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mortality %</td>
+                  <td>13%</td>
+                  <td>26%</td>
+                  <td>48%</td>
+                  <td>72%</td>
+                  <td>97%</td>
+                  <td>100%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-box alert-row-danger">
+            <h3>⚡ Emergency Anticoagulation Reversal</h3>
+            <table class="print-table" style="font-size:0.65rem;">
+              <thead>
+                <tr>
+                  <th>Agent</th>
+                  <th>Lab Test</th>
+                  <th>First-Line Reversal Treatment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Warfarin</strong></td>
+                  <td>INR</td>
+                  <td>**4-Factor PCC** (Kcentra): Dose by INR: INR 2-4: 25 U/kg; INR 4-6: 35 U/kg; INR &gt;6: 50 U/kg (max 5000 U) + **Vitamin K** 10 mg IV.</td>
+                </tr>
+                <tr>
+                  <td><strong>Dabigatran</strong></td>
+                  <td>aPTT / dTT</td>
+                  <td>**Idarucizumab** (Praxbind) 5 g IV (two 2.5 g vials). Alternate: aPCC (FEIBA) 50 U/kg.</td>
+                </tr>
+                <tr>
+                  <td><strong>Apixaban / Rivaroxaban</strong></td>
+                  <td>Anti-Xa</td>
+                  <td>**Andexanet Alfa** (Andexxa): Low dose (400mg bolus + 4mg/min infusion for 2h) or High dose (800mg bolus + 8mg/min infusion for 2h) depending on drug dose/timing. Alternate: 4-factor PCC 50 U/kg.</td>
+                </tr>
+                <tr>
+                  <td><strong>Heparin (UFH)</strong></td>
+                  <td>aPTT</td>
+                  <td>**Protamine Sulfate:** 1 mg per 100 U UFH given in past 2-3h (max 50 mg).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-box">
+            <h3>📉 Acute Blood Pressure Control</h3>
+            <ul class="print-list">
+              <li><strong>BP Target:</strong> Target **SBP &lt;140 mmHg** (range 130-140 mmHg) per INTERACT2. Avoid dropping SBP &lt;120 mmHg (causes renal injury per ATACH-II).</li>
+              <li><strong>Acute Management Timeline:</strong> Initiate treatment within 2 hours of symptom onset. Achieve SBP target within 1 hour.</li>
+              <li><strong>First-Line Options:</strong> Nicardipine IV infusion (5-15 mg/h) or Clevidipine IV infusion (1-21 mg/h).</li>
+            </ul>
+          </div>
+          
+          <div class="print-box">
+            <h3>📋 Volume Estimation & ICP Protocol</h3>
+            <ul class="print-list">
+              <li><strong>ABC/2 Hemorrhage Volume:</strong>
+                <ul>
+                  <li>**A:** Maximum length on axial CT slice (cm)</li>
+                  <li>**B:** Width perpendicular to A on same slice (cm)</li>
+                  <li>**C:** Number of slices where blood is seen multiplied by slice thickness (cm)</li>
+                </ul>
+              </li>
+              <li><strong>ICP Management:</strong> Elevate head of bed to 30°, maintain neutral neck, provide sedation, hyperventilation (transient only), hyperosmolar therapy (3% saline or Mannitol).</li>
+            </ul>
+          </div>
+          
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Hemphill JC 3rd, et al. Stroke 2001;32:891-897. [2] INTERACT2 Investigators. NEJM 2013. [3] ATACH-II Investigators. NEJM 2016. [4] 2022 AHA/ASA Guideline for the Management of Spontaneous Intracerebral Hemorrhage.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
 
-  </div>
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
 
+  <script src="../assets/dual_view.js"></script>
   <script>
-    // Copy template utility for bedside consent template
-    document.addEventListener("DOMContentLoaded", function() {
-      const template = document.querySelector(".copyable-template");
-      if (template) {
-        template.addEventListener("click", function() {
-          const text = this.innerText.replace(/COPY TEMPLATE/g, "").trim();
-          navigator.clipboard.writeText(text).then(() => {
-            const badge = this.querySelector(".copy-badge");
-            if (badge) {
-              badge.classList.add("copied");
-              badge.innerText = "Copied!";
-              setTimeout(() => {
-                badge.classList.remove("copied");
-                badge.innerText = "Copy Template";
-              }, 2000);
-            }
-          }).catch(err => {
-            console.error("Clipboard error:", err);
-          });
-        });
+    // Tab contents
+    const tabContents = {
+      bp: `
+        <div class="glass-card" style="margin-bottom:0; flex:1;">
+          <h3>Blood Pressure Management in ICH</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Rapid blood pressure control prevents hematoma expansion, which is the primary driver of early neurologic deterioration.</p>
+          
+          <div class="status-summary-box warning" style="margin-bottom:12px;">
+            <svg viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <div class="status-desc">
+              <h4>Systolic BP Target: 130 - 140 mmHg</h4>
+              <p>Achieve SBP &lt;140 mmHg rapidly (within 1 hour). Do not lower SBP &lt;120 mmHg, which is associated with increased acute kidney injury (ATACH-II).</p>
+            </div>
+          </div>
+          
+          <ul class="step-list">
+            <li>Initiate intravenous antihypertensives if SBP &gt;150 mmHg.</li>
+            <li><strong>Nicardipine IV:</strong> Start 5 mg/h, titrate by 2.5 mg/h every 5-15 min (max 15 mg/h).</li>
+            <li><strong>Clevidipine IV:</strong> Start 1-2 mg/h, double every 90 seconds (max 21 mg/h).</li>
+          </ul>
+        </div>
+      `,
+      reversal: `
+        <div class="glass-card" style="margin-bottom:0; flex:1; max-height:480px; overflow-y:auto;">
+          <h3>Anticoagulation Reversal Dosing</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">Administer reversal agents immediately at the bedside for all patients with acute ICH on anticoagulants.</p>
+          
+          <div style="display:flex; flex-direction:column; gap:10px; font-size:0.8rem;">
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:8px; border-radius:6px;">
+              <strong style="color:var(--color-cyan);">Warfarin Reversal</strong><br>
+              • **4-Factor PCC (Kcentra):** Dosed by INR:<br>
+              &nbsp;&nbsp;- INR 2-4: 25 U/kg IV<br>
+              &nbsp;&nbsp;- INR 4-6: 35 U/kg IV<br>
+              &nbsp;&nbsp;- INR &gt;6: 50 U/kg IV (max 5000 U).<br>
+              • **Vitamin K:** Administer 10 mg IV slowly (over 20-30 min) to prevent rebound INR increase.
+            </div>
+            
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:8px; border-radius:6px;">
+              <strong style="color:var(--color-cyan);">DOAC Reversal (Apixaban / Rivaroxaban)</strong><br>
+              • **Andexanet Alfa (Andexxa):**<br>
+              &nbsp;&nbsp;- Low Dose: 400 mg bolus + 4 mg/min infusion for 120 min.<br>
+              &nbsp;&nbsp;- High Dose: 800 mg bolus + 8 mg/min infusion for 120 min.<br>
+              • Alternate: **4-Factor PCC** 50 U/kg IV.
+            </div>
+            
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:8px; border-radius:6px;">
+              <strong style="color:var(--color-cyan);">Dabigatran Reversal</strong><br>
+              • **Idarucizumab (Praxbind):** 5 g IV total (two separate 2.5 g doses).
+            </div>
+          </div>
+        </div>
+      `
+    };
+
+    function switchIchTab(tabId) {
+      document.getElementById('tab-btn-bp').classList.toggle('active', tabId === 'bp');
+      document.getElementById('tab-btn-reversal').classList.toggle('active', tabId === 'reversal');
+      
+      document.getElementById('ich-tab-content').innerHTML = tabContents[tabId];
+    }
+
+    // Volume calculation
+    function calculateVolume() {
+      const a = parseFloat(document.getElementById('vol-a').value) || 0;
+      const b = parseFloat(document.getElementById('vol-b').value) || 0;
+      const c = parseFloat(document.getElementById('vol-c').value) || 0;
+      
+      const volume = (a * b * c) / 2;
+      
+      // Update UI
+      document.getElementById('vol-result').innerText = `${volume.toFixed(1)} mL`;
+      
+      // Update ICH Score dropdown automatically
+      const volSelect = document.getElementById('ich-vol-score');
+      if (volSelect) {
+        if (volume >= 30) {
+          volSelect.value = "1";
+        } else {
+          volSelect.value = "0";
+        }
+        calculateICH();
       }
+    }
+
+    // ICH Score calculation
+    const ichMortalityRates = {
+      0: '13%',
+      1: '26%',
+      2: '48%',
+      3: '72%',
+      4: '97%',
+      5: '100%',
+      6: '100%'
+    };
+
+    function calculateICH() {
+      const gcs = parseInt(document.getElementById('ich-gcs').value, 10);
+      const age = parseInt(document.getElementById('ich-age').value, 10);
+      const infra = parseInt(document.getElementById('ich-infra').value, 10);
+      const vol = parseInt(document.getElementById('ich-vol-score').value, 10);
+      const ivh = parseInt(document.getElementById('ich-ivh').value, 10);
+      
+      const total = gcs + age + infra + vol + ivh;
+      
+      document.getElementById('ich-total-display').innerText = total;
+      
+      // Update badge
+      const badge = document.getElementById('ich-mortality-badge');
+      const mortality = ichMortalityRates[total];
+      badge.innerText = `MORTALITY RISK: ${mortality} (Score ${total})`;
+      
+      if (total <= 1) {
+        badge.className = 'status-badge status-normal';
+      } else if (total === 2) {
+        badge.className = 'status-badge status-warning';
+      } else if (total === 3) {
+        badge.className = 'status-badge status-danger';
+      } else {
+        badge.className = 'status-badge status-critical';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      switchIchTab('bp');
+      calculateVolume();
     });
   </script>
-
 </body>
 </html>

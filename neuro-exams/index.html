@@ -3,224 +3,445 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delirium vs. Aphasia &amp; Bedside Coma Exam</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Aphasia, Delirium & Coma Bedside Exam Guide</title>
+  <meta name="description" content="Bedside guide and interactive calculators for localizing aphasias, differentiating delirium, and structured coma examinations.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
+    /* Scoped styles for Neuro Exams */
+    .exam-select-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-color);
     }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
+    
+    .exam-select-row label {
+      font-size: 0.8rem;
       font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
+      color: var(--text-main);
     }
-    .portal-nav a:hover {
-      color: #38bdf8;
+    
+    .exam-select-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.8rem;
+      outline: none;
+      width: 100%;
     }
-    .cards-wrapper-outer {
+
+    .tab-btn-group {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
+      gap: 8px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
     }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
+
+    .tab-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .tab-btn.active {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper landscape-card">
-      <div class="card-container" style="box-sizing: border-box; width: 825px; min-height: 1120px; padding: 25px 40px;">
-        <div class="card-content" style="justify-content: flex-start; gap: 10px;">
-          
-          <div class="card-header" style="display: flex;">
-            <div class="title-logo">UW Medicine</div>
-            <div class="doc-id">DOC.REF.EXAMS</div>
-          </div>
-
-          <h1 style="font-size: 16.5pt; margin-bottom: 4px; padding-bottom: 2px; text-align: center;">Delirium vs. Aphasia &amp; Bedside Coma Exam</h1>
-          <p style="font-size: 9.2pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
-            Systematic differentiation guides and structured exam checklists for acute stroke and neurocritical care encounters.
-          </p>
-
-          <!-- Section 1: Delirium vs Aphasia -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Differentiating Delirium (Acute Confusional State) from Aphasia</h2>
-          <table style="width: 100%; border-collapse: collapse; font-size: 7.8pt; line-height: 1.35; margin-bottom: 15px;">
-            <thead>
-              <tr style="background: var(--teal-deep); color: white;">
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 18%;">Feature</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 41%;">Acute Confusional State (Delirium)</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 41%;">Aphasia</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Definition</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Transient, fluctuating disturbance in attention, awareness, and global cognition.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Acquired language-dominant hemisphere disorder affecting language processing.</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Onset &amp; Course</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Acute/subacute (hours to days). **Hallmark: Fluctuating symptoms** with lucid intervals.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Sudden onset. Mental status stable; language deficits stable or slowly recovering.</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Attention</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--red-deep);">Severely Impaired. Difficulty focusing, sustaining, or shifting. (Digit span, months backward).</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Generally preserved (except in large stroke causing neglect or sensory overload).</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Language</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Rambling, incoherent, tangential. Content is illogical or nonsensical.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Specific linguistic deficits (paraphasias, neologisms, impaired naming/repetition).</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">L.O.C. &amp; Hallucinations</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Ranges from hyperalert to lethargic. Visual hallucinations common.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Usually alert. Hallucinations are atypical.</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">Focal Signs</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Absent (unless prior deficits or global metabolic flap).</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Commonly associated with right-sided hemiplegia or sensory loss (focal left MCA).</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Section 2: Aphasia Classification -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Linguistic Classification of Aphasias</h2>
-          <table style="width: 100%; border-collapse: collapse; font-size: 7.8pt; line-height: 1.35; margin-bottom: 15px;">
-            <thead>
-              <tr style="background: #1e293b; color: white;">
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 20%;">Aphasia Type</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 25%;">Spontaneous Speech</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 17%;">Comprehension</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 15%;">Repetition</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 13%;">Naming</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 10%;">Localization</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--purple-deep);">Broca's (Non-fluent)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Effortful, telegraphic, sparse</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #2e7d32; font-weight: bold;">Preserved</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Left frontal gyrus</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--purple-deep);">Wernicke's (Fluent)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Fluent but meaningless (word salad)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828; font-weight: bold;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Left temporal gyrus</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--purple-deep);">Global (Non-fluent)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Mutism or minimal stereotypic speech</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828; font-weight: bold;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Large MCA lesion</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--purple-deep);">Conduction (Fluent)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Fluent with phonemic paraphasias</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #2e7d32; font-weight: bold;">Preserved</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828; font-weight: bold;">Impaired (Disproportionate)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Arcuate fasciculus</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--purple-deep);">Anomic (Fluent)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Fluent with word-finding pauses</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #2e7d32; font-weight: bold;">Preserved</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #2e7d32; font-weight: bold;">Preserved</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; color: #c62828;">Impaired</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Temporal-parietal</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Section 3: Bedside Coma Exam Checklist -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--red-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Bedside Coma Examination Checklist</h2>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
-            <div style="border: 1px solid var(--border-color); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--purple-deep); font-size: 8.5pt; display: block; margin-bottom: 5px;">1. Level of Consciousness &amp; Motor</strong>
-              • **Arousal**: Response to voice, tactile stimulation, and central pain (sternal rub, supraorbital pressure, nailbed pressure).
-              <br>• **Glasgow Coma Scale (GCS)**: Complete scoring of Eye (1–4), Verbal (1–5), and Motor (1–6).
-              <br>• **Motor Responses**:
-              <br>&nbsp;&nbsp;– *Localizing*: Arm moves to cross midline toward painful stimulus.
-              <br>&nbsp;&nbsp;– *Withdrawal*: Limb pulls away from pain.
-              <br>&nbsp;&nbsp;– *Decorticate Posturing*: Flexion of elbow, wrist, and shoulder with adduction.
-              <br>&nbsp;&nbsp;– *Decerebrate Posturing*: Extension and pronation of upper limb.
-            </div>
-            <div style="border: 1px solid var(--border-color); background: var(--fill-soft); padding: 12px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--purple-deep); font-size: 8.5pt; display: block; margin-bottom: 5px;">2. Brainstem Reflexes &amp; Breathing</strong>
-              • **Pupillary Light Reflex**: Size, shape, reactivity (CN II &amp; III). *Anisocoria indicates uncal herniation.*
-              • **Corneal Reflex**: Direct corneal touch with cotton swab (CN V &amp; VII).
-              • **Oculocephalic (Doll's Eyes)**: Rapid horizontal turning of head in absence of cervical spine injury (CN III, VI, VIII).
-              • **Oculovestibular (Cold Caloric)**: Injection of ice water into external canal in intact tympanic membrane.
-              • **Breathing Patterns**:
-              <br>&nbsp;&nbsp;– *Cheyne-Stokes*: Alternating hyperpnea &amp; apnea (forebrain/diencephalon).
-              <br>&nbsp;&nbsp;– *Apneustic*: Deep, gasping inspiration w/ pause (pons).
-              <br>&nbsp;&nbsp;– *Ataxic / Biot's*: Irregular, disorganized breaths (medulla).
-            </div>
-          </div>
-
-          <!-- Document References -->
-          <div style="font-size: 8pt; color: #64748b; margin-top: 10px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 8px; display: flex; justify-content: center; gap: 20px;">
-            <span>PDF: <a href="../documents/exam/Differentiating Acute Confusional State (Delirium) from Aphasia.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">Differentiating Delirium from Aphasia.pdf</a></span>
-            <span>PDF: <a href="../documents/exam/coma exam.pdf" target="_blank" style="color: var(--teal-deep); text-decoration: underline;">coma exam.pdf</a></span>
-          </div>
-
-          <div class="card-footer" style="display: flex;">
-            <div class="disclaimer-text">For educational &amp; clinical decision support. Verify local institutional protocols prior to application.</div>
-            <div class="page-num">Page 1</div>
-          </div>
-
-        </div>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Neurological Exam</span>
+        <h1 id="app-title">Aphasia, Delirium & Coma Guide</h1>
+        <p class="subtitle">Aphasia localization engine, delirium vs aphasia matrix, and bedside coma protocols</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
       </div>
     </div>
-  </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: APHASIA DIAGNOSIS ASSISTANT -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <h2>Aphasia Classifier</h2>
+            <span class="card-label">Linguistic Engine</span>
+          </div>
+
+          <div class="lcd-screen">
+            <span class="lcd-label">Localized Aphasia Category</span>
+            <div id="aphasia-result-display" style="font-size: 1.4rem; font-weight:700; color:var(--color-cyan);">Global Aphasia</div>
+            <div id="aphasia-site-display" class="formula-box">Location: Large MCA territory (frontal-temporal-parietal)</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div class="exam-select-row">
+              <label>1. Spontaneous Speech</label>
+              <select id="inp-fluency" onchange="runAphasiaClassifier()">
+                <option value="nonfluent">Non-Fluent (Effortful, telegraphic, sparse)</option>
+                <option value="fluent">Fluent (Normal phrase length, effortless)</option>
+              </select>
+            </div>
+
+            <div class="exam-select-row">
+              <label>2. Comprehension</label>
+              <select id="inp-comprehension" onchange="runAphasiaClassifier()">
+                <option value="impaired">Impaired (Difficulty following commands)</option>
+                <option value="preserved">Preserved (Follows commands easily)</option>
+              </select>
+            </div>
+
+            <div class="exam-select-row">
+              <label>3. Repetition</label>
+              <select id="inp-repetition" onchange="runAphasiaClassifier()">
+                <option value="impaired">Impaired (Cannot repeat phrases)</option>
+                <option value="preserved">Preserved (Repeats phrases accurately)</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="aphasia-explanation" style="font-size:0.8rem; color:var(--text-muted); line-height:1.4; padding:8px 12px; background:hsla(223,30%,4%,0.4); border:1px solid var(--border-color); border-radius:6px;">
+            Patient presents with non-fluent speech, poor comprehension, and impaired repetition.
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: DELIRIUM VS APHASIA & BEDSIDE COMA EXAM -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
+          <div class="tab-btn-group">
+            <button class="tab-btn active" onclick="switchTab('tab-delirium')">Delirium vs. Aphasia</button>
+            <button class="tab-btn" onclick="switchTab('tab-coma')">Bedside Coma Exam</button>
+            <button class="tab-btn" onclick="switchTab('tab-files')">Reference PDFs</button>
+          </div>
+
+          <!-- TAB 1: DELIRIUM VS APHASIA -->
+          <div id="tab-delirium" class="tab-pane active">
+            <h2>Differentiating Delirium from Aphasia</h2>
+            <table class="print-table" style="font-size:0.8rem; margin-top:10px;">
+              <thead>
+                <tr>
+                  <th style="width:20%;">Feature</th>
+                  <th style="width:40%;">Delirium (Acute Confusion)</th>
+                  <th style="width:40%;">Aphasia</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Onset & Course</strong></td>
+                  <td>Acute/subacute. **Fluctuating** with lucid intervals.</td>
+                  <td>Sudden onset. Stable deficits. Preserved arousal.</td>
+                </tr>
+                <tr>
+                  <td><strong>Attention</strong></td>
+                  <td><span style="color:var(--color-red); font-weight:700;">Severely Impaired.</span> Difficulty focusing or shifting.</td>
+                  <td>Preserved attention. Focuses on examiner.</td>
+                </tr>
+                <tr>
+                  <td><strong>Language</strong></td>
+                  <td>Rambling, incoherent, tangential. Content is illogical.</td>
+                  <td>Specific deficits (paraphasias, impaired repetition/naming).</td>
+                </tr>
+                <tr>
+                  <td><strong>L.O.C.</strong></td>
+                  <td>Fluctuates from hyperalert to lethargic. Visual hallucinations common.</td>
+                  <td>Usually alert. Preserved awareness.</td>
+                </tr>
+                <tr>
+                  <td><strong>Focal Signs</strong></td>
+                  <td>Absent (unless metabolic flap or pre-existing stroke).</td>
+                  <td>Commonly has hemiplegia or sensory loss (left MCA).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- TAB 2: BEDSIDE COMA EXAM -->
+          <div id="tab-coma" class="tab-pane">
+            <h2>Bedside Coma Exam Protocol</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px; font-size:0.85rem; line-height:1.45;">
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-purple); font-size:0.9rem; margin-bottom:4px;">1. Level of Consciousness & Motor</h3>
+                <p>• Check response to voice, touch, and central pain (sternal rub, supraorbital pressure).</p>
+                <p>• Motor Responses: Localizing (crosses midline), Withdrawal (pulls away), Decorticate (elbow flexion), Decerebrate (extension + pronation).</p>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-cyan); font-size:0.9rem; margin-bottom:4px;">2. Brainstem Reflexes & Breathing</h3>
+                <p>• Pupillary Light Reflex: CN II/III. Reactivity and anisocoria (uncal herniation sign).</p>
+                <p>• Corneal (CN V/VII) & Oculocephalic (Doll's eyes - CN III, VI, VIII).</p>
+                <p>• Breathing: Cheyne-Stokes (forebrain), Apneustic (pons gasps), Ataxic/Biot's (medulla - terminal).</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: REFERENCE FILES -->
+          <div id="tab-files" class="tab-pane">
+            <h2>Reference PDF Documents</h2>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">Open the following files in the local workspace directory for detailed guides:</p>
+            <ul class="step-list">
+              <li>📄 <a href="../documents/exam/Differentiating Acute Confusional State (Delirium) from Aphasia.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">Differentiating Delirium from Aphasia.pdf</a></li>
+              <li>📄 <a href="../documents/exam/coma exam.pdf" target="_blank" style="color:var(--color-cyan); text-decoration:underline;">coma exam.pdf</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Aphasia, Delirium & Bedside Coma Exam Cheatsheet</h1>
+          <div class="print-subtitle">Clinical Localization Guides & Structured Checklists</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box full-width">
+            <h3>⚡ Delirium vs. Aphasia Differential Table</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:20%;">Feature</th>
+                  <th style="width:40%;">Acute Confusional State (Delirium)</th>
+                  <th style="width:40%;">Aphasia</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Definition</strong></td>
+                  <td>Transient, fluctuating disturbance in attention and awareness.</td>
+                  <td>Acquired language-dominant hemisphere disorder.</td>
+                </tr>
+                <tr class="alert-row-yellow">
+                  <td><strong>Onset / Course</strong></td>
+                  <td>Acute/subacute (hours/days). **Fluctuating** symptoms.</td>
+                  <td>Sudden onset. Stable deficits. Alert.</td>
+                </tr>
+                <tr class="alert-row-danger">
+                  <td><strong>Attention</strong></td>
+                  <td><strong>Severely Impaired.</strong> Inability to focus, sustain, or shift attention.</td>
+                  <td>Generally preserved (except in large neglect/hemispheric overload).</td>
+                </tr>
+                <tr>
+                  <td><strong>Language</strong></td>
+                  <td>Rambling, incoherent, tangential. Content is illogical.</td>
+                  <td>Specific deficits (paraphasias, impaired repetition/naming).</td>
+                </tr>
+                <tr>
+                  <td><strong>L.O.C. / Hallucination</strong></td>
+                  <td>Fluctuates. Visual hallucinations common.</td>
+                  <td>Alert. Hallucinations are atypical.</td>
+                </tr>
+                <tr>
+                  <td><strong>Focal Signs</strong></td>
+                  <td>Absent (unless pre-existing).</td>
+                  <td>Right hemiparesis/hemiplegia common (left MCA).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>🗣️ Linguistic Classification of Aphasias</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th>Aphasia Type</th>
+                  <th>Fluency</th>
+                  <th>Comprehension</th>
+                  <th>Repetition</th>
+                  <th>Localization</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Broca's</strong></td>
+                  <td>Non-fluent</td>
+                  <td>Preserved</td>
+                  <td>Impaired</td>
+                  <td>Left inferior frontal</td>
+                </tr>
+                <tr>
+                  <td><strong>Wernicke's</strong></td>
+                  <td>Fluent</td>
+                  <td>Impaired</td>
+                  <td>Impaired</td>
+                  <td>Left superior temporal</td>
+                </tr>
+                <tr>
+                  <td><strong>Global</strong></td>
+                  <td>Non-fluent</td>
+                  <td>Impaired</td>
+                  <td>Impaired</td>
+                  <td>Large MCA trunk</td>
+                </tr>
+                <tr>
+                  <td><strong>Conduction</strong></td>
+                  <td>Fluent</td>
+                  <td>Preserved</td>
+                  <td>Impaired</td>
+                  <td>Arcuate fasciculus</td>
+                </tr>
+                <tr>
+                  <td><strong>Anomic</strong></td>
+                  <td>Fluent</td>
+                  <td>Preserved</td>
+                  <td>Preserved</td>
+                  <td>Temporal-parietal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>🧠 Bedside Coma Exam Checklist</h3>
+            <p style="font-weight:700; font-size:0.75rem;">1. LOC & Motor Responses:</p>
+            <ul class="print-list" style="margin-bottom:6px;">
+              <li>Verify response to voice, touch, and central pain (sternal rub, nailbed).</li>
+              <li>Motor: Localizing, Withdrawal, Decorticate, Decerebrate, Flaccid.</li>
+            </ul>
+            <p style="font-weight:700; font-size:0.75rem;">2. Brainstem Reflexes & Breathing:</p>
+            <ul class="print-list">
+              <li>Pupillary Light Reflex (CN II/III). Anisocoria: Uncal herniation.</li>
+              <li>Corneals (CN V/VII) & Doll's Eyes (CN III, VI, VIII).</li>
+              <li>Breathing: Cheyne-Stokes (forebrain), Apneustic (pons), Ataxic (medullary).</li>
+            </ul>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Plum and Posner's Diagnosis of Stupor and Coma. [2] Mesulam MM. Principles of Behavioral and Cognitive Neurology.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    const aphasias = {
+      "nonfluent-impaired-impaired": {
+        name: "Global Aphasia",
+        site: "Location: Large left MCA territory (frontal-temporal-parietal)",
+        desc: "Severe impairment of all language modalities. Patient cannot express or understand spoken/written language. Commonly associated with right-sided hemiplegia."
+      },
+      "nonfluent-preserved-impaired": {
+        name: "Broca's Aphasia",
+        site: "Location: Left inferior frontal gyrus (Broca's area)",
+        desc: "Non-fluent, sparse, and effortful telegraphic speech. Comprehension is largely preserved. Right facial and arm weakness are common associated findings."
+      },
+      "nonfluent-preserved-preserved": {
+        name: "Transcortical Motor Aphasia",
+        site: "Location: Left dorsolateral prefrontal or supplementary motor cortex",
+        desc: "Non-fluent speech with preserved comprehension and preserved repetition. Caused by lesions in watershed areas of the left hemisphere."
+      },
+      "nonfluent-impaired-preserved": {
+        name: "Transcortical Mixed Aphasia",
+        site: "Location: Combined anterior/posterior watershed zones",
+        desc: "Non-fluent speech with impaired comprehension, but repetition is uniquely preserved (echolalia is common). Isolation of language zone."
+      },
+      "fluent-impaired-impaired": {
+        name: "Wernicke's Aphasia",
+        site: "Location: Left superior temporal gyrus (Wernicke's area)",
+        desc: "Fluent but meaningless speech ('word salad') with frequent paraphasias and neologisms. Comprehension and repetition are both severely impaired. Patient is typically unaware of the deficit."
+      },
+      "fluent-preserved-impaired": {
+        name: "Conduction Aphasia",
+        site: "Location: Arcuate fasciculus or supramarginal gyrus",
+        desc: "Fluent speech with frequent literal paraphasias, but comprehension is preserved. Repetition is disproportionately impaired. Good awareness of errors."
+      },
+      "fluent-impaired-preserved": {
+        name: "Transcortical Sensory Aphasia",
+        site: "Location: Left temporal-parietal-occipital watershed junction",
+        desc: "Fluent speech with impaired comprehension, but repetition is preserved. Often resembles Wernicke's, but the patient can repeat words accurately."
+      },
+      "fluent-preserved-preserved": {
+        name: "Anomic Aphasia",
+        site: "Location: Left temporal-parietal cortex or angular gyrus",
+        desc: "Fluent speech with preserved comprehension and repetition, but severe word-finding pauses and circumlocutions. The mildest form of aphasia."
+      }
+    };
+
+    function runAphasiaClassifier() {
+      const fluency = document.getElementById('inp-fluency').value;
+      const comp = document.getElementById('inp-comprehension').value;
+      const rep = document.getElementById('inp-repetition').value;
+      
+      const key = `${fluency}-${comp}-${rep}`;
+      const data = aphasias[key] || { name: "Atypical Aphasia", site: "Location: Variable subcortical/thalamic", desc: "Atypical clinical profile. Consider subcortical or thalamic aphasia syndromes." };
+      
+      document.getElementById('aphasia-result-display').innerText = data.name;
+      document.getElementById('aphasia-site-display').innerText = data.site;
+      document.getElementById('aphasia-explanation').innerHTML = data.desc;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      runAphasiaClassifier();
+    });
+  </script>
 </body>
 </html>

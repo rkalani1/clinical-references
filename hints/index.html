@@ -3,113 +3,27 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HINTS Exam Protocol — Acute Vestibular Syndrome</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>HINTS Bedside Exam Guide & Eye Simulator</title>
+  <meta name="description" content="Bedside diagnostic support and eye simulator for the 3-step HINTS exam in Acute Vestibular Syndrome.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
   
-  <!-- Navigation Header Styles -->
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #00f2fe;
-    }
-    .portal-nav-links {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-    .portal-nav-links a {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
-    }
-    .portal-nav-links a:hover {
-      background: rgba(0, 242, 254, 0.08);
-      border-color: rgba(0, 242, 254, 0.3);
-    }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-
-    /* Custom Layout for HINTS visual components */
-    .hints-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-    @media (min-width: 768px) {
-      .hints-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .hints-card {
-      background: var(--paper);
-      border: 1px solid var(--rule-soft);
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .hints-card.central {
-      border-left: 4px solid var(--red);
-    }
-    .hints-card.peripheral {
-      border-left: 4px solid var(--teal);
-    }
-
-    /* Simulator Panel */
+    /* Scoped styles for HINTS simulator graphics */
     .simulator-container {
-      background: #fafafc;
-      border: 1.5px dashed var(--rule);
+      background: #020408;
+      border: 1px solid var(--border-color);
       border-radius: 12px;
       padding: 20px;
-      margin-top: 15px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 15px;
     }
-
+    
     .simulation-viewport {
       width: 100%;
-      max-width: 480px;
       height: 160px;
-      background: #0f172a;
+      background: #000;
       border-radius: 10px;
       position: relative;
       overflow: hidden;
@@ -118,8 +32,7 @@
       justify-content: center;
       border: 2px solid rgba(255,255,255,0.05);
     }
-
-    /* Head & Eye Animations */
+    
     .sim-head {
       width: 130px;
       height: 130px;
@@ -133,7 +46,7 @@
       gap: 18px;
       transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
-
+    
     .sim-nose {
       position: absolute;
       top: -12px;
@@ -142,7 +55,7 @@
       background: #475569;
       border-radius: 50% 50% 0 0;
     }
-
+    
     .sim-eye {
       width: 30px;
       height: 18px;
@@ -152,7 +65,7 @@
       overflow: hidden;
       border: 1px solid #000000;
     }
-
+    
     .sim-pupil {
       width: 12px;
       height: 12px;
@@ -165,82 +78,28 @@
       transform: translate(-50%, -50%);
       transition: transform 0.15s ease-out;
     }
-
+    
     .target-dot {
       width: 8px;
       height: 8px;
-      background: var(--red);
+      background: var(--color-red);
       border-radius: 50%;
       position: absolute;
       top: 20px;
-      box-shadow: 0 0 10px var(--red);
+      box-shadow: 0 0 10px var(--color-red);
       z-index: 10;
     }
-
+    
     .target-label {
       position: absolute;
       top: 32px;
-      color: #94a3b8;
-      font-size: 8pt;
+      color: var(--text-muted);
+      font-size: 7.5pt;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-
-    /* Simulator controls */
-    .sim-controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-    }
-
-    .sim-btn {
-      background: #ffffff;
-      border: 1px solid var(--rule);
-      color: var(--ink-soft);
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 8.5pt;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      min-height: 36px;
-    }
-
-    .sim-btn:hover {
-      background: #f1f5f9;
-      border-color: #cbd5e1;
-    }
-
-    .sim-btn.active-central {
-      background: var(--red-soft);
-      color: var(--red-deep);
-      border-color: rgba(198, 46, 46, 0.3);
-      box-shadow: 0 0 8px var(--red-glow);
-    }
-
-    .sim-btn.active-peripheral {
-      background: var(--teal-soft);
-      color: var(--teal-deep);
-      border-color: rgba(24, 132, 158, 0.3);
-      box-shadow: 0 0 8px var(--teal-glow);
-    }
-
-    .sim-explanation {
-      font-size: 9pt;
-      color: var(--ink-soft);
-      text-align: center;
-      min-height: 48px;
-      max-width: 480px;
-      padding: 8px 12px;
-      background: #ffffff;
-      border: 1px solid var(--rule-soft);
-      border-radius: 8px;
-      width: 100%;
-    }
-
+    
     .cover-patch {
       width: 40px;
       height: 30px;
@@ -252,246 +111,395 @@
       opacity: 0;
       transition: opacity 0.2s ease;
     }
-
-    @media (max-width: 850px) {
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
+    
+    .sim-explanation {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      min-height: 52px;
+      padding: 8px 12px;
+      background: hsla(223, 30%, 8%, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      width: 100%;
+    }
+    
+    /* Scoped styles for comparison tables */
+    .hints-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin: 10px 0;
+    }
+    
+    .hints-table th, .hints-table td {
+      border: 1px solid var(--border-color);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    
+    .hints-table th {
+      background-color: hsla(223, 30%, 8%, 0.8);
+      font-weight: 700;
+    }
+    
+    .hints-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    
+    .hints-badge.central {
+      background-color: rgba(220, 53, 69, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(220, 53, 69, 0.3);
+    }
+    
+    .hints-badge.peripheral {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #a7f3d0;
+      border: 1px solid rgba(16, 185, 129, 0.3);
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
 
-  <!-- Navigation header linked back to the index portal -->
-  <div class="portal-nav">
+  <nav class="portal-nav">
     <a href="../index.html">
-      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
-      Back to Dashboard
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
+      Portal Dashboard
     </a>
-    <div class="portal-nav-links">
-      <a href="#overview">AVS Criteria</a>
-      <a href="#hints-protocol">HINTS Protocol</a>
-      <a href="#skew-table">Diagnostic Matrix</a>
-      <a href="#simulator">Interactive Eye Simulator</a>
-    </div>
-  </div>
+  </nav>
 
-  <div class="cards-wrapper-outer">
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Acute Vestibular Syndrome (AVS)</span>
+        <h1 id="app-title">HINTS Bedside Exam Guide</h1>
+        <p class="subtitle">Diagnostic differentiation of peripheral vs. central vestibular lesions</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
     
-    <!-- Primary HINTS Card -->
-    <div class="card-container" id="overview">
-      <div class="card-header">
-        <span class="title-logo">Clinical References</span>
-        <span class="doc-id">HINTS-AVS-v1.0</span>
-      </div>
-      
-      <div class="card-content">
-        <h1>HINTS Bedside Exam</h1>
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid">
         
-        <div class="card-callout purple">
-          <div class="tag">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Acute Vestibular Syndrome (AVS) Criteria
+        <!-- LEFT COLUMN: EYE SIMULATOR -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>Interactive Eye Simulator</h2>
+            <span class="card-label">Bedside Simulation Tool</span>
           </div>
-          <strong>Target Population:</strong> Rapid assessment tool for patients presenting with <strong>Acute Vestibular Syndrome (AVS)</strong>:
-          <div style="margin-top: 5px; font-size: 9.5pt; color: var(--ink-soft);">
-            • Acute, continuous vertigo lasting &gt;24 hours<br>
-            • Spontaneous or gaze-evoked nystagmus<br>
-            • Nausea, vomiting, and head-motion intolerance<br>
-            • Unsteady gait (often unable to stand without support)
-          </div>
-        </div>
-
-        <h2 id="hints-protocol">The 3-Step HINTS Clinical Protocol</h2>
-        <p style="font-size: 10pt; color: var(--ink-soft); margin-bottom: 10px;">Sensitivity <strong>96.8%</strong>, specificity <strong>98.5%</strong> for differentiating central (stroke) from peripheral (vestibular neuritis) lesions. <em>More sensitive than MRI DWI in first 24-48 hours.</em></p>
-
-        <div class="hints-grid">
           
-          <!-- H - Head Impulse -->
-          <div class="hints-card central">
-            <div>
-              <h3 style="color: var(--purple-deep); font-size: 11pt; border-bottom: 2px solid var(--purple-soft); padding-bottom: 4px; margin-bottom: 8px;">H — Head Impulse</h3>
-              <p style="font-size: 9pt; color: var(--ink-soft); line-height: 1.3;">Patient fixates on your nose. Gently but rapidly rotate the head 10-20° horizontally.</p>
+          <div class="simulator-container">
+            <div class="simulation-viewport">
+              <div class="target-dot" id="sim-target"></div>
+              <div class="target-label" id="sim-target-label">Target (Nose)</div>
+              
+              <div class="cover-patch" id="left-cover" style="top: 65px; left: 165px;"></div>
+              <div class="cover-patch" id="right-cover" style="top: 65px; left: 275px;"></div>
+              
+              <div class="sim-head" id="sim-head">
+                <div class="sim-nose"></div>
+                <div class="sim-eye" id="eye-l"><div class="sim-pupil" id="pupil-l"></div></div>
+                <div class="sim-eye" id="eye-r"><div class="sim-pupil" id="pupil-r"></div></div>
+              </div>
             </div>
-            <div style="margin-top: 10px;">
-              <div class="pill red" style="display: block; text-align: center; margin-bottom: 5px; font-size: 8.5pt;">Normal = CENTRAL</div>
-              <div class="pill teal" style="display: block; text-align: center; font-size: 8.5pt;">Abnormal = PERIPHERAL</div>
-              <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 6px; line-height: 1.25;">
-                • <strong>Normal VOR</strong> (no catch-up saccade) points to brainstem/cerebellar stroke.<br>
-                • <strong>Abnormal VOR</strong> (delayed catch-up saccade) suggests vestibular neuritis.
-              </p>
+            
+            <div class="sim-explanation" id="sim-exp">
+              Select a clinical test scenario below to start the visual animation simulation.
             </div>
-          </div>
-
-          <!-- N - Nystagmus -->
-          <div class="hints-card peripheral">
-            <div>
-              <h3 style="color: var(--purple-deep); font-size: 11pt; border-bottom: 2px solid var(--purple-soft); padding-bottom: 4px; margin-bottom: 8px;">N — Nystagmus</h3>
-              <p style="font-size: 9pt; color: var(--ink-soft); line-height: 1.3;">Observe eyes in primary gaze, then looking left and right. Note nystagmus beating direction.</p>
+            
+            <h3 class="card-subheader">1. Head Impulse Test (HIT)</h3>
+            <div class="scenarios-grid">
+              <button class="btn-scenario" onclick="runHIT('peripheral')">VOR Deficit (Peripheral)</button>
+              <button class="btn-scenario" onclick="runHIT('central')">VOR Intact (Central)</button>
             </div>
-            <div style="margin-top: 10px;">
-              <div class="pill red" style="display: block; text-align: center; margin-bottom: 5px; font-size: 8.5pt;">Dir-Changing = CENTRAL</div>
-              <div class="pill teal" style="display: block; text-align: center; font-size: 8.5pt;">Unidirectional = PERIPHERAL</div>
-              <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 6px; line-height: 1.25;">
-                • <strong>Direction-changing</strong> (beats left on left gaze, right on right gaze) or <strong>vertical</strong> = stroke.<br>
-                • <strong>Unidirectional</strong> (beats same direction on all gazes) = peripheral.
-              </p>
+            
+            <h3 class="card-subheader">2. Nystagmus (N)</h3>
+            <div class="scenarios-grid">
+              <button class="btn-scenario" onclick="runNystagmus('unidirectional')">Unidirectional (Peripheral)</button>
+              <button class="btn-scenario" onclick="runNystagmus('bidirectional')">Gaze-Evoked (Central)</button>
+              <button class="btn-scenario" onclick="runNystagmus('vertical')">Vertical (Central)</button>
             </div>
-          </div>
-
-          <!-- TS - Test of Skew -->
-          <div class="hints-card central">
-            <div>
-              <h3 style="color: var(--purple-deep); font-size: 11pt; border-bottom: 2px solid var(--purple-soft); padding-bottom: 4px; margin-bottom: 8px;">TS — Test of Skew</h3>
-              <p style="font-size: 9pt; color: var(--ink-soft); line-height: 1.3;">Cover-uncover test. Cover one eye, then alternate. Watch for vertical drift when uncovered.</p>
+            
+            <h3 class="card-subheader">3. Test of Skew (TS)</h3>
+            <div class="scenarios-grid">
+              <button class="btn-scenario" onclick="runSkew('none')">No Skew (Peripheral)</button>
+              <button class="btn-scenario" onclick="runSkew('present')">Skew Present (Central)</button>
             </div>
-            <div style="margin-top: 10px;">
-              <div class="pill red" style="display: block; text-align: center; margin-bottom: 5px; font-size: 8.5pt;">Skew Present = CENTRAL</div>
-              <div class="pill teal" style="display: block; text-align: center; font-size: 8.5pt;">No Skew = PERIPHERAL</div>
-              <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 6px; line-height: 1.25;">
-                • <strong>Vertical correction</strong> (eye moves up or down when uncovered) = brainstem/cerebellar stroke.<br>
-                • <strong>Stable alignment</strong> (no vertical correction) = peripheral.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="card-callout red" style="margin-top: 5px; margin-bottom: 10px;">
-          <div class="tag" style="color: var(--red-deep);">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" style="margin-right: 2px;"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            INFARCT Clinical Warning Rule
-          </div>
-          <strong>Any SINGLE "Central" finding on the 3-step exam requires treating the vertigo as a stroke (INFARCT):</strong>
-          <p style="font-size: 9.5pt; margin-top: 3px; font-weight: 500;">
-            • <strong>I</strong>mpulse Normal (VOR intact)<br>
-            • <strong>N</strong>ystagmus Fast-phase alternating (Direction-changing)<br>
-            • <strong>F</strong>ast-<strong>A</strong>lternating <strong>R</strong>edirection of <strong>C</strong>over (Test of Skew deviation present)
-          </p>
-          <div style="font-size: 9pt; margin-top: 6px; font-style: italic;">
-            Obtain urgent Brain MRI with DWI. Keep patient NPO until swallow screening is completed.
           </div>
         </div>
-
-        <!-- Matrix Table -->
-        <table class="card-table" id="skew-table" style="margin-top: 5px; margin-bottom: 5px;">
-          <thead>
-            <tr>
-              <th style="width: 25%">Exam Step</th>
-              <th style="width: 37.5%; background: var(--teal);">Peripheral (Neuritis) - Benign</th>
-              <th style="width: 37.5%; background: var(--red);">Central (Stroke) - DANGEROUS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="label-cell">Head Impulse (HIT)</td>
-              <td><strong>Abnormal VOR:</strong> Delayed catch-up corrective saccade back to target nose.</td>
-              <td><strong>Normal VOR:</strong> Eyes stay locked on target nose immediately with no saccade.</td>
-            </tr>
-            <tr>
-              <td class="label-cell">Nystagmus (N)</td>
-              <td><strong>Unidirectional:</strong> Beats away from lesion side (fast phase) in all gaze directions.</td>
-              <td><strong>Direction-changing:</strong> Beats left on left gaze, beats right on right gaze; or vertical.</td>
-            </tr>
-            <tr>
-              <td class="label-cell">Test of Skew (TS)</td>
-              <td><strong>Conjugate:</strong> Eyes stay in alignment; no vertical movement on uncover test.</td>
-              <td><strong>Skew Deviation:</strong> Vertical correction (uncovered eye shifts vertically to realign).</td>
-            </tr>
-            <tr>
-              <td class="label-cell" style="background: rgba(0,0,0,0.03); color: var(--ink);">Summary</td>
-              <td style="color: var(--teal-deep); font-weight: 600; background: rgba(24,132,158,0.05);">ALL THREE steps must be benign to rule out stroke.</td>
-              <td style="color: var(--red-deep); font-weight: 600; background: rgba(198,46,46,0.05);">Any ONE central finding overrides normal scans.</td>
-            </tr>
-          </tbody>
-        </table>
         
-        <p style="font-size: 7.8pt; color: var(--ink-mute); text-align: center; margin-top: 4px;">
-          Kattah JC, et al. Stroke. 2009;40(11):3504-3510. | Newman-Toker DE, et al. Stroke. 2008;39(11):3070-3074.
-        </p>
-      </div>
-
-      <div class="card-footer">
-        <span class="disclaimer-text">Verify institutional protocols. For clinical reference and educational support only.</span>
-        <span class="page-num">Page 1 of 2</span>
-      </div>
-    </div>
-
-    <!-- Simulator Card -->
-    <div class="card-container" id="simulator">
-      <div class="card-header">
-        <span class="title-logo">Clinical References</span>
-        <span class="doc-id">HINTS-SIM-v1.0</span>
-      </div>
-
-      <div class="card-content">
-        <h1>Interactive Eye Simulator</h1>
-        <p style="font-size: 10pt; color: var(--ink-soft); margin-bottom: 10px; text-align: center;">Click the scenarios below to simulate ocular movements during the HINTS examination.</p>
-
-        <div class="simulator-container">
-          <div class="simulation-viewport">
-            <!-- Target dot (Examiner's nose) -->
-            <div class="target-dot" id="sim-target"></div>
-            <div class="target-label" id="sim-target-label">Target (Nose)</div>
-
-            <!-- Left eye cover patch -->
-            <div class="cover-patch" id="left-cover" style="top: 65px; left: 165px;"></div>
-            <!-- Right eye cover patch -->
-            <div class="cover-patch" id="right-cover" style="top: 65px; left: 275px;"></div>
-
-            <!-- Simulated Head -->
-            <div class="sim-head" id="sim-head">
-              <div class="sim-nose"></div>
-              
-              <!-- Left Eye -->
-              <div class="sim-eye" id="eye-l">
-                <div class="sim-pupil" id="pupil-l"></div>
+        <!-- RIGHT COLUMN: INTERPRETATION & RULES -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>Bedside Diagnostic Assistant</h2>
+            <span class="card-label">Algorithm Helper</span>
+          </div>
+          
+          <div class="control-card">
+            <h3>Diagnostic Input Selector</h3>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Input your exam findings to calculate central vs. peripheral etiology probabilities.</p>
+            
+            <div class="checklist-grid" style="grid-template-columns:1fr; gap:10px;">
+              <div>
+                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Head Impulse Test (HIT)</label>
+                <div class="scenarios-grid" style="margin-bottom:0;">
+                  <button id="inp-hit-abnormal" class="btn-scenario active" onclick="setFinding('hit', 'abnormal')">Abnormal VOR (Saccade)</button>
+                  <button id="inp-hit-normal" class="btn-scenario" onclick="setFinding('hit', 'normal')">Normal VOR (Intact)</button>
+                </div>
               </div>
               
-              <!-- Right Eye -->
-              <div class="sim-eye" id="eye-r">
-                <div class="sim-pupil" id="pupil-r"></div>
+              <div>
+                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Nystagmus Profile (N)</label>
+                <div class="scenarios-grid" style="margin-bottom:0;">
+                  <button id="inp-n-uni" class="btn-scenario active" onclick="setFinding('nystagmus', 'uni')">Unidirectional</button>
+                  <button id="inp-n-bi" class="btn-scenario" onclick="setFinding('nystagmus', 'bi')">Gaze-Evoked / Vertical</button>
+                </div>
+              </div>
+              
+              <div>
+                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Test of Skew (TS)</label>
+                <div class="scenarios-grid" style="margin-bottom:0;">
+                  <button id="inp-ts-none" class="btn-scenario active" onclick="setFinding('skew', 'none')">Stable (No Skew)</button>
+                  <button id="inp-ts-skew" class="btn-scenario" onclick="setFinding('skew', 'skew')">Skew Present</button>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="sim-explanation" id="sim-exp">
-            Select a scenario below to start the visual simulation.
+          
+          <!-- Live Result Display -->
+          <div id="diag-status-panel" class="status-summary-box safe">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="status-desc">
+              <h4 id="diag-title">PERIPHERAL VESTIBULAR PROFILE</h4>
+              <p id="diag-text">All three exam steps are benign (Abnormal HIT, Unidirectional Nystagmus, No Skew). This is highly consistent with acute peripheral vestibulopathy (e.g. vestibular neuritis). Manage symptomatically.</p>
+            </div>
           </div>
-
-          <h3 style="margin-top: 5px; margin-bottom: 2px;">1. Head Impulse Test (HIT)</h3>
-          <div class="sim-controls">
-            <button class="sim-btn" onclick="runHIT('peripheral')">Peripheral (VOR Deficit - Catch-up Saccade)</button>
-            <button class="sim-btn" onclick="runHIT('central')">Central (VOR Intact - Normal Eyes)</button>
+          
+          <!-- INFARCT Rules Panel -->
+          <div class="status-summary-box danger" style="margin-top:1rem;">
+            <svg viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <div class="status-desc">
+              <h4>INFARCT Clinical Rule</h4>
+              <p><strong>Any SINGLE "Central" finding requires treating as a stroke:</strong><br>
+              • <strong>I</strong>mpulse <strong>N</strong>ormal (VOR intact)<br>
+              • <strong>F</strong>ast-<strong>A</strong>lternating <strong>R</strong>edirection of <strong>C</strong>over (Test of Skew deviation present)<br>
+              • <strong>T</strong>ype of Nystagmus direction-changing or pure vertical.
+              </p>
+            </div>
           </div>
-
-          <h3 style="margin-top: 5px; margin-bottom: 2px;">2. Nystagmus (N)</h3>
-          <div class="sim-controls">
-            <button class="sim-btn" onclick="runNystagmus('unidirectional')">Peripheral (Unidirectional Left-Beating)</button>
-            <button class="sim-btn" onclick="runNystagmus('bidirectional')">Central (Gaze-Evoked Direction-Changing)</button>
-            <button class="sim-btn" onclick="runNystagmus('vertical')">Central (Pure Vertical Down-Beating)</button>
+          
+          <!-- Exam Matrix Table -->
+          <table class="hints-table">
+            <thead>
+              <tr>
+                <th>Test Phase</th>
+                <th>Peripheral Findings</th>
+                <th>Central Findings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Head Impulse (HIT)</strong></td>
+                <td><span class="hints-badge peripheral">Abnormal</span> Corrective catch-up saccade</td>
+                <td><span class="hints-badge central">Normal</span> Eyes stay locked on target</td>
+              </tr>
+              <tr>
+                <td><strong>Nystagmus (N)</strong></td>
+                <td><span class="hints-badge peripheral">Unidirectional</span> Beats away from lesion</td>
+                <td><span class="hints-badge central">Direction-Changing</span> Beats in direction of gaze</td>
+              </tr>
+              <tr>
+                <td><strong>Test of Skew (TS)</strong></td>
+                <td><span class="hints-badge peripheral">Stable</span> No vertical movement</td>
+                <td><span class="hints-badge central">Skew Deviation</span> Vertical correction</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+    </section>
+    
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>HINTS Exam Bedside Reference Card</h1>
+          <div class="print-subtitle">Acute Vestibular Syndrome (AVS) Triage Protocol</div>
+        </div>
+        
+        <div class="print-grid">
+          <div class="print-box full-width">
+            <h3>⚡ HINTS Core Diagnostic Matrix</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:20%;">Exam Step</th>
+                  <th style="width:40%;" class="alert-row-teal">Peripheral (Neuritis) - Benign</th>
+                  <th style="width:40%;" class="alert-row-danger">Central (Stroke) - Dangerous</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Head Impulse (HIT)</strong></td>
+                  <td><strong>Abnormal VOR:</strong> Delayed catch-up corrective saccade back to target nose.</td>
+                  <td><strong>Normal VOR:</strong> Eyes stay locked on target nose immediately with no saccades.</td>
+                </tr>
+                <tr>
+                  <td><strong>Nystagmus (N)</strong></td>
+                  <td><strong>Unidirectional:</strong> Beats away from lesion side (fast phase) in all gaze directions.</td>
+                  <td><strong>Direction-changing:</strong> Beats left on left gaze, beats right on right gaze, or vertical.</td>
+                </tr>
+                <tr>
+                  <td><strong>Test of Skew (TS)</strong></td>
+                  <td><strong>Conjugate:</strong> Eyes stay in alignment; no vertical movement on uncover test.</td>
+                  <td><strong>Skew Deviation:</strong> Vertical correction (uncovered eye shifts vertically to realign).</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-
-          <h3 style="margin-top: 5px; margin-bottom: 2px;">3. Test of Skew (TS)</h3>
-          <div class="sim-controls">
-            <button class="sim-btn" onclick="runSkew('none')">Peripheral (No Skew Deviation)</button>
-            <button class="sim-btn" onclick="runSkew('present')">Central (Skew Deviation Present)</button>
+          
+          <div class="print-box">
+            <h3>🎯 Target Patient Population (AVS)</h3>
+            <p>The HINTS examination should only be applied to patients presenting with the <strong>Acute Vestibular Syndrome (AVS)</strong> clinical triad:</p>
+            <ul class="print-list">
+              <li>Acute, continuous vertigo lasting hours to days.</li>
+              <li>Spontaneous or gaze-evoked nystagmus.</li>
+              <li>Significant nausea, vomiting, and head-motion intolerance.</li>
+              <li><strong>Confounder:</strong> Do not use HINTS in patients with episodic vertigo (e.g. BPPV) or patients without active nystagmus.</li>
+            </ul>
+          </div>
+          
+          <div class="print-box alert-row-danger">
+            <h3>🚨 INFARCT Clinical Warning Rule</h3>
+            <p><strong>Any SINGLE Central finding on the 3-step HINTS exam requires treating the patient as having an acute stroke:</strong></p>
+            <ul class="print-list" style="list-style-type:square;">
+              <li><strong>I</strong>mpulse <strong>N</strong>ormal (VOR intact).</li>
+              <li><strong>F</strong>ast-<strong>A</strong>lternating <strong>R</strong>edirection of <strong>C</strong>over (Test of Skew deviation present).</li>
+              <li><strong>T</strong>ype of Nystagmus direction-changing or pure vertical.</li>
+              <li><strong>Clinical Note:</strong> HINTS is 96.8% sensitive and 98.5% specific for central lesions. It is more sensitive than MRI DWI in the first 24–48 hours from vertigo onset.</li>
+            </ul>
+          </div>
+          
+          <div class="print-box full-width">
+            <h3>📈 Landmark Evidence Summary</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th>Study & Citation</th>
+                  <th>Cohort</th>
+                  <th>Key Metric / Finding</th>
+                  <th>Clinical Translation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Kattah et al. (Stroke, 2009)</strong></td>
+                  <td>101 AVS patients with high-risk features</td>
+                  <td>Sensitivity 100%, Specificity 96% for identifying stroke compared to initial MRI.</td>
+                  <td>Establish HINTS bedside exam superiority over early MRI DWI in hyperacute phase.</td>
+                </tr>
+                <tr>
+                  <td><strong>Newman-Toker et al. (Acad Emerg Med, 2013)</strong></td>
+                  <td>190 AVS patients in ED setting</td>
+                  <td>Missed stroke rate is extremely high if bedside HINTS is omitted or performed incorrectly.</td>
+                  <td>Proper technique and population selection (must have nystagmus) are mandatory.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Kattah JC, et al. Stroke. 2009;40(11):3504-3510. [2] Newman-Toker DE, et al. Acad Emerg Med. 2013;20(10):986-996. [3] Kleindorfer DO, et al. 2021 AHA/ASA Stroke Prevention Guidelines.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
       </div>
+    </section>
+    
+  </main>
 
-      <div class="card-footer">
-        <span class="disclaimer-text">Bedside training tool. Always perform clinical examination in a safe, controlled environment.</span>
-        <span class="page-num">Page 2 of 2</span>
-      </div>
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
     </div>
+  </footer>
 
-  </div>
-
-  <!-- Interactive JavaScript logic for Eye/Head Simulation -->
+  <script src="../assets/dual_view.js"></script>
   <script>
+    // State for interactive assistant
+    const currentFindings = {
+      hit: 'abnormal',
+      nystagmus: 'uni',
+      skew: 'none'
+    };
+
+    function setFinding(field, value) {
+      currentFindings[field] = value;
+      
+      // Update button active classes
+      if (field === 'hit') {
+        document.getElementById('inp-hit-abnormal').classList.toggle('active', value === 'abnormal');
+        document.getElementById('inp-hit-normal').classList.toggle('active', value === 'normal');
+      } else if (field === 'nystagmus') {
+        document.getElementById('inp-n-uni').classList.toggle('active', value === 'uni');
+        document.getElementById('inp-n-bi').classList.toggle('active', value === 'bi');
+      } else if (field === 'skew') {
+        document.getElementById('inp-ts-none').classList.toggle('active', value === 'none');
+        document.getElementById('inp-ts-skew').classList.toggle('active', value === 'skew');
+      }
+      
+      calculateDiagnosis();
+    }
+
+    function calculateDiagnosis() {
+      const isCentralHIT = currentFindings.hit === 'normal';
+      const isCentralN = currentFindings.nystagmus === 'bi';
+      const isCentralTS = currentFindings.skew === 'skew';
+      
+      const isCentral = isCentralHIT || isCentralN || isCentralTS;
+      
+      const panel = document.getElementById('diag-status-panel');
+      const title = document.getElementById('diag-title');
+      const text = document.getElementById('diag-text');
+      
+      if (isCentral) {
+        panel.className = 'status-summary-box danger';
+        title.innerText = 'CENTRAL STROKE PROFILE (INFARCT ALARM)';
+        
+        let reasons = [];
+        if (isCentralHIT) reasons.push('Normal/Intact VOR (no saccade)');
+        if (isCentralN) reasons.push('Direction-changing or vertical Nystagmus');
+        if (isCentralTS) reasons.push('Skew Deviation present');
+        
+        text.innerHTML = `<strong>Alert:</strong> Stroke suspect. Identified central finding(s): <strong>${reasons.join(', ')}</strong>. Treat immediately as acute stroke, activate stroke team, and obtain urgent brain MRI with DWI.`;
+      } else {
+        panel.className = 'status-summary-box safe';
+        title.innerText = 'PERIPHERAL VESTIBULAR PROFILE';
+        text.innerText = 'All three exam steps are benign (Abnormal HIT, Unidirectional Nystagmus, No Skew). This is highly consistent with acute peripheral vestibulopathy (e.g. vestibular neuritis). Manage symptomatically.';
+      }
+    }
+
+    // Simulator variables and functions
     const head = document.getElementById('sim-head');
     const pupilL = document.getElementById('pupil-l');
     const pupilR = document.getElementById('pupil-r');
@@ -507,54 +515,43 @@
         activeInterval = null;
       }
       
-      // Reset head position
       head.style.transform = 'none';
-      
-      // Reset pupil offset
       pupilL.style.transform = 'translate(-50%, -50%)';
       pupilR.style.transform = 'translate(-50%, -50%)';
       
-      // Remove transitions
       pupilL.style.transition = 'transform 0.15s ease-out';
       pupilR.style.transition = 'transform 0.15s ease-out';
       head.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
       
-      // Hide covers
       coverL.style.opacity = '0';
       coverR.style.opacity = '0';
 
-      // Reset button active states
-      document.querySelectorAll('.sim-btn').forEach(btn => {
-        btn.classList.remove('active-central', 'active-peripheral');
+      document.querySelectorAll('.btn-scenario').forEach(btn => {
+        if (!btn.id.startsWith('inp-')) {
+          btn.classList.remove('active');
+        }
       });
     }
 
     function runHIT(type) {
       clearActiveSims();
       const btn = event.currentTarget;
+      btn.classList.add('active');
       
       if (type === 'central') {
-        btn.classList.add('active-central');
-        explanation.innerHTML = "<strong>Head Impulse Test (Central/Normal):</strong> Rapid head rotation to the right. Since VOR is intact, eyes instantly counter-rotate left to remain locked on the target nose. <em>No corrective saccade = brainstem/cerebellum lesion.</em>";
-        
-        // Rotate head right
+        explanation.innerHTML = "<strong>Head Impulse Test (Central/Normal VOR):</strong> Head rotates rapidly to the right. The Vestibulo-Ocular Reflex is intact, meaning the eyes immediately adjust leftward to stay locked on the target. <em>Normal HIT = Central stroke.</em>";
         setTimeout(() => {
           head.style.transform = 'rotate(20deg)';
-          // Eyes stay fixed on target (relative to head, they shift left)
           pupilL.style.transform = 'translate(-85%, -50%)';
           pupilR.style.transform = 'translate(-85%, -50%)';
         }, 300);
       } else {
-        btn.classList.add('active-peripheral');
-        explanation.innerHTML = "<strong>Head Impulse Test (Peripheral/VOR Deficit):</strong> Rapid head rotation right. VOR fails; eyes initially turn right with the head. Then, a fast corrective <em>'catch-up' saccade</em> beats left to lock back on target. <em>Positive test = vestibular neuritis.</em>";
-
-        // Head turns, eyes turn with head (relative to head, pupils stay centered)
+        explanation.innerHTML = "<strong>Head Impulse Test (Peripheral/VOR Deficit):</strong> Head rotates right, but the VOR fails. The eyes move rightward along with the head. Then, a quick corrective <em>catch-up saccade</em> snaps the eyes leftward back onto the target. <em>Abnormal HIT = Peripheral neuritis.</em>";
         setTimeout(() => {
           head.style.transform = 'rotate(20deg)';
           pupilL.style.transform = 'translate(-50%, -50%)';
           pupilR.style.transform = 'translate(-50%, -50%)';
           
-          // Fast corrective saccade back to target
           setTimeout(() => {
             pupilL.style.transition = 'transform 0.08s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
             pupilR.style.transition = 'transform 0.08s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
@@ -568,25 +565,21 @@
     function runNystagmus(type) {
       clearActiveSims();
       const btn = event.currentTarget;
+      btn.classList.add('active');
 
       if (type === 'unidirectional') {
-        btn.classList.add('active-peripheral');
-        explanation.innerHTML = "<strong>Peripheral Nystagmus (Unidirectional):</strong> Spontaneous horizontal beating in one direction only. Usually fast phase beats away from lesion (e.g. Left-beating: slow drift right, fast snap left).";
-        
-        let state = 0; // 0 = center, 1 = drift right, 2 = snap left
+        explanation.innerHTML = "<strong>Unidirectional Nystagmus (Peripheral):</strong> Spontaneous left-beating nystagmus. Eyes slowly drift to the right, then snap rapidly left. The beating direction does not change with gaze. <em>Peripheral sign.</em>";
+        let state = 0;
         pupilL.style.transition = 'none';
         pupilR.style.transition = 'none';
-        
         activeInterval = setInterval(() => {
           if (state === 0) {
-            // Slow phase drift right
             pupilL.style.transition = 'transform 0.4s linear';
             pupilR.style.transition = 'transform 0.4s linear';
             pupilL.style.transform = 'translate(-20%, -50%)';
             pupilR.style.transform = 'translate(-20%, -50%)';
             state = 1;
           } else {
-            // Fast phase snap left
             pupilL.style.transition = 'transform 0.06s ease-out';
             pupilR.style.transition = 'transform 0.06s ease-out';
             pupilL.style.transform = 'translate(-80%, -50%)';
@@ -595,50 +588,39 @@
           }
         }, 450);
       } else if (type === 'bidirectional') {
-        btn.classList.add('active-central');
-        explanation.innerHTML = "<strong>Central Nystagmus (Direction-Changing):</strong> Beats left on left gaze, beats right on right gaze. <em>Highly specific central stroke sign.</em>";
-        
-        let stage = 0; // 0 = left gaze look, 1 = left beat cycle, 2 = right gaze look, 3 = right beat cycle
-        pupilL.style.transition = 'transform 0.5s ease';
-        pupilR.style.transition = 'transform 0.5s ease';
-        
-        // Turn eyes left
+        explanation.innerHTML = "<strong>Gaze-Evoked Nystagmus (Central):</strong> Nystagmus direction changes depending on gaze (beats left when looking left, beats right when looking right). <em>Highly specific stroke marker.</em>";
+        let cycle = 0;
         pupilL.style.transform = 'translate(-80%, -50%)';
         pupilR.style.transform = 'translate(-80%, -50%)';
-        
-        let cycle = 0;
         activeInterval = setInterval(() => {
           cycle++;
           if (cycle < 6) {
-            // Leftward beating
             if (cycle % 2 === 0) {
               pupilL.style.transition = 'transform 0.25s linear';
               pupilR.style.transition = 'transform 0.25s linear';
-              pupilL.style.transform = 'translate(-60%, -50%)'; // Drift right
+              pupilL.style.transform = 'translate(-60%, -50%)';
               pupilR.style.transform = 'translate(-60%, -50%)';
             } else {
               pupilL.style.transition = 'transform 0.05s ease-out';
               pupilR.style.transition = 'transform 0.05s ease-out';
-              pupilL.style.transform = 'translate(-90%, -50%)'; // Snap left
+              pupilL.style.transform = 'translate(-90%, -50%)';
               pupilR.style.transform = 'translate(-90%, -50%)';
             }
           } else if (cycle === 6) {
-            // Transition to right gaze
             pupilL.style.transition = 'transform 0.6s ease';
             pupilR.style.transition = 'transform 0.6s ease';
             pupilL.style.transform = 'translate(-20%, -50%)';
             pupilR.style.transform = 'translate(-20%, -50%)';
           } else if (cycle > 6 && cycle < 12) {
-            // Rightward beating
             if (cycle % 2 === 0) {
               pupilL.style.transition = 'transform 0.25s linear';
               pupilR.style.transition = 'transform 0.25s linear';
-              pupilL.style.transform = 'translate(-40%, -50%)'; // Drift left
+              pupilL.style.transform = 'translate(-40%, -50%)';
               pupilR.style.transform = 'translate(-40%, -50%)';
             } else {
               pupilL.style.transition = 'transform 0.05s ease-out';
               pupilR.style.transition = 'transform 0.05s ease-out';
-              pupilL.style.transform = 'translate(-10%, -50%)'; // Snap right
+              pupilL.style.transform = 'translate(-10%, -50%)';
               pupilR.style.transform = 'translate(-10%, -50%)';
             }
           } else {
@@ -646,24 +628,18 @@
           }
         }, 300);
       } else {
-        // Pure Vertical Down-Beating
-        btn.classList.add('active-central');
-        explanation.innerHTML = "<strong>Central Nystagmus (Vertical):</strong> Down-beating nystagmus (slow phase drifts up, fast phase snaps down). <em>Never peripheral; diagnostic of central etiology.</em>";
-        
+        explanation.innerHTML = "<strong>Pure Vertical Nystagmus (Central):</strong> Spontaneous down-beating nystagmus. Eyes drift slowly upward, then fast-snap downward. <em>Exclusively central (brainstem/cerebellar stroke).</em>";
         let state = 0;
         pupilL.style.transition = 'none';
         pupilR.style.transition = 'none';
-        
         activeInterval = setInterval(() => {
           if (state === 0) {
-            // Slow phase drift up
             pupilL.style.transition = 'transform 0.35s linear';
             pupilR.style.transition = 'transform 0.35s linear';
             pupilL.style.transform = 'translate(-50%, -75%)';
             pupilR.style.transform = 'translate(-50%, -75%)';
             state = 1;
           } else {
-            // Fast phase snap down
             pupilL.style.transition = 'transform 0.06s ease-out';
             pupilR.style.transition = 'transform 0.06s ease-out';
             pupilL.style.transform = 'translate(-50%, -25%)';
@@ -677,14 +653,12 @@
     function runSkew(type) {
       clearActiveSims();
       const btn = event.currentTarget;
+      btn.classList.add('active');
 
       if (type === 'none') {
-        btn.classList.add('active-peripheral');
-        explanation.innerHTML = "<strong>Test of Skew (Peripheral/Normal):</strong> Covered eye remains fully aligned with the target. No movement occurs when the cover shifts. <em>No skew deviation.</em>";
-        
+        explanation.innerHTML = "<strong>No Skew Deviation (Benign):</strong> Covering and uncovering the eyes alternate without any vertical correction. Eyes remain conjugate and horizontally aligned. <em>Peripheral sign.</em>";
         let coveredLeft = true;
         coverL.style.opacity = '1';
-        
         activeInterval = setInterval(() => {
           if (coveredLeft) {
             coverL.style.opacity = '0';
@@ -697,49 +671,31 @@
           }
         }, 1500);
       } else {
-        btn.classList.add('active-central');
-        explanation.innerHTML = "<strong>Test of Skew (Central/Deviation):</strong> Left eye drifts down under cover. When uncovered, it vertical-corrects (shifts upward to re-align). Right eye drifts up under cover, and shifts downward when uncovered.";
-        
+        explanation.innerHTML = "<strong>Skew Deviation Present (Central):</strong> The covered eye vertical-drifts (e.g. downward). When uncovered, it snaps upward to fixate, while the opposite eye drifts up under the cover. <em>Oculomotor pathway / brainstem stroke.</em>";
         let coveredLeft = true;
         coverL.style.opacity = '1';
-        
-        // Setup initial covered misalignment
-        pupilL.style.transform = 'translate(-50%, -30%)'; // Drifted down relative to center (-30% is down since 0 is top)
-        
+        pupilL.style.transform = 'translate(-50%, -30%)';
         activeInterval = setInterval(() => {
           if (coveredLeft) {
-            // Swap cover to right eye
             coverL.style.opacity = '0';
             coverR.style.opacity = '1';
-            
-            // Left eye instantly does vertical corrective adjustment upward to re-center
             pupilL.style.transition = 'transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1)';
             pupilL.style.transform = 'translate(-50%, -50%)';
-            
-            // Right eye drifts up under cover
             pupilR.style.transition = 'transform 0.5s ease-out';
             pupilR.style.transform = 'translate(-50%, -70%)';
-            
             coveredLeft = false;
           } else {
-            // Swap cover to left eye
             coverR.style.opacity = '0';
             coverL.style.opacity = '1';
-            
-            // Right eye instantly does vertical corrective adjustment downward to re-center
             pupilR.style.transition = 'transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1)';
             pupilR.style.transform = 'translate(-50%, -50%)';
-            
-            // Left eye drifts down under cover
             pupilL.style.transition = 'transform 0.5s ease-out';
             pupilL.style.transform = 'translate(-50%, -30%)';
-            
             coveredLeft = true;
           }
         }, 1500);
       }
     }
   </script>
-
 </body>
 </html>

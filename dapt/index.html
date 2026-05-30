@@ -3,307 +3,402 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DAPT for Non-Cardioembolic Ischemic Stroke</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>DAPT Regimens Bedside Guide & Selector</title>
+  <meta name="description" content="Bedside guide and selector for dual antiplatelet therapy (DAPT) in acute ischemic stroke and high-risk TIA.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #38bdf8;
-    }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
-    }
-    @media print {
-      .portal-nav {
-        display: none !important;
-      }
-      .cards-wrapper-outer {
-        padding: 0 !important;
-        background: #ffffff !important;
-        gap: 0 !important;
-      }
-    }
-  </style>
-  <style>
-    /* Scoped DAPT Figure Styles */
-    .card-add_figure_03_dapt_regimens .dapt-pearls-grid {
+    /* Scoped styles for DAPT */
+    .dapt-input-row {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-    .card-add_figure_03_dapt_regimens .dapt-pearl-card {
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-    .card-add_figure_03_dapt_regimens .dapt-pearl-card.purple {
-      border: 1px solid var(--purple-soft);
-      border-left: 4px solid var(--purple);
-      background: linear-gradient(135deg, var(--purple-soft) 0%, #ffffff 100%);
-    }
-    .card-add_figure_03_dapt_regimens .dapt-pearl-card.red {
-      border: 1px solid var(--red-soft);
-      border-left: 4px solid var(--red);
-      background: linear-gradient(135deg, var(--red-soft) 0%, #ffffff 100%);
-    }
-    .card-add_figure_03_dapt_regimens table.card-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 8.8pt;
-      margin-bottom: 15px;
-    }
-    .card-add_figure_03_dapt_regimens table.card-table th, 
-    .card-add_figure_03_dapt_regimens table.card-table td {
-      border: 1px solid var(--rule-soft);
-      padding: 6px 8px;
-      vertical-align: top;
-    }
-    .card-add_figure_03_dapt_regimens table.card-table th {
-      background: #4B2E83;
-      color: white;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 8pt;
-      letter-spacing: 0.02em;
-    }
-    .card-add_figure_03_dapt_regimens table.card-table tr:nth-child(even) {
-      background: rgba(0,0,0,0.01);
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
     }
     
-    @media (max-width: 850px) {
-      .card-add_figure_03_dapt_regimens .dapt-pearls-grid {
-        grid-template-columns: 1fr;
-      }
-      .card-add_figure_03_dapt_regimens table.card-table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
+    .dapt-input-row label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+    
+    .dapt-input-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.8rem;
+      outline: none;
+      width: 100%;
+    }
+    
+    .infographic-box {
+      background: #020408;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-in;
+    }
+    
+    .infographic-box img {
+      max-width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+    }
+    
+    .infographic-box.zoomed img {
+      transform: scale(1.4);
+      z-index: 10;
+    }
+    
+    .dapt-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin: 10px 0;
+    }
+    
+    .dapt-table th, .dapt-table td {
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      text-align: left;
+    }
+    
+    .dapt-table th {
+      background-color: hsla(223, 30%, 8%, 0.8);
+      font-weight: 700;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper card-add_figure_03_dapt_regimens landscape-card">
-      <div class="card-container" style="box-sizing: border-box;">
-        <div class="card-content">
-          <h1 style="text-align: center; margin-bottom: 4px;">DAPT for Non-Cardioembolic Ischemic Stroke</h1>
-          <p style="font-size: 8.8pt; color: var(--ink-soft); margin-bottom: 6px; text-align: center; font-weight: 500;">
-            Guideline-directed Dual Antiplatelet Therapy (DAPT) for secondary non-cardioembolic stroke prevention.
-          </p>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Secondary Prevention</span>
+        <h1 id="app-title">Dual Antiplatelet Therapy (DAPT)</h1>
+        <p class="subtitle">Evidence-based guidelines for non-cardioembolic acute stroke & TIA</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
 
-          <!-- Bedside Decision Tree SVG -->
-          <svg viewBox="0 0 735 240" style="width: 100%; height: 210px; margin-bottom: 6px;">
-            <rect x="0" y="0" width="735" height="240" rx="8" fill="var(--fill-soft)" stroke="var(--rule-soft)" stroke-width="1"/>
-            <rect x="292" y="10" width="150" height="35" rx="6" fill="var(--purple-deep)" />
-            <text x="367" y="23" fill="white" font-size="8.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">ACUTE STROKE / TIA</text>
-            <text x="367" y="36" fill="rgba(255,255,255,0.8)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">Non-Cardioembolic Onset</text>
-            <path d="M 367 45 L 367 60 M 120 60 L 615 60 M 120 60 L 120 75 M 367 60 L 367 75 M 615 60 L 615 75" stroke="var(--purple)" stroke-width="1.5" fill="none"/>
-            <rect x="35" y="75" width="170" height="40" rx="6" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.5"/>
-            <text x="120" y="90" fill="var(--teal-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Symptomatic IC Stenosis</text>
-            <text x="120" y="102" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">70-99% Stenosis (SAMMPRIS)</text>
-            <path d="M 120 115 L 120 140" stroke="var(--teal)" stroke-width="1.5" fill="none"/>
-            <polygon points="120,145 117,137 123,137" fill="var(--teal)" />
-            <rect x="35" y="145" width="170" height="40" rx="6" fill="white" stroke="var(--teal)" stroke-width="2" style="filter: drop-shadow(0 2px 4px var(--teal-glow));"/>
-            <text x="120" y="159" fill="var(--teal-deep)" font-size="9pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + CLOPIDOGREL</text>
-            <text x="120" y="172" fill="var(--red-deep)" font-size="8pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Duration: 90 Days</text>
-            <rect x="252" y="75" width="230" height="42" rx="6" fill="var(--purple-soft)" stroke="var(--purple)" stroke-width="1.5"/>
-            <text x="367" y="88" fill="var(--purple-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Minor Stroke (NIHSS&le;3) / TIA</text>
-            <text x="367" y="99" fill="var(--purple-deep)" font-size="7pt" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle">Start Clopidogrel + ASA (Day 1)</text>
-            <text x="367" y="110" fill="var(--purple-deep)" font-size="6.5pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Send CYP2C19 Genotype on Admission</text>
-            <path d="M 367 117 L 367 127 M 290 127 L 444 127 M 290 127 L 290 145 M 444 127 L 444 145" stroke="var(--purple)" stroke-width="1.5" fill="none"/>
-            <rect x="215" y="145" width="140" height="42" rx="6" fill="white" stroke="var(--red)" stroke-width="1.5"/>
-            <text x="285" y="157" fill="var(--red-deep)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">LOF Carrier (*2, *3)</text>
-            <text x="285" y="169" fill="var(--ink-soft)" font-size="6.5pt" font-family="IBM Plex Sans" text-anchor="middle">Results Return (Days 1–3)</text>
-            <text x="285" y="180" fill="var(--red-deep)" font-size="6.5pt" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle">Switch to Ticagrelor</text>
-            <path d="M 285 187 L 285 203" stroke="var(--red)" stroke-width="1.5" fill="none"/>
-            <polygon points="285,203 282,195 288,195" fill="var(--red)" />
-            <rect x="215" y="203" width="140" height="32" rx="4" fill="var(--red-soft)" stroke="var(--red)" stroke-width="2"/>
-            <text x="285" y="213" fill="var(--red-deep)" font-size="7.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + TICAGRELOR</text>
-            <text x="285" y="222" fill="var(--red-deep)" font-size="6pt" font-family="IBM Plex Sans" text-anchor="middle">Load 180mg STAT, then BID</text>
-            <text x="285" y="231" fill="var(--red-deep)" font-size="6pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Complete 21d DAPT</text>
-            <rect x="375" y="145" width="140" height="42" rx="6" fill="white" stroke="var(--purple)" stroke-width="1.5"/>
-            <text x="445" y="157" fill="var(--purple-deep)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Normal Metabolizer</text>
-            <text x="445" y="169" fill="var(--ink-soft)" font-size="6.5pt" font-family="IBM Plex Sans" text-anchor="middle">Results Return (Days 1–3)</text>
-            <text x="445" y="180" fill="var(--purple-deep)" font-size="6.5pt" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle">Continue Clopidogrel</text>
-            <path d="M 445 187 L 445 203" stroke="var(--purple)" stroke-width="1.5" fill="none"/>
-            <polygon points="445,203 442,195 448,195" fill="var(--purple)" />
-            <rect x="375" y="203" width="140" height="32" rx="4" fill="var(--purple-soft)" stroke="var(--purple)" stroke-width="2"/>
-            <text x="445" y="213" fill="var(--purple-deep)" font-size="7.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + CLOPIDOGREL</text>
-            <text x="445" y="222" fill="var(--purple-deep)" font-size="6pt" font-family="IBM Plex Sans" text-anchor="middle">Continue Clopidogrel 75mg qD</text>
-            <text x="445" y="231" fill="var(--purple-deep)" font-size="6pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Complete 21d DAPT</text>
-            <rect x="530" y="75" width="170" height="40" rx="6" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5"/>
-            <text x="615" y="90" fill="var(--amber-deep)" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">Mild-Mod Stroke (NIHSS&le;5)</text>
-            <text x="615" y="102" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">Or High-Risk TIA (THALES)</text>
-            <path d="M 615 115 L 615 140" stroke="var(--amber)" stroke-width="1.5" fill="none"/>
-            <polygon points="615,145 612,137 618,137" fill="var(--amber)" />
-            <rect x="530" y="145" width="170" height="40" rx="6" fill="white" stroke="var(--amber)" stroke-width="2" style="filter: drop-shadow(0 2px 4px var(--amber-glow));"/>
-            <text x="615" y="159" fill="var(--amber-deep)" font-size="9pt" font-family="Outfit" font-weight="800" text-anchor="middle">ASA + TICAGRELOR</text>
-            <text x="615" y="172" fill="var(--red-deep)" font-size="8pt" font-family="IBM Plex Mono" font-weight="700" text-anchor="middle">Duration: 30 Days</text>
-          </svg>
-
-          <!-- Comparative Table of Trials -->
-          <table class="card-table">
-            <thead>
-              <tr style="background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 100%); color: white;">
-                <th style="width: 22%;">Scenario / Trial</th>
-                <th style="width: 22%;">Target Population</th>
-                <th style="width: 22%;">Loading Dose (Day 1)</th>
-                <th style="width: 20%;">DAPT Duration</th>
-                <th style="width: 14%;">Post-DAPT</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="font-weight: 700;">POINT Trial</td>
-                <td>NIHSS &le;3 or ABCD² &ge;4. **Within 12 hours** of onset.</td>
-                <td><strong>Clopidogrel 600 mg</strong> +<br/>Aspirin 162–325 mg</td>
-                <td><strong>Clopidogrel 75mg qD</strong> +<br/>Aspirin 81mg qD for <strong>21 days</strong></td>
-                <td>Aspirin 81mg</td>
-              </tr>
-              <tr>
-                <td style="font-weight: 700;">CHANCE / INSPIRES</td>
-                <td><strong>CHANCE:</strong> NIHSS&le;3, ABCD²&ge;4 within 24h.<br/><strong>INSPIRES:</strong> NIHSS&le;5, ABCD²&ge;4, &ge;50% stenosis within 72h.</td>
-                <td><strong>Clopidogrel 300 mg</strong> +<br/>Aspirin 75–300 mg</td>
-                <td><strong>Clopidogrel 75mg qD</strong> +<br/>Aspirin 75-100mg for <strong>21 days</strong></td>
-                <td>Clopidogrel 75mg (to Day 90)</td>
-              </tr>
-              <tr style="background: var(--purple-soft);">
-                <td style="font-weight: 700; color: var(--purple-deep);">CHANCE-2 Trial</td>
-                <td>CYP2C19 LOF carrier (*2/*3) + Minor stroke/TIA. **Within 24h**.</td>
-                <td><strong>Ticagrelor 180 mg</strong> +<br/>Aspirin 75–300 mg</td>
-                <td><strong>Ticagrelor 90mg BID</strong> +<br/>Aspirin 75-100mg for <strong>21 days</strong></td>
-                <td>Ticagrelor 90mg BID (to Day 90)</td>
-              </tr>
-              <tr>
-                <td style="font-weight: 700;">THALES Trial</td>
-                <td>NIHSS &le;5 or high-risk TIA (ABCD² &ge;6 or symptomatic stenosis) within 24h.</td>
-                <td><strong>Ticagrelor 180 mg</strong> +<br/>Aspirin 300–325 mg</td>
-                <td><strong>Ticagrelor 90mg BID</strong> +<br/>Aspirin 75-100mg for <strong>30 days</strong></td>
-                <td>Aspirin 81mg</td>
-              </tr>
-              <tr style="background: var(--teal-soft);">
-                <td style="font-weight: 700; color: var(--teal-deep);">SAMMPRIS Trial</td>
-                <td>Severe symptomatic stenosis (70-99%) of major intracranial artery.</td>
-                <td><strong>Aspirin 325 mg</strong> +<br/><strong>Clopidogrel 75 mg</strong> (no load)</td>
-                <td><strong>Clopidogrel 75mg qD</strong> +<br/>Aspirin for <strong>90 days</strong></td>
-                <td>Aspirin</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Alternative / Novel Antithrombotics Section -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: #4B2E83; margin: 15px 0 8px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;">Novel &amp; Alternative Antithrombotic Trials</h2>
-          <table class="card-table">
-            <thead>
-              <tr style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white;">
-                <th style="width: 25%;">Trial / Drug Class</th>
-                <th style="width: 35%;">Target Population &amp; Design</th>
-                <th style="width: 20%;">Efficacy Result</th>
-                <th style="width: 20%;">Safety &amp; Clinical Pearls</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="font-weight: 700;">CSPS.com (2019)<br><span style="font-size: 7.5pt; font-weight: normal; color: var(--ink-soft);">Cilostazol (PDE3i)</span></td>
-                <td>High-risk noncardioembolic stroke, 8–180 days post-onset (Japan). Open-label RCT (N=1,879). **Cilostazol + ASA/Clopidogrel** vs. Single AP.</td>
-                <td style="color: var(--teal-deep); font-weight: 600;">HR 0.49 (0.31–0.76)<br><span style="font-size: 7.5pt; font-weight: normal; color: var(--ink-soft);">Recurrent stroke: 2.2%/yr vs. 4.5%/yr</span></td>
-                <td>**Severe Bleeding:** HR 0.66 (NS). High rate of early dropout (23% vs 14%) due to headaches &amp; palpitations. Efficacious in Asian cohorts.</td>
-              </tr>
-              <tr style="background: var(--teal-soft);">
-                <td style="font-weight: 700; color: var(--teal-deep);">OCEANIC-STROKE (2026)<br><span style="font-size: 7.5pt; font-weight: normal; color: var(--ink-soft);">Asundexian (Factor XIa Inhibitor)</span></td>
-                <td>Noncardioembolic stroke (NIHSS &le;15) or high-risk TIA &le;72h. Double-blind RCT (N=12,327). **Asundexian 50mg daily + SAPT/DAPT** vs. Placebo + SAPT/DAPT.</td>
-                <td style="color: var(--teal-deep); font-weight: 600;">HR 0.74 (0.65–0.84)<br><span style="font-size: 7.5pt; font-weight: normal; color: var(--ink-soft);">Ischemic stroke: 6.2% vs. 8.4%</span></td>
-                <td>**ISTH Major Bleeding:** HR 1.10 (1.9% vs. 1.7%, NS). Safely reduces stroke recurrence without any bleeding penalty.</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Infographic Section -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: #4B2E83; margin: 15px 0 8px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;">DAPT Clinical Matching Flowchart</h2>
-          <div style="text-align: center; margin-bottom: 20px; background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--rule-soft);">
-            <img src="../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg" alt="DAPT Selection Flowchart" style="max-width: 100%; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-            <p style="font-size: 8pt; color: var(--ink-soft); margin-top: 6px; font-style: italic;">Infographic: Bedside secondary stroke prevention trial selection guide.</p>
-          </div>
-
-          <div class="dapt-pearls-grid">
-            <!-- CYP2C19 Genotyping box -->
-            <div class="dapt-pearl-card purple">
-              <strong style="color: var(--purple-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">CYP2C19 Genotyping &amp; Clopidogrel Resistance</strong>
-              <p style="font-size: 7.8pt; color: var(--ink-soft); margin: 0; line-height: 1.45;">
-                • <strong>~30% of US stroke patients</strong> carry a loss-of-function (LOF) allele (<strong>*2, *3</strong>), resulting in poor active metabolite generation and a 2x stroke recurrence rate.
-              </p>
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid">
+        
+        <!-- LEFT COLUMN: PROTOCOL SELECTOR -->
+        <div class="glass-card" style="display:flex; flex-direction:column; gap:15px;">
+          <div>
+            <div class="card-header" style="margin-bottom:0.8rem;">
+              <h2>Interactive Regimen Selector</h2>
+              <span class="card-label">Clinical Pathway Helper</span>
             </div>
-
-            <!-- Safety Pearls box -->
-            <div class="dapt-pearl-card red">
-              <strong style="color: var(--red-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">Safety Pearls</strong>
-              <p style="font-size: 7.6pt; color: var(--ink-soft); margin: 0; line-height: 1.45;">
-                • <strong>Bleeding vs. Benefit:</strong> DAPT beyond 21 days for minor stroke/TIA increases bleeding (including ICH) without reducing recurrence (POINT/CHANCE).
-                <br/>• <strong>Post-Lytic Policy:</strong> Avoid DAPT in patients who received TNK or EVT (unless specifically requested by neurointerventions for stent).
-              </p>
+            
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div class="dapt-input-row">
+                <label>1. Deficit Severity</label>
+                <select id="inp-severity" onchange="runDaptAlgorithm()">
+                  <option value="minor">Minor Stroke (NIHSS &le;3) / High-Risk TIA (ABCD² &ge;4)</option>
+                  <option value="icas">Symptomatic Large Artery Stenosis (ICAS 50-99%)</option>
+                  <option value="moderate">Moderate-to-Severe Stroke (NIHSS &ge;4)</option>
+                </select>
+              </div>
+              
+              <div class="dapt-input-row">
+                <label>2. Time from Onset</label>
+                <select id="inp-onset" onchange="runDaptAlgorithm()">
+                  <option value="early">&lt; 24 hours</option>
+                  <option value="mid">24 - 72 hours</option>
+                  <option value="late">&gt; 72 hours</option>
+                </select>
+              </div>
+              
+              <div class="dapt-input-row">
+                <label>3. Genetic Variant Status</label>
+                <select id="inp-variant" onchange="runDaptAlgorithm()">
+                  <option value="normal">Normal metabolizer (or untested)</option>
+                  <option value="carrier">CYP2C19 Loss-of-function carrier (CHANCE-2 profile)</option>
+                </select>
+              </div>
             </div>
           </div>
-
-          <!-- Citations -->
-          <div class="ref-citation" style="margin-top: 0; padding: 6px 10px; font-size: 7.5pt; line-height: 1.25;">
-            <strong>POINT:</strong> Johnston SC et al. <em>N Engl J Med</em>. 2018;379:215-225. <a href="https://pubmed.ncbi.nlm.nih.gov/29766750/" target="_blank">PMID: 29766750</a> | <strong>CHANCE:</strong> Wang Y et al. <em>N Engl J Med</em>. 2013;369:11-19. <a href="https://pubmed.ncbi.nlm.nih.gov/23803136/" target="_blank">PMID: 23803136</a><br/>
-            <strong>CHANCE-2:</strong> Wang Y et al. <em>N Engl J Med</em>. 2021;385:2520-2530. <a href="https://pubmed.ncbi.nlm.nih.gov/34708996/" target="_blank">PMID: 34708996</a> | <strong>INSPIRES:</strong> Gao Y et al. <em>N Engl J Med</em>. 2023;389:2413-2424. <a href="https://pubmed.ncbi.nlm.nih.gov/38157499/" target="_blank">PMID: 38157499</a><br/>
-            <strong>THALES:</strong> Johnston SC et al. <em>N Engl J Med</em>. 2020;383:207-217. <a href="https://pubmed.ncbi.nlm.nih.gov/32668111/" target="_blank">PMID: 32668111</a> | <strong>SAMMPRIS:</strong> Chimowitz MI et al. <em>N Engl J Med</em>. 2011;365:993-1003. <a href="https://pubmed.ncbi.nlm.nih.gov/21899409/" target="_blank">PMID: 21899409</a><br/>
-            <strong>CSPS.com:</strong> Toyoda K et al. <em>Lancet Neurol</em>. 2019;18:539-548. <a href="https://pubmed.ncbi.nlm.nih.gov/30910470/" target="_blank">PMID: 30910470</a> | <strong>OCEANIC-STROKE:</strong> Sharma M et al. <em>N Engl J Med</em>. 2026;394:1467-1479.
+          
+          <div id="dapt-result-box" class="status-summary-box safe" style="margin-bottom:0; flex:1;">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="status-desc">
+              <h4 id="dapt-title">POINT / CHANCE PROTOCOL</h4>
+              <p id="dapt-text">Loading...</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN: INFOGRAPHIC & TRIALS -->
+        <div class="glass-card" style="display:flex; flex-direction:column; gap:15px; margin-bottom:0;">
+          <div class="card-header" style="margin-bottom:0.8rem;">
+            <h2>Clinical Trials & Visuals</h2>
+            <span class="card-label">Secondary Evidence</span>
+          </div>
+          
+          <div class="scenarios-grid">
+            <button id="tab-btn-infographic" class="btn-scenario active" onclick="switchDaptTab('infographic')">Bedside Infographic</button>
+            <button id="tab-btn-trials" class="btn-scenario" onclick="switchDaptTab('trials')">Landmark Trials</button>
+            <button id="tab-btn-novel" class="btn-scenario" onclick="switchDaptTab('novel')">Novel Agents (Cilostazol)</button>
+          </div>
+          
+          <div id="dapt-tab-content" style="min-height: 420px; display:flex; flex-direction:column; justify-content:center;">
+            <!-- Tab content loaded dynamically -->
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>DAPT Bedside Reference Card</h1>
+          <div class="print-subtitle">Acute Non-Cardioembolic Ischemic Stroke & High-Risk TIA</div>
+        </div>
+        
+        <div class="print-grid">
+          
+          <div class="print-box">
+            <h3>⚡ Standard Bedside DAPT Protocols</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th>Protocol</th>
+                  <th>Clinical Target</th>
+                  <th>Loading Doses</th>
+                  <th>Maintenance Regimen (21-Day)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="alert-row-teal">
+                  <td><strong>POINT / CHANCE</strong></td>
+                  <td>Minor Stroke (NIHSS &le;3) or High-Risk TIA (ABCD² &ge;4) presenting **&lt;24 hours** from onset.</td>
+                  <td>• **Aspirin:** 150-325 mg once.<br>• **Clopidogrel:** 300-600 mg once.</td>
+                  <td>• **Days 2–21:** Aspirin 81 mg daily + Clopidogrel 75 mg daily.<br>• **Days 22–90:** Aspirin 81 mg daily monotherapy.</td>
+                </tr>
+                <tr class="alert-row-cyan">
+                  <td><strong>CHANCE-2</strong></td>
+                  <td>CYP2C19 Loss-of-function carriers presenting **&lt;24 hours**.</td>
+                  <td>• **Aspirin:** 150-325 mg once.<br>• **Ticagrelor:** 180 mg once.</td>
+                  <td>• **Days 2–21:** Aspirin 81 mg daily + Ticagrelor 90 mg BID.<br>• **Days 22–90:** Aspirin 81 mg daily monotherapy.</td>
+                </tr>
+                <tr class="alert-row-danger">
+                  <td><strong>SAMMPRIS</strong></td>
+                  <td>Symptomatic Large Artery Stenosis (ICAS 50-99%).</td>
+                  <td>• **Aspirin:** 325 mg once.<br>• **Clopidogrel:** 300-600 mg once.</td>
+                  <td>• **Days 2–90:** Aspirin 325 mg daily + Clopidogrel 75 mg daily.<br>• **Day 91+:** Aspirin 325 mg daily monotherapy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-box alert-row-danger">
+            <h3>🚨 Essential Exclusions & Contraindications</h3>
+            <ul class="print-list">
+              <li><strong>Prior Intracranial Hemorrhage:</strong> History of ICH, severe trauma, or active systemic bleeding.</li>
+              <li><strong>Thrombolysis Candidates:</strong> Do not load DAPT prior to IV thrombolysis. Hold all antiplatelets for 24 hours post-tPA/TNK.</li>
+              <li><strong>Cardioembolic Origin:</strong> AFib, mechanical valves, or thrombi require therapeutic anticoagulation, NOT long-term DAPT.</li>
+              <li><strong>Severe Deficits:</strong> NIHSS &ge; 4 (unless ICAS profile) carries high hemorrhagic transformation risk if loaded with DAPT.</li>
+            </ul>
+          </div>
+          
+          <div class="print-box full-width">
+            <h3>📈 Landmark DAPT Clinical Trials</h3>
+            <table class="print-table" style="font-size:0.65rem;">
+              <thead>
+                <tr>
+                  <th>Trial</th>
+                  <th>Population</th>
+                  <th>Intervention vs Control</th>
+                  <th>Efficacy Outcomes</th>
+                  <th>Bleeding Safety Outcomes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>CHANCE (NEJM, 2013)</strong></td>
+                  <td>5,170 Chinese patients, Minor Stroke/TIA &lt;24h.</td>
+                  <td>Clopidogrel (300mg load, 75mg daily) + ASA (75-300mg load, 75mg daily) for 21d vs. ASA alone.</td>
+                  <td>DAPT significantly reduced stroke recurrence at 90 days (8.2% vs. 11.7%, HR 0.68, p&lt;0.001).</td>
+                  <td>No significant difference in moderate-to-severe bleeding (0.3% vs 0.3%).</td>
+                </tr>
+                <tr>
+                  <td><strong>POINT (NEJM, 2018)</strong></td>
+                  <td>4,881 international patients, Minor Stroke/TIA &lt;24h.</td>
+                  <td>Clopidogrel (600mg load, 75mg daily) + ASA (50-325mg daily) for 90d vs. ASA alone.</td>
+                  <td>DAPT reduced major ischemic events at 90 days (5.0% vs. 6.5%, HR 0.75, p=0.02). Most benefit in first 21d.</td>
+                  <td>DAPT significantly increased major bleeding (0.9% vs. 0.4%, HR 2.32, p=0.02) during the 90d duration.</td>
+                </tr>
+                <tr>
+                  <td><strong>CHANCE-2 (NEJM, 2021)</strong></td>
+                  <td>6,431 Chinese CYP2C19 carriers, Minor Stroke/TIA &lt;24h.</td>
+                  <td>Ticagrelor (180mg load, 90mg BID) + ASA vs. Clopidogrel (300mg load, 75mg daily) + ASA for 21d.</td>
+                  <td>Ticagrelor-DAPT reduced stroke recurrence at 90 days compared to Clopidogrel-DAPT (6.0% vs. 7.6%, HR 0.77).</td>
+                  <td>No difference in severe or moderate bleeding (0.3% vs 0.3%).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Wang Y, et al. CHANCE. NEJM 2013. [2] Johnston SC, et al. POINT. NEJM 2018. [3] Wang Y, et al. CHANCE-2. NEJM 2021. [4] Chimowitz MI, et al. SAMMPRIS. NEJM 2011.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
       </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
     </div>
-  </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    // Tab contents
+    const tabContents = {
+      infographic: `
+        <div class="infographic-box" id="info-box" onclick="toggleZoom()">
+          <img src="../documents/antiplatelet/DAPT After Ischemic Stroke-TIA.jpeg" alt="DAPT Bedside Infographic"/>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:8px;">Click image to toggle zoom. Standard clinical pathway flowchart for secondary prevention.</p>
+      `,
+      trials: `
+        <div class="glass-card" style="margin-bottom:0; flex:1; font-size:0.8rem; overflow-y:auto; max-height:360px;">
+          <h3>Landmark Clinical Trials</h3>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+            <div>
+              <strong style="color:var(--color-cyan);">POINT Trial (NEJM 2018)</strong><br>
+              • DAPT for 90 days showed lower ischemic stroke rates but increased risk of major bleeding after day 21. Standard of care shifted to <strong>21 days</strong> of DAPT.
+            </div>
+            <div>
+              <strong style="color:var(--color-cyan);">CHANCE Trial (NEJM 2013)</strong><br>
+              • DAPT for 21 days showed significant reduction in stroke recurrence without excess bleeding risk in Chinese population.
+            </div>
+            <div>
+              <strong style="color:var(--color-cyan);">CHANCE-2 (NEJM 2021)</strong><br>
+              • In CYP2C19 loss-of-function carriers (poor clopidogrel metabolizers), Ticagrelor + Aspirin was superior to Clopidogrel + Aspirin.
+            </div>
+          </div>
+        </div>
+      `,
+      novel: `
+        <div class="glass-card" style="margin-bottom:0; flex:1; font-size:0.8rem;">
+          <h3>Novel Antiplatelet Regimens (Cilostazol)</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">CSPS.com trial (2019) validated dual therapy with Cilostazol in high-risk patients.</p>
+          <ul class="step-list">
+            <li><strong>Cilostazol Dosing:</strong> 100 mg orally twice daily.</li>
+            <li><strong>Trial Design:</strong> Dual therapy (Cilostazol + Aspirin/Clopidogrel) vs Monotherapy for long-term stroke prevention.</li>
+            <li><strong>Efficacy:</strong> Dual therapy led to a <strong>51% relative risk reduction</strong> of recurrent ischemic stroke without increasing bleeding rates.</li>
+            <li><strong>Side Effects:</strong> Headache, tachycardia, palpitations (PDE-3 inhibitor effect). Contraindicated in congestive heart failure.</li>
+          </ul>
+        </div>
+      `
+    };
+
+    function switchDaptTab(tabId) {
+      document.getElementById('tab-btn-infographic').classList.toggle('active', tabId === 'infographic');
+      document.getElementById('tab-btn-trials').classList.toggle('active', tabId === 'trials');
+      document.getElementById('tab-btn-novel').classList.toggle('active', tabId === 'novel');
+      
+      document.getElementById('dapt-tab-content').innerHTML = tabContents[tabId];
+    }
+
+    function toggleZoom() {
+      const box = document.getElementById('info-box');
+      if (box) {
+        box.classList.toggle('zoomed');
+      }
+    }
+
+    // Selector algorithm logic
+    function runDaptAlgorithm() {
+      const severity = document.getElementById('inp-severity').value;
+      const onset = document.getElementById('inp-onset').value;
+      const variant = document.getElementById('inp-variant').value;
+      
+      const rBox = document.getElementById('dapt-result-box');
+      const rTitle = document.getElementById('dapt-title');
+      const rText = document.getElementById('dapt-text');
+      
+      if (onset === 'late') {
+        rBox.className = 'status-summary-box danger';
+        rTitle.innerText = 'DAPT CONTRAINDICATED (LATE ONSET)';
+        rText.innerHTML = '<strong>Avoid DAPT:</strong> Time from onset is &gt;72 hours. Efficacy of DAPT is diminished, and hemorrhage risks outweigh benefits. Initiate standard single antiplatelet therapy (Aspirin 81 mg or Clopidogrel 75 mg daily) and focus on risk factors.';
+        return;
+      }
+      
+      if (severity === 'moderate') {
+        rBox.className = 'status-summary-box danger';
+        rTitle.innerText = 'DAPT CONTRAINDICATED (SEVERE DEFICIT)';
+        rText.innerHTML = '<strong>Avoid DAPT:</strong> Patient has a moderate-to-severe stroke (NIHSS &ge;4) and lacks a symptomatic ICAS profile. Loading DAPT carries high risk of hemorrhagic transformation in large infarcts. Proceed with single antiplatelet therapy.';
+        return;
+      }
+      
+      if (onset === 'mid') {
+        rBox.className = 'status-summary-box warning';
+        rTitle.innerText = 'DAPT BENCHMARK WARNING (24-72h WINDOW)';
+        rText.innerHTML = '<strong>Caution:</strong> Time from onset is 24-72 hours. While not enrolled in POINT/CHANCE, some clinicians consider DAPT for minor stroke if there is high recurrent risk and low core size. Weigh risks and benefits carefully.';
+        return;
+      }
+      
+      // Early window DAPT (<24 hours)
+      if (severity === 'icas') {
+        rBox.className = 'status-summary-box safe';
+        rTitle.innerText = 'SAMMPRIS PROTOCOL (ICAS PROFILE)';
+        rText.innerHTML = '<strong>90-Day DAPT:</strong><br>• **Loading:** Aspirin 325 mg + Clopidogrel 300-600 mg.<br>• **Days 2–90:** Aspirin 325 mg daily + Clopidogrel 75 mg daily.<br>• **Day 91+:** Transition to Aspirin 325 mg daily monotherapy. High-intensity statin and strict BP control (target &lt;140 mmHg) are mandatory.';
+      } else {
+        if (variant === 'carrier') {
+          rBox.className = 'status-summary-box safe';
+          rTitle.innerText = 'CHANCE-2 PROTOCOL (TICAGRELOR-DAPT)';
+          rText.innerHTML = '<strong>21-Day Ticagrelor DAPT:</strong><br>• **Loading:** Aspirin 150-325 mg + Ticagrelor 180 mg.<br>• **Days 2–21:** Aspirin 81 mg daily + Ticagrelor 90 mg orally twice daily.<br>• **Days 22–90:** Transition to Aspirin 81 mg daily monotherapy.';
+        } else {
+          rBox.className = 'status-summary-box safe';
+          rTitle.innerText = 'POINT / CHANCE PROTOCOL (CLOPIDOGREL-DAPT)';
+          rText.innerHTML = '<strong>21-Day Clopidogrel DAPT:</strong><br>• **Loading:** Aspirin 150-325 mg + Clopidogrel 300-600 mg.<br>• **Days 2–21:** Aspirin 81 mg daily + Clopidogrel 75 mg daily.<br>• **Days 22–90:** Transition to Aspirin 81 mg daily monotherapy.';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      switchDaptTab('infographic');
+      runDaptAlgorithm();
+    });
+  </script>
 </body>
 </html>

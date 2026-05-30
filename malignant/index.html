@@ -3,321 +3,496 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malignant Infarction Management</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Malignant Infarction Bedside Guide & Hemicraniectomy Wizard</title>
+  <meta name="description" content="Bedside eligibility calculator, counseling helper, and supportive ICU care for malignant MCA infarction.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
+    /* Scoped styles for Malignant MCA */
+    .malignant-input-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
     }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
+    
+    .malignant-input-row label {
+      font-size: 0.8rem;
       font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
+      color: var(--text-main);
     }
-    .portal-nav a:hover {
-      color: #38bdf8;
+    
+    .malignant-input-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 0.8rem;
+      outline: none;
+      width: 100%;
     }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
-    }
-    @media print {
-      .portal-nav {
-        display: none !important;
-      }
-      .cards-wrapper-outer {
-        padding: 0 !important;
-        background: #ffffff !important;
-        gap: 0 !important;
-      }
-    }
-  </style>
-  <style>
-    /* Scoped Malignant Figure Styles */
-    .card-add_figure_04_malignant_mca .outcome-chart-container {
-      background: white;
-      border: 1px solid var(--rule-soft);
+    
+    .outcome-chart-container {
+      background: hsl(223, 30%, 8%);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      padding: 12px;
+      margin-top: 10px;
     }
-    .card-add_figure_04_malignant_mca .outcome-row {
+    
+    .outcome-row {
       display: flex;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      transition: opacity 0.3s ease;
     }
-    .card-add_figure_04_malignant_mca .outcome-row:last-child {
-      margin-bottom: 4px;
-    }
-    .card-add_figure_04_malignant_mca .outcome-label {
-      width: 155px;
-      font-size: 9.0pt;
+    
+    .outcome-label {
+      width: 140px;
+      font-size: 0.75rem;
       font-weight: 700;
-      color: var(--ink-soft);
+      color: var(--text-muted);
       line-height: 1.2;
     }
-    .card-add_figure_04_malignant_mca .stacked-bar-container {
+    
+    .stacked-bar-container {
       flex: 1;
-      height: 24px;
+      height: 20px;
       display: flex;
       border-radius: 4px;
       overflow: hidden;
-      background: #f1f2f6;
+      background: #1e293b;
     }
-    .card-add_figure_04_malignant_mca .bar-segment {
+    
+    .bar-segment {
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 8.5pt;
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
       font-weight: 700;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
-    .card-add_figure_04_malignant_mca .bar-mrs-03 { background: #2E7D32; } /* Green - Functional Independence */
-    .card-add_figure_04_malignant_mca .bar-mrs-4  { background: #F57C00; } /* Gold - Walk with help */
-    .card-add_figure_04_malignant_mca .bar-mrs-5  { background: #E64A19; } /* Orange-Red - Bedbound */
-    .card-add_figure_04_malignant_mca .bar-mrs-6  { background: #212121; } /* Dark charcoal - Death */
+    
+    .bar-mrs-03 { background: #15803d; } /* Green - Functional Independence */
+    .bar-mrs-4  { background: #b45309; } /* Gold - Walk with help */
+    .bar-mrs-5  { background: #be123c; } /* Red - Bedbound */
+    .bar-mrs-6  { background: #1e293b; border-left: 1px solid rgba(255,255,255,0.1); } /* Dark charcoal - Death */
 
-    .card-add_figure_04_malignant_mca .chart-legend {
+    .chart-legend {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 10px 20px;
+      gap: 6px 15px;
       margin-top: 10px;
-      font-size: 8.5pt;
-      color: var(--ink-soft);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      border-top: 1px dashed var(--border-color);
+      padding-top: 8px;
     }
-    .card-add_figure_04_malignant_mca .legend-item {
+    
+    .legend-item {
       display: flex;
       align-items: center;
       gap: 4px;
     }
-    .card-add_figure_04_malignant_mca .legend-dot {
+    
+    .legend-dot {
       width: 8px;
       height: 8px;
       border-radius: 2px;
     }
-    
-    @media (max-width: 850px) {
-      .card-add_figure_04_malignant_mca .outcome-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 5px;
-      }
-      .card-add_figure_04_malignant_mca .outcome-label {
-        width: 100%;
-      }
-    }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper card-add_figure_04_malignant_mca">
-      <div class="card-container" style="box-sizing: border-box;">
-        <div class="card-content">
-          <h1 style="text-align: center; margin-bottom: 4px;">Malignant Infarction</h1>
-          <p style="font-size: 8.8pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
-            Decompressive hemicraniectomy selection criteria, evidence, and supportive ICU care.
-          </p>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Critical Care Neurology</span>
+        <h1 id="app-title">Malignant Infarction Guide</h1>
+        <p class="subtitle">Hemicraniectomy selection criteria, outcomes counseling, and ICU supportive care</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
 
-          <!-- Horizontal Chevron Timeline SVG -->
-          <svg viewBox="0 0 735 65" style="width: 100%; height: 65px; margin-bottom: 8px;">
-            <polygon points="0,0 230,0 242,32 230,65 0,65" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.5" />
-            <text x="110" y="28" fill="var(--teal-deep)" font-size="8.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">STAGE 1: 0 - 24 HOURS</text>
-            <text x="110" y="44" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">Baseline Core &amp; Serial NIHSS Checks</text>
-            <polygon points="233,0 470,0 482,32 470,65 233,65 245,32" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5" />
-            <text x="352" y="28" fill="var(--amber-deep)" font-size="8.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">STAGE 2: 24 - 48 HOURS</text>
-            <text x="352" y="44" fill="var(--ink-soft)" font-size="7pt" font-family="IBM Plex Sans" text-anchor="middle">Peak Edema Phase &amp; Serial CT Scan</text>
-            <polygon points="473,0 735,0 735,65 473,65 485,32" fill="var(--red-soft)" stroke="var(--red)" stroke-width="1.5" />
-            <text x="609" y="28" fill="var(--red-deep)" font-size="8.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">STAGE 3: &lt; 48H SURGERY</text>
-            <text x="609" y="44" fill="var(--red-deep)" font-size="7pt" font-family="IBM Plex Sans" font-weight="600" text-anchor="middle">Decompressive Hemicraniectomy</text>
-          </svg>
-
-          <!-- Selection Criteria Grid -->
-          <div style="border: 1.5px solid var(--red); border-radius: 8px; padding: 8px 10px; background: linear-gradient(135deg, var(--red-soft) 0%, #ffffff 100%); margin-bottom: 12px; box-shadow: 0 4px 12px var(--red-glow);">
-            <strong style="color: var(--red-deep); font-size: 11.5pt; display: block; margin-bottom: 4px;">1. Decompressive Hemicraniectomy Selection Criteria</strong>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 8.0pt; line-height: 1.35; color: var(--ink-soft);">
-              <div>
-                <strong>Clinical Deficit Severity:</strong>
-                <br/>• NIHSS <strong>&gt; 15</strong> (non-dominant hemisphere)
-                <br/>• NIHSS <strong>&gt; 20</strong> (dominant hemisphere)
-                <br/>• AND decrease in level of consciousness (NIHSS Item 1a score <strong>&ge; 1</strong> / obtunded or stuporous)
-                <br/>• <strong>Timing:</strong> Surgery performed <strong>within 48 hours</strong> of onset.
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid">
+        
+        <!-- LEFT COLUMN: ELIGIBILITY WIZARD -->
+        <div class="glass-card" style="display:flex; flex-direction:column; gap:15px;">
+          <div>
+            <div class="card-header" style="margin-bottom:0.8rem;">
+              <h2>Hemicraniectomy Selection Wizard</h2>
+              <span class="card-label">Surgical Candidate Calculator</span>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div class="malignant-input-row">
+                <label>1. Patient Age</label>
+                <select id="inp-age" onchange="runMalignantAlgorithm()">
+                  <option value="young">Age &lt; 60 years</option>
+                  <option value="old">Age &ge; 60 years</option>
+                </select>
               </div>
-              <div>
-                <strong>Radiographic Markers:</strong>
-                <br/>• Infarction of <strong>&ge; 50%</strong> of the MCA territory (CT/MRI)
-                <br/>• DWI core volume <strong>&gt; 82 mL</strong> within 6 hours
-                <br/>• DWI core volume <strong>&gt; 145 mL</strong> within 14 hours
-                <br/>• Midline shift or mass effect on repeat imaging
-                <br/>• <strong>Surgical Spec:</strong> Bone flap diameter <strong>&ge; 12–15 cm</strong> with duraplasty.
+              
+              <div class="malignant-input-row">
+                <label>2. Deficit Severity</label>
+                <select id="inp-nihss" onchange="runMalignantAlgorithm()">
+                  <option value="severe">NIHSS &gt;15 (non-dominant) or &gt;20 (dominant)</option>
+                  <option value="mild">NIHSS &le;15 / Mild deficits</option>
+                </select>
+              </div>
+              
+              <div class="malignant-input-row">
+                <label>3. Level of Consciousness</label>
+                <select id="inp-loc" onchange="runMalignantAlgorithm()">
+                  <option value="depressed">Decreased LOC (NIHSS 1a &ge; 1)</option>
+                  <option value="alert">Fully Alert (NIHSS 1a = 0)</option>
+                </select>
+              </div>
+              
+              <div class="malignant-input-row">
+                <label>4. Infarct Size (MRI/CT)</label>
+                <select id="inp-infarct" onchange="runMalignantAlgorithm()">
+                  <option value="large">Infarction &ge;50% MCA territory (or core &gt;82mL)</option>
+                  <option value="small">Infarction &lt;50% MCA territory</option>
+                </select>
+              </div>
+              
+              <div class="malignant-input-row">
+                <label>5. Time from Onset</label>
+                <select id="inp-timing" onchange="runMalignantAlgorithm()">
+                  <option value="early">&le; 48 hours</option>
+                  <option value="late">&gt; 48 hours</option>
+                </select>
               </div>
             </div>
           </div>
-
-          <!-- Bedside Counseling outcomes chart -->
-          <div class="outcome-chart-container">
-            <strong style="color: var(--purple-deep); font-size: 11.5pt; display: block; margin-bottom: 4px;">2. Surgical Outcomes &amp; Evidence (By Age Group)</strong>
-            
-            <!-- Age < 60 Row -->
-            <div class="outcome-row">
-              <div class="outcome-label">
-                <strong>Age &lt; 60 Years</strong> (DECIMAL/DESTINY)<br/>
-                <span style="font-size: 6.5pt; font-weight: normal; color: var(--ink-mute);">Surgery (22% Mort) vs Med (71% Mort)</span>
-              </div>
-              <div class="stacked-bar-container">
-                <div class="bar-segment bar-mrs-03" style="width: 43%;">43%</div>
-                <div class="bar-segment bar-mrs-4" style="width: 32%;">32%</div>
-                <div class="bar-segment bar-mrs-5" style="width: 3%;">3%</div>
-                <div class="bar-segment bar-mrs-6" style="width: 22%;">22%</div>
-              </div>
-            </div>
-
-            <div class="outcome-row">
-              <div class="outcome-label" style="opacity: 0.7; font-weight: normal; font-size: 7.2pt;">
-                Age &lt; 60 Medical Control
-              </div>
-              <div class="stacked-bar-container" style="opacity: 0.7;">
-                <div class="bar-segment bar-mrs-03" style="width: 21%;">21%</div>
-                <div class="bar-segment bar-mrs-4" style="width: 3%;">3%</div>
-                <div class="bar-segment bar-mrs-5" style="width: 5%;">5%</div>
-                <div class="bar-segment bar-mrs-6" style="width: 71%;">71%</div>
-              </div>
-            </div>
-
-            <!-- Age >= 60 Row -->
-            <div class="outcome-row" style="margin-top: 6px;">
-              <div class="outcome-label">
-                <strong>Age &ge; 60 Years</strong> (DESTINY II)<br/>
-                <span style="font-size: 6.5pt; font-weight: normal; color: var(--ink-mute);">Surgery (33% Mort) vs Med (70% Mort)</span>
-              </div>
-              <div class="stacked-bar-container">
-                <div class="bar-segment bar-mrs-03" style="width: 7%;">7%</div>
-                <div class="bar-segment bar-mrs-4" style="width: 31%;">31%</div>
-                <div class="bar-segment bar-mrs-5" style="width: 29%;">29%</div>
-                <div class="bar-segment bar-mrs-6" style="width: 33%;">33%</div>
-              </div>
-            </div>
-
-            <div class="outcome-row">
-              <div class="outcome-label" style="opacity: 0.7; font-weight: normal; font-size: 7.2pt;">
-                Age &ge; 60 Medical Control
-              </div>
-              <div class="stacked-bar-container" style="opacity: 0.7;">
-                <div class="bar-segment bar-mrs-03" style="width: 3%;">3%</div>
-                <div class="bar-segment bar-mrs-4" style="width: 15%;">15%</div>
-                <div class="bar-segment bar-mrs-5" style="width: 12%;">12%</div>
-                <div class="bar-segment bar-mrs-6" style="width: 70%;">70%</div>
-              </div>
-            </div>
-
-            <!-- Legend -->
-            <div class="chart-legend">
-              <div class="legend-item">
-                <div class="legend-dot bar-mrs-03"></div>
-                <div>mRS 0–3: Functional Independence / Mild-Mod Disability</div>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot bar-mrs-4"></div>
-                <div>mRS 4: Moderately Severe (Walk with assistance)</div>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot bar-mrs-5"></div>
-                <div>mRS 5: Severe Disability (Bedbound)</div>
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot bar-mrs-6"></div>
-                <div>mRS 6: Death</div>
-              </div>
-            </div>
-            
-            <div style="font-size: 7pt; line-height: 1.25; margin-top: 4px; color: var(--ink-soft); text-align: center; border-top: 1px dashed var(--rule); padding-top: 3px;">
-              • <strong>Age &lt; 60:</strong> NNT = 2 for survival, NNT = 4 for mRS &le;3. | • <strong>Age &ge; 60:</strong> NNT = 3 for survival, NNT = 25 for mRS &le;3. *Goals-of-care discussion critical.
+          
+          <div id="malignant-result" class="status-summary-box safe" style="margin-bottom:0; flex:1;">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="status-desc">
+              <h4 id="mal-title">SURGICAL DECOMPRESSION INDICATED</h4>
+              <p id="mal-text">Patient meets criteria for decompressive hemicraniectomy. Triage for urgent neurosurgical consultation, obtain consent, and prepare for operating room.</p>
             </div>
           </div>
-
-          <!-- Supportive Care Grid -->
-          <div style="border: 1px solid var(--rule-soft); border-radius: 8px; padding: 12px 14px; background: white; margin-bottom: 20px;">
-            <strong style="color: var(--purple-deep); font-size: 11.5pt; display: block; margin-bottom: 4px;">3. Supportive ICU Care &amp; Medical Management</strong>
-            <table style="width: 100%; border-collapse: collapse; font-size: 7.8pt; line-height: 1.35; color: var(--ink);">
+        </div>
+        
+        <!-- RIGHT COLUMN: OUTCOMES & ICU SUPPORT -->
+        <div class="glass-card" style="display:flex; flex-direction:column; gap:15px; margin-bottom:0;">
+          <div class="card-header" style="margin-bottom:0.8rem;">
+            <h2>Evidence-Based Outcomes & Counseling</h2>
+            <span class="card-label">Outcomes Database</span>
+          </div>
+          
+          <div class="scenarios-grid">
+            <button id="tab-btn-outcomes" class="btn-scenario active" onclick="switchMalTab('outcomes')">Surgical Outcomes (mRS)</button>
+            <button id="tab-btn-icu" class="btn-scenario" onclick="switchMalTab('icu')">ICU Supportive Care</button>
+            <button id="tab-btn-trials" class="btn-scenario" onclick="switchMalTab('trials')">Landmark Trials</button>
+          </div>
+          
+          <div id="mal-tab-content" style="min-height: 420px; display:flex; flex-direction:column; justify-content:center;">
+            <!-- Tab content loaded dynamically -->
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Malignant Infarction Bedside Reference</h1>
+          <div class="print-subtitle">Decompressive Hemicraniectomy & ICU Supportive Protocols</div>
+        </div>
+        
+        <div class="print-grid">
+          
+          <div class="print-box">
+            <h3>⚡ Decompressive Hemicraniectomy Selection Criteria</h3>
+            <ul class="print-list" style="margin-top:0.25rem;">
+              <li><strong>Clinical Deficit Severity:</strong>
+                <ul>
+                  <li>NIHSS &gt;15 in non-dominant hemisphere stroke.</li>
+                  <li>NIHSS &gt;20 in dominant hemisphere stroke.</li>
+                  <li>**AND** decrease in level of consciousness (NIHSS Item 1a score &ge; 1 / drowsy or stuporous).</li>
+                </ul>
+              </li>
+              <li><strong>Radiographic Markers (CT or MRI):</strong>
+                <ul>
+                  <li>Infarction of &ge; 50% of the MCA territory.</li>
+                  <li>DWI core volume &gt; 82 mL within 6 hours of onset.</li>
+                  <li>DWI core volume &gt; 145 mL within 14 hours of onset.</li>
+                </ul>
+              </li>
+              <li><strong>Timing:</strong> Surgery must be performed **within 48 hours** of onset.</li>
+              <li><strong>Surgical Spec:</strong> Bone flap diameter **&ge; 12–15 cm** with duraplasty.</li>
+            </ul>
+          </div>
+          
+          <div class="print-box alert-row-danger">
+            <h3>🚨 Supportive ICU Care & Medical Management</h3>
+            <table class="print-table" style="font-size:0.7rem;">
+              <thead>
+                <tr>
+                  <th style="width:25%;">Protocol Area</th>
+                  <th style="width:75%;">Standard Intervention Criteria</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--rule-soft);">
-                  <td style="font-weight: 700; width: 22%; padding: 4px 0; color: var(--purple-deep); vertical-align: top;">Positioning</td>
-                  <td style="padding: 4px 0; color: var(--ink-soft);">Elevate HOB 30 degrees; maintain straight head/neck alignment to maximize venous outflow.</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--rule-soft);">
-                  <td style="font-weight: 700; padding: 4px 0; color: var(--purple-deep); vertical-align: top;">Fluids</td>
-                  <td style="padding: 4px 0; color: var(--ink-soft);">Use Isotonic Saline (0.9% NS). <strong>Avoid hypotonic fluids</strong> (e.g. D5W, 0.45% NS, LR) which worsen edema. Maintain euvolemia.</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--rule-soft);">
-                  <td style="font-weight: 700; padding: 4px 0; color: var(--purple-deep); vertical-align: top;">Osmotherapy</td>
-                  <td style="padding: 4px 0; color: var(--ink-soft);">Consider <strong>targeted PRN</strong> hyperosmolar agents (HTS 3% or Mannitol) for acute decline or severe mass effect. <em>Prophylactic osmotherapy is not recommended.</em></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--rule-soft);">
-                  <td style="font-weight: 700; padding: 4px 0; color: var(--purple-deep); vertical-align: top;">Metabolic</td>
-                  <td style="padding: 4px 0; color: var(--ink-soft);">Target normothermia (&lt;37.8°C). Target normocapnia (PaCO2 35-45 mmHg); avoid hypoventilation/hypercapnia.</td>
+                <tr>
+                  <td><strong>HOB Elevation</strong></td>
+                  <td>Elevate HOB **30 degrees** with head/neck kept in neutral alignment to maximize jugular venous drainage and reduce intracranial pressure.</td>
                 </tr>
                 <tr>
-                  <td style="font-weight: 700; padding: 4px 0; color: var(--purple-deep); vertical-align: top;">Steroids</td>
-                  <td style="padding: 4px 0; color: var(--ink-soft);"><strong style="color: var(--red);">Class III (Harmful)</strong>: Corticosteroids are NOT recommended for reducing cerebral edema in acute ischemic stroke.</td>
+                  <td><strong>Fluids</strong></td>
+                  <td>Maintain euvolemia using **Isotonic Saline (0.9% NS)**. Avoid hypotonic fluids (D5W, 0.45% NS, LR) which worsen cytotoxic edema.</td>
+                </tr>
+                <tr>
+                  <td><strong>Osmotherapy</strong></td>
+                  <td>Targeted **PRN** hyperosmolar therapy (HTS 3% or Mannitol 20%) for acute clinical pupil changes or severe midline shift. Avoid prophylactic use.</td>
+                </tr>
+                <tr>
+                  <td><strong>Metabolic Target</strong></td>
+                  <td>Target normothermia (&lt;37.8°C). Target normocapnia (PaCO2 35-45 mmHg); avoid hypoventilation which raises SBP/ICP.</td>
+                </tr>
+                <tr>
+                  <td><strong>Steroids</strong></td>
+                  <td>**Class III (Harmful):** Glucocorticoids are contraindicated for cerebral edema in ischemic stroke. Do not use.</td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <!-- Citations -->
-          <div class="ref-citation" style="margin-top: 0; padding: 6px 10px; font-size: 7.5pt; line-height: 1.25;">
-            <strong>DECIMAL:</strong> Vahedi K et al. <em>Stroke</em>. 2007;38:2506-2517. <a href="https://pubmed.ncbi.nlm.nih.gov/17690311/" target="_blank">PMID: 17690311</a> | <strong>DESTINY:</strong> Jüttler E et al. <em>Stroke</em>. 2007;38:2518-2525. <a href="https://pubmed.ncbi.nlm.nih.gov/17690310/" target="_blank">PMID: 17690310</a><br/>
-            <strong>HAMLET:</strong> Hofmeijer J et al. <em>Lancet Neurol</em>. 2009;8:326-333. <a href="https://pubmed.ncbi.nlm.nih.gov/19269254/" target="_blank">PMID: 19269254</a> | <strong>DESTINY II:</strong> Jüttler E et al. <em>N Engl J Med</em>. 2014;370:1091-1100. <a href="https://pubmed.ncbi.nlm.nih.gov/24645942/" target="_blank">PMID: 24645942</a><br/>
-            <strong>AHA Guidelines:</strong> Wijdicks EF et al. <em>Stroke</em>. 2014;45:1222-1238. <a href="https://pubmed.ncbi.nlm.nih.gov/24481970/" target="_blank">PMID: 24481970</a>
+          
+          <div class="print-box full-width">
+            <h3>📊 Hemicraniectomy Outcomes & Evidence Summary</h3>
+            <table class="print-table" style="font-size:0.65rem;">
+              <thead>
+                <tr>
+                  <th>Age Category</th>
+                  <th>Core Evidence Trials</th>
+                  <th>Survival Benefit (Mortality)</th>
+                  <th>Functional Outcomes (mRS &le; 3)</th>
+                  <th>Clinical Takeaway</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="alert-row-teal">
+                  <td><strong>Age &lt; 60 Years</strong></td>
+                  <td>DECIMAL, DESTINY, HAMLET pooled meta-analysis</td>
+                  <td>**22%** with Surgery vs **71%** with Medical Management (ARR 49%, NNT = 2 for survival).</td>
+                  <td>**43%** with Surgery vs **21%** with Medical Management (NNT = 4 for functional independence).</td>
+                  <td>Highly recommended. Strong survival and functional independence benefit. Perform surgery &lt;48 hours.</td>
+                </tr>
+                <tr class="alert-row-yellow">
+                  <td><strong>Age &ge; 60 Years</strong></td>
+                  <td>DESTINY II Trial (NEJM 2014)</td>
+                  <td>**33%** with Surgery vs **70%** with Medical Management (ARR 37%, NNT = 3 for survival).</td>
+                  <td>**7%** with Surgery vs **3%** with Medical Management (NNT = 25 for functional independence).</td>
+                  <td>Significant survival benefit but functional recovery is limited (most survivors have mRS 4 or 5). Strict counseling and goals-of-care discussion critical.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] Vahedi K, et al. DECIMAL. Stroke 2007. [2] Jüttler E, et al. DESTINY. Stroke 2007. [3] Jüttler E, et al. DESTINY II. NEJM 2014. [4] Wijdicks EF, et al. AHA Guidelines. Stroke 2014.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
       </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
     </div>
-  </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    // Tab content configurations
+    const tabContents = {
+      outcomes: `
+        <div class="outcome-chart-container">
+          <h3 style="font-size:0.95rem; margin-bottom:8px;">DECIMAL / DESTINY II Outcomes</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">Comparative 90-day Modified Rankin Scale (mRS) outcomes of surgery vs. medical management.</p>
+          
+          <!-- Young Age Row -->
+          <div class="outcome-row" id="young-outcomes-row">
+            <div class="outcome-label">
+              <strong>Age &lt; 60 Years</strong><br>
+              <span style="font-size: 6.5pt; font-weight: normal; color: var(--text-muted);">Surg (22% Mort) vs Med (71% Mort)</span>
+            </div>
+            <div class="stacked-bar-container">
+              <div class="bar-segment bar-mrs-03" style="width: 43%;">43%</div>
+              <div class="bar-segment bar-mrs-4" style="width: 32%;">32%</div>
+              <div class="bar-segment bar-mrs-5" style="width: 3%;">3%</div>
+              <div class="bar-segment bar-mrs-6" style="width: 22%;">22%</div>
+            </div>
+          </div>
+          
+          <!-- Old Age Row -->
+          <div class="outcome-row" id="old-outcomes-row">
+            <div class="outcome-label">
+              <strong>Age &ge; 60 Years</strong><br>
+              <span style="font-size: 6.5pt; font-weight: normal; color: var(--text-muted);">Surg (33% Mort) vs Med (70% Mort)</span>
+            </div>
+            <div class="stacked-bar-container">
+              <div class="bar-segment bar-mrs-03" style="width: 7%;">7%</div>
+              <div class="bar-segment bar-mrs-4" style="width: 31%;">31%</div>
+              <div class="bar-segment bar-mrs-5" style="width: 29%;">29%</div>
+              <div class="bar-segment bar-mrs-6" style="width: 33%;">33%</div>
+            </div>
+          </div>
+          
+          <!-- Legend -->
+          <div class="chart-legend">
+            <div class="legend-item"><div class="legend-dot bar-mrs-03"></div><span>mRS 0-3 (Indep / Mild-Mod)</span></div>
+            <div class="legend-item"><div class="legend-dot bar-mrs-4"></div><span>mRS 4 (Assisted Walk)</span></div>
+            <div class="legend-item"><div class="legend-dot bar-mrs-5"></div><span>mRS 5 (Bedbound)</span></div>
+            <div class="legend-item"><div class="legend-dot bar-mrs-6"></div><span>mRS 6 (Death)</span></div>
+          </div>
+        </div>
+      `,
+      icu: `
+        <div class="glass-card" style="margin-bottom:0; flex:1; font-size:0.8rem;">
+          <h3>Supportive ICU Care Management</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">Supportive protocols to reduce edema and secondary ICP spikes.</p>
+          <ul class="step-list">
+            <li><strong>HOB Elevation:</strong> 30 degrees; neutral head alignment to promote venous drainage.</li>
+            <li><strong>Isotonic Fluids:</strong> Maintain euvolemia with 0.9% Normal Saline. Avoid all hypotonic solutions.</li>
+            <li><strong>Osmotherapy:</strong> PRN Hypertonic Saline (3%) or Mannitol for acute pupil changes or severe mass shifts.</li>
+            <li><strong>Metabolic Norms:</strong> Maintain normothermia (&lt;37.8°C) and normocapnia (PaCO2 35-45 mmHg).</li>
+          </ul>
+        </div>
+      `,
+      trials: `
+        <div class="glass-card" style="margin-bottom:0; flex:1; font-size:0.8rem; overflow-y:auto; max-height:360px;">
+          <h3>DECIMAL / DESTINY Landmark Trials</h3>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+            <div>
+              <strong style="color:var(--color-cyan);">DECIMAL & DESTINY (Age &lt;60)</strong><br>
+              • Pooled meta-analysis showed hemicraniectomy performed &lt;48h reduces mortality from 71% to 22% (ARR 49%, NNT=2) and increases functional independence (NNT=4).
+            </div>
+            <div>
+              <strong style="color:var(--color-cyan);">DESTINY II (Age &ge;60 - NEJM 2014)</strong><br>
+              • Thrombectomy reduced mortality from 70% to 33% (NNT=3) but most survivors remained severely disabled (mRS 4 or 5). Only 7% achieved mRS &le;3. Strict counseling required.
+            </div>
+          </div>
+        </div>
+      `
+    };
+
+    function switchMalTab(tabId) {
+      document.getElementById('tab-btn-outcomes').classList.toggle('active', tabId === 'outcomes');
+      document.getElementById('tab-btn-icu').classList.toggle('active', tabId === 'icu');
+      document.getElementById('tab-btn-trials').classList.toggle('active', tabId === 'trials');
+      
+      document.getElementById('mal-tab-content').innerHTML = tabContents[tabId];
+      
+      // Update highlights if Outcomes tab is active
+      if (tabId === 'outcomes') {
+        highlightOutcomesRow();
+      }
+    }
+
+    function highlightOutcomesRow() {
+      const age = document.getElementById('inp-age').value;
+      const youngRow = document.getElementById('young-outcomes-row');
+      const oldRow = document.getElementById('old-outcomes-row');
+      
+      if (youngRow && oldRow) {
+        if (age === 'young') {
+          youngRow.style.opacity = '1';
+          oldRow.style.opacity = '0.3';
+        } else {
+          youngRow.style.opacity = '0.3';
+          oldRow.style.opacity = '1';
+        }
+      }
+    }
+
+    // Eligibility algorithm logic
+    function runMalignantAlgorithm() {
+      const age = document.getElementById('inp-age').value;
+      const nihss = document.getElementById('inp-nihss').value;
+      const loc = document.getElementById('inp-loc').value;
+      const infarct = document.getElementById('inp-infarct').value;
+      const timing = document.getElementById('inp-timing').value;
+      
+      const rBox = document.getElementById('malignant-result');
+      const rTitle = document.getElementById('mal-title');
+      const rText = document.getElementById('mal-text');
+      
+      // Update outcomes chart highlight if it is currently displayed
+      highlightOutcomesRow();
+      
+      if (timing === 'late') {
+        rBox.className = 'status-summary-box danger';
+        rTitle.innerText = 'SURGERY NOT SUPPORTED (&gt;48h WINDOW)';
+        rText.innerHTML = '<strong>Hemicraniectomy contraindicated:</strong> Time from symptom onset exceeds 48 hours. DECIMAL/DESTINY trials only validated surgery within 48h. Focus on supportive ICU care and osmotic therapy.';
+        return;
+      }
+      
+      if (infarct === 'small') {
+        rBox.className = 'status-summary-box warning';
+        rTitle.innerText = 'MONITOR CLOSELY (SMALL CORE)';
+        rText.innerHTML = '<strong>Monitor Patient:</strong> Infarcted MCA territory is &lt;50% and core is small. Surgery not indicated at this time. Perform serial neuro checks (q1-2h) and repeat Head CT at 24 hours to monitor for edema expansion.';
+        return;
+      }
+      
+      if (nihss === 'mild' || loc === 'alert') {
+        rBox.className = 'status-summary-box warning';
+        rTitle.innerText = 'MONITOR CLOSELY (MILD OR ALERT)';
+        rText.innerHTML = '<strong>Monitor Patient:</strong> Patient has a large territory infarct but clinical deficits are mild or level of consciousness is intact. Surgery not immediately indicated. Hold and perform serial clinical assessments.';
+        return;
+      }
+      
+      // Candidate meets criteria
+      rBox.className = 'status-summary-box safe';
+      rTitle.innerText = 'SURGICAL DECOMPRESSION INDICATED';
+      
+      if (age === 'young') {
+        rText.innerHTML = '<strong>DECIMAL / DESTINY Profile (Age &lt;60):</strong> Strong survival benefit (mortality drops 71% &rarr; 22%, NNT=2) and functional benefit (mRS 0-3: 43% vs 21%, NNT=4). Triage neurosurgery immediately.';
+      } else {
+        rText.innerHTML = '<strong>DESTINY II Profile (Age &ge;60):</strong> Significant survival benefit (mortality drops 70% &rarr; 33%, NNT=3) but functional recovery is limited (only 7% achieve mRS 0-3; most survivors have mRS 4 or 5). <strong>Goals-of-care discussion is critical.</strong>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      switchMalTab('outcomes');
+      runMalignantAlgorithm();
+    });
+  </script>
 </body>
 </html>

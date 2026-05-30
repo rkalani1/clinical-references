@@ -3,220 +3,417 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Symptomatic Carotid Stenosis &amp; Large Artery Disease</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Symptomatic Carotid Stenosis Bedside Guide</title>
+  <meta name="description" content="Bedside guide and interactive decision support for symptomatic carotid stenosis revascularization, trials, and medical targets.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
+  
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #38bdf8;
-    }
-    .cards-wrapper-outer {
+    /* Scoped styles for Carotid */
+    .carotid-select-row {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
+      gap: 5px;
+      margin-bottom: 12px;
     }
-    @media (max-width: 850px) {
-      .portal-nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
+    
+    .carotid-select-row label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    
+    .carotid-select-row select {
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 0.85rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .decision-display {
+      background-color: hsl(223, 30%, 4%);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      margin-top: 10px;
+    }
+
+    .tab-btn-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .tab-btn.active {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="dark-mode">
+
   <nav class="portal-nav">
     <a href="../index.html">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
       Portal Dashboard
     </a>
   </nav>
 
-  <div class="cards-wrapper-outer">
-    <div class="card-wrapper landscape-card">
-      <div class="card-container" style="box-sizing: border-box; width: 825px; min-height: 1100px; padding: 25px 40px;">
-        <div class="card-content" style="justify-content: flex-start; gap: 10px;">
-          
-          <div class="card-header" style="display: flex;">
-            <div class="title-logo">UW Medicine</div>
-            <div class="doc-id">DOC.REF.CAROTID</div>
-          </div>
-
-          <h1 style="font-size: 16.5pt; margin-bottom: 4px; padding-bottom: 2px; text-align: center;">Symptomatic Cervical Carotid Artery Stenosis</h1>
-          <p style="font-size: 9.2pt; color: var(--ink-soft); margin-bottom: 12px; text-align: center; font-weight: 500;">
-            Revascularization selection criteria, clinical trials, and diagnostic imaging comparisons for secondary stroke prevention.
-          </p>
-
-          <!-- Decision Tree SVG Diagram -->
-          <svg viewBox="0 0 745 170" style="width: 100%; height: 160px; margin-bottom: 10px;">
-            <rect x="0" y="0" width="745" height="170" rx="8" fill="var(--fill-soft)" stroke="var(--rule-soft)" stroke-width="1"/>
-            <rect x="297" y="10" width="150" height="28" rx="4" fill="var(--purple-deep)" />
-            <text x="372.5" y="27" fill="white" font-size="8pt" font-family="Outfit" font-weight="700" text-anchor="middle">SYMPTOMATIC CAROTID STENOSIS</text>
-            <path d="M 372.5 38 L 372.5 50 M 115 50 L 630 50 M 115 50 L 115 62 M 285 50 L 285 62 M 455 50 L 455 62 M 630 50 L 630 62" stroke="var(--purple)" stroke-width="1.2" fill="none"/>
-            
-            <rect x="40" y="62" width="150" height="30" rx="4" fill="white" stroke="var(--slate)" stroke-width="1.2"/>
-            <text x="115" y="76" fill="var(--ink)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Mild (&lt;50% Stenosis)</text>
-            <text x="115" y="87" fill="var(--red-deep)" font-size="6.5pt" font-family="IBM Plex Mono" font-weight="600" text-anchor="middle">Revasc Harmful. Medical Mgmt.</text>
-            
-            <rect x="210" y="62" width="150" height="30" rx="4" fill="white" stroke="var(--amber)" stroke-width="1.2"/>
-            <text x="285" y="76" fill="var(--ink)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Moderate (50-69% Stenosis)</text>
-            <text x="285" y="87" fill="var(--amber-deep)" font-size="6.5pt" font-family="IBM Plex Sans" text-anchor="middle">Verify w/ 2nd Study. Select Patients.</text>
-            
-            <rect x="380" y="62" width="150" height="30" rx="4" fill="white" stroke="var(--teal)" stroke-width="1.5"/>
-            <text x="455" y="76" fill="var(--teal-deep)" font-size="7.5pt" font-family="Outfit" font-weight="800" text-anchor="middle">Severe (70-99% Stenosis)</text>
-            <text x="455" y="87" fill="var(--teal-deep)" font-size="6.5pt" font-family="IBM Plex Sans" font-weight="600" text-anchor="middle">Revasc Beneficial (NNT = 6)</text>
-            
-            <rect x="555" y="62" width="150" height="30" rx="4" fill="white" stroke="var(--slate)" stroke-width="1.2"/>
-            <text x="630" y="76" fill="var(--ink)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Near-Occlusion or Occlusion</text>
-            <text x="630" y="87" fill="var(--ink-mute)" font-size="6.5pt" font-family="IBM Plex Mono" text-anchor="middle">No Revasc Benefit. Medical Mgmt.</text>
-
-            <path d="M 455 92 L 455 105 M 285 92 L 285 105" stroke="var(--slate)" stroke-width="1" fill="none"/>
-            <path d="M 285 105 L 625 105 M 625 105 L 625 115 M 455 105 L 455 115" stroke="var(--slate)" stroke-width="1" fill="none"/>
-
-            <rect x="380" y="115" width="150" height="22" rx="3" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.2"/>
-            <text x="455" y="129" fill="var(--teal-deep)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Carotid Endarterectomy (CEA)</text>
-            <text x="455" y="139" fill="var(--ink-soft)" font-size="5.5pt" font-family="IBM Plex Sans" text-anchor="middle">Preferred if age &gt;75 &amp; accessible</text>
-
-            <rect x="550" y="115" width="150" height="22" rx="3" fill="var(--purple-soft)" stroke="var(--purple)" stroke-width="1.2"/>
-            <text x="625" y="129" fill="var(--purple-deep)" font-size="7.5pt" font-family="Outfit" font-weight="700" text-anchor="middle">Stenting (CAS / TCAR)</text>
-            <text x="625" y="139" fill="var(--ink-soft)" font-size="5.5pt" font-family="IBM Plex Sans" text-anchor="middle">If radiation, restenosis, cardiac risk</text>
-          </svg>
-
-          <!-- Revascularization Efficacy Table -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">NASCET &amp; ECST Trial Efficacy Statistics</h2>
-          <table style="width: 100%; border-collapse: collapse; font-size: 7.8pt; line-height: 1.35; margin-bottom: 15px;">
-            <thead>
-              <tr style="background: var(--teal-deep); color: white;">
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 15%;">Stenosis Grade</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 30%;">Trial Outcome Comparison (5-Year Risk)</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 22%;">Relative Risk (95% CI)</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 18%;">Absolute Risk Red.</th>
-                <th style="border: 1px solid #cbd5e1; padding: 5px; text-align: left; width: 15%;">NNT / NNH</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="background: rgba(46, 125, 50, 0.05);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: #2e7d32;">70% – 99% (Severe)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Ipsilateral ischemic stroke &amp; operative stroke/death.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: #2e7d32;">0.47 (0.25 – 0.88)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: #2e7d32;">17.0%</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: #2e7d32;">NNT = 6</td>
-              </tr>
-              <tr style="background: rgba(217, 134, 11, 0.03);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--amber-deep);">50% – 69% (Moderate)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Ipsilateral ischemic stroke &amp; operative stroke/death.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">0.84 (0.60 – 1.18)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold;">4.5%</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--amber-deep);">NNT = 22</td>
-              </tr>
-              <tr style="background: rgba(198, 46, 46, 0.05);">
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--red-deep);">&lt; 50% (Mild)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px;">Revascularization increases risk of perioperative events.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; color: var(--red-deep); font-weight: bold;">Harmful (&gt;1.0)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; color: var(--red-deep); font-weight: bold;">-2.2% (Harm)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 5px; font-weight: bold; color: var(--red-deep);">Harmful</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Diagnostic Modalities Comparison -->
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 11pt; color: var(--teal-deep); margin: 0 0 6px 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: 3px; text-transform: uppercase;">Diagnostic Imaging Modalities</h2>
-          <table style="width: 100%; border-collapse: collapse; font-size: 7.8pt; line-height: 1.3; margin-bottom: 15px;">
-            <thead>
-              <tr style="background: #1e293b; color: white;">
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 15%;">Modality</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 35%;">Advantages</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 35%;">Limitations / Overestimations</th>
-                <th style="border: 1px solid #cbd5e1; padding: 4px; text-align: left; width: 15%;">Sensitivity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold;">CE-MRA</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Contrast-enhanced MRA is more accurate than TOF. Highly sensitive.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">TOF-MRA overestimates degree of stenosis due to signal loss from turbulent flow.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--teal-deep);">~99%</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold;">CTA</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Accurately shows calcifications, surrounding bone, and soft tissue anatomy.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">High calcification can obscure lumen, requiring multiplanar reconstruction.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--teal-deep);">~97%</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold;">Duplex U/S</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Non-invasive, fast, bedside screening tool.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Very operator-dependent. Overestimates if contralateral carotid is occluded.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold;">Variable</td>
-              </tr>
-              <tr style="background: rgba(0,0,0,0.01);">
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold;">DSA (Cath)</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Gold standard diagnostic tool. Best spatial resolution.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px;">Invasive, carries inherent 1-2% risk of stroke/procedural complications.</td>
-                <td style="border: 1px solid #cbd5e1; padding: 4px; font-weight: bold; color: var(--teal-deep);">100%</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- CEA vs. CAS vs. TCAR Selection Pearls -->
-          <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 15px; margin-bottom: 12px;">
-            <div style="border: 1px solid var(--purple-soft); background: var(--fill-soft); padding: 10px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--purple-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">Revascularization Modality Selection</strong>
-              • **Timing**: Revascularization should ideally occur **within 2 weeks** of TIA/stroke. Emergent revascularization (&lt;2 days) is not recommended.
-              <br>• **Age &gt;75**: CEA is preferred over transfemoral stenting (CAS) because CAS carries double the risk of periprocedural stroke in the elderly.
-              <br>• **CAS Indications**: Restenosis after CEA, radiation-induced stenosis, surgically inaccessible plaque, or severe cardiac disease.
-              <br>• **TCAR Advantage**: Trans-carotid access with flow reversal shows significantly lower periprocedural stroke/death risk compared to transfemoral stenting.
-            </div>
-            <div style="border: 1px solid var(--red-soft); background: #fff5f5; padding: 10px; border-radius: 6px; font-size: 8pt; line-height: 1.45;">
-              <strong style="color: var(--red-deep); font-size: 8.5pt; display: block; margin-bottom: 4px;">Intensive Medical Management</strong>
-              • **Antiplatelet**: Short-term DAPT (ASA+Clopidogrel) for minor stroke/high-risk TIA. Long-term single antiplatelet.
-              <br>• **Blood Pressure**: Gradual titration to a long-term target SBP &lt;130/80 mmHg (avoid diuretics initially in bilateral high-grade stenosis).
-              <br>• **Lipids**: Target LDL-C &lt;70 mg/dL (SPARCL trial) using high-intensity statin &plusmn; Ezetimibe.
-              <br>• **Diabetes**: Glycemic control targeting HbA1c &le;7.0%.
-            </div>
-          </div>
-
-          <div class="card-footer" style="display: flex;">
-            <div class="disclaimer-text">For educational &amp; clinical decision support. Verify local institutional protocols prior to application.</div>
-            <div class="page-num">Page 1</div>
-          </div>
-
-        </div>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Large Artery Disease</span>
+        <h1 id="app-title">Symptomatic Carotid Stenosis</h1>
+        <p class="subtitle">Revascularization decision trees, NASCET statistics, and medical management</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
       </div>
     </div>
-  </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-grid-1-2">
+        
+        <!-- LEFT COLUMN: STENOSIS CLINICAL DECISION TOOL -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <h2>Stenosis Decision Helper</h2>
+            <span class="card-label">NASCET / ECST Criteria</span>
+          </div>
+
+          <div class="carotid-select-row">
+            <label>Select Carotid Stenosis Grade</label>
+            <select id="carotid-selector" onchange="updateCarotidDecision()">
+              <option value="severe">Severe (70% – 99% Stenosis)</option>
+              <option value="moderate">Moderate (50% – 69% Stenosis)</option>
+              <option value="mild">Mild (&lt;50% Stenosis)</option>
+              <option value="occlusion">Near-Occlusion or Total Occlusion</option>
+            </select>
+          </div>
+
+          <div id="decision-display" class="decision-display">
+            <!-- Dynamic decision display -->
+          </div>
+
+          <div class="status-summary-box warning" style="margin-top:12px; margin-bottom:0;">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="status-desc">
+              <h4>Revascularization Timing Rule</h4>
+              <p>Revascularization (CEA or stenting) should ideally occur <strong>within 2 weeks</strong> of the index event. Emergent intervention (&lt;48h) is not recommended.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: MODALITIES, IMAGING, MEDICAL MGMT -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
+          <div class="tab-btn-group">
+            <button class="tab-btn active" onclick="switchTab('tab-selection')">CEA vs. CAS vs. TCAR</button>
+            <button class="tab-btn" onclick="switchTab('tab-imaging')">Imaging Modalities</button>
+            <button class="tab-btn" onclick="switchTab('tab-medical')">Medical Targets</button>
+          </div>
+
+          <!-- TAB 1: MODALITY SELECTION -->
+          <div id="tab-selection" class="tab-pane active">
+            <h2>Revascularization Modality Selection</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-cyan);">CEA (Carotid Endarterectomy)</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  Preferred first-line for patients **aged &gt;75 years** because transfemoral stenting carries double the periprocedural stroke risk in older cohorts due to vascular tortuosity.
+                </p>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-purple);">CAS (Carotid Artery Stenting)</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  Indicated if there is restenosis after a prior CEA, radiation-induced stenosis, surgically inaccessible lesions, or severe cardiac comorbidities.
+                </p>
+              </div>
+
+              <div class="control-card" style="margin-bottom:0;">
+                <h3 style="color:var(--color-green);">TCAR (Trans-Carotid Artery Revascularization)</h3>
+                <p style="font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+                  Combines direct carotid access with a flow reversal circuit. TCAR shows significantly lower perioperative stroke/death rates compared to transfemoral CAS.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: IMAGING MODALITIES -->
+          <div id="tab-imaging" class="tab-pane">
+            <h2>Carotid Diagnostic Modalities</h2>
+            <table class="print-table" style="font-size:0.8rem; margin-top:10px;">
+              <thead>
+                <tr>
+                  <th>Modality</th>
+                  <th>Pros & Cons</th>
+                  <th>Overestimations</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>CE-MRA</strong></td>
+                  <td>Highly sensitive. Contrast-enhanced is more accurate than TOF.</td>
+                  <td>TOF-MRA overestimates stenosis due to signal drop in turbulent flow.</td>
+                </tr>
+                <tr>
+                  <td><strong>CTA</strong></td>
+                  <td>Accurately details calcification, soft tissue, and bony structures.</td>
+                  <td>Severe calcification can obscure lumen, requiring reconstruction.</td>
+                </tr>
+                <tr>
+                  <td><strong>Duplex U/S</strong></td>
+                  <td>Fast, non-invasive bedside tool. Very operator-dependent.</td>
+                  <td>Can overestimate if contralateral carotid is fully occluded.</td>
+                </tr>
+                <tr>
+                  <td><strong>DSA (Cath)</strong></td>
+                  <td>Gold standard diagnostic. 1-2% inherent complication risk.</td>
+                  <td>Invasive; reserved for therapeutic EVT or ambiguous non-invasive scans.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- TAB 3: MEDICAL TARGETS -->
+          <div id="tab-medical" class="tab-pane">
+            <h2>Intensive Medical Management</h2>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:12px;">
+              <div class="control-card" style="margin-bottom:0;">
+                <div class="checklist-grid" style="grid-template-columns:1fr; gap:8px;">
+                  <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                    <div class="checklist-dot">✓</div>
+                    <span><strong>Antiplatelets:</strong> Short-term DAPT (ASA + Clopidogrel) for minor stroke/high-risk TIA. Single agent long-term.</span>
+                  </div>
+                  <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                    <div class="checklist-dot">✓</div>
+                    <span><strong>Statin Therapy:</strong> Target LDL-C &lt;70 mg/dL (SPARCL trial) using high-intensity statin. Add Ezetimibe if needed.</span>
+                  </div>
+                  <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                    <div class="checklist-dot">✓</div>
+                    <span><strong>Blood Pressure:</strong> Long-term SBP &lt;130/80 mmHg. Avoid intensive diuretics initially in bilateral high-grade stenosis.</span>
+                  </div>
+                  <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                    <div class="checklist-dot">✓</div>
+                    <span><strong>Diabetes Goal:</strong> Glycemic control targeting HbA1c &le;7.0%.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Symptomatic Carotid Stenosis & Large Artery Disease</h1>
+          <div class="print-subtitle">Revascularization Statistics & Modality Selection Guide</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box full-width">
+            <h3>📊 NASCET & ECST Trial Efficacy Statistics</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:20%;">Stenosis Grade</th>
+                  <th style="width:40%;">Outcome Comparison (5-Year Risk)</th>
+                  <th style="width:15%;">Relative Risk (95% CI)</th>
+                  <th style="width:15%;">Absolute Risk Red.</th>
+                  <th style="width:10%;">NNT / NNH</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="alert-row-teal">
+                  <td><strong>70% – 99% (Severe)</strong></td>
+                  <td>Ipsilateral stroke and perioperative events reduced.</td>
+                  <td>0.47 (0.25 – 0.88)</td>
+                  <td>17.0%</td>
+                  <td><strong>NNT = 6</strong></td>
+                </tr>
+                <tr class="alert-row-yellow">
+                  <td><strong>50% – 69% (Moderate)</strong></td>
+                  <td>Selected patients benefit. Confirm with second study.</td>
+                  <td>0.84 (0.60 – 1.18)</td>
+                  <td>4.5%</td>
+                  <td><strong>NNT = 22</strong></td>
+                </tr>
+                <tr class="alert-row-danger">
+                  <td><strong>&lt; 50% (Mild)</strong></td>
+                  <td>Revascularization increases periprocedural risks.</td>
+                  <td>Harmful (&gt;1.0)</td>
+                  <td>-2.2% (Harm)</td>
+                  <td><strong>Harmful</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-box">
+            <h3>🔬 Revascularization Modality Selection</h3>
+            <ul class="print-list">
+              <li><strong>CEA (Endarterectomy):</strong> Preferred first-line if age &gt;75 due to tortuous femoral access.</li>
+              <li><strong>CAS (Stenting):</strong> Indicated if prior CEA restenosis, neck radiation, inaccessible plaque, or high cardiac risk.</li>
+              <li><strong>TCAR:</strong> Direct carotid access with reverse flow circuit. Lower stroke risk than transfemoral stenting.</li>
+              <li><strong>Timing:</strong> Perform revascularization within 14 days of TIA/stroke.</li>
+            </ul>
+          </div>
+
+          <div class="print-box">
+            <h3>💊 Intensive Medical Therapy Targets</h3>
+            <ul class="print-list">
+              <li><strong>Statin Goal:</strong> High-intensity statin targeting LDL-C &lt;70 mg/dL (SPARCL trial).</li>
+              <li><strong>Blood Pressure:</strong> Titrate gradually to SBP &lt;130/80 mmHg. Avoid early dehydration in bilateral severe disease.</li>
+              <li><strong>Antiplatelets:</strong> Short-term DAPT (POINT/CHANCE), then long-term single agent.</li>
+              <li><strong>Diabetes:</strong> Target HbA1c &le;7.0%.</li>
+            </ul>
+          </div>
+
+          <div class="print-box full-width">
+            <h3>🔍 Carotid Diagnostic Modalities Comparison</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:15%;">Modality</th>
+                  <th style="width:40%;">Clinical Advantages</th>
+                  <th style="width:30%;">Limitations & Errors</th>
+                  <th style="width:15%;">Sensitivity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>CE-MRA</strong></td>
+                  <td>Highly sensitive. Contrast-enhanced is more accurate than TOF.</td>
+                  <td>TOF-MRA overestimates stenosis due to flow turbulence signal loss.</td>
+                  <td>~99%</td>
+                </tr>
+                <tr>
+                  <td><strong>CTA</strong></td>
+                  <td>Accurately details calcium burden, soft tissue, and bony anatomy.</td>
+                  <td>Severe calcification can obscure arterial lumen.</td>
+                  <td>~97%</td>
+                </tr>
+                <tr>
+                  <td><strong>Duplex U/S</strong></td>
+                  <td>Non-invasive, fast bedside screening tool.</td>
+                  <td>Operator dependent. Overestimates if contralateral side is occluded.</td>
+                  <td>Variable</td>
+                </tr>
+                <tr>
+                  <td><strong>DSA</strong></td>
+                  <td>Gold standard. Superior spatial resolution.</td>
+                  <td>Invasive with 1-2% risk of procedural stroke.</td>
+                  <td>100%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] NASCET Investigators. N Engl J Med. 1991. [2] CREST trial. N Engl J Med. 2010. [3] SPARCL trial. N Engl J Med. 2006.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/dual_view.js"></script>
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    const decisions = {
+      severe: {
+        title: "Severe Stenosis (70% - 99%)",
+        text: "<strong>NASCET Benefit:</strong> Strong benefit for revascularization. Absolute Risk Reduction (ARR) of 17% over 5 years. NNT = 6.<br><strong>Recommendation:</strong> Perform Carotid Endarterectomy (CEA) or TCAR within 14 days of the index event. If age >75, CEA is strongly preferred over transfemoral CAS."
+      },
+      moderate: {
+        title: "Moderate Stenosis (50% - 69%)",
+        text: "<strong>NASCET Benefit:</strong> Selected patients benefit. Absolute Risk Reduction (ARR) of 4.5% over 5 years. NNT = 22.<br><strong>Recommendation:</strong> Revascularization is beneficial for men with recent hemispheric symptoms (not retinal). Highly verify stenosis grade with a second imaging study (e.g. CTA + MRA)."
+      },
+      mild: {
+        title: "Mild Stenosis (&lt;50%)",
+        text: "<strong>NASCET Benefit:</strong> Revascularization shows no benefit and increases risks (ARR = -2.2% harm).<br><strong>Recommendation:</strong> Revascularization is harmful and contraindicated. Manage aggressively with intensive medical therapy (statin LDL <70, SBP <130, single antiplatelet)."
+      },
+      occlusion: {
+        title: "Near-Occlusion or Total Occlusion",
+        text: "<strong>NASCET Benefit:</strong> No benefit shown for surgery/stenting over medical therapy alone.<br><strong>Recommendation:</strong> Revascularization is not recommended. Manage medically. Ensure collateral circulation is evaluated."
+      }
+    };
+
+    function updateCarotidDecision() {
+      const val = document.getElementById('carotid-selector').value;
+      const data = decisions[val];
+      document.getElementById('decision-display').innerHTML = `
+        <h3 style="color:var(--color-cyan); margin-bottom:5px;">${data.title}</h3>
+        <p>${data.text}</p>
+      `;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCarotidDecision();
+    });
+  </script>
 </body>
 </html>

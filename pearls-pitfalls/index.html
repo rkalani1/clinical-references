@@ -3,465 +3,553 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clinical Pearls & Trainee Pitfalls</title>
-  <link href="../assets/pocket_cards.css" rel="stylesheet"/>
+  <title>Clinical Pearls & Trainee Pitfalls Bedside Guide</title>
+  <meta name="description" content="Bedside guide and interactive QA tool for clinical pearls and common management pitfalls on the stroke service.">
+  <link href="../assets/dual_view.css" rel="stylesheet"/>
   
-  <!-- Navigation Header Styles -->
   <style>
-    .portal-nav {
-      background: #0f172a;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .portal-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .portal-nav a:hover {
-      color: #38bdf8;
-    }
-    .portal-nav-links {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-    .portal-nav-links a {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
-    }
-    .portal-nav-links a:hover {
-      background: rgba(56, 189, 248, 0.08);
-      border-color: rgba(56, 189, 248, 0.3);
-    }
-    .cards-wrapper-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      padding: 20px 0;
-      background: #f3f1f6;
-      min-height: calc(100vh - 50px);
-    }
-
-    /* Trainee Pearls Grid */
-    .pearls-grid {
+    /* Scoped styles for Pearls & Pitfalls */
+    .pearls-dashboard-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      margin-bottom: 15px;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
-    @media (min-width: 768px) {
-      .pearls-grid {
-        grid-template-columns: 1fr 1fr;
+    
+    @media (max-width: 1024px) {
+      .pearls-dashboard-grid {
+        grid-template-columns: 1fr;
       }
     }
-
-    .pearls-section {
-      background: var(--paper);
-      border: 1px solid var(--rule-soft);
-      border-radius: 12px;
-      padding: 18px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-    }
-    .pearls-section h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 13pt;
-      margin-top: 0;
-      padding-bottom: 6px;
-      border-bottom: 2px solid var(--rule-soft);
-      margin-bottom: 10px;
-    }
-
-    .pearl-list {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-    .pearl-list li {
-      font-size: 9.2pt;
-      line-height: 1.4;
-      margin-bottom: 8px;
-      padding-left: 14px;
-      position: relative;
-    }
-    .pearl-list li::before {
-      content: "•";
-      color: var(--teal);
-      font-weight: bold;
-      position: absolute;
-      left: 0;
-    }
-
-    /* Accordion Styles */
-    .pitfall-accordion {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    
+    .pitfall-search-input {
       width: 100%;
-      margin-top: 10px;
-    }
-
-    .accordion-item {
-      border: 1px solid rgba(198, 46, 46, 0.15);
-      background: var(--red-soft);
+      background-color: hsl(223, 30%, 8%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
-      overflow: hidden;
-      transition: all 0.2s ease;
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      outline: none;
+      margin-bottom: 12px;
+      transition: var(--transition);
     }
-
-    .accordion-header {
-      padding: 12px 15px;
-      font-size: 9.8pt;
+    
+    .pitfall-search-input:focus {
+      border-color: var(--color-cyan);
+      box-shadow: 0 0 8px rgba(0,242,254,0.15);
+    }
+    
+    .pitfall-item {
+      border: 1px solid var(--border-color);
+      background-color: hsla(223, 30%, 8%, 0.4);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    
+    .pitfall-item.active {
+      border-color: rgba(220, 53, 69, 0.4);
+      background-color: hsla(0, 85%, 60%, 0.05);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.1);
+    }
+    
+    .pitfall-header {
+      padding: 10px 14px;
+      font-size: 0.85rem;
       font-weight: 600;
-      color: var(--red-deep);
+      color: var(--text-main);
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
       user-select: none;
-      -webkit-user-select: none;
     }
-
-    .accordion-header:hover {
-      background: rgba(198, 46, 46, 0.05);
+    
+    .pitfall-header:hover {
+      background-color: rgba(255,255,255,0.03);
     }
-
-    .accordion-content {
+    
+    .pitfall-header.active {
+      color: #fca5a5;
+    }
+    
+    .pitfall-content {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      background: #ffffff;
-      border-top: 0 solid rgba(198, 46, 46, 0.1);
+      border-top: 0 solid var(--border-color);
+      background-color: hsla(223, 30%, 5%, 0.5);
     }
-
-    .accordion-content-inner {
-      padding: 12px 15px;
-      font-size: 9.2pt;
+    
+    .pitfall-item.active .pitfall-content {
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .pitfall-content-inner {
+      padding: 10px 14px;
+      font-size: 0.8rem;
       line-height: 1.45;
-      color: var(--ink-soft);
+      color: var(--text-muted);
     }
 
-    .accordion-icon {
-      transition: transform 0.2s ease;
-      font-weight: bold;
-      font-size: 11pt;
+    .pitfall-content-inner strong {
+      color: var(--text-main);
     }
 
-    .accordion-item.active {
-      box-shadow: 0 4px 12px var(--red-glow);
+    .pearl-category-card {
+      border-top: 4px solid var(--color-primary);
+      margin-bottom: 12px;
     }
 
-    .accordion-item.active .accordion-content {
-      border-top-width: 1px;
-    }
-
-    .accordion-item.active .accordion-icon {
-      transform: rotate(45deg);
-    }
-
-    @media (max-width: 850px) {
-      .cards-wrapper-outer {
-        padding: 0;
-        gap: 0;
-        background: #ffffff;
-      }
-    }
+    .pearl-category-card.assessment { border-top-color: var(--color-purple); }
+    .pearl-category-card.treatment { border-top-color: var(--color-cyan); }
+    .pearl-category-card.ich { border-top-color: var(--color-red); }
+    .pearl-category-card.dispo { border-top-color: var(--color-yellow); }
   </style>
 </head>
-<body>
+<body class="dark-mode">
 
-  <!-- Navigation header linked back to the index portal -->
-  <div class="portal-nav">
+  <nav class="portal-nav">
     <a href="../index.html">
-      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
-      Back to Dashboard
+      <svg viewBox="0 0 24 24"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
+      Portal Dashboard
     </a>
-    <div class="portal-nav-links">
-      <a href="#pearls">Bedside Pearls</a>
-      <a href="#pitfalls">Trainee Pitfalls</a>
-    </div>
-  </div>
+  </nav>
 
-  <div class="cards-wrapper-outer">
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="badge">Education & Safety</span>
+        <h1 id="app-title">Clinical Pearls & Trainee Pitfalls</h1>
+        <p class="subtitle">Interactive checklist of high-yield pearls and trap mitigations</p>
+      </div>
+      <div class="view-toggle-container">
+        <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button id="toggle-print" class="toggle-btn" onclick="switchView('print')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Printable Reference Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
     
-    <!-- Page 1: Clinical Pearls Checklist -->
-    <div class="card-container" id="pearls">
-      <div class="card-header">
-        <span class="title-logo">Clinical References</span>
-        <span class="doc-id">PEARLS-v1.0</span>
-      </div>
-      
-      <div class="card-content">
-        <h1>Clinical Pearls for Trainees</h1>
-        <p style="font-size: 10pt; color: var(--ink-soft); margin-bottom: 10px; text-align: center;">Core high-yield checklists for ward and ICU stroke services.</p>
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="pearls-dashboard-grid">
+        
+        <!-- LEFT COLUMN: BEDSIDE PEARLS CHECKLISTS -->
+        <div>
+          <div class="glass-card pearl-category-card assessment">
+            <div class="card-header">
+              <h2>1. Acute Assessment</h2>
+              <span class="card-label" style="color:var(--color-purple);">Diagnosis</span>
+            </div>
+            <div class="checklist-grid" style="grid-template-columns:1fr; gap:8px;">
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Time is Brain:</strong> ~1.9M neurons lost/min in LVO. Every minute saved saves 1.8 days of healthy life.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>NIHSS 0 Warning:</strong> Posterior strokes can present with severe ataxia/vertigo and score 0.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Check Glucose First:</strong> Correct hypoglycemia (BG &lt;60 mg/dL) before giving thrombolytics.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Permissive HTN:</strong> SBP &lt;220/120 is acceptable in AIS unless candidate for thrombolysis (target &lt;185/110).</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>CT Sensitivity:</strong> Non-contrast head CT is only ~25% sensitive in the first 6 hours. Normal CT does not rule out stroke.</span>
+              </div>
+            </div>
+          </div>
 
-        <div class="pearls-grid">
+          <div class="glass-card pearl-category-card treatment">
+            <div class="card-header">
+              <h2>2. Treatment Protocols</h2>
+              <span class="card-label" style="color:var(--color-cyan);">Therapeutics</span>
+            </div>
+            <div class="checklist-grid" style="grid-template-columns:1fr; gap:8px;">
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Tenecteplase Dosing:</strong> TNK 0.25 mg/kg (max 25 mg) single IV bolus. Logistically faster; no infusion required.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Do Not Delay for CTP:</strong> Within the 4.5h window, do not wait for perfusion imaging to start lytics.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>POINT/CHANCE DAPT:</strong> Minor stroke (NIHSS &le;3) / high-risk TIA: load clopidogrel 300mg + ASA 325mg, then DAPT x 21d.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Atorvastatin:</strong> Start high-intensity statin (Atorvastatin 80mg) immediately. Do not wait for fasting lipids.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card pearl-category-card ich">
+            <div class="card-header">
+              <h2>3. Intracerebral Hemorrhage</h2>
+              <span class="card-label" style="color:var(--color-red);">Critical Care</span>
+            </div>
+            <div class="checklist-grid" style="grid-template-columns:1fr; gap:8px;">
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>BP Target Timing:</strong> SBP &lt;140 mmHg within 2 hours of onset reduces hematoma expansion (Nicardipine preferred).</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Avoid SBP &lt;130:</strong> Intensive BP control (&lt;130 mmHg) increases renal complications without functional benefit.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Speed of Reversal:</strong> Reversing anticoagulants is the single most time-sensitive ICH intervention.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>CTA Spot Sign:</strong> Contrast extravasation within the hematoma indicates active bleeding and expansion risk.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card pearl-category-card dispo">
+            <div class="card-header">
+              <h2>4. Disposition & Safety</h2>
+              <span class="card-label" style="color:var(--color-yellow);">Disposition</span>
+            </div>
+            <div class="checklist-grid" style="grid-template-columns:1fr; gap:8px;">
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Dedicated Stroke Unit:</strong> Reduces mortality and dependency (NNT 18) regardless of stroke severity.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Early Mobilization:</strong> Avoid bedrest beyond 24h, but avoid very early mobilization (&lt;24h) which can harm.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Swallow Screen PO Safety:</strong> Keep strictly NPO until bedside screen. Aspiration pneumonia is preventable.</span>
+              </div>
+              <div class="checklist-item" onclick="this.classList.toggle('checked')">
+                <div class="checklist-dot">✓</div>
+                <span><strong>Normothermia Target:</strong> Every 1&deg;C increase in the first 72h worsens outcomes. Target temp &lt;37.8&deg;C.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN: PITFALLS SEARCH & FILTER ASSISTANT -->
+        <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column;">
+          <div class="card-header">
+            <h2>Trainee Pitfalls Assistant</h2>
+            <span class="card-label">QA Hub</span>
+          </div>
           
-          <!-- Acute Assessment Pearls -->
-          <div class="pearls-section" style="border-top: 4px solid var(--purple);">
-            <h3 style="color: var(--purple-deep);">1. Acute Assessment</h3>
-            <ul class="pearl-list">
-              <li><strong>Time is Brain:</strong> ~1.9 million neurons are lost per minute in untreated LVO stroke. Every minute saved saves 1.8 days of healthy life.</li>
-              <li><strong>NIHSS 0 Warning:</strong> Posterior circulation strokes (ischemic cerebellar/brainstem) can present with severe ataxia/vertigo and score 0.</li>
-              <li><strong>Check Glucose First:</strong> Hypoglycemia is a highly treatable mimic. BG &lt;60 mg/dL should be corrected immediately before giving TNK.</li>
-              <li><strong>Permissive Hypertension:</strong> AIS SBP &lt;220/120 mmHg is acceptable. Do not lower BP unless giving lytics (target &lt;185/110) or stenting.</li>
-              <li><strong>CT Negative Stroke:</strong> Non-contrast head CT has only ~25% sensitivity in the first 6 hours of ischemia. Normal CT does not rule out stroke.</li>
-              <li><strong>ASPECTS Scoring:</strong> Count the regions involved (ischemic hypoattenuation), not the spared regions, and subtract from 10.</li>
+          <input type="text" id="pitfall-search" class="pitfall-search-input" placeholder="Search pitfalls (e.g. TNK, heparin, seizures, DAPT)..." onkeyup="filterPitfalls()">
+          
+          <div id="pitfalls-list" style="display:flex; flex-direction:column; gap:8px; overflow-y:auto; max-height: 800px;">
+            
+            <div class="pitfall-item" data-keywords="trace hematuria tnk reversal tenecteplase">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>1. Trace hematuria post-TNK?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>No reversal.</strong> Microscopic hematuria is expected and not an indication to reverse tenecteplase. Only gross hematuria, active bleeding requiring transfusion, or symptomatic intracranial hemorrhage warrants reversal. Continue monitoring.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: AHA/ASA 2019 AIS Guidelines</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="high ich score comfort care dnr prophecy">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>2. High ICH Score = Comfort Care recommendation?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>No.</strong> The ICH Score predicts 30-day <em>mortality</em>, not long-term functional recovery, and was derived from historical cohorts with high rates of early DNR. Guidelines recommend postponing new DNR orders for at least 48 hours to avoid self-fulfilling mortality prophecy. Use FUNC Score for functional predictions.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: AHA/ASA ICH Guidelines 2022; Rost 2008</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="cvt cerebral venous thrombosis hemorrhage heparin anticoagulation">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>3. CVT with hemorrhage = Hold heparin?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>No.</strong> Anticoagulation is indicated even in the presence of venous hemorrhagic transformation. The hemorrhage is caused by venous congestion (outflow block), and heparin treats the underlying thrombosis. AHA/ASA recommends initial anticoagulation with heparin (UFH or LMWH) as Class IIa.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: AHA/ASA CVT Guidelines 2024</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="nihss 3 minor stroke m1 occlusion skip evt lvo">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>4. NIHSS 3 but M1 Occlusion = Skip EVT?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>Do not automatically skip.</strong> Low NIHSS does not exclude benefit. Up to 30% of LVO patients with initially low NIHSS deteriorate neurologically when managed medically. Discuss urgently with the neurointerventionalist. Early EVT may prevent devastating progression.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: MR CLEAN-LATE 2023; ESCAPE trial</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="seizure onset tnk contraindication mimic ctp">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>5. Seizure at onset = TNK contraindicated?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>No.</strong> Seizure at onset is no longer an absolute contraindication if residual deficits are clearly ischemic and not Todd's paralysis. If clinical uncertainty exists, CT perfusion or CTA can help differentiate. Do a thorough exam to confirm stroke deficits.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: AHA/ASA 2019 Guidelines; ACT-FAST 2022</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="spontaneous ich prophylactic aed seizure keppra">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>6. Spontaneous ICH = Start prophylactic AED?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>No.</strong> Prophylactic anti-seizure medications are NOT recommended (Class III: No Benefit). Only treat clinical seizures or non-convulsive status epilepticus diagnosed on EEG. Prophylactic AEDs are associated with worse functional recovery and unnecessary drug-drug interactions.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: AHA/ASA ICH Guidelines 2022</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="clopidogrel omeprazole interaction cyp2c19 inhibitor pantoprazole">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>7. Clopidogrel + Omeprazole interaction?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>Yes, significant.</strong> Omeprazole and esomeprazole are strong CYP2C19 inhibitors that significantly reduce clopidogrel's conversion to its active metabolite, potentially increasing stroke risk. Switch to pantoprazole (weak inhibitor) or an H2 blocker.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: FDA Safety Communication 2009; COGENT trial</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="new hemianopia post tnk hemorrhagic transformation occlusion reocclusion">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>8. New hemianopia 3h post-TNK = HT?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>Get STAT NCHCT, but consider re-occlusion.</strong> Hemorrhagic transformation (HT) usually presents with headache, decreased arousal, and severe hypertension. A new isolated focal deficit without arousal changes suggests vessel re-occlusion. If CT is negative for blood, proceed to urgent CTA; the patient may need rescue EVT.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: Clinical reasoning; AHA/ASA 2019</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="phenytoin dilantin seizure interaction doac statin keppra vimpat">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>9. Use phenytoin for post-stroke seizures?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>Avoid.</strong> Phenytoin has severe drug interactions with DOACs, statins, and steroids, can cause hypotension, and is linked to worse long-term cognitive recovery. Levetiracetam (Keppra) or Lacosamide (Vimpat) are preferred first-line agents.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: Clinical consensus; AHA/ASA 2022</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pitfall-item" data-keywords="malignant mca hemicraniectomy age elderly destiny futility">
+              <div class="pitfall-header" onclick="togglePitfall(this)">
+                <span>10. Malignant MCA age >60 = Automatic futility?</span>
+                <span class="pitfall-icon">+</span>
+              </div>
+              <div class="pitfall-content">
+                <div class="pitfall-content-inner">
+                  <strong>No, but requires explicit shared decisions.</strong> DESTINY II trial showed that hemicraniectomy in age &gt;60 significantly increases survival (NNT 2) but most survivors have moderate-to-severe disability (mRS 4-5). This is a goals-of-care decision rather than medical futility. Talk to the family about patient values.
+                  <p style="font-size: 7.5pt; color: var(--text-muted); margin-top: 5px; font-style: italic;">Ref: DESTINY II trial (2014)</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRINT VIEW -->
+    <section id="print-view" class="view-section">
+      <div class="print-page">
+        <div class="print-header">
+          <h1>Clinical Pearls & Management Pitfalls Cheatsheet</h1>
+          <div class="print-subtitle">Essential Ward & ICU Reference for Stroke Trainees</div>
+        </div>
+
+        <div class="print-grid">
+          <div class="print-box">
+            <h3>🧠 Acute Assessment & Diagnosis Pearls</h3>
+            <ul class="print-list">
+              <li><strong>Time is Brain:</strong> ~1.9 million neurons lost per minute in untreated large vessel occlusion (LVO) strokes.</li>
+              <li><strong>NIHSS 0 Alert:</strong> Posterior strokes (cerebellar/brainstem) can present with severe vertigo/ataxia and score 0.</li>
+              <li><strong>Check Glucose:</strong> Correct hypoglycemia (&lt;60 mg/dL) before administering lytics to rule out stroke mimic.</li>
+              <li><strong>Permissive HTN:</strong> Keep SBP &lt;220/120 mmHg in AIS. Keep &lt;185/110 mmHg if giving thrombolytics.</li>
+              <li><strong>CT Sensitivity:</strong> Non-contrast Head CT is only ~25% sensitive for ischemia in the first 6 hours. Normal CT does not rule out stroke.</li>
             </ul>
           </div>
 
-          <!-- Treatment Pearls -->
-          <div class="pearls-section" style="border-top: 4px solid var(--teal);">
-            <h3 style="color: var(--teal-deep);">2. Treatment Protocols</h3>
-            <ul class="pearl-list">
-              <li><strong>TNK Dosing:</strong> Tenecteplase 0.25 mg/kg (max 25 mg) single IV bolus is preferred over alteplase. Logistically faster; no infusion.</li>
-              <li><strong>Do Not Delay for CTP:</strong> Within the 4.5h window, do not wait for perfusion imaging to start lytics. Perfusion is for late-window screening.</li>
-              <li><strong>CHANCE/POINT DAPT:</strong> For minor stroke (NIHSS ≤3) or high-risk TIA, start DAPT within 24h (ASA 325 + Clopidogrel 300 load, then 81/75 x 21d).</li>
-              <li><strong>Statin Timing:</strong> Initiate high-intensity statin (atorvastatin 80 mg) immediately in-facility. Do not wait for fasting lipid results.</li>
-              <li><strong>Extended ECG Monitoring:</strong> If stroke is cryptogenic, a 14-day monitor finds AFib in 12-16% of patients.</li>
-              <li><strong>ELAN Timing:</strong> Early DOAC start (Day 1-4 for minor/moderate, Day 6-7 for severe) is safe and non-inferior to delayed start.</li>
+          <div class="print-box">
+            <h3>💊 Therapeutics & Treatment Pearls</h3>
+            <ul class="print-list">
+              <li><strong>TNK Dosing:</strong> Tenecteplase 0.25 mg/kg (max 25 mg) single IV bolus is preferred over alteplase.</li>
+              <li><strong>Do Not Delay for CTP:</strong> Perfusion imaging should not delay lytic administration in &lt;4.5h window.</li>
+              <li><strong>POINT/CHANCE DAPT:</strong> Minor stroke (NIHSS &le;3) / high-risk TIA: clopidogrel 300mg load + ASA 325mg load, then DAPT for 21 days.</li>
+              <li><strong>Statins:</strong> Initiate Atorvastatin 80mg immediately in-hospital; do not delay for fasting lipid panels.</li>
+              <li><strong>ELAN DOAC Timing:</strong> Days 1-4 for minor/mod, Days 6-7 for severe ischemic stroke with AFib.</li>
             </ul>
           </div>
 
-          <!-- ICH Pearls -->
-          <div class="pearls-section" style="border-top: 4px solid var(--red);">
-            <h3 style="color: var(--red-deep);">3. Intracerebral Hemorrhage</h3>
-            <ul class="pearl-list">
-              <li><strong>BP Target Timing:</strong> SBP &lt;140 mmHg within 2 hours of onset reduces hematoma expansion (INTERACT2). Nicardipine preferred.</li>
-              <li><strong>Avoid SBP &lt;130:</strong> Intensive BP control (&lt;130 mmHg) increases renal complications without improving functional outcomes (ATACH-2).</li>
-              <li><strong>Speed of Reversal:</strong> Reversal of anticoagulants is the single most time-sensitive ICH intervention. Reverse before CT if history is clear.</li>
-              <li><strong>CTA Spot Sign:</strong> Contrast extravasation within the hematoma indicates active bleeding and predicts volume expansion.</li>
-              <li><strong>IVH Prognosis:</strong> Intraventricular hemorrhage worsens outcomes. CLEAR III showed intraventricular lytics reduce mortality but not disability.</li>
+          <div class="print-box">
+            <h3>🔴 Intracerebral Hemorrhage Pearls</h3>
+            <ul class="print-list">
+              <li><strong>BP Target Timing:</strong> SBP &lt;140 mmHg within 2 hours of onset reduces hematoma expansion. Nicardipine preferred.</li>
+              <li><strong>Avoid SBP &lt;130:</strong> Intensive BP control (&lt;130 mmHg) increases renal injury risk without functional benefits.</li>
+              <li><strong>Speed of Reversal:</strong> Reversing anticoagulants is the single most time-sensitive ICH intervention.</li>
+              <li><strong>CTA Spot Sign:</strong> Contrast extravasation represents active bleeding and predicts expansion.</li>
             </ul>
           </div>
 
-          <!-- Disposition Pearls -->
-          <div class="pearls-section" style="border-top: 4px solid var(--amber);">
-            <h3 style="color: var(--amber-deep);">4. Disposition & Safety</h3>
-            <ul class="pearl-list">
-              <li><strong>Dedicated Stroke Unit:</strong> Care in a specialized stroke unit reduces mortality and dependency (NNT 18) regardless of stroke severity.</li>
-              <li><strong>Early Mobilization:</strong> Avoid bedrest beyond 24h, but avoid very early aggressive mobilization (&lt;24h - AVERT showed harm).</li>
-              <li><strong>Swallow Screen PO Safety:</strong> Keep NPO until bedside screen. Aspiration pneumonia is the #1 preventable stroke complication.</li>
-              <li><strong>DVT Prophylaxis:</strong> SCDs immediately on admission. Hold heparin SQ x 24h post-TNK, or start Day 2-3 in stable ICH.</li>
-              <li><strong>Normothermia Target:</strong> Every 1°C increase in temperature in the first 72h worsens outcomes. Target temp &lt;37.8°C with acetaminophen.</li>
+          <div class="print-box">
+            <h3>🏥 Care, Safety & Disposition Pearls</h3>
+            <ul class="print-list">
+              <li><strong>Dedicated Stroke Unit:</strong> Reduces mortality and dependency (NNT 18) regardless of stroke severity.</li>
+              <li><strong>Early Mobilization:</strong> Avoid bedrest beyond 24h, but avoid very early mobilization (&lt;24h - AVERT showed harm).</li>
+              <li><strong>Swallow Screen:</strong> Keep strictly NPO until bedside screen. Aspiration pneumonia is preventable.</li>
+              <li><strong>Normothermia Target:</strong> Keep temperature &lt;37.8&deg;C. Fever in first 72h is associated with worse outcomes.</li>
             </ul>
           </div>
 
+          <div class="print-box full-width">
+            <h3>⚡ Critical Trainee Pitfalls & Management Rules</h3>
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width:30%;">Clinical Question / Trap</th>
+                  <th style="width:70%;">Mitigation / Correct Bedside Practice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Trace hematuria post-TNK?</strong></td>
+                  <td><strong>No reversal.</strong> Microscopic hematuria is expected. Only reverse for gross hematuria or symptomatic ICH.</td>
+                </tr>
+                <tr>
+                  <td><strong>High ICH Score = Comfort?</strong></td>
+                  <td><strong>No.</strong> Score predicts 30-day mortality, not recovery. Postpone DNR for &ge;48h to avoid self-fulfilling prophecy.</td>
+                </tr>
+                <tr>
+                  <td><strong>CVT with hemorrhage = Hold heparin?</strong></td>
+                  <td><strong>No.</strong> Anticoagulation is indicated even with venous hemorrhage (Class IIa) to treat underlying thrombus.</td>
+                </tr>
+                <tr>
+                  <td><strong>NIHSS 3 with LVO = Skip EVT?</strong></td>
+                  <td><strong>Do not skip automatically.</strong> Up to 30% of medically managed LVOs deteriorate. Discuss urgently with NIR.</td>
+                </tr>
+                <tr>
+                  <td><strong>ICH AED Prophylaxis?</strong></td>
+                  <td><strong>Not recommended.</strong> Do not start prophylactic anticonvulsants (Class III). Treat only clinical/EEG seizures.</td>
+                </tr>
+                <tr>
+                  <td><strong>Clopidogrel + Omeprazole?</strong></td>
+                  <td><strong>Avoid.</strong> Omeprazole inhibits CYP2C19, reducing clopidogrel efficacy. Use Pantoprazole instead.</td>
+                </tr>
+                <tr>
+                  <td><strong>New focal deficit post-TNK?</strong></td>
+                  <td><strong>Get STAT CT.</strong> If no blood, suspect vessel re-occlusion. Perform urgent CTA for possible rescue EVT.</td>
+                </tr>
+                <tr>
+                  <td><strong>Avoid Phenytoin (Dilantin)?</strong></td>
+                  <td><strong>Avoid.</strong> Phenytoin has severe drug interactions (DOACs, statins) and impairs cognitive recovery. Prefer Keppra.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="print-footer-references">
+            <p><strong>References:</strong> [1] AHA/ASA Stroke & ICH Guidelines. [2] INTERACT2 & ATACH-2. [3] DESTINY II. [4] POINT & CHANCE. [5] ELAN Trial.</p>
+            <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
+          </div>
         </div>
       </div>
+    </section>
+    
+  </main>
 
-      <div class="card-footer">
-        <span class="disclaimer-text">Verify local institutional guidelines. Standard guidelines compiled from AHA/ASA statements.</span>
-        <span class="page-num">Page 1 of 2</span>
-      </div>
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Stroke Service & Neurocritical Care Division.</p>
     </div>
+  </footer>
 
-    <!-- Page 2: Pitfalls Accordion -->
-    <div class="card-container" id="pitfalls">
-      <div class="card-header">
-        <span class="title-logo">Clinical References</span>
-        <span class="doc-id">PITFALLS-v1.0</span>
-      </div>
-
-      <div class="card-content">
-        <h1>Common Trainee Pitfalls</h1>
-        <p style="font-size: 10pt; color: var(--ink-soft); margin-bottom: 10px; text-align: center;">Interactive scenario-based Q&amp;A for common stroke management mistakes.</p>
-
-        <!-- Accordion container -->
-        <div class="pitfall-accordion">
-          
-          <!-- Item 1 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>1. Trace hematuria post-TNK?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>No reversal.</strong> Microscopic hematuria is expected and not an indication to reverse tenecteplase. Only gross hematuria, active bleeding requiring transfusion, or symptomatic intracranial hemorrhage warrants reversal. Continue monitoring.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: AHA/ASA 2019 AIS Guidelines</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 2 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>2. High ICH Score = Comfort Care recommendation?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>No.</strong> The ICH Score predicts 30-day <em>mortality</em>, not long-term functional recovery, and was derived from historical cohorts with high rates of early DNR. AHA/ASA guidelines recommend postponing new DNR orders for at least 48 hours to avoid self-fulfilling mortality prophecy. Use FUNC Score for functional predictions.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: AHA/ASA ICH Guidelines 2022; Rost 2008</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 3 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>3. CVT with hemorrhage = Hold heparin?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>No.</strong> Anticoagulation is indicated even in the presence of venous hemorrhagic transformation. The hemorrhage is caused by venous congestion (outflow block), and heparin treats the underlying thrombosis. AHA/ASA recommends initial anticoagulation with heparin (UFH or LMWH) as Class IIa.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: AHA/ASA CVT Guidelines 2024</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 4 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>4. NIHSS 3 but M1 Occlusion = Skip EVT?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>Do not automatically skip.</strong> Low NIHSS does not exclude benefit. Up to 30% of LVO patients with initially low NIHSS deteriorate neurologically when managed medically. Discuss urgently with the neurointerventionalist. Early EVT may prevent devastating progression.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: MR CLEAN-LATE 2023; ESCAPE trial</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 5 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>5. Seizure at onset = TNK contraindicated?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>No.</strong> Seizure at onset is no longer an absolute contraindication if residual deficits are clearly ischemic and not Todd's paralysis. If clinical uncertainty exists, CT perfusion or CTA can help differentiate. Do a thorough exam to confirm stroke deficits.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: AHA/ASA 2019 Guidelines; ACT-FAST 2022</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 6 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>6. Spontaneous ICH = Start prophylactic AED?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>No.</strong> Prophylactic anti-seizure medications are NOT recommended (Class III: No Benefit). Only treat clinical seizures or non-convulsive status epilepticus diagnosed on EEG. Prophylactic AEDs are associated with worse functional recovery and unnecessary drug-drug interactions.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: AHA/ASA ICH Guidelines 2022</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 7 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>7. Clopidogrel + Omeprazole interaction?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>Yes, significant.</strong> Omeprazole and esomeprazole are strong CYP2C19 inhibitors that significantly reduce clopidogrel's conversion to its active metabolite, potentially increasing stroke risk. Switch to pantoprazole (weak inhibitor) or an H2 blocker.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: FDA Safety Communication 2009; COGENT trial</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 8 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>8. New hemianopia 3h post-TNK = HT?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>Get STAT NCHCT, but consider re-occlusion.</strong> Hemorrhagic transformation (HT) usually presents with headache, decreased arousal, and severe hypertension. A new isolated focal deficit without arousal changes suggests vessel re-occlusion. If CT is negative for blood, proceed to urgent CTA; the patient may need rescue EVT.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: Clinical reasoning; AHA/ASA 2019</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 9 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>9. Use phenytoin for post-stroke seizures?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>Avoid.</strong> Phenytoin has severe drug interactions with DOACs, statins, and steroids, can cause hypotension, and is linked to worse long-term cognitive recovery. Levetiracetam (Keppra) or Lacosamide (Vimpat) are preferred first-line agents.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: Clinical consensus; AHA/ASA 2022</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item 10 -->
-          <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>10. Malignant MCA age >60 = Automatic futility?</span>
-              <span class="accordion-icon">+</span>
-            </div>
-            <div class="accordion-content">
-              <div class="accordion-content-inner">
-                <strong>No, but requires explicit shared decisions.</strong> DESTINY II trial showed that hemicraniectomy in age &gt;60 significantly increases survival (NNT 2) but most survivors have moderate-to-severe disability (mRS 4-5). This is a goals-of-care decision rather than medical futility. Talk to the family about patient values.
-                <p style="font-size: 8pt; color: var(--ink-mute); margin-top: 5px; font-style: italic; margin-bottom: 0;">Ref: DESTINY II trial (2014); Jüttler et al.</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="card-footer">
-        <span class="disclaimer-text">Bedside trainee training tool. Always consult with the attending vascular neurologist.</span>
-        <span class="page-num">Page 2 of 2</span>
-      </div>
-    </div>
-
-  </div>
-
+  <script src="../assets/dual_view.js"></script>
   <script>
-    function toggleAccordion(header) {
+    function togglePitfall(header) {
       const item = header.parentElement;
-      const content = item.querySelector('.accordion-content');
+      const content = item.querySelector('.pitfall-content');
+      const icon = header.querySelector('.pitfall-icon');
       const isActive = item.classList.contains('active');
       
-      // Close all other items
-      document.querySelectorAll('.accordion-item').forEach(otherItem => {
-        if (otherItem !== item) {
-          otherItem.classList.remove('active');
-          otherItem.querySelector('.accordion-content').style.maxHeight = '0';
+      // Close other pitfalls
+      document.querySelectorAll('.pitfall-item').forEach(other => {
+        if (other !== item) {
+          other.classList.remove('active');
+          other.querySelector('.pitfall-content').style.maxHeight = '0';
+          other.querySelector('.pitfall-icon').innerText = '+';
         }
       });
-
+      
       if (isActive) {
         item.classList.remove('active');
         content.style.maxHeight = '0';
+        icon.innerText = '+';
       } else {
         item.classList.add('active');
         content.style.maxHeight = content.scrollHeight + 'px';
+        icon.innerText = '−';
       }
     }
+    
+    function filterPitfalls() {
+      const query = document.getElementById('pitfall-search').value.toLowerCase();
+      document.querySelectorAll('.pitfall-item').forEach(item => {
+        const keywords = item.getAttribute('data-keywords').toLowerCase();
+        const headerText = item.querySelector('.pitfall-header span').innerText.toLowerCase();
+        if (keywords.includes(query) || headerText.includes(query)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
   </script>
-
 </body>
 </html>
