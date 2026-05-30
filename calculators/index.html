@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Clinical Calculators - Stroke & Neurology</title>
+  <title>Clinical Calculators - Stroke & Neurology</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,6 +29,9 @@
       --radius-card: 16px;
       --radius-btn: 8px;
       --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      --color-warning: #f59e0b;
+      --color-danger: #ef4444;
     }
 
     * {
@@ -107,11 +110,11 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 1rem 1.25rem;
+      padding: 0.85rem 1.1rem;
       border-radius: var(--radius-btn);
       text-align: left;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       cursor: pointer;
       transition: var(--transition);
       display: flex;
@@ -134,7 +137,7 @@
 
     .sidebar-btn .badge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       padding: 0.15rem 0.4rem;
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.1);
@@ -241,6 +244,71 @@
       box-shadow: 0 0 12px rgba(0, 242, 254, 0.1);
     }
 
+    /* Checklist Grid (ASPECTS) */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .check-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      padding: 1rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .check-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .check-card .label {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .check-card .sub-pts {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .check-card .status-indicator {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .check-card.affected {
+      border-color: var(--color-danger);
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .check-card.affected .status-indicator {
+      border-color: var(--color-danger);
+      background-color: var(--color-danger);
+    }
+
+    .check-card.affected .status-indicator::after {
+      content: "✓";
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
     /* Sub Calculator (ABC/2 volume) */
     .sub-calc-box {
       background: rgba(255, 255, 255, 0.01);
@@ -306,7 +374,7 @@
       justify-content: space-between;
       gap: 1.5rem;
       box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      margin-top: 2rem;
+      margin-top: 2.25rem;
     }
 
     .result-left h3 {
@@ -346,8 +414,74 @@
       line-height: 1.4;
     }
 
+    /* mRS scale layout */
+    .mrs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .mrs-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .mrs-card:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .mrs-card.selected {
+      border-color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.08);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.08);
+    }
+
+    .mrs-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .mrs-card.selected .mrs-num {
+      background: var(--accent-gradient);
+      color: var(--bg);
+    }
+
+    .mrs-info {
+      flex: 1;
+    }
+
+    .mrs-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #ffffff;
+      margin-bottom: 0.15rem;
+    }
+
+    .mrs-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
     /* Responsive adjustments */
-    @media (max-width: 900px) {
+    @media (max-width: 950px) {
       .app-container {
         flex-direction: column;
         padding: 1rem;
@@ -378,7 +512,7 @@
       </svg>
       Portal Dashboard
     </a>
-    <span style="font-size:0.85rem; font-weight:600; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.05em;">Interactive Calculators</span>
+    <span style="font-size:0.85rem; font-weight:600; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:0.05em;">Bedside Calculators</span>
   </nav>
 
   <div class="app-container">
@@ -387,6 +521,15 @@
     <aside class="sidebar">
       <button class="sidebar-btn active" onclick="switchCalc('gcs')">
         GCS <span class="badge">3-15</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('aspects')">
+        ASPECTS <span class="badge">0-10</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('pcaspects')">
+        PC-ASPECTS <span class="badge">0-10</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('mrs')">
+        mRS <span class="badge">0-6</span>
       </button>
       <button class="sidebar-btn" onclick="switchCalc('ich')">
         ICH Score <span class="badge">0-6</span>
@@ -397,8 +540,14 @@
       <button class="sidebar-btn" onclick="switchCalc('chads')">
         CHADS2-VASc <span class="badge">0-9</span>
       </button>
+      <button class="sidebar-btn" onclick="switchCalc('hasbled')">
+        HAS-BLED <span class="badge">0-9</span>
+      </button>
       <button class="sidebar-btn" onclick="switchCalc('rope')">
         RoPE / PASCAL <span class="badge">0-10</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchCalc('rcvs2')">
+        RCVS2 <span class="badge">-2 to 10</span>
       </button>
     </aside>
 
@@ -457,7 +606,226 @@
         </div>
       </div>
 
-      <!-- Calculator 2: ICH Score -->
+      <!-- Calculator 2: ASPECTS -->
+      <div id="calc-aspects" class="calc-card">
+        <div class="calc-header">
+          <h1>Anterior Circulation ASPECTS</h1>
+          <p>Alberta Stroke Program Early CT Score. Subtract 1 point for each affected (ischemic) MCA region.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title" style="margin-bottom:1rem;">Select affected (ischemic / hypodense) areas:</div>
+          <div class="checkbox-grid">
+            <div class="check-card" onclick="toggleAspects('aspects-c', this)">
+              <div class="label">C - Caudate nucleus</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-l', this)">
+              <div class="label">L - Lentiform nucleus</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-ic', this)">
+              <div class="label">IC - Internal capsule</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-i', this)">
+              <div class="label">I - Insular ribbon</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-m1', this)">
+              <div class="label">M1 - Anterior MCA cortex</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-m2', this)">
+              <div class="label">M2 - Lateral MCA cortex</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-m3', this)">
+              <div class="label">M3 - Posterior MCA cortex</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-m4', this)">
+              <div class="label">M4 - Anterior MCA (sup)</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-m5', this)">
+              <div class="label">M5 - Lateral MCA (sup)</div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="toggleAspects('aspects-m6', this)">
+              <div class="label">M6 - Posterior MCA (sup)</div>
+              <div class="status-indicator"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>ASPECTS Score</h3>
+            <div class="result-score" id="aspects-score-val">10</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="aspects-interp">Normal CT (Score 10)</div>
+            <div class="result-details" id="aspects-details">No early ischemic changes selected.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 3: PC-ASPECTS -->
+      <div id="calc-pcaspects" class="calc-card">
+        <div class="calc-header">
+          <h1>Posterior Circulation ASPECTS</h1>
+          <p>Assess early ischemic changes in the posterior circulation (vertebrobasilar). Weighted subtractions from 10.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title" style="margin-bottom:1rem;">Select affected (ischemic) regions:</div>
+          <div class="checkbox-grid">
+            <div class="check-card" onclick="togglePcAspects('pons', 2, this)">
+              <div>
+                <div class="label">Pons</div>
+                <div class="sub-pts">-2 points</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="togglePcAspects('midbrain', 2, this)">
+              <div>
+                <div class="label">Midbrain</div>
+                <div class="sub-pts">-2 points</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="togglePcAspects('thalL', 1, this)">
+              <div>
+                <div class="label">Left Thalamus</div>
+                <div class="sub-pts">-1 point</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="togglePcAspects('thalR', 1, this)">
+              <div>
+                <div class="label">Right Thalamus</div>
+                <div class="sub-pts">-1 point</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="togglePcAspects('pcaL', 1, this)">
+              <div>
+                <div class="label">Left PCA Territory</div>
+                <div class="sub-pts">-1 point</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="togglePcAspects('pcaR', 1, this)">
+              <div>
+                <div class="label">Right PCA Territory</div>
+                <div class="sub-pts">-1 point</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="togglePcAspects('cerebL', 1, this)">
+              <div>
+                <div class="label">Left Cerebellum</div>
+                <div class="sub-pts">-1 point</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="check-card" onclick="togglePcAspects('cerebR', 1, this)">
+              <div>
+                <div class="label">Right Cerebellum</div>
+                <div class="sub-pts">-1 point</div>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>PC-ASPECTS</h3>
+            <div class="result-score" id="pcaspects-score-val">10</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="pcaspects-interp">Normal (Score 10)</div>
+            <div class="result-details" id="pcaspects-details">No posterior circulation ischemic changes selected.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 4: mRS -->
+      <div id="calc-mrs" class="calc-card">
+        <div class="calc-header">
+          <h1>Modified Rankin Scale (mRS)</h1>
+          <p>The standard score for measuring the degree of disability or dependence in daily activities.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="mrs-list">
+            <div class="mrs-card" onclick="selectMRS(0, this)">
+              <div class="mrs-num">0</div>
+              <div class="mrs-info">
+                <div class="mrs-title">No symptoms</div>
+                <div class="mrs-desc">Entirely normal state, no limitations or complaints.</div>
+              </div>
+            </div>
+            <div class="mrs-card" onclick="selectMRS(1, this)">
+              <div class="mrs-num">1</div>
+              <div class="mrs-info">
+                <div class="mrs-title">No significant disability</div>
+                <div class="mrs-desc">Able to carry out all usual duties and activities despite some minor symptoms.</div>
+              </div>
+            </div>
+            <div class="mrs-card" onclick="selectMRS(2, this)">
+              <div class="mrs-num">2</div>
+              <div class="mrs-info">
+                <div class="mrs-title">Slight disability</div>
+                <div class="mrs-desc">Unable to carry out all previous activities, but able to look after own affairs without assistance.</div>
+              </div>
+            </div>
+            <div class="mrs-card" onclick="selectMRS(3, this)">
+              <div class="mrs-num">3</div>
+              <div class="mrs-info">
+                <div class="mrs-title">Moderate disability</div>
+                <div class="mrs-desc">Requires some help, but able to walk without assistance (or with a cane/walker).</div>
+              </div>
+            </div>
+            <div class="mrs-card" onclick="selectMRS(4, this)">
+              <div class="mrs-num">4</div>
+              <div class="mrs-info">
+                <div class="mrs-title">Moderately severe disability</div>
+                <div class="mrs-desc">Unable to walk without assistance and unable to attend to own bodily needs without assistance.</div>
+              </div>
+            </div>
+            <div class="mrs-card" onclick="selectMRS(5, this)">
+              <div class="mrs-num">5</div>
+              <div class="mrs-info">
+                <div class="mrs-title">Severe disability</div>
+                <div class="mrs-desc">Bedridden, incontinent and requiring constant nursing care and attention.</div>
+              </div>
+            </div>
+            <div class="mrs-card" onclick="selectMRS(6, this)">
+              <div class="mrs-num">6</div>
+              <div class="mrs-info">
+                <div class="mrs-title">Dead</div>
+                <div class="mrs-desc">Patient has expired.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>mRS Score</h3>
+            <div class="result-score" id="mrs-score-val">0</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="mrs-interp">No symptoms</div>
+            <div class="result-details" id="mrs-details">Fully independent and symptom-free.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 5: ICH Score -->
       <div id="calc-ich" class="calc-card">
         <div class="calc-header">
           <h1>ICH Score & Volume Calculator</h1>
@@ -546,7 +914,7 @@
         </div>
       </div>
 
-      <!-- Calculator 3: ABCD2 -->
+      <!-- Calculator 6: ABCD2 -->
       <div id="calc-abcd2" class="calc-card">
         <div class="calc-header">
           <h1>ABCD2 Score</h1>
@@ -607,7 +975,7 @@
         </div>
       </div>
 
-      <!-- Calculator 4: CHADS2-VASc -->
+      <!-- Calculator 7: CHADS2-VASc -->
       <div id="calc-chads" class="calc-card">
         <div class="calc-header">
           <h1>CHADS2-VASc Score</h1>
@@ -683,7 +1051,98 @@
         </div>
       </div>
 
-      <!-- Calculator 5: RoPE & PASCAL -->
+      <!-- Calculator 8: HAS-BLED -->
+      <div id="calc-hasbled" class="calc-card">
+        <div class="calc-header">
+          <h1>HAS-BLED Bleeding Risk Score</h1>
+          <p>Predicts 1-year risk of major bleeding in patients on anticoagulation for atrial fibrillation.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Hypertension (uncontrolled SBP >160)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-htn', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-htn', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Abnormal Renal Function (dialysis, transplant, or Cr >2.26)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-renal', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-renal', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Abnormal Liver Function (cirrhosis, LFTs >3x upper limit, or bilirubin >2x)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-liver', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-liver', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Prior Stroke History</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-stroke', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-stroke', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Prior Bleeding History or Predisposition (anemia, hemorrhage)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-bleed', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-bleed', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Labile INRs (high variability, therapeutic time in range &lt;60%)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-labile', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-labile', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Elderly (Age ≥ 65 years)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-elderly', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-elderly', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Medication Pre-disponents (antiplatelets, NSAIDs)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-drugs', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-drugs', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Excessive Alcohol Use (≥ 8 drinks/week)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('has-alcohol', this)">Yes (+1)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('has-alcohol', this)">No (0)</div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>HAS-BLED</h3>
+            <div class="result-score" id="hasbled-score-val">0</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="hasbled-interp">Major Bleeding Risk: 1.13% / year</div>
+            <div class="result-details" id="hasbled-details">Low-to-moderate bleeding risk (Score 0). Clinical monitoring.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator 9: RoPE & PASCAL -->
       <div id="calc-rope" class="calc-card">
         <div class="calc-header">
           <h1>RoPE & PASCAL Score</h1>
@@ -763,6 +1222,65 @@
         </div>
       </div>
 
+      <!-- Calculator 10: RCVS2 -->
+      <div id="calc-rcvs2" class="calc-card">
+        <div class="calc-header">
+          <h1>RCVS2 Diagnostic Score</h1>
+          <p>Reversible Cerebral Vasoconstriction Syndrome vs. alternative vasculopathies diagnostic index.</p>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Thunderclap Headache (TCH) pattern</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="5" onclick="selectOpt('rcvs-tch', this)">Recurrent TCH (+5 points)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rcvs-tch', this)">Single TCH (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Vasoconstrictive Trigger (sexual activity, vasoactive drug/SSRIs, postpartum)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="3" onclick="selectOpt('rcvs-trig', this)">Present (+3 points)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rcvs-trig', this)">Absent (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Concomitant SAH (convexity subarachnoid hemorrhage)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rcvs-sah', this)">Present (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rcvs-sah', this)">Absent (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Patient Biological Sex</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="1" onclick="selectOpt('rcvs-sex', this)">Female (+1 point)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rcvs-sex', this)">Male (0 points)</div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-title">Internal Carotid Artery Involvement (stenosis/narrowing)</div>
+          <div class="option-grid">
+            <div class="opt-btn" data-val="-2" onclick="selectOpt('rcvs-carotid', this)">Present (-2 points)</div>
+            <div class="opt-btn" data-val="0" onclick="selectOpt('rcvs-carotid', this)">Absent (0 points)</div>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <div class="result-left">
+            <h3>RCVS2 Score</h3>
+            <div class="result-score" id="rcvs2-score-val">0</div>
+          </div>
+          <div class="result-right">
+            <div class="result-interpretation" id="rcvs2-interp">Low Probability of RCVS (Score &lt;2)</div>
+            <div class="result-details" id="rcvs2-details">High sensitivity for ruling out Reversible Cerebral Vasoconstriction Syndrome.</div>
+          </div>
+        </div>
+      </div>
+
     </main>
 
   </div>
@@ -774,6 +1292,15 @@
       'gcs-e': 4,
       'gcs-v': 5,
       'gcs-m': 6,
+      // ASPECTS
+      'aspects-c': 0, 'aspects-l': 0, 'aspects-ic': 0, 'aspects-i': 0,
+      'aspects-m1': 0, 'aspects-m2': 0, 'aspects-m3': 0, 'aspects-m4': 0,
+      'aspects-m5': 0, 'aspects-m6': 0,
+      // PC-ASPECTS
+      'pons': 0, 'midbrain': 0, 'thalL': 0, 'thalR': 0,
+      'pcaL': 0, 'pcaR': 0, 'cerebL': 0, 'cerebR': 0,
+      // mRS
+      'mrs-val': 0,
       // ICH
       'ich-gcs': 0,
       'ich-age': 0,
@@ -794,6 +1321,16 @@
       'chads-stroke': 0,
       'chads-vasc': 0,
       'chads-sex': 0,
+      // HAS-BLED
+      'has-htn': 0,
+      'has-renal': 0,
+      'has-liver': 0,
+      'has-stroke': 0,
+      'has-bleed': 0,
+      'has-labile': 0,
+      'has-elderly': 0,
+      'has-drugs': 0,
+      'has-alcohol': 0,
       // RoPE
       'rope-htn': 0,
       'rope-dm': 0,
@@ -801,8 +1338,121 @@
       'rope-smoke': 0,
       'rope-cort': 0,
       'rope-age': 0,
-      'rope-hrf': 0
+      'rope-hrf': 0,
+      // RCVS2
+      'rcvs-tch': 0,
+      'rcvs-trig': 0,
+      'rcvs-sah': 0,
+      'rcvs-sex': 0,
+      'rcvs-carotid': 0
     };
+
+    // Toggle Aspects
+    function toggleAspects(regionId, elem) {
+      elem.classList.toggle('affected');
+      const isAffected = elem.classList.contains('affected');
+      states[regionId] = isAffected ? 1 : 0;
+      
+      // Calculate ASPECTS
+      let score = 10;
+      const affectedRegions = [];
+      const keys = ['aspects-c', 'aspects-l', 'aspects-ic', 'aspects-i', 'aspects-m1', 'aspects-m2', 'aspects-m3', 'aspects-m4', 'aspects-m5', 'aspects-m6'];
+      
+      keys.forEach(k => {
+        if (states[k] === 1) {
+          score -= 1;
+          affectedRegions.push(k.replace('aspects-', '').toUpperCase());
+        }
+      });
+      
+      document.getElementById('aspects-score-val').innerText = score;
+      
+      let interp = `Mild/Small Core Infarct (ASPECTS ${score})`;
+      if (score === 10) {
+        interp = "Normal CT (Score 10)";
+      } else if (score >= 6) {
+        interp = `Eligible for Acute EVT (ASPECTS ${score})`;
+      } else if (score >= 3) {
+        interp = `Large Core Infarct - Cautious EVT Select (ASPECTS ${score})`;
+      } else {
+        interp = `Very Large Core Infarct / Poor Prognosis (ASPECTS ${score})`;
+      }
+      
+      document.getElementById('aspects-interp').innerText = interp;
+      document.getElementById('aspects-details').innerText = affectedRegions.length > 0 
+        ? `Affected Regions: ${affectedRegions.join(', ')}`
+        : "No early ischemic changes selected.";
+    }
+
+    // Toggle PC-ASPECTS
+    function togglePcAspects(regionId, weight, elem) {
+      elem.classList.toggle('affected');
+      const isAffected = elem.classList.contains('affected');
+      states[regionId] = isAffected ? weight : 0;
+      
+      // Calculate
+      let score = 10;
+      const affected = [];
+      const keys = ['pons', 'midbrain', 'thalL', 'thalR', 'pcaL', 'pcaR', 'cerebL', 'cerebR'];
+      
+      keys.forEach(k => {
+        if (states[k] > 0) {
+          score -= states[k];
+          affected.push(k.toUpperCase());
+        }
+      });
+      
+      document.getElementById('pcaspects-score-val').innerText = score;
+      
+      let interp = `Posterior Impairment (Score ${score})`;
+      if (score === 10) {
+        interp = "Normal PC-ASPECTS (Score 10)";
+      } else if (score >= 6) {
+        interp = `Favorable Posterior Core (Score ${score})`;
+      } else {
+        interp = `Large Posterior Core Infarct / High Mortality Risk (Score ${score})`;
+      }
+      
+      document.getElementById('pcaspects-interp').innerText = interp;
+      document.getElementById('pcaspects-details').innerText = affected.length > 0
+        ? `Affected Regions: ${affected.join(', ')}`
+        : "No posterior circulation ischemic changes selected.";
+    }
+
+    // Select MRS
+    function selectMRS(val, elem) {
+      const parent = elem.parentElement;
+      const cards = parent.querySelectorAll('.mrs-card');
+      cards.forEach(c => c.classList.remove('selected'));
+      
+      elem.classList.add('selected');
+      states['mrs-val'] = val;
+      
+      document.getElementById('mrs-score-val').innerText = val;
+      
+      const interps = {
+        0: "No symptoms",
+        1: "No significant disability",
+        2: "Slight disability",
+        3: "Moderate disability",
+        4: "Moderately severe disability",
+        5: "Severe disability",
+        6: "Dead"
+      };
+      
+      const details = {
+        0: "Entirely independent and symptom-free.",
+        1: "Able to carry out all usual activities despite minor symptoms.",
+        2: "Independent in own bodily needs but restricted in previous roles.",
+        3: "Requires some help, but able to walk independently without assist.",
+        4: "Unable to walk or attend to own needs without physical assistance.",
+        5: "Bedridden, incontinent, requiring constant nursing care.",
+        6: "Patient has expired."
+      };
+      
+      document.getElementById('mrs-interp').innerText = interps[val];
+      document.getElementById('mrs-details').innerText = details[val];
+    }
 
     // Initialize option layouts
     function selectOpt(category, elem) {
@@ -822,8 +1472,12 @@
         calcABCD2();
       } else if (category.startsWith('chads-')) {
         calcCHADS();
+      } else if (category.startsWith('has-')) {
+        calcHASBLED();
       } else if (category.startsWith('rope-')) {
         calcRoPE();
+      } else if (category.startsWith('rcvs-')) {
+        calcRCVS2();
       }
     }
 
@@ -870,7 +1524,6 @@
         ichGcsPoints = 0; // GCS 13-15
       }
       
-      // Find the option grid in the ICH section and toggle GCS point buttons
       const ichGcsBtns = document.querySelectorAll('[onclick*="ich-gcs"]');
       ichGcsBtns.forEach(btn => {
         if (parseInt(btn.getAttribute('data-val')) === ichGcsPoints) {
@@ -890,7 +1543,6 @@
       
       const volumePoints = (vol >= 30.0) ? 1 : 0;
       
-      // Set points warning message
       const msg = document.getElementById('volume-pts-msg');
       if (volumePoints === 1) {
         msg.innerText = "(Adds 1 point to ICH Score: ≥30 cc)";
@@ -900,7 +1552,6 @@
         msg.style.color = "var(--text-muted)";
       }
       
-      // Auto toggle ICH volume selectors
       const ichVolBtns = document.querySelectorAll('[onclick*="ich-vol"]');
       ichVolBtns.forEach(btn => {
         const val = parseInt(btn.getAttribute('data-val'));
@@ -991,7 +1642,40 @@
       document.getElementById('chads-details').innerText = `Annual stroke risk for CHADS2-VASc score of ${total} in non-anticoagulated patients.`;
     }
 
-    // 5. RoPE & PASCAL
+    // 5. HAS-BLED
+    function calcHASBLED() {
+      const htn = states['has-htn'] || 0;
+      const renal = states['has-renal'] || 0;
+      const liver = states['has-liver'] || 0;
+      const stroke = states['has-stroke'] || 0;
+      const bleed = states['has-bleed'] || 0;
+      const labile = states['has-labile'] || 0;
+      const elderly = states['has-elderly'] || 0;
+      const drugs = states['has-drugs'] || 0;
+      const alcohol = states['has-alcohol'] || 0;
+      
+      const total = htn + renal + liver + stroke + bleed + labile + elderly + drugs + alcohol;
+      document.getElementById('hasbled-score-val').innerText = total;
+      
+      let interp = "1-year major bleed risk: 1.13%";
+      let details = "Low bleeding risk (Score 0). Anticoagulation is generally safe.";
+      
+      if (total >= 3) {
+        interp = "1-year major bleed risk: 3.74% (High Risk)";
+        details = `High bleeding risk (Score ${total}). Anticoagulation requires careful monitoring and BP management.`;
+      } else if (total === 2) {
+        interp = "1-year major bleed risk: 1.88%";
+        details = "Moderate bleeding risk (Score 2). Clinical monitoring advised.";
+      } else if (total === 1) {
+        interp = "1-year major bleed risk: 1.02%";
+        details = "Low-to-moderate bleeding risk (Score 1). Standard care.";
+      }
+      
+      document.getElementById('hasbled-interp').innerText = interp;
+      document.getElementById('hasbled-details').innerText = details;
+    }
+
+    // 6. RoPE & PASCAL
     function calcRoPE() {
       const htn = states['rope-htn'] || 0;
       const dm = states['rope-dm'] || 0;
@@ -1004,7 +1688,6 @@
       const total = htn + dm + hx + smoke + cort + age;
       document.getElementById('rope-score-val').innerText = total;
       
-      // Get relatedness percentage
       let pfoAttributedStr = "0%";
       if (total === 4) pfoAttributedStr = "38% (25-48%)";
       else if (total === 5) pfoAttributedStr = "34% (21-45%)";
@@ -1013,7 +1696,6 @@
       else if (total === 8) pfoAttributedStr = "84% (79-87%)";
       else if (total >= 9) pfoAttributedStr = "88% (83-91%)";
       
-      // PASCAL classification logic
       let pascalText = "";
       let riskPostClosure = "";
       let riskPersistentAF = "";
@@ -1034,6 +1716,32 @@
       
       document.getElementById('rope-interp').innerText = `PFO Relatedness: ${pascalText} (Attributable Fraction: ${pfoAttributedStr})`;
       document.getElementById('rope-details').innerText = `PASCAL: ${pascalText} | Closure Stroke Risk ${riskPostClosure} | AF Post Closure ${riskPersistentAF}`;
+    }
+
+    // 7. RCVS2
+    function calcRCVS2() {
+      const tch = states['rcvs-tch'] || 0;
+      const trig = states['rcvs-trig'] || 0;
+      const sah = states['rcvs-sah'] || 0;
+      const sex = states['rcvs-sex'] || 0;
+      const carotid = states['rcvs-carotid'] || 0;
+      
+      const total = tch + trig + sah + sex + carotid;
+      document.getElementById('rcvs2-score-val').innerText = total;
+      
+      let interp = "Low Probability of RCVS (Score <2)";
+      let details = "RCVS diagnosis ruled out with high sensitivity. Review other vasculopathies.";
+      
+      if (total >= 5) {
+        interp = "High Probability of RCVS (Score ≥5)";
+        details = "High specificity (~99%) for Reversible Cerebral Vasoconstriction Syndrome.";
+      } else if (total >= 2) {
+        interp = "Intermediate Probability (Score 2-4)";
+        details = "Possible RCVS. Order angiography or serial monitoring.";
+      }
+      
+      document.getElementById('rcvs2-interp').innerText = interp;
+      document.getElementById('rcvs2-details').innerText = details;
     }
 
     // Set defaults on load
@@ -1059,15 +1767,20 @@
         }
       });
       
+      // Select mRS default
+      const mrsDefaultCard = document.querySelector('.mrs-card[onclick*="selectMRS(0"]');
+      if (mrsDefaultCard) selectMRS(0, mrsDefaultCard);
+      
       // Trigger other defaults
       calcICH();
       calcABCD2();
       calcCHADS();
+      calcHASBLED();
       calcRoPE();
+      calcRCVS2();
     });
 
     function reExtractParams(str) {
-      // extracts parameter string from: selectOpt('ich-gcs', this) -> ['ich-gcs']
       const regex = /selectOpt\('([^']*)'/;
       const match = str.match(regex);
       return match ? [match[1]] : null;
