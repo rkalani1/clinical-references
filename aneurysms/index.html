@@ -129,7 +129,7 @@
               <select id="inp-pop" onchange="runPhasesCalculator()">
                 <option value="0">North American / European (+0)</option>
                 <option value="3">Japanese (+3)</option>
-                <option value="4">Finnish (+4)</option>
+                <option value="5">Finnish (+5)</option>
               </select>
             </div>
 
@@ -280,13 +280,29 @@
               <tbody>
                 <tr>
                   <td><strong>P – Population</strong></td>
-                  <td>North American/European (0) | Japanese (3) | Finnish (4)</td>
-                  <td rowspan="6" style="font-weight:700; vertical-align:middle; text-align:left;">
-                    • 0–3 points: <strong>0.5%</strong><br>
-                    • 4–7 points: <strong>0.7% - 1.2%</strong><br>
-                    • 8–11 points: <strong>2.2% - 4.3%</strong><br>
-                    • 12–15 points: <strong>7.2% - 17.8%</strong><br>
-                    • &ge;16 points: <strong>&gt;40%</strong>
+                  <td>North American/European (0) | Japanese (3) | Finnish (5)</td>
+                  <td rowspan="6" style="vertical-align:middle; text-align:left; font-size: 0.65rem; line-height: 1.2;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px; font-weight: normal; color: var(--text-main);">
+                      <div><strong>Score 0-2:</strong> 0.4%</div>
+                      <div><strong>Score 11:</strong> 4.3%</div>
+                      <div><strong>Score 3:</strong> 0.5%</div>
+                      <div><strong>Score 12:</strong> 5.3%</div>
+                      <div><strong>Score 4:</strong> 0.7%</div>
+                      <div><strong>Score 13:</strong> 7.2%</div>
+                      <div><strong>Score 5:</strong> 0.9%</div>
+                      <div><strong>Score 14:</strong> 9.8%</div>
+                      <div><strong>Score 6:</strong> 1.2%</div>
+                      <div><strong>Score 15:</strong> 13.8%</div>
+                      <div><strong>Score 7:</strong> 1.7%</div>
+                      <div><strong>Score 16:</strong> 17.8%</div>
+                      <div><strong>Score 8:</strong> 2.2%</div>
+                      <div><strong>Score 17:</strong> 23.0%</div>
+                      <div><strong>Score 9:</strong> 2.8%</div>
+                      <div><strong>Score 18:</strong> 29.5%</div>
+                      <div><strong>Score 10:</strong> 3.5%</div>
+                      <div><strong>Score 19:</strong> 36.9%</div>
+                      <div style="grid-column: span 2; font-weight: bold; border-top: 1px solid var(--border-color); padding-top: 2px; margin-top: 2px;">Score &ge;20: &ge;45.9%</div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -397,22 +413,55 @@
       
       scoreDisplay.innerText = `Total Score: ${score} points`;
       
+      const riskLookup = {
+        0: "0.4%", 1: "0.4%", 2: "0.4%",
+        3: "0.5%",
+        4: "0.7%",
+        5: "0.9%",
+        6: "1.2%",
+        7: "1.7%",
+        8: "2.2%",
+        9: "2.8%",
+        10: "3.5%",
+        11: "4.3%",
+        12: "5.3%",
+        13: "7.2%",
+        14: "9.8%",
+        15: "13.8%",
+        16: "17.8%",
+        17: "23.0%",
+        18: "29.5%",
+        19: "36.9%"
+      };
+      
+      let riskVal = "";
+      if (score >= 20) {
+        riskVal = "≥45.9%";
+      } else if (score < 0) {
+        riskVal = "0.4%";
+      } else {
+        riskVal = riskLookup[score];
+      }
+      
+      let riskDesc = "";
       if (score >= 16) {
-        riskDisplay.innerText = ">40% (Extreme Risk)";
+        riskDesc = "Extreme Risk";
         riskDisplay.style.color = "var(--color-red)";
       } else if (score >= 12) {
-        riskDisplay.innerText = "7.2% - 17.8% (High Risk)";
+        riskDesc = "High Risk";
         riskDisplay.style.color = "var(--color-orange)";
       } else if (score >= 8) {
-        riskDisplay.innerText = "2.2% - 4.3% (Moderate Risk)";
+        riskDesc = "Moderate Risk";
         riskDisplay.style.color = "var(--color-yellow)";
       } else if (score >= 4) {
-        riskDisplay.innerText = "0.7% - 1.2% (Low-Moderate Risk)";
+        riskDesc = "Low-Moderate Risk";
         riskDisplay.style.color = "var(--color-primary)";
       } else {
-        riskDisplay.innerText = "0.5% (Low Risk)";
+        riskDesc = "Low Risk";
         riskDisplay.style.color = "var(--color-green)";
       }
+      
+      riskDisplay.innerText = `${riskVal} (${riskDesc})`;
     }
 
     document.addEventListener('DOMContentLoaded', () => {

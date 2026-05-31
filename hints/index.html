@@ -244,6 +244,12 @@
               <button class="btn-scenario" onclick="runSkew('none')">No Skew (Peripheral)</button>
               <button class="btn-scenario" onclick="runSkew('present')">Skew Present (Central)</button>
             </div>
+            
+            <h3 class="card-subheader">4. Bedside Hearing Test (HINTS+)</h3>
+            <div class="scenarios-grid" style="margin-bottom:0;">
+              <button class="btn-scenario" onclick="runHearing('normal')">Hearing Intact (Peripheral)</button>
+              <button class="btn-scenario" onclick="runHearing('loss')">New Hearing Loss (Central/AICA)</button>
+            </div>
           </div>
         </div>
         
@@ -282,6 +288,14 @@
                   <button id="inp-ts-skew" class="btn-scenario" onclick="setFinding('skew', 'skew')">Skew Present</button>
                 </div>
               </div>
+              
+              <div>
+                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Bedside Hearing Test (+)</label>
+                <div class="scenarios-grid" style="margin-bottom:0;">
+                  <button id="inp-hearing-normal" class="btn-scenario active" onclick="setFinding('hearing', 'normal')">Hearing Intact</button>
+                  <button id="inp-hearing-loss" class="btn-scenario" onclick="setFinding('hearing', 'loss')">New Unilateral Loss</button>
+                </div>
+              </div>
             </div>
           </div>
           
@@ -294,15 +308,15 @@
             </div>
           </div>
           
-          <!-- INFARCT Rules Panel -->
           <div class="status-summary-box danger" style="margin-top:1rem;">
             <svg viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
             <div class="status-desc">
               <h4>INFARCT Clinical Rule</h4>
-              <p><strong>Any SINGLE "Central" finding requires treating as a stroke:</strong><br>
+              <p><strong>Any SINGLE "Central" finding requires treating as a stroke (INFARCT):</strong><br>
               • <strong>I</strong>mpulse <strong>N</strong>ormal (VOR intact)<br>
-              • <strong>F</strong>ast-<strong>A</strong>lternating <strong>R</strong>edirection of <strong>C</strong>over (Test of Skew deviation present)<br>
-              • <strong>T</strong>ype of Nystagmus direction-changing or pure vertical.
+              • <strong>F</strong>ast-<strong>A</strong>lternating nystagmus (direction-changing)<br>
+              • <strong>R</strong>efixation on <strong>C</strong>over <strong>T</strong>est (skew deviation present)<br>
+              • <em>Note: **HINTS+** adds new unilateral hearing loss as a central stroke sign.</em>
               </p>
             </div>
           </div>
@@ -390,13 +404,14 @@
           </div>
           
           <div class="print-box alert-row-danger">
-            <h3>🚨 INFARCT Clinical Warning Rule</h3>
-            <p><strong>Any SINGLE Central finding on the 3-step HINTS exam requires treating the patient as having an acute stroke:</strong></p>
+            <h3>🚨 HINTS+ & INFARCT Clinical Warning Rule</h3>
+            <p><strong>Any SINGLE Central finding on the HINTS+ exam requires treating as an acute stroke:</strong></p>
             <ul class="print-list" style="list-style-type:square;">
               <li><strong>I</strong>mpulse <strong>N</strong>ormal (VOR intact).</li>
-              <li><strong>F</strong>ast-<strong>A</strong>lternating <strong>R</strong>edirection of <strong>C</strong>over (Test of Skew deviation present).</li>
-              <li><strong>T</strong>ype of Nystagmus direction-changing or pure vertical.</li>
-              <li><strong>Clinical Note:</strong> HINTS is 96.8% sensitive and 98.5% specific for central lesions. It is more sensitive than MRI DWI in the first 24–48 hours from vertigo onset.</li>
+              <li><strong>F</strong>ast-<strong>A</strong>lternating nystagmus (direction-changing).</li>
+              <li><strong>R</strong>efixation on <strong>C</strong>over <strong>T</strong>est (skew deviation present).</li>
+              <li><strong>+ Hearing Loss:</strong> New unilateral hearing impairment is a central sign (AICA stroke).</li>
+              <li><strong>Clinical Note:</strong> HINTS+ is highly sensitive and specific. It is more sensitive than MRI DWI in the first 24–48 hours from vertigo onset.</li>
             </ul>
           </div>
           
@@ -450,7 +465,8 @@
     const currentFindings = {
       hit: 'abnormal',
       nystagmus: 'uni',
-      skew: 'none'
+      skew: 'none',
+      hearing: 'normal'
     };
 
     function setFinding(field, value) {
@@ -466,6 +482,9 @@
       } else if (field === 'skew') {
         document.getElementById('inp-ts-none').classList.toggle('active', value === 'none');
         document.getElementById('inp-ts-skew').classList.toggle('active', value === 'skew');
+      } else if (field === 'hearing') {
+        document.getElementById('inp-hearing-normal').classList.toggle('active', value === 'normal');
+        document.getElementById('inp-hearing-loss').classList.toggle('active', value === 'loss');
       }
       
       calculateDiagnosis();
@@ -475,8 +494,9 @@
       const isCentralHIT = currentFindings.hit === 'normal';
       const isCentralN = currentFindings.nystagmus === 'bi';
       const isCentralTS = currentFindings.skew === 'skew';
+      const isCentralHearing = currentFindings.hearing === 'loss';
       
-      const isCentral = isCentralHIT || isCentralN || isCentralTS;
+      const isCentral = isCentralHIT || isCentralN || isCentralTS || isCentralHearing;
       
       const panel = document.getElementById('diag-status-panel');
       const title = document.getElementById('diag-title');
@@ -490,12 +510,13 @@
         if (isCentralHIT) reasons.push('Normal/Intact VOR (no saccade)');
         if (isCentralN) reasons.push('Direction-changing or vertical Nystagmus');
         if (isCentralTS) reasons.push('Skew Deviation present');
+        if (isCentralHearing) reasons.push('New Unilateral Hearing Loss (+)');
         
         text.innerHTML = `<strong>Alert:</strong> Stroke suspect. Identified central finding(s): <strong>${reasons.join(', ')}</strong>. Treat immediately as acute stroke, activate stroke team, and obtain urgent brain MRI with DWI.`;
       } else {
         panel.className = 'status-summary-box safe';
         title.innerText = 'PERIPHERAL VESTIBULAR PROFILE';
-        text.innerText = 'All three exam steps are benign (Abnormal HIT, Unidirectional Nystagmus, No Skew). This is highly consistent with acute peripheral vestibulopathy (e.g. vestibular neuritis). Manage symptomatically.';
+        text.innerText = 'All four exam steps are benign (Abnormal HIT, Unidirectional Nystagmus, No Skew, Normal Hearing). This is highly consistent with acute peripheral vestibulopathy (e.g. vestibular neuritis). Manage symptomatically.';
       }
     }
 
@@ -694,6 +715,18 @@
             coveredLeft = true;
           }
         }, 1500);
+      }
+    }
+
+    function runHearing(type) {
+      clearActiveSims();
+      const btn = event.currentTarget;
+      btn.classList.add('active');
+      
+      if (type === 'normal') {
+        explanation.innerHTML = "<strong>Bedside Hearing Test (Intact / Peripheral):</strong> Rubbing fingers or whispering at the bedside is heard equally in both ears. No new hearing loss is reported or detected. <em>Intact hearing = Peripheral pattern.</em>";
+      } else {
+        explanation.innerHTML = "<strong>Bedside Hearing Test (New Unilateral Loss / Central AICA):</strong> Finger rub test reveals new-onset asymmetry or hearing loss on one side. This points to labyrinthine artery ischemia, which is a branch of the Anterior Inferior Cerebellar Artery (AICA). <em>New hearing loss = Central stroke sign (HINTS+).</em>";
       }
     }
   </script>

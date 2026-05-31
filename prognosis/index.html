@@ -171,76 +171,12 @@
         <!-- RIGHT COLUMN: INTERACTIVE CALCULATOR & CHANNELS -->
         <div class="glass-card" style="margin-bottom:0; display:flex; flex-direction:column; gap:10px;">
           <div class="tab-btn-group">
-            <button class="tab-btn active" onclick="switchTab('tab-func')">FUNC Score (ICH Independence)</button>
-            <button class="tab-btn" onclick="switchTab('tab-ais')">Severe AIS Outlook</button>
+            <button class="tab-btn active" onclick="switchTab('tab-ais')">Severe AIS Outlook</button>
             <button class="tab-btn" onclick="switchTab('tab-comm')">Communication Frameworks</button>
           </div>
 
-          <!-- TAB 1: FUNC SCORE CALCULATOR -->
-          <div id="tab-func" class="tab-pane active">
-            <div class="card-header" style="border:none; margin-bottom:5px; padding-bottom:0;">
-              <h2>FUNC Score Calculator</h2>
-              <span class="card-label">mRS &le;3 Independence Predictor</span>
-            </div>
-
-            <div class="lcd-screen">
-              <span class="lcd-label">Predicted 90-Day Independence (mRS &le;3)</span>
-              <div id="func-result-display" style="font-size: 1.4rem; font-weight:700; color:var(--color-green);">80-90% Chance</div>
-              <div id="func-score-display" class="formula-box">Total Score: 11 / 14</div>
-            </div>
-
-            <div style="display:flex; flex-direction:column; gap:6px;">
-              <div class="prognosis-input-row">
-                <label>Age</label>
-                <select id="func-age" onchange="runFuncScore()">
-                  <option value="4">&lt;70 years (+4)</option>
-                  <option value="3">70-79 years (+3)</option>
-                  <option value="0">&ge;80 years (+0)</option>
-                </select>
-              </div>
-
-              <div class="prognosis-input-row">
-                <label>GCS Score</label>
-                <select id="func-gcs" onchange="runFuncScore()">
-                  <option value="4">&ge;9 (+4)</option>
-                  <option value="2">5-8 (+2)</option>
-                  <option value="0">3-4 (+0)</option>
-                </select>
-              </div>
-
-              <div class="prognosis-input-row">
-                <label>ICH Volume</label>
-                <select id="func-vol" onchange="runFuncScore()">
-                  <option value="4">&lt;30 mL (+4)</option>
-                  <option value="2">30-60 mL (+2)</option>
-                  <option value="0">&gt;60 mL (+0)</option>
-                </select>
-              </div>
-
-              <div class="prognosis-input-row">
-                <label>Location</label>
-                <select id="func-loc" onchange="runFuncScore()">
-                  <option value="2">Lobar (+2)</option>
-                  <option value="1">Deep / Infratentorial (+1)</option>
-                </select>
-              </div>
-
-              <div class="prognosis-input-row">
-                <label>Pre-ICH Cognitive Impairment</label>
-                <select id="func-cog" onchange="runFuncScore()">
-                  <option value="1">No (+1)</option>
-                  <option value="0">Yes (+0)</option>
-                </select>
-              </div>
-            </div>
-            
-            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:10px; line-height:1.4;">
-              * Note: Deep or infratentorial location, advanced age, volume >60 mL, and poor GCS reduce the score. A score of &ge;11 indicates a high probability of functional independence at 90 days.
-            </p>
-          </div>
-
-          <!-- TAB 2: SEVERE AIS OUTLOOK -->
-          <div id="tab-ais" class="tab-pane">
+          <!-- TAB 1: SEVERE AIS OUTLOOK -->
+          <div id="tab-ais" class="tab-pane active">
             <h2>Severe Acute Ischemic Stroke Prognosis</h2>
             <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px; font-size:0.85rem; line-height:1.45;">
               <p>
@@ -295,52 +231,17 @@
             </p>
           </div>
 
-          <div class="print-box">
-            <h3>📋 FUNC Score for 90-Day Independence</h3>
-            <table class="print-table">
-              <thead>
-                <tr>
-                  <th>Predictor Variable</th>
-                  <th>Points Assigned</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Age</strong></td>
-                  <td>&lt;70 (4) | 70-79 (3) | &ge;80 (0)</td>
-                </tr>
-                <tr>
-                  <td><strong>GCS Score</strong></td>
-                  <td>&ge;9 (4) | 5-8 (2) | 3-4 (0)</td>
-                </tr>
-                <tr>
-                  <td><strong>ICH Volume</strong></td>
-                  <td>&lt;30 mL (4) | 30-60 mL (2) | &gt;60 mL (0)</td>
-                </tr>
-                <tr>
-                  <td><strong>ICH Location</strong></td>
-                  <td>Lobar (2) | Deep / Infratentorial (1)</td>
-                </tr>
-                <tr>
-                  <td><strong>Pre-ICH Cognitive</strong></td>
-                  <td>No Impairment (1) | Impairment (0)</td>
-                </tr>
-              </tbody>
-            </table>
-            <div style="font-size:0.65rem; margin-top:5px; line-height:1.2;">
-              <strong>Score Interpretation:</strong><br>
-              • 11-14: **High** (~80-90% Functional Independence mRS &le;3)<br>
-              • 8-10: **Moderate** (~40-60%) | • 5-7: **Low** (~10-20%) | • 0-4: **Extremely Low** (&lt;5%)
-            </div>
-          </div>
-
-          <div class="print-box">
-            <h3>🧠 Severe AIS Prognostication Pearls</h3>
-            <ul class="print-list">
-              <li><strong>Immediate Post-Reperfusion NIHSS:</strong> Highly unreliable indicator of recovery. Deficits often improve dramatically over weeks.</li>
-              <li><strong>ASPECTS & Recanalization:</strong> ASPECTS &ge;6 + successful recanalization (TICI 2b/3) leads to independence (mRS 0-2) in up to 50%.</li>
-              <li><strong>Malignant MCA Decompression:</strong> Hemicraniectomy within 48h (age &lt;60) has NNT of 2 for survival, 4 for mRS &le;3 recovery.</li>
-              <li><strong>Basilar Artery Occlusion:</strong> Revascularization provides robust benefits even in extended windows. Do not declare futility early.</li>
+          <div class="print-box full-width">
+            <h3>🧠 Acute Stroke Prognostication Pearls</h3>
+            <ul class="print-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 0;">
+              <div>
+                <li style="margin-bottom: 6px;"><strong>Immediate Post-Reperfusion NIHSS:</strong> Highly unreliable indicator of recovery. Deficits often improve dramatically over weeks.</li>
+                <li><strong>ASPECTS & Recanalization:</strong> ASPECTS &ge;6 + successful recanalization (TICI 2b/3) leads to independence (mRS 0-2) in up to 50%.</li>
+              </div>
+              <div>
+                <li style="margin-bottom: 6px;"><strong>Malignant MCA Decompression:</strong> Hemicraniectomy within 48h (age &lt;60) has NNT of 2 for survival, 4 for mRS &le;3 recovery.</li>
+                <li><strong>Basilar Artery Occlusion:</strong> Revascularization provides robust benefits even in extended windows. Do not declare futility early.</li>
+              </div>
             </ul>
           </div>
 
@@ -375,7 +276,7 @@
           </div>
 
           <div class="print-footer-references">
-            <p><strong>References:</strong> [1] AHA/ASA ICH Guidelines. Stroke. 2022. [2] Rost NS, et al. FUNC Score. Stroke. 2008. [3] DESTINY II. N Engl J Med. 2014.</p>
+            <p><strong>References:</strong> [1] AHA/ASA Stroke Guidelines. 2022. [2] DESTINY II. N Engl J Med. 2014. [3] DECIDE/DECIMAL/HAMLET pooled analysis.</p>
             <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
@@ -400,35 +301,6 @@
       event.target.classList.add('active');
     }
 
-    function runFuncScore() {
-      const age = parseInt(document.getElementById('func-age').value);
-      const gcs = parseInt(document.getElementById('func-gcs').value);
-      const vol = parseInt(document.getElementById('func-vol').value);
-      const loc = parseInt(document.getElementById('func-loc').value);
-      const cog = parseInt(document.getElementById('func-cog').value);
-      
-      const total = age + gcs + vol + loc + cog;
-      
-      const resultDisplay = document.getElementById('func-result-display');
-      const scoreDisplay = document.getElementById('func-score-display');
-      
-      scoreDisplay.innerText = `Total Score: ${total} / 14`;
-      
-      if (total >= 11) {
-        resultDisplay.innerText = 'High (~80-90% Chance of Independence)';
-        resultDisplay.style.color = 'var(--color-green)';
-      } else if (total >= 8) {
-        resultDisplay.innerText = 'Moderate (~40-60% Chance of Independence)';
-        resultDisplay.style.color = 'var(--color-yellow)';
-      } else if (total >= 5) {
-        resultDisplay.innerText = 'Low (~10-20% Chance of Independence)';
-        resultDisplay.style.color = 'var(--color-orange)';
-      } else {
-        resultDisplay.innerText = 'Extremely Low (<5% Chance of Independence)';
-        resultDisplay.style.color = 'var(--color-red)';
-      }
-    }
-
     const scenarios = {
       best: '<strong>Best Case Script:</strong> "With aggressive rehab and time, he may regain the ability to walk with a cane and communicate basic needs, though some arm weakness will remain."',
       real: '<strong>Most Realistic Outcome Script:</strong> "He will likely require assistance with daily tasks (dressing, transfers) and may need long-term feeding tube support due to swallowing deficits."',
@@ -442,7 +314,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      runFuncScore();
+      // Init actions if needed
     });
   </script>
 </body>

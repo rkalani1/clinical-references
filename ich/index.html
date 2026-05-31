@@ -81,7 +81,7 @@
           <div class="lcd-screen">
             <span class="lcd-label">Total ICH Score</span>
             <div id="ich-total-display" class="lcd-value">0</div>
-            <span id="ich-mortality-badge" class="status-badge status-normal" style="align-self: flex-start; margin-top: 4px;">MORTALITY RISK: 13% (Score 0)</span>
+            <span id="ich-mortality-badge" class="status-badge status-normal" style="align-self: flex-start; margin-top: 4px;">MORTALITY RISK: 0% (Score 0)</span>
           </div>
           
           <h3 class="card-subheader">1. Hematoma Volume (ABC/2 Method)</h3>
@@ -256,15 +256,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Mortality %</td>
-                  <td>13%</td>
-                  <td>26%</td>
-                  <td>48%</td>
-                  <td>72%</td>
-                  <td>97%</td>
-                  <td>100%</td>
-                </tr>
+                 <tr>
+                   <td>Mortality %</td>
+                   <td>0%</td>
+                   <td>13%</td>
+                   <td>26%</td>
+                   <td>72%</td>
+                   <td>97%</td>
+                   <td>100%</td>
+                 </tr>
               </tbody>
             </table>
           </div>
@@ -429,11 +429,10 @@
       }
     }
 
-    // ICH Score calculation
     const ichMortalityRates = {
-      0: '13%',
-      1: '26%',
-      2: '48%',
+      0: '0%',
+      1: '13%',
+      2: '26%',
       3: '72%',
       4: '97%',
       5: '100%',

@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IV Thrombolysis (IVT) Bedside Guide & Dosing Calculator</title>
-  <meta name="description" content="Bedside calculator and decision support for acute stroke intravenous thrombolysis (Alteplase, Tenecteplase).">
+  <title>IV Tenecteplase (TNK) Bedside Guide & Dosing Calculator</title>
+  <meta name="description" content="Bedside calculator and decision support for acute stroke intravenous thrombolysis (Tenecteplase).">
   <link href="../assets/dual_view.css" rel="stylesheet"/>
   
   <style>
     /* Scoped styles for IVT Calculator */
     .dose-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 12px;
       margin-bottom: 12px;
     }
@@ -52,8 +52,8 @@
     <div class="header-container">
       <div class="brand">
         <span class="badge">Acute Stroke Protocol</span>
-        <h1 id="app-title">Intravenous Thrombolysis (IVT)</h1>
-        <p class="subtitle">Eligibility checklist, dosing calculators, and post-infusion monitoring</p>
+        <h1 id="app-title">IV Tenecteplase (TNK) Thrombolysis</h1>
+        <p class="subtitle">Eligibility checklist, TNK dosing calculator, and post-infusion monitoring</p>
       </div>
       <div class="view-toggle-container">
         <button id="toggle-dashboard" class="toggle-btn active" onclick="switchView('dashboard')">
@@ -99,23 +99,13 @@
             </div>
             
             <div class="dose-grid">
-              <!-- Alteplase Dosing -->
-              <div class="dose-card" style="border-top: 4px solid var(--color-primary);">
-                <span>Alteplase (tPA) 0.9 mg/kg</span>
-                <strong id="alt-total">63.0 mg</strong>
-                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
-                  Bolus (10%): <span id="alt-bolus" style="color:white; font-weight:600;">6.3 mg</span> over 1m<br>
-                  Infusion (90%): <span id="alt-inf" style="color:white; font-weight:600;">56.7 mg</span> over 1h
-                </p>
-              </div>
-              
               <!-- Tenecteplase Dosing -->
               <div class="dose-card" style="border-top: 4px solid var(--color-purple);">
                 <span>Tenecteplase (TNK) 0.25 mg/kg</span>
                 <strong id="tnk-total">17.5 mg</strong>
                 <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
                   Single IV Bolus given over 5-10 seconds.<br>
-                  Max TNK dose: <span style="color:white; font-weight:600;">25.0 mg</span>
+                  Max TNK dose: <span style="color:white; font-weight:600;">25.0 mg</span> (reached at &ge;100 kg)
                 </p>
               </div>
             </div>
@@ -199,7 +189,7 @@
           <div class="scenarios-grid">
             <button id="tab-btn-bp" class="btn-scenario active" onclick="switchIvtTab('bp')">BP Protocol</button>
             <button id="tab-btn-monitoring" class="btn-scenario" onclick="switchIvtTab('monitoring')">Monitoring</button>
-            <button id="tab-btn-late" class="btn-scenario" onclick="switchIvtTab('late')">Late Window (4.5-24h) Trials</button>
+            <button id="tab-btn-late" class="btn-scenario" onclick="switchIvtTab('late')">Critical TNK Trials</button>
           </div>
           
           <div id="ivt-tab-content" style="min-height: 480px; display:flex; flex-direction:column; gap:10px;">
@@ -214,57 +204,48 @@
     <section id="print-view" class="view-section">
       <div class="print-page">
         <div class="print-header">
-          <h1>Acute Ischemic Stroke IV Thrombolysis Checklist & Dosing</h1>
+          <h1>Acute Ischemic Stroke IV Tenecteplase Dosing & Checklist</h1>
           <div class="print-subtitle">Bedside Quick Reference Card</div>
         </div>
         
         <div class="print-grid">
           
           <div class="print-box">
-            <h3>⚡ Thrombolytic Dosing Guidelines</h3>
+            <h3>⚡ Tenecteplase (TNK) Dosing Guidelines</h3>
             <table class="print-table">
               <thead>
                 <tr>
-                  <th>Drug</th>
                   <th>Standard Dose</th>
-                  <th>Max Dose</th>
-                  <th>Dosing Strategy</th>
+                  <th>Maximum Cap</th>
+                  <th>Administration Strategy</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Alteplase (tPA)</strong></td>
-                  <td>0.9 mg / kg</td>
-                  <td>90 mg</td>
-                  <td>Give **10%** of total dose as an IV bolus over 1 minute. Infuse the remaining **90%** over 60 minutes.</td>
-                </tr>
-                <tr>
-                  <td><strong>Tenecteplase (TNK)</strong></td>
-                  <td>0.25 mg / kg</td>
-                  <td>25 mg</td>
-                  <td>Give as a single rapid IV bolus over 5-10 seconds. (Preferred for LVO candidates).</td>
+                  <td style="font-weight:700;">0.25 mg / kg</td>
+                  <td style="font-weight:700;">25.0 mg</td>
+                  <td>Give as a single rapid IV bolus over 5-10 seconds. Highly preferred for LVO and non-LVO candidates.</td>
                 </tr>
               </tbody>
             </table>
             
-            <h4 style="margin-top:0.4rem; font-size:0.75rem;">Weight-Based Cheat Sheet (Alteplase / TNK):</h4>
+            <h4 style="margin-top:0.4rem; font-size:0.75rem;">Weight-Based Cheat Sheet (TNK Dosing):</h4>
             <table class="print-table compact" style="font-size:0.65rem;">
               <thead>
                 <tr>
                   <th>Weight (kg)</th>
-                  <th>tPA Total (mg)</th>
-                  <th>tPA Bolus (mg)</th>
-                  <th>tPA Infusion (mg)</th>
+                  <th>Weight (lbs)</th>
                   <th>TNK Dose (mg)</th>
+                  <th>Administration Volume (at 5 mg/mL)</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>50 kg</td><td>45.0 mg</td><td>4.5 mg</td><td>40.5 mg</td><td>12.5 mg</td></tr>
-                <tr><td>60 kg</td><td>54.0 mg</td><td>5.4 mg</td><td>48.6 mg</td><td>15.0 mg</td></tr>
-                <tr><td>70 kg</td><td>63.0 mg</td><td>6.3 mg</td><td>56.7 mg</td><td>17.5 mg</td></tr>
-                <tr><td>80 kg</td><td>72.0 mg</td><td>7.2 mg</td><td>64.8 mg</td><td>20.0 mg</td></tr>
-                <tr><td>90+ kg</td><td>81.0 mg</td><td>8.1 mg</td><td>72.9 mg</td><td>22.5 mg</td></tr>
-                <tr><td>&ge;100 kg</td><td>90.0 mg</td><td>9.0 mg</td><td>81.0 mg</td><td>25.0 mg</td></tr>
+                <tr><td>50 kg</td><td>110 lbs</td><td>12.5 mg</td><td>2.5 mL</td></tr>
+                <tr><td>60 kg</td><td>132 lbs</td><td>15.0 mg</td><td>3.0 mL</td></tr>
+                <tr><td>70 kg</td><td>154 lbs</td><td>17.5 mg</td><td>3.5 mL</td></tr>
+                <tr><td>80 kg</td><td>176 lbs</td><td>20.0 mg</td><td>4.0 mL</td></tr>
+                <tr><td>90 kg</td><td>198 lbs</td><td>22.5 mg</td><td>4.5 mL</td></tr>
+                <tr><td>&ge;100 kg</td><td>&ge;220 lbs</td><td>25.0 mg (Max)</td><td>5.0 mL (Full vial)</td></tr>
               </tbody>
             </table>
           </div>
@@ -312,7 +293,7 @@
           </div>
           
           <div class="print-box full-width">
-            <h3>🧠 Late-Window IV Thrombolysis Trials Summary</h3>
+            <h3>🧠 Critical Tenecteplase (TNK) Clinical Trials Summary</h3>
             <table class="print-table">
               <thead>
                 <tr>
@@ -324,29 +305,29 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>WAKE-UP (NEJM, 2018)</strong></td>
-                  <td>Wake-Up (Unknown)</td>
-                  <td>DWI-FLAIR Mismatch (ischemia on DWI, normal/no hyperintensity on FLAIR).</td>
-                  <td>Excellent 90-day functional recovery (mRS 0-1) was significantly higher with Alteplase vs. placebo (53.3% vs. 41.8%, p=0.02). No mortality difference.</td>
+                  <td><strong>AcT (Lancet, 2022)</strong></td>
+                  <td>&lt;4.5 hours</td>
+                  <td>Standard thrombolysis candidates (LVO and non-LVO).</td>
+                  <td>Tenecteplase 0.25 mg/kg was non-inferior to Alteplase 0.9 mg/kg for 90d functional independence (mRS 0-1: 36.9% vs. 34.8%) with equivalent safety. Establishes TNK as the standard-of-care lytic.</td>
                 </tr>
                 <tr>
-                  <td><strong>EXTEND (NEJM, 2019)</strong></td>
-                  <td>4.5 – 9.0 hours</td>
-                  <td>Perfusion mismatch (CTP/MRP): Automated core-penumbra software showing salvageable tissue.</td>
-                  <td>Alteplase led to higher rate of mRS 0-1 at 90 days (35.4% vs. 29.5%, RR 1.44). Higher rate of symptomatic ICH (6.2% vs. 0.9%).</td>
+                  <td><strong>EXTEND-IA TNK (NEJM, 2018)</strong></td>
+                  <td>&lt;4.5 hours (pre-EVT)</td>
+                  <td>LVO patients scheduled to undergo thrombectomy.</td>
+                  <td>Tenecteplase 0.25 mg/kg achieved significantly higher pre-EVT substantial reperfusion (22% vs. 10%, p=0.03) and better 90d functional outcomes compared to Alteplase.</td>
                 </tr>
                 <tr>
                   <td><strong>TRACE-III (NEJM, 2024)</strong></td>
                   <td>4.5 – 24.0 hours</td>
-                  <td>Tenecteplase in late window select patients showing perfusion mismatch on automated CTP.</td>
-                  <td>Tenecteplase 0.25 mg/kg showed excellent functional outcomes and recanalization rates without excess safety events in tissue-profile selected patients.</td>
+                  <td>Late window patients showing perfusion mismatch on automated CTP (core-penumbra).</td>
+                  <td>Tenecteplase 0.25 mg/kg showed excellent 90d functional outcomes and higher recanalization without excess safety concerns compared to placebo in tissue-profile selected patients.</td>
                 </tr>
               </tbody>
             </table>
           </div>
           
           <div class="print-footer-references">
-            <p><strong>References:</strong> [1] Hacke W, et al. ECASS III. NEJM 2008. [2] WAKE-UP Trial Investigators. NEJM 2018. [3] EXTEND Trial Investigators. NEJM 2019. [4] TRACE-III Investigators. NEJM 2024. [5] 2019 AHA/ASA Acute Stroke Management Guidelines.</p>
+            <p><strong>References:</strong> [1] Campbell BCV, et al. EXTEND-IA TNK. NEJM 2018. [2] Menon BK, et al. AcT. Lancet 2022. [3] TRACE-III Investigators. NEJM 2024. [4] AHA/ASA Acute Stroke Guidelines.</p>
             <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
@@ -407,29 +388,29 @@
       `,
       late: `
         <div class="glass-card" style="margin-bottom:0; flex:1; max-height:480px; overflow-y:auto;">
-          <h3>Late-Window / Wake-Up Trials</h3>
-          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">Thrombolysis between 4.5 and 24 hours is guided by advanced tissue imaging to detect salvageable penumbra.</p>
+          <h3>Critical Tenecteplase Trials</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">Key clinical trial evidence establishing Tenecteplase (TNK) efficacy and safety in acute ischemic stroke.</p>
           
           <div style="display:flex; flex-direction:column; gap:10px; font-size:0.8rem;">
             <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:8px; border-radius:6px;">
-              <strong style="color:var(--color-cyan);">WAKE-UP (NEJM 2018)</strong><br>
-              • <strong>Window:</strong> Unknown (Wake-up stroke).<br>
-              • <strong>Imaging:</strong> DWI-FLAIR mismatch (intact diffusion lesion, no FLAIR hyperintensity).<br>
-              • <strong>Outcome:</strong> Alteplase significantly improved 90d mRS 0-1 (53.3% vs 41.8%, p=0.02) without increasing mortality.
+              <strong style="color:var(--color-cyan);">AcT (Lancet 2022)</strong><br>
+              • <strong>Window:</strong> &lt;4.5 hours.<br>
+              • <strong>Inclusion:</strong> All standard thrombolysis-eligible patients.<br>
+              • <strong>Outcome:</strong> Tenecteplase 0.25 mg/kg was non-inferior to Alteplase 0.9 mg/kg for 90d functional independence (mRS 0-1: 36.9% vs 34.8%) with equivalent safety.
             </div>
             
             <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:8px; border-radius:6px;">
-              <strong style="color:var(--color-cyan);">EXTEND (NEJM 2019)</strong><br>
-              • <strong>Window:</strong> 4.5 - 9 hours.<br>
-              • <strong>Imaging:</strong> CTP mismatch (automated perfusion mismatch).<br>
-              • <strong>Outcome:</strong> Alteplase led to higher rate of mRS 0-1 (35.4% vs 29.5%, RR 1.44). Higher risk of sICH (6.2% vs 0.9%).
+              <strong style="color:var(--color-cyan);">EXTEND-IA TNK (NEJM 2018)</strong><br>
+              • <strong>Window:</strong> &lt;4.5 hours (pre-EVT).<br>
+              • <strong>Inclusion:</strong> LVO patients scheduled to undergo thrombectomy.<br>
+              • <strong>Outcome:</strong> Tenecteplase achieved superior pre-EVT substantial reperfusion (22% vs 10%, p=0.03) and better 90d functional outcomes compared to Alteplase.
             </div>
             
             <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:8px; border-radius:6px;">
               <strong style="color:var(--color-cyan);">TRACE-III (NEJM 2024)</strong><br>
               • <strong>Window:</strong> 4.5 - 24 hours.<br>
-              • <strong>Imaging:</strong> CTP mismatch with automated software.<br>
-              • <strong>Outcome:</strong> Tenecteplase 0.25 mg/kg showed excellent functional outcomes and recanalization rates without excess safety events.
+              • <strong>Inclusion:</strong> Perfusion mismatch on automated CTP/MRP.<br>
+              • <strong>Outcome:</strong> Tenecteplase 0.25 mg/kg showed excellent functional outcomes and recanalization rates without excess safety events in tissue-profile selected patients.
             </div>
           </div>
         </div>
@@ -454,22 +435,11 @@
         weightKg = inputVal * 0.45359237;
       }
       
-      // Alteplase (tPA) Calculation
-      let tpaTotal = weightKg * 0.9;
-      if (tpaTotal > 90) tpaTotal = 90;
-      
-      const tpaBolus = tpaTotal * 0.1;
-      const tpaInfusion = tpaTotal * 0.9;
-      
       // Tenecteplase (TNK) Calculation
       let tnkTotal = weightKg * 0.25;
       if (tnkTotal > 25) tnkTotal = 25;
       
       // Update UI
-      document.getElementById('alt-total').innerText = `${tpaTotal.toFixed(1)} mg`;
-      document.getElementById('alt-bolus').innerText = `${tpaBolus.toFixed(2)} mg`;
-      document.getElementById('alt-inf').innerText = `${tpaInfusion.toFixed(2)} mg`;
-      
       document.getElementById('tnk-total').innerText = `${tnkTotal.toFixed(2)} mg`;
     }
 

@@ -930,9 +930,9 @@
             <h3>ICH Score</h3>
             <div class="result-score" id="ich-score-val">0</div>
           </div>
-          <div class="result-right">
-            <div class="result-interpretation" id="ich-interp">Mortality Risk: 0.9%</div>
-            <div class="result-details" id="ich-details">HMC mortality (2005-2008, comfort care excluded)</div>
+          <div class="result-right" style="display:flex; flex-direction:column; gap:4px; justify-content:center;">
+            <div class="result-interpretation" id="ich-interp-std" style="font-size:0.95rem; font-weight:600; color:#ffffff;">Standard 30-Day Mortality (Hemphill): 0%</div>
+            <div class="result-details" id="ich-interp-loc" style="font-size:0.9rem; font-weight:500; color:var(--accent-cyan); margin-top:2px;">Local Cohort (Comfort Care Excluded): 0.9%</div>
           </div>
         </div>
       </div>
@@ -1594,7 +1594,17 @@
       const total = gcs + age + vol + ivh + infra;
       document.getElementById('ich-score-val').innerText = total;
       
-      const mortality = {
+      const standardMortality = {
+        0: "0%",
+        1: "13%",
+        2: "26%",
+        3: "72%",
+        4: "97%",
+        5: "100%",
+        6: "100%"
+      };
+      
+      const localMortality = {
         0: "0.9%",
         1: "0.7%",
         2: "5.3%",
@@ -1604,8 +1614,8 @@
         6: "100.0% (predicted)"
       };
       
-      document.getElementById('ich-interp').innerText = `Predictive 30-day Mortality: ${mortality[total]}`;
-      document.getElementById('ich-details').innerText = `HMC mortality (comfort care excluded) for score of ${total}.`;
+      document.getElementById('ich-interp-std').innerText = `Standard 30-Day Mortality (Hemphill): ${standardMortality[total]}`;
+      document.getElementById('ich-interp-loc').innerText = `Local Cohort (Comfort Care Excluded): ${localMortality[total]}`;
     }
 
     // 3. ABCD2 Calculator
@@ -1863,10 +1873,10 @@
           <h3>🔍 RCVS2 (Reversible Cerebral Vasoconstriction)</h3>
           <ul class="print-list" style="margin-top:0.25rem;">
             <li><strong>R (5):</strong> Recurrent thunderclap headaches (TCHs)</li>
-            <li><strong>C (1):</strong> Carotid / vertebral artery dissection</li>
-            <li><strong>V (1):</strong> Vasoconstrictor trigger identified</li>
+            <li><strong>C (1):</strong> Convexity subarachnoid hemorrhage (cSAH)</li>
+            <li><strong>V (3):</strong> Vasoactive trigger identified</li>
             <li><strong>S (1):</strong> Sex category (Female)</li>
-            <li><strong>2 (-2):</strong> Subarachnoid hemorrhage present (**minus 2 points**)</li>
+            <li><strong>2 (-2):</strong> Internal carotid artery narrowing/stenosis (**minus 2 points**)</li>
           </ul>
           <p style="font-size:0.75rem; margin-top:0.25rem; font-weight:600;">Score &ge; 5: High probability of RCVS (~99% specificity).</p>
         </div>

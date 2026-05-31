@@ -126,8 +126,9 @@
                 <label>1. Deficit Severity</label>
                 <select id="inp-severity" onchange="runDaptAlgorithm()">
                   <option value="minor">Minor Stroke (NIHSS &le;3) / High-Risk TIA (ABCD² &ge;4)</option>
-                  <option value="icas">Symptomatic Large Artery Stenosis (ICAS 50-99%)</option>
-                  <option value="moderate">Moderate-to-Severe Stroke (NIHSS &ge;4)</option>
+                  <option value="mild-mod">Mild-to-Moderate Stroke (NIHSS 4-5)</option>
+                  <option value="icas">Symptomatic Severe ICAS (70-99% Stenosis)</option>
+                  <option value="moderate">Moderate-to-Severe Stroke (NIHSS &ge;6)</option>
                 </select>
               </div>
               
@@ -198,7 +199,7 @@
                   <th>Protocol</th>
                   <th>Clinical Target</th>
                   <th>Loading Doses</th>
-                  <th>Maintenance Regimen (21-Day)</th>
+                  <th>Maintenance Regimen</th>
                 </tr>
               </thead>
               <tbody>
@@ -214,9 +215,15 @@
                   <td>• **Aspirin:** 150-325 mg once.<br>• **Ticagrelor:** 180 mg once.</td>
                   <td>• **Days 2–21:** Aspirin 81 mg daily + Ticagrelor 90 mg BID.<br>• **Days 22–90:** Aspirin 81 mg daily monotherapy.</td>
                 </tr>
+                <tr class="alert-row-teal">
+                  <td><strong>THALES</strong></td>
+                  <td>Mild-to-Moderate Stroke (NIHSS &le;5) or High-Risk TIA presenting **&lt;24 hours** from onset.</td>
+                  <td>• **Aspirin:** 300-325 mg once.<br>• **Ticagrelor:** 180 mg once.</td>
+                  <td>• **Days 2–30:** Aspirin 75-100 mg daily + Ticagrelor 90 mg BID.<br>• **Day 31+:** Aspirin 81 mg daily monotherapy.</td>
+                </tr>
                 <tr class="alert-row-danger">
                   <td><strong>SAMMPRIS</strong></td>
-                  <td>Symptomatic Large Artery Stenosis (ICAS 50-99%).</td>
+                  <td>Symptomatic Severe ICAS (70-99% Stenosis).</td>
                   <td>• **Aspirin:** 325 mg once.<br>• **Clopidogrel:** 300-600 mg once.</td>
                   <td>• **Days 2–90:** Aspirin 325 mg daily + Clopidogrel 75 mg daily.<br>• **Day 91+:** Aspirin 325 mg daily monotherapy.</td>
                 </tr>
@@ -228,9 +235,9 @@
             <h3>🚨 Essential Exclusions & Contraindications</h3>
             <ul class="print-list">
               <li><strong>Prior Intracranial Hemorrhage:</strong> History of ICH, severe trauma, or active systemic bleeding.</li>
-              <li><strong>Thrombolysis Candidates:</strong> Do not load DAPT prior to IV thrombolysis. Hold all antiplatelets for 24 hours post-tPA/TNK.</li>
+              <li><strong>Thrombolysis Candidates:</strong> Do not load DAPT prior to IV thrombolysis. Hold all antiplatelets for 24 hours post-TNK.</li>
               <li><strong>Cardioembolic Origin:</strong> AFib, mechanical valves, or thrombi require therapeutic anticoagulation, NOT long-term DAPT.</li>
-              <li><strong>Severe Deficits:</strong> NIHSS &ge; 4 (unless ICAS profile) carries high hemorrhagic transformation risk if loaded with DAPT.</li>
+              <li><strong>Severe Deficits:</strong> NIHSS &ge; 6 (unless ICAS profile) carries high hemorrhagic transformation risk if loaded with DAPT. (NIHSS 4-5 is safe for Ticagrelor DAPT per THALES).</li>
             </ul>
           </div>
           
@@ -268,12 +275,19 @@
                   <td>Ticagrelor-DAPT reduced stroke recurrence at 90 days compared to Clopidogrel-DAPT (6.0% vs. 7.6%, HR 0.77).</td>
                   <td>No difference in severe or moderate bleeding (0.3% vs 0.3%).</td>
                 </tr>
+                <tr>
+                  <td><strong>THALES (NEJM, 2020)</strong></td>
+                  <td>11,016 international patients, Mild-to-Moderate Stroke (NIHSS &le;5) or High-Risk TIA &lt;24h.</td>
+                  <td>Ticagrelor (180mg load, 90mg BID) + ASA (75-100mg daily) for 30d vs. ASA alone.</td>
+                  <td>Ticagrelor-DAPT reduced stroke recurrence or death at 30 days (5.5% vs. 6.6%, HR 0.83, p=0.001).</td>
+                  <td>Ticagrelor-DAPT significantly increased severe bleeding (0.5% vs. 0.1%, HR 3.99, p=0.001).</td>
+                </tr>
               </tbody>
             </table>
           </div>
           
           <div class="print-footer-references">
-            <p><strong>References:</strong> [1] Wang Y, et al. CHANCE. NEJM 2013. [2] Johnston SC, et al. POINT. NEJM 2018. [3] Wang Y, et al. CHANCE-2. NEJM 2021. [4] Chimowitz MI, et al. SAMMPRIS. NEJM 2011.</p>
+            <p><strong>References:</strong> [1] Wang Y, et al. CHANCE. NEJM 2013. [2] Johnston SC, et al. POINT. NEJM 2018. [3] Wang Y, et al. CHANCE-2. NEJM 2021. [4] Johnston SC, et al. THALES. NEJM 2020. [5] Chimowitz MI, et al. SAMMPRIS. NEJM 2011.</p>
             <p class="disclaimer">Disclaimer: For clinical reference and educational support only. Decisions must incorporate individual patient context.</p>
           </div>
         </div>
@@ -302,6 +316,10 @@
         <div class="glass-card" style="margin-bottom:0; flex:1; font-size:0.8rem; overflow-y:auto; max-height:360px;">
           <h3>Landmark Clinical Trials</h3>
           <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+            <div>
+              <strong style="color:var(--color-cyan);">THALES Trial (NEJM 2020)</strong><br>
+              • In mild-to-moderate stroke (NIHSS &le;5) or high-risk TIA, <strong>Ticagrelor + Aspirin</strong> daily for 30 days reduced stroke/death rates at 30 days compared to Aspirin alone, with a risk of increased severe bleeding.
+            </div>
             <div>
               <strong style="color:var(--color-cyan);">POINT Trial (NEJM 2018)</strong><br>
               • DAPT for 90 days showed lower ischemic stroke rates but increased risk of major bleeding after day 21. Standard of care shifted to <strong>21 days</strong> of DAPT.
@@ -366,7 +384,7 @@
       if (severity === 'moderate') {
         rBox.className = 'status-summary-box danger';
         rTitle.innerText = 'DAPT CONTRAINDICATED (SEVERE DEFICIT)';
-        rText.innerHTML = '<strong>Avoid DAPT:</strong> Patient has a moderate-to-severe stroke (NIHSS &ge;4) and lacks a symptomatic ICAS profile. Loading DAPT carries high risk of hemorrhagic transformation in large infarcts. Proceed with single antiplatelet therapy.';
+        rText.innerHTML = '<strong>Avoid DAPT:</strong> Patient has a moderate-to-severe stroke (NIHSS &ge;6) and lacks a symptomatic ICAS profile. Loading DAPT carries high risk of hemorrhagic transformation in large infarcts. Proceed with single antiplatelet therapy.';
         return;
       }
       
@@ -381,16 +399,20 @@
       if (severity === 'icas') {
         rBox.className = 'status-summary-box safe';
         rTitle.innerText = 'SAMMPRIS PROTOCOL (ICAS PROFILE)';
-        rText.innerHTML = '<strong>90-Day DAPT:</strong><br>• **Loading:** Aspirin 325 mg + Clopidogrel 300-600 mg.<br>• **Days 2–90:** Aspirin 325 mg daily + Clopidogrel 75 mg daily.<br>• **Day 91+:** Transition to Aspirin 325 mg daily monotherapy. High-intensity statin and strict BP control (target &lt;140 mmHg) are mandatory.';
+        rText.innerHTML = '<strong>90-Day DAPT (ICAS 70-99%):</strong><br>• **Loading:** Aspirin 325 mg + Clopidogrel 300-600 mg.<br>• **Days 2–90:** Aspirin 325 mg daily + Clopidogrel 75 mg daily.<br>• **Day 91+:** Transition to Aspirin 325 mg daily monotherapy. High-intensity statin and BP target &lt;140 mmHg are mandatory.';
+      } else if (severity === 'mild-mod') {
+        rBox.className = 'status-summary-box safe';
+        rTitle.innerText = 'THALES PROTOCOL (TICAGRELOR-DAPT)';
+        rText.innerHTML = '<strong>30-Day Ticagrelor DAPT (NIHSS 4-5):</strong><br>• **Loading:** Aspirin 300-325 mg + Ticagrelor 180 mg.<br>• **Days 2–30:** Aspirin 75-100 mg daily + Ticagrelor 90 mg orally twice daily.<br>• **Day 31+:** Transition to Aspirin 81 mg daily monotherapy.';
       } else {
         if (variant === 'carrier') {
           rBox.className = 'status-summary-box safe';
           rTitle.innerText = 'CHANCE-2 PROTOCOL (TICAGRELOR-DAPT)';
-          rText.innerHTML = '<strong>21-Day Ticagrelor DAPT:</strong><br>• **Loading:** Aspirin 150-325 mg + Ticagrelor 180 mg.<br>• **Days 2–21:** Aspirin 81 mg daily + Ticagrelor 90 mg orally twice daily.<br>• **Days 22–90:** Transition to Aspirin 81 mg daily monotherapy.';
+          rText.innerHTML = '<strong>21-Day Ticagrelor DAPT (NIHSS &le;3):</strong><br>• **Loading:** Aspirin 150-325 mg + Ticagrelor 180 mg.<br>• **Days 2–21:** Aspirin 81 mg daily + Ticagrelor 90 mg orally twice daily.<br>• **Days 22–90:** Transition to Aspirin 81 mg daily monotherapy.';
         } else {
           rBox.className = 'status-summary-box safe';
           rTitle.innerText = 'POINT / CHANCE PROTOCOL (CLOPIDOGREL-DAPT)';
-          rText.innerHTML = '<strong>21-Day Clopidogrel DAPT:</strong><br>• **Loading:** Aspirin 150-325 mg + Clopidogrel 300-600 mg.<br>• **Days 2–21:** Aspirin 81 mg daily + Clopidogrel 75 mg daily.<br>• **Days 22–90:** Transition to Aspirin 81 mg daily monotherapy.';
+          rText.innerHTML = '<strong>21-Day Clopidogrel DAPT (NIHSS &le;3):</strong><br>• **Loading:** Aspirin 150-325 mg + Clopidogrel 300-600 mg.<br>• **Days 2–21:** Aspirin 81 mg daily + Clopidogrel 75 mg daily.<br>• **Days 22–90:** Transition to Aspirin 81 mg daily monotherapy.';
         }
       }
     }

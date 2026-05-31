@@ -265,7 +265,7 @@
               <thead>
                 <tr>
                   <th style="width:20%;">Stenosis Grade</th>
-                  <th style="width:40%;">Outcome Comparison (5-Year Risk)</th>
+                  <th style="width:40%;">Outcome Comparison (Primary Trial Endpoints)</th>
                   <th style="width:15%;">Relative Risk (95% CI)</th>
                   <th style="width:15%;">Absolute Risk Red.</th>
                   <th style="width:10%;">NNT / NNH</th>
@@ -276,15 +276,15 @@
                   <td><strong>70% – 99% (Severe)</strong></td>
                   <td>Ipsilateral stroke and perioperative events reduced.</td>
                   <td>0.47 (0.25 – 0.88)</td>
-                  <td>17.0%</td>
+                  <td>17.0% (at 2 Years)</td>
                   <td><strong>NNT = 6</strong></td>
                 </tr>
                 <tr class="alert-row-yellow">
                   <td><strong>50% – 69% (Moderate)</strong></td>
                   <td>Selected patients benefit. Confirm with second study.</td>
                   <td>0.84 (0.60 – 1.18)</td>
-                  <td>4.5%</td>
-                  <td><strong>NNT = 22</strong></td>
+                  <td>6.5% (at 5 Years)</td>
+                  <td><strong>NNT = 15</strong></td>
                 </tr>
                 <tr class="alert-row-danger">
                   <td><strong>&lt; 50% (Mild)</strong></td>
@@ -386,11 +386,11 @@
     const decisions = {
       severe: {
         title: "Severe Stenosis (70% - 99%)",
-        text: "<strong>NASCET Benefit:</strong> Strong benefit for revascularization. Absolute Risk Reduction (ARR) of 17% over 5 years. NNT = 6.<br><strong>Recommendation:</strong> Perform Carotid Endarterectomy (CEA) or TCAR within 14 days of the index event. If age >75, CEA is strongly preferred over transfemoral CAS."
+        text: "<strong>NASCET Benefit:</strong> Strong benefit for revascularization. Absolute Risk Reduction (ARR) of 17% at 2 years. NNT = 6.<br><strong>Recommendation:</strong> Perform Carotid Endarterectomy (CEA) or TCAR within 14 days of the index event. If age >75, CEA is strongly preferred over transfemoral CAS."
       },
       moderate: {
         title: "Moderate Stenosis (50% - 69%)",
-        text: "<strong>NASCET Benefit:</strong> Selected patients benefit. Absolute Risk Reduction (ARR) of 4.5% over 5 years. NNT = 22.<br><strong>Recommendation:</strong> Revascularization is beneficial for men with recent hemispheric symptoms (not retinal). Highly verify stenosis grade with a second imaging study (e.g. CTA + MRA)."
+        text: "<strong>NASCET Benefit:</strong> Selected patients benefit. Absolute Risk Reduction (ARR) of 6.5% at 5 years. NNT = 15.<br><strong>Recommendation:</strong> Revascularization is beneficial for men with recent hemispheric symptoms (not retinal). Highly verify stenosis grade with a second imaging study (e.g. CTA + MRA)."
       },
       mild: {
         title: "Mild Stenosis (&lt;50%)",

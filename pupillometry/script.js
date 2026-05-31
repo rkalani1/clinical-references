@@ -240,7 +240,7 @@ function interpretClinicalMetrics(npi, cv, change, diff) {
     statusClass = 'status-normal';
     statusText = 'NORMAL PROFILE';
     riskPercent = 10;
-    text = 'Pupillary parameters are within normal limits. Normal NPi (>3.0) and constriction velocity (>0.8 mm/s) exclude active brainstem compression and severe intracranial hypertension with a high negative predictive value (>97%).';
+    text = 'Pupillary parameters are within normal limits. Normal NPi (>3.0) and constriction velocity (>0.8 mm/s) suggest absence of active brainstem compression, but clinical trials (Petrosino et al. JAMA Neurol 2025) demonstrate that normal pupillometry cannot safely exclude elevated intracranial pressure (ICP) and cannot replace invasive monitoring.';
     steps = [
       'Continue baseline serial assessments every 4 hours.',
       'Ensure nursing staff are calibrated on device use.',
