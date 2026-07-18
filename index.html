@@ -137,7 +137,7 @@
     /* Card Grid Layout */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
       gap: 2rem;
       margin-bottom: 4rem;
     }
@@ -354,8 +354,8 @@
       .card {
         padding: 1.75rem;
       }
-    }"
-"./* Respect users who prefer reduced motion (vestibular/a11y). */
+    }
+        /* Respect users who prefer reduced motion (vestibular/a11y). */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -363,7 +363,7 @@
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
-        }.
+        }
   </style>
 </head>
 <body>
@@ -930,7 +930,7 @@
 
     </main>
 
-  <footer style="margin-top: 40px; padding: 20px; text-align: center; font-size: 12px; color: #6b7280; border-top: 1px solid var(--border);">
+  <footer style="margin-top: 40px; padding: 20px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border);">
     <p>This is a synthetic public demo site for educational and reference purposes only. Not for clinical decision-making or real patient care.</p>
     <p style="margin-top: 8px;">
       <a href="https://www.washington.edu/online/terms/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan); text-decoration: underline; margin-right: 15px;">University Website Terms</a>
