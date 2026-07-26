@@ -21,387 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
   
-  <style>
-    :root {
-      /* Field-manual palette: warm paper, deep clinical ink, restrained teal. */
-      --bg: #f2f5f3;
-      --surface: #ffffff;
-      --surface-hover: #f8fbfa;
-      --border: rgba(23, 63, 75, 0.14);
-      --border-hover: rgba(20, 116, 125, 0.5);
-      
-      /* Accent colors */
-      --accent-cyan: #14747d;
-      --accent-blue: #24586b;
-      --accent-gradient: linear-gradient(90deg, #173f4b 0%, #14747d 100%);
-      --accent-glow: rgba(20, 116, 125, 0.16);
-      
-      /* Category Colors */
-      --color-icu: #365c79;
-      --bg-icu: rgba(54, 92, 121, 0.1);
-      --color-stroke: #a33b35;
-      --bg-stroke: rgba(163, 59, 53, 0.1);
-      
-      /* Typography Colors */
-      --text-main: #162b32;
-      --text-muted: #596c72;
-      
-      --radius-card: 12px;
-      --radius-tag: 5px;
-      --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg);
-      background-image:
-        linear-gradient(rgba(23, 63, 75, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(23, 63, 75, 0.035) 1px, transparent 1px);
-      background-size: 32px 32px;
-      color: var(--text-main);
-      font-family: 'Inter', -apple-system, sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 2.25rem 1.25rem;
-    }
-
-    /* Container */
-    .container {
-      max-width: 1180px;
-      margin: 0 auto;
-      width: 100%;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    /* Header Styling */
-    header {
-      text-align: left;
-      margin-bottom: 2rem;
-      position: relative;
-      padding: 1.25rem 0 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      padding: 0.5rem 1rem;
-      border-radius: 99px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--accent-cyan);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .logo-badge svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-    }
-
-    h1 {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: clamp(2.35rem, 5vw, 3.65rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 0;
-      color: var(--text-main);
-    }
-
-    .subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      color: var(--text-muted);
-      max-width: 680px;
-      margin: 0 auto;
-      font-weight: 400;
-      line-height: 1.5;
-    }
-
-    /* Card Grid Layout */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(285px, 100%), 1fr));
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    /* Card Design */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      transition: var(--transition);
-      cursor: pointer;
-      box-shadow: 0 12px 28px -24px rgba(23, 63, 75, 0.5);
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--accent-gradient);
-      opacity: 0.72;
-      transition: var(--transition);
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--border-hover);
-      background: var(--surface-hover);
-      box-shadow: 0 18px 32px -24px rgba(23, 63, 75, 0.48), 0 1px 0 var(--border-hover);
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    /* Card Contents */
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.15rem;
-    }
-
-    .category-tag {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.3rem 0.6rem;
-      border-radius: var(--radius-tag);
-    }
-
-    .category-tag.icu {
-      color: var(--color-icu);
-      background: var(--bg-icu);
-    }
-
-    .category-tag.stroke {
-      color: var(--color-stroke);
-      background: var(--bg-stroke);
-    }
-
-    .category-tag.calc {
-      color: var(--accent-cyan);
-      background: rgba(0, 242, 254, 0.15);
-    }
-
-    .card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: #edf4f2;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-blue);
-      transition: var(--transition);
-    }
-
-    .card:hover .card-icon {
-      background: var(--accent-gradient);
-      color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .card-icon svg {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-    }
-
-    .card h2 {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--text-main);
-      letter-spacing: -0.01em;
-    }
-
-    .card p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      flex: 1;
-      line-height: 1.5;
-    }
-
-    .features-list {
-      list-style: none;
-      margin-bottom: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .features-list li {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .features-list li::before {
-      content: "•";
-      color: var(--accent-cyan);
-      font-weight: bold;
-    }
-
-    .card-action {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.5rem;
-      background: #f4f7f6;
-      border: 1px solid var(--border);
-      color: var(--accent-blue);
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: var(--transition);
-      width: 100%;
-    }
-
-    .card:hover .card-action {
-      background: var(--accent-gradient);
-      color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 10px 20px -10px var(--accent-glow);
-    }
-
-    .card-action svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      stroke-width: 2.5;
-      transition: transform 0.2s ease;
-    }
-
-    /* Stretch the existing semantic link across its card without changing any
-       destination or label. Keyboard focus now matches the visual hit area. */
-    .card-action::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-    }
-
-    .card:has(.card-action:focus-visible) {
-      outline: 3px solid var(--accent-cyan);
-      outline-offset: 3px;
-      border-color: var(--accent-cyan);
-    }
-
-    .card-action:focus-visible {
-      outline: none;
-    }
-
-    .card-action:hover svg {
-      transform: translateX(3px);
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem 0;
-      border-top: 1px solid var(--border);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-    }
-
-    footer p {
-      margin-bottom: 0.5rem;
-    }
-
-    footer a {
-      color: var(--accent-cyan);
-      text-decoration: none;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    .skip-link {
-      position: fixed;
-      top: 0.75rem;
-      left: 0.75rem;
-      z-index: 10;
-      padding: 0.7rem 1rem;
-      border-radius: 8px;
-      background: var(--text-main);
-      color: #ffffff;
-      text-decoration: none;
-      transform: translateY(-160%);
-      transition: transform var(--transition);
-    }
-
-    .skip-link:focus {
-      transform: translateY(0);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 640px) {
-      body {
-        padding: 1.5rem 1rem;
-      }
-      header {
-        margin-bottom: 2.5rem;
-      }
-      .grid {
-        gap: 1.5rem;
-        margin-bottom: 2.5rem;
-      }
-      .card {
-        padding: 1.35rem;
-      }
-    }
-        /* Respect users who prefer reduced motion (vestibular/a11y). */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-  </style>
+  <link rel="stylesheet" href="assets/directory.css">
 </head>
 <body>
   <a class="skip-link" href="#reference-grid">Skip to references</a>
@@ -411,7 +31,29 @@
       <h1>Clinical References</h1>
     </header>
 
-    <main class="grid" id="reference-grid">
+    <div class="scope-alert" role="note" aria-label="Synthetic demo scope">
+      <span aria-hidden="true">ⓘ</span>
+      <p><strong>Synthetic public demo:</strong> educational reference only; not for clinical decision-making or real patient care.</p>
+    </div>
+
+    <section class="directory-tools" aria-label="Find a clinical reference">
+      <div class="directory-search-row">
+        <div class="directory-search-field">
+          <label for="reference-search">Search references</label>
+          <input id="reference-search" type="search" autocomplete="off" placeholder="Try “pupillometry,” “stroke,” or “calculator”">
+        </div>
+        <p class="result-count" id="reference-count" role="status" aria-live="polite" aria-atomic="true">22 references</p>
+      </div>
+      <div class="category-chips" aria-label="Filter by category">
+        <button class="category-chip" type="button" data-category="all" aria-pressed="true">All</button>
+        <button class="category-chip" type="button" data-category="Neuro ICU" aria-pressed="false">Neuro ICU</button>
+        <button class="category-chip" type="button" data-category="Stroke Services" aria-pressed="false">Stroke</button>
+        <button class="category-chip" type="button" data-category="Calculators" aria-pressed="false">Calculators</button>
+        <button class="category-chip" type="button" data-category="EBM" aria-pressed="false">Evidence</button>
+      </div>
+    </section>
+
+    <main class="grid" id="reference-grid" tabindex="-1">
       
       <!-- Card 1: Bedside Pupillometry -->
       <div class="card" onclick="window.location.href='./pupillometry/index.html'">
@@ -432,7 +74,7 @@
           <li>Automated action guidelines</li>
         </ul>
         <a href="./pupillometry/index.html" class="card-action">
-          Open Guide
+          Open Bedside Pupillometry Guide
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
@@ -457,7 +99,7 @@
           <li>Troubleshooting guidelines</li>
         </ul>
         <a href="./evd-icp/index.html" class="card-action">
-          Open Guide
+          Open EVD &amp; ICP Bedside Guide
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
@@ -966,6 +608,11 @@
         </a>
       </div>
 
+      <div class="directory-empty" id="directory-empty" hidden>
+        <h2>No matching references</h2>
+        <p>Try another term or clear the category filter.</p>
+        <button class="clear-filters" id="clear-filters" type="button">Clear search and filters</button>
+      </div>
     </main>
 
   <footer style="margin-top: 40px; padding: 20px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border);">
@@ -977,5 +624,6 @@
   </footer>
   </div>
 
+  <script src="assets/directory.js"></script>
 </body>
 </html>

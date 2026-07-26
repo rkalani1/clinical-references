@@ -48,6 +48,27 @@ body {
   padding-bottom: 30px;
 }
 
+.all-references-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin: -6px 0 2px;
+  color: #60a5fa;
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.all-references-link:hover {
+  text-decoration: underline;
+}
+
+.all-references-link:focus-visible {
+  outline: 3px solid rgba(96, 165, 250, 0.55);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* ==========================================================================
    Header & App Controls
    ========================================================================== */
