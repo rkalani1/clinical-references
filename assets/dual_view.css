@@ -9,28 +9,28 @@
   --font-display: 'Montserrat', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
   
-  /* HSL Slate Dark Mode Palette */
-  --bg-main: hsl(222, 47%, 7%);
-  --bg-card: hsla(223, 30%, 12%, 0.65);
-  --bg-card-hover: hsla(223, 30%, 15%, 0.85);
-  --border-color: hsla(220, 20%, 30%, 0.25);
-  --text-main: hsl(210, 38%, 95%);
-  --text-muted: hsl(215, 20%, 65%);
-  --bg-lcd: #05070c;
+  /* Clinical field-manual palette shared with the portal. */
+  --bg-main: #0d2027;
+  --bg-card: rgba(20, 47, 56, 0.82);
+  --bg-card-hover: rgba(24, 55, 65, 0.9);
+  --border-color: rgba(148, 195, 196, 0.18);
+  --text-main: #f3f7f5;
+  --text-muted: #afc2c2;
+  --bg-lcd: #07161b;
   
   /* Alert HSL Colors */
   --color-green: hsl(142, 70%, 45%);
   --color-yellow: hsl(45, 100%, 50%);
   --color-orange: hsl(28, 100%, 50%);
   --color-red: hsl(0, 85%, 60%);
-  --color-cyan: hsl(190, 90%, 50%);
-  --color-primary: hsl(207, 90%, 54%);
-  --color-purple: hsl(263, 90%, 60%);
+  --color-cyan: #5ed0c5;
+  --color-primary: #287f91;
+  --color-purple: #7d9eb7;
   
   /* Shared values */
-  --card-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
-  --card-radius: 16px;
-  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --card-shadow: 0 20px 50px -36px rgba(0, 0, 0, 0.85);
+  --card-radius: 12px;
+  --transition: 180ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Reset and Global Styles */
@@ -50,11 +50,15 @@ body.dark-mode {
   flex-direction: column;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(rgba(148, 195, 196, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 195, 196, 0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
 /* Portal Navigation Bar (Clean Slate style, hides in print) */
 .portal-nav {
-  background: hsla(222, 47%, 4%, 0.9);
+  background: rgba(7, 22, 27, 0.96);
   border-bottom: 1px solid var(--border-color);
   padding: 0.5rem 1.5rem;
   display: flex;
@@ -80,6 +84,12 @@ body.dark-mode {
   color: var(--color-cyan);
 }
 
+.portal-nav a:focus-visible,
+.toggle-btn:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+}
+
 .portal-nav svg {
   width: 14px;
   height: 14px;
@@ -92,7 +102,7 @@ body.dark-mode {
 .app-header {
   border-bottom: 1px solid var(--border-color);
   padding: 1.25rem 2rem;
-  background-color: hsla(222, 47%, 5%, 0.8);
+  background-color: rgba(13, 32, 39, 0.92);
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
@@ -114,9 +124,7 @@ body.dark-mode {
   font-weight: 800;
   font-size: 1.6rem;
   letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #fff 30%, var(--text-muted) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-main);
 }
 
 .brand .subtitle {
@@ -141,7 +149,7 @@ body.dark-mode {
 /* View Switcher toggle */
 .view-toggle-container {
   display: flex;
-  background-color: hsl(223, 30%, 4%);
+  background-color: rgba(7, 22, 27, 0.9);
   padding: 0.3rem;
   border-radius: 50px;
   border: 1px solid var(--border-color);
@@ -181,7 +189,7 @@ body.dark-mode {
 /* Main Layout Grid & Containers */
 #main-content {
   flex: 1;
-  max-width: 1400px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   width: 100%;
@@ -193,6 +201,17 @@ body.dark-mode {
 
 .view-section.active {
   display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .view-section.active {
+    animation: view-enter 160ms ease-out both;
+  }
+
+  @keyframes view-enter {
+    from { opacity: 0.74; transform: translateY(3px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }
 
 .dashboard-grid {
@@ -231,7 +250,7 @@ body.dark-mode {
 /* Glassmorphism Cards */
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(130%);
   border: 1px solid var(--border-color);
   border-radius: var(--card-radius);
   padding: 1.8rem;
@@ -244,8 +263,8 @@ body.dark-mode {
 
 .glass-card:hover {
   background: var(--bg-card-hover);
-  border-color: hsla(220, 20%, 40%, 0.35);
-  box-shadow: 0 16px 45px 0 rgba(0, 0, 0, 0.5);
+  border-color: rgba(94, 208, 197, 0.34);
+  box-shadow: 0 22px 52px -38px rgba(0, 0, 0, 0.9);
 }
 
 .card-header {

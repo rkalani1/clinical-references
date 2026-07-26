@@ -11,10 +11,10 @@
   --fill-soft:   #f8f7fa;
   --paper:       #ffffff;
 
-  --purple:      #5B3B9C;
-  --purple-deep: #3A2368;
-  --purple-soft: #f1edfa;
-  --purple-glow: rgba(91, 59, 156, 0.15);
+  --purple:      #24586B;
+  --purple-deep: #173F4B;
+  --purple-soft: #EAF1F2;
+  --purple-glow: rgba(36, 88, 107, 0.15);
 
   --teal:        #18849E;
   --teal-soft:   #e6f4f7;
@@ -619,6 +619,7 @@ table.card-table tbody td.label-cell {
     break-after: page !important;
     width: 825px !important;
     height: 1275px !important;
+  }
 }
 
 /* Mobile Responsiveness Overrides for Bedside Usage */
@@ -645,4 +646,3 @@ table.card-table tbody td.label-cell {
     padding: 15px 15px !important;
   }
 }
-

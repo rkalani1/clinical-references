@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Clinical References & Bedside Guides">
   <meta name="twitter:description" content="Curated quick-reference cards and decision-support tools for neurology and stroke care.">
-  <meta name="theme-color" content="#4b2e83">
+  <meta name="theme-color" content="#173f4b">
   
   <!-- Typography from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,32 +23,32 @@
   
   <style>
     :root {
-      /* Color Palette: Sleek Medical Dark Slate */
-      --bg: #070d19;
-      --surface: #0e1726;
-      --surface-hover: #131f33;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(0, 242, 254, 0.3);
+      /* Field-manual palette: warm paper, deep clinical ink, restrained teal. */
+      --bg: #f2f5f3;
+      --surface: #ffffff;
+      --surface-hover: #f8fbfa;
+      --border: rgba(23, 63, 75, 0.14);
+      --border-hover: rgba(20, 116, 125, 0.5);
       
       /* Accent colors */
-      --accent-cyan: #00f2fe;
-      --accent-blue: #4facfe;
-      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --accent-glow: rgba(0, 242, 254, 0.15);
+      --accent-cyan: #14747d;
+      --accent-blue: #24586b;
+      --accent-gradient: linear-gradient(90deg, #173f4b 0%, #14747d 100%);
+      --accent-glow: rgba(20, 116, 125, 0.16);
       
       /* Category Colors */
-      --color-icu: #a855f7;
-      --bg-icu: rgba(168, 85, 247, 0.15);
-      --color-stroke: #f43f5e;
-      --bg-stroke: rgba(244, 63, 94, 0.15);
+      --color-icu: #365c79;
+      --bg-icu: rgba(54, 92, 121, 0.1);
+      --color-stroke: #a33b35;
+      --bg-stroke: rgba(163, 59, 53, 0.1);
       
       /* Typography Colors */
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --text-main: #162b32;
+      --text-muted: #596c72;
       
-      --radius-card: 16px;
-      --radius-tag: 6px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius-card: 12px;
+      --radius-tag: 5px;
+      --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -59,34 +59,37 @@
 
     body {
       background-color: var(--bg);
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.05) 0%, transparent 40%);
+      background-image:
+        linear-gradient(rgba(23, 63, 75, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 63, 75, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
       color: var(--text-main);
       font-family: 'Inter', -apple-system, sans-serif;
       line-height: 1.6;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 2rem 1rem;
+      padding: 2.25rem 1.25rem;
     }
 
     /* Container */
     .container {
-      max-width: 1100px;
+      max-width: 1180px;
       margin: 0 auto;
       width: 100%;
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     /* Header Styling */
     header {
-      text-align: center;
-      margin-bottom: 3.5rem;
+      text-align: left;
+      margin-bottom: 2rem;
       position: relative;
+      padding: 1.25rem 0 1.5rem;
+      border-bottom: 1px solid var(--border);
     }
 
     .logo-badge {
@@ -114,15 +117,12 @@
 
     h1 {
       font-family: 'Newsreader', Georgia, serif;
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-size: clamp(2.35rem, 5vw, 3.65rem);
       font-weight: 700;
       line-height: 1.15;
       letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 0;
+      color: var(--text-main);
     }
 
     .subtitle {
@@ -137,9 +137,9 @@
     /* Card Grid Layout */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-      gap: 2rem;
-      margin-bottom: 4rem;
+      grid-template-columns: repeat(auto-fit, minmax(min(285px, 100%), 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
     }
 
     /* Card Design */
@@ -147,14 +147,14 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
-      padding: 2.25rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
       transition: var(--transition);
       cursor: pointer;
-      box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 28px -24px rgba(23, 63, 75, 0.5);
     }
 
     .card::before {
@@ -165,15 +165,15 @@
       right: 0;
       height: 4px;
       background: var(--accent-gradient);
-      opacity: 0;
+      opacity: 0.72;
       transition: var(--transition);
     }
 
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-2px);
       border-color: var(--border-hover);
       background: var(--surface-hover);
-      box-shadow: 0 20px 40px -20px rgba(0, 242, 254, 0.15), 0 1px 0 var(--border-hover);
+      box-shadow: 0 18px 32px -24px rgba(23, 63, 75, 0.48), 0 1px 0 var(--border-hover);
     }
 
     .card:hover::before {
@@ -185,7 +185,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.15rem;
     }
 
     .category-tag {
@@ -216,18 +216,18 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
+      background: #edf4f2;
       border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-cyan);
+      color: var(--accent-blue);
       transition: var(--transition);
     }
 
     .card:hover .card-icon {
       background: var(--accent-gradient);
-      color: var(--bg);
+      color: #ffffff;
       border-color: transparent;
       box-shadow: 0 0 15px var(--accent-glow);
     }
@@ -245,21 +245,21 @@
       font-size: 1.6rem;
       font-weight: 600;
       margin-bottom: 0.75rem;
-      color: #ffffff;
+      color: var(--text-main);
       letter-spacing: -0.01em;
     }
 
     .card p {
       font-size: 0.95rem;
       color: var(--text-muted);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       flex: 1;
       line-height: 1.5;
     }
 
     .features-list {
       list-style: none;
-      margin-bottom: 2.25rem;
+      margin-bottom: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
@@ -285,10 +285,10 @@
       justify-content: center;
       gap: 0.5rem;
       padding: 0.85rem 1.5rem;
-      background: rgba(255, 255, 255, 0.03);
+      background: #f4f7f6;
       border: 1px solid var(--border);
-      color: #ffffff;
-      border-radius: 10px;
+      color: var(--accent-blue);
+      border-radius: 8px;
       font-weight: 600;
       font-size: 0.9rem;
       text-decoration: none;
@@ -298,7 +298,7 @@
 
     .card:hover .card-action {
       background: var(--accent-gradient);
-      color: var(--bg);
+      color: #ffffff;
       border-color: transparent;
       box-shadow: 0 10px 20px -10px var(--accent-glow);
     }
@@ -309,6 +309,24 @@
       stroke: currentColor;
       stroke-width: 2.5;
       transition: transform 0.2s ease;
+    }
+
+    /* Stretch the existing semantic link across its card without changing any
+       destination or label. Keyboard focus now matches the visual hit area. */
+    .card-action::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    .card:has(.card-action:focus-visible) {
+      outline: 3px solid var(--accent-cyan);
+      outline-offset: 3px;
+      border-color: var(--accent-cyan);
+    }
+
+    .card-action:focus-visible {
+      outline: none;
     }
 
     .card-action:hover svg {
@@ -322,6 +340,7 @@
       border-top: 1px solid var(--border);
       font-size: 0.85rem;
       color: var(--text-muted);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
     }
 
     footer p {
@@ -339,6 +358,24 @@
       text-decoration: underline;
     }
 
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 10;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      background: var(--text-main);
+      color: #ffffff;
+      text-decoration: none;
+      transform: translateY(-160%);
+      transition: transform var(--transition);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
     /* Responsive adjustments */
     @media (max-width: 640px) {
       body {
@@ -352,7 +389,7 @@
         margin-bottom: 2.5rem;
       }
       .card {
-        padding: 1.75rem;
+        padding: 1.35rem;
       }
     }
         /* Respect users who prefer reduced motion (vestibular/a11y). */
@@ -367,13 +404,14 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#reference-grid">Skip to references</a>
 
   <div class="container">
     <header>
       <h1>Clinical References</h1>
     </header>
 
-    <main class="grid">
+    <main class="grid" id="reference-grid">
       
       <!-- Card 1: Bedside Pupillometry -->
       <div class="card" onclick="window.location.href='./pupillometry/index.html'">

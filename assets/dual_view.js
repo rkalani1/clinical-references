@@ -36,16 +36,36 @@ function switchView(viewName, saveToStorage = true) {
     // Show Print View
     dashboardView.classList.remove('active');
     printView.classList.add('active');
+    dashboardView.setAttribute('aria-hidden', 'true');
+    printView.setAttribute('aria-hidden', 'false');
+    dashboardView.inert = true;
+    printView.inert = false;
     
-    if (toggleDashboardBtn) toggleDashboardBtn.classList.remove('active');
-    if (togglePrintBtn) togglePrintBtn.classList.add('active');
+    if (toggleDashboardBtn) {
+      toggleDashboardBtn.classList.remove('active');
+      toggleDashboardBtn.setAttribute('aria-pressed', 'false');
+    }
+    if (togglePrintBtn) {
+      togglePrintBtn.classList.add('active');
+      togglePrintBtn.setAttribute('aria-pressed', 'true');
+    }
   } else {
     // Show Dashboard View (Default)
     printView.classList.remove('active');
     dashboardView.classList.add('active');
+    printView.setAttribute('aria-hidden', 'true');
+    dashboardView.setAttribute('aria-hidden', 'false');
+    printView.inert = true;
+    dashboardView.inert = false;
     
-    if (togglePrintBtn) togglePrintBtn.classList.remove('active');
-    if (toggleDashboardBtn) toggleDashboardBtn.classList.add('active');
+    if (togglePrintBtn) {
+      togglePrintBtn.classList.remove('active');
+      togglePrintBtn.setAttribute('aria-pressed', 'false');
+    }
+    if (toggleDashboardBtn) {
+      toggleDashboardBtn.classList.add('active');
+      toggleDashboardBtn.setAttribute('aria-pressed', 'true');
+    }
   }
 
   // Persist State
