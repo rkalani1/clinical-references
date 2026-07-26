@@ -1,0 +1,199 @@
+/* Pulse animation rings */
+.pulse-ring {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(13, 110, 253, 0.3);
+  border-radius: 8px;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn-primary.animating .pulse-ring {
+  animation: pulse-out 0.8s ease-out;
+}
+
+@keyframes pulse-out {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------------------
+   PRINT STYLING (FOR 1-PAGE CLINICAL SUMMARY SHEET)
+   ------------------------------------------------------------- */
+#print-view {
+  display: none;
+}
+
+#print-view.active {
+  display: block;
+}
+
+/* Print View Styling (applied on screen as a preview, and customized for print) */
+.print-page {
+  max-width: 960px;
+  margin: 1rem auto 2rem auto;
+  padding: 2.5rem;
+  background-color: #fff;
+  color: #111;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+}
+
+.print-header {
+  border-bottom: 2px solid #000;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.print-header h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.print-subtitle {
+  font-size: 0.8rem;
+  color: #444;
+  font-weight: 600;
+}
+
+.print-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.print-box {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.8rem;
+  background-color: #fcfcfc;
+  color: #222;
+}
+
+.print-box h3 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #000;
+  border-bottom: 1.5px solid #444;
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.print-box.full-width {
+  grid-column: 1 / span 2;
+}
+
+.print-list {
+  padding-left: 1.2rem;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.print-list li {
+  margin-bottom: 0.35rem;
+}
+
+.print-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+  margin-top: 0.35rem;
+  color: #111;
+}
+
+.print-table th, .print-table td {
+  border: 1px solid #ccc;
+  padding: 0.45rem;
+  text-align: left;
+}
+
+.print-table th {
+  background-color: #f0f0f0;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Alert rows for black and white or high contrast */
+.alert-row-danger { background-color: #fce8e6 !important; }
+.alert-row-orange { background-color: #fef3e6 !important; }
+.alert-row-yellow { background-color: #fffbeb !important; }
+.alert-row-cyan { background-color: #eaf6fc !important; }
+.alert-row-teal { background-color: #eafaf7 !important; }
+
+.print-footer-references {
+  font-size: 0.65rem;
+  color: #555;
+  border: none !important;
+  background: none !important;
+  padding-top: 0.8rem;
+  text-align: center;
+}
+
+.print-footer-references p {
+  margin-bottom: 0.2rem;
+}
+
+.print-footer-references .disclaimer {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Print Overrides */
+@media print {
+  body, html {
+    background-color: #fff !important;
+    color: #111 !important;
+    font-size: 10px !important;
+  }
+
+  .app-header, .app-footer, .view-toggle-container {
+    display: none !important;
+  }
+
+  #main-content {
+    max-width: 100% !important;
+  }
+
+  #print-view {
+    display: block !important;
+  }
+
+  .print-page {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0.2cm !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .print-grid {
+    gap: 0.4rem !important;
+  }
+
+  .print-box {
+    padding: 0.4rem !important;
+  }
+
+  .print-table th, .print-table td {
+    padding: 0.25rem !important;
+  }
+}

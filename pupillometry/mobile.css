@@ -1,0 +1,159 @@
+/* Compact-width containment: keep every simulator, label, and control inside
+   the document at the 320–390px bedside-phone widths. */
+@media (max-width: 600px) {
+  .app-header {
+    padding: 0.75rem;
+  }
+
+  .header-container {
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .brand,
+  .view-toggle-container,
+  .toggle-btn {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .brand h1 {
+    font-size: clamp(1.2rem, 7vw, 1.55rem);
+    overflow-wrap: anywhere;
+  }
+
+  .brand .subtitle {
+    font-size: 0.78rem;
+  }
+
+  .view-toggle-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .toggle-btn {
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.55rem 0.45rem;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+  }
+
+  #main-content {
+    padding: 0.75rem;
+    overflow: clip;
+  }
+
+  .grid-container,
+  .bottom-row-grid,
+  .comparison-grid,
+  .protocol-grid,
+  .anatomic-grid,
+  .print-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .glass-card {
+    margin-bottom: 0.75rem;
+    padding: 0.85rem;
+    border-radius: 10px;
+  }
+
+  .card-header {
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .card-header h2,
+  .card-label,
+  .status-badge {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .simulator-display {
+    gap: 0.5rem;
+    padding: 0.7rem;
+  }
+
+  .eye-label {
+    min-height: 2.4rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.62rem;
+    line-height: 1.25;
+  }
+
+  .eye-graphic {
+    border-width: 3px;
+  }
+
+  .iris {
+    width: 68%;
+    height: 68%;
+  }
+
+  .iris::after {
+    top: 12%;
+    left: 12%;
+    width: 16%;
+    height: 16%;
+  }
+
+  .control-card,
+  .comparison-card,
+  .protocol-step,
+  .anatomic-item,
+  .npi-param-pill {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .slider-scale,
+  .risk-labels {
+    gap: 0.25rem;
+    font-size: 0.58rem;
+  }
+
+  .slider-scale span,
+  .risk-labels span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .timeline-item {
+    gap: 0.6rem;
+    padding-left: 1rem;
+  }
+
+  .timeline-desc,
+  .detail-section,
+  .npi-explanation-content {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .print-page {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .print-box.full-width {
+    grid-column: auto;
+  }
+
+  .print-table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
